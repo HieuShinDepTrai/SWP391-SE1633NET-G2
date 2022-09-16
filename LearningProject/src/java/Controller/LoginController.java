@@ -1,0 +1,54 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package Controller;
+
+import VIew.AccountDAO;
+import VIew.UserDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+/**
+ *
+ * @author vuman
+ */
+public class LoginController extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        AccountDAO accountDAO = new AccountDAO();
+        UserDAO userDAO = new UserDAO();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (accountDAO.checkLogin(username, password)) {
+            // save into session
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            session.setAttribute("firstname", userDAO.getUserInforByUsername1(username).getFirstName());
+            session.setAttribute("lastname", userDAO.getUserInforByUsername1(username).getLastName());
+            session.setAttribute("role", new AccountDAO().getRoleByUsername(username));
+
+            response.sendRedirect("HomePage.html");
+        } else {
+            if (accountDAO.isAccountExist(username)) {
+                request.setAttribute("result", "Wrong password, please try again!");
+            } else {
+                request.setAttribute("result", "Login Failed, your account does not exist!!");
+            }
+            doGet(request, response);
+        }
+    }
+
+}
