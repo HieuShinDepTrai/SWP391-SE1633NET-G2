@@ -37,10 +37,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     margin-left: 30px;
     font-size: 30px;
     margin-top: 30px;
+    position: absolute;
 }
 
 .home:hover{
     color: gray;
     font-size: 35px;
 }
+
+.back{
+    position: absolute;
+}
+
 
