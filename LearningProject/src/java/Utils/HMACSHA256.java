@@ -26,7 +26,7 @@ public class HMACSHA256 {
         return bytesToHex(mac.doFinal(data.getBytes()));
     }
 
-    private static String bytesToHex(byte[] bytes) {        
+    public static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte hashByte : bytes) {
             int intVal = 0xff & hashByte;
