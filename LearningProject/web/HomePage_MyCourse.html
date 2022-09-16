@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div id="main" >
+    <div id="main">
         <header>
             <div class="header-content">
                 <div class="logo">
@@ -87,7 +87,7 @@
                             <div class="menu-content">
                                 <div class="menu-element">
                                     <i class="fa-solid fa-user"></i>
-                                    <a href="AccountProfile.html" class="menu-title">Trang cá nhân</a>
+                                    <a href="" class="menu-title">Trang cá nhân</a>
                                 </div>
                                 <div class="menu-element">
                                     <i class="fa-solid fa-list"></i>
@@ -114,14 +114,14 @@
                 </div>
             </div>
         </header>
-        <div id="content" >
+        <div id="content" style="display: flex;">
             <!-- Begin: Side Bar -->
             <div id="side-bar">
-                <a class="bar-button button-hover" href="HomePage.html">
+                <a class="bar-button " href="HomePage.html">
                     <i class="fa-solid fa-house"></i>
                     <p class="button-title">Home</p>
                 </a>
-                <a class="bar-button " href="HomePage_MyCourse.html">
+                <a class="bar-button button-hover" href="HomePage_MyCourse.html">
                     <i class="fa-solid fa-road"></i>
                     <p class="button-title">My Course</p>
                 </a>
@@ -132,114 +132,18 @@
             </div>
             <!-- End: Side Bar -->
 
-            <!-- Begin: Section Content -->
-            <section class="section-home show">
-                <div class="section-slider autoplay">
-                    <!-- <div class="slider-left">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </div> -->
-                    <div class="slider-content">
-                        <div class="slider-content-left">
-                            <h1>Upgrade your learning skill</h1>
-                            <p>Đây là khóa học đầy đủ và chi tiết nhất bạn có thể tìm thấy được ở trên Internet!</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="slider-content-right">
-                            <img src="assets/img/slider-img/slide-img.png" alt=""
-                                style="height: 100%; object-fit: cover;">
-                        </div>
+            <!-- Begin: Section My Course -->
+            <section class="section-my-course" style="display: block; flex: 1;">
+                <div class=".container-fluid">
+                    <div class="row pb-3">
+                        <h3 class="fw-bolder">My Course</h3>
                     </div>
-                    <div class="slider-content-1">
-                        <div class="slider-content-left">
-                            <h1>Upgrade your learning skill</h1>
-                            <p>Đây là khóa học đầy đủ và chi tiết nhất bạn có thể tìm thấy được ở trên Internet!</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="slider-content-right" style="height: 80%;">
-                            <img src="assets/img/slider-img/slider1-img.png" alt=""
-                                style="height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="slider-content-2">
-                        <div class="slider-content-left">
-                            <h1>Upgrade your learning skill</h1>
-                            <p>Đây là khóa học đầy đủ và chi tiết nhất bạn có thể tìm thấy được ở trên Internet!</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="slider-content-right" style="height: 90%;">
-                            <img src="assets/img/slider-img/slider2-img.png" alt=""
-                                style="height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="slider-content-3">
-                        <div class="slider-content-left">
-                            <h1>Upgrade your learning skill</h1>
-                            <p>Đây là khóa học đầy đủ và chi tiết nhất bạn có thể tìm thấy được ở trên Internet!</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                        <div class="slider-content-right" style="height: 90%;">
-                            <img src="assets/img/slider-img/slider3-img.png" alt=""
-                                style="height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                    <!-- <div class="slider-right">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div> -->
-                </div>
-
-                <!-- Course -->
-                <!-- <div class="section-container"> -->
-                <!-- <div class="section-title">
-                    <h1>Pro course</h1>
-                </div>
-                <div class="course-list">
-                    <div class="course">
-                        <div class="course-header">
-                            <div class="course-img" style="background-image: url(https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);">
-                                <div class="course-img-opacity">
-                                    <button>Xem khóa học</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="course-content">
-                            <div class="course-meta">
-                                <div class="category">Programming</div>
-                                <div class="difficulty">
-                                    <i class="fa-solid fa-signal"></i>
-                                    <p>Beginner</p>
-                                </div>
-                            </div>
-                            <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
-                            <div class="course-meta-info">
-                                <div class="course-meta-author">
-                                    <div class="author-avatar">
-                                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                    </div>
-                                    <p>By <a href="#" class="author-name">Lynda</a></p>
-                                </div>
-                                <div class="course-meta-student">
-                                    <i class="fa-solid fa-user"></i>
-                                    <p>51 Students</p>
-                                </div>
-                            </div>
-                            <div class="course-footer">
-                                <div class="course-price">1.299.000đ</div>
-                                <a href="#">Mua Ngay</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- </div> -->
-                <div class="container-fluid">
                     <div class="row">
-                        <h3 class="fw-bold my-3">Pro Course</h3>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="card">
-                                <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
+                        <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+                            <div class="card my-course">
+                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top" style="width: 100%;">
                                 <div class="card-body">
-                                    <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                    <h3 class="card-title">HTML CSS</h3>
                                     <div class="course-meta-info">
                                         <div class="course-meta-author">
                                             <div class="author-avatar">
@@ -253,19 +157,20 @@
                                             <p>51 Students</p>
                                         </div>
                                     </div>
-                                    <div class="course-footer">
-                                        <div class="course-price">1.299.000đ</div>
-                                        <a href="#">Mua Ngay</a>
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="card">
-                                <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
+                        <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+                            <div class="card my-course">
+                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top" style="width: 100%;">
                                 <div class="card-body">
-                                    <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                    <h3 class="card-title">HTML CSS</h3>
                                     <div class="course-meta-info">
                                         <div class="course-meta-author">
                                             <div class="author-avatar">
@@ -279,19 +184,20 @@
                                             <p>51 Students</p>
                                         </div>
                                     </div>
-                                    <div class="course-footer">
-                                        <div class="course-price">1.299.000đ</div>
-                                        <a href="#">Mua Ngay</a>
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="card">
-                                <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
+                        <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+                            <div class="card my-course">
+                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top" style="width: 100%;">
                                 <div class="card-body">
-                                    <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                    <h3 class="card-title">HTML CSS</h3>
                                     <div class="course-meta-info">
                                         <div class="course-meta-author">
                                             <div class="author-avatar">
@@ -305,19 +211,20 @@
                                             <p>51 Students</p>
                                         </div>
                                     </div>
-                                    <div class="course-footer">
-                                        <div class="course-price">1.299.000đ</div>
-                                        <a href="#">Mua Ngay</a>
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="card">
-                                <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
+                        <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+                            <div class="card my-course">
+                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top" style="width: 100%;">
                                 <div class="card-body">
-                                    <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                    <h3 class="card-title">HTML CSS</h3>
                                     <div class="course-meta-info">
                                         <div class="course-meta-author">
                                             <div class="author-avatar">
@@ -331,19 +238,20 @@
                                             <p>51 Students</p>
                                         </div>
                                     </div>
-                                    <div class="course-footer">
-                                        <div class="course-price">1.299.000đ</div>
-                                        <a href="#">Mua Ngay</a>
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="card">
-                                <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
+                        <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
+                            <div class="card my-course">
+                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top" style="width: 100%;">
                                 <div class="card-body">
-                                    <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                    <h3 class="card-title">HTML CSS</h3>
                                     <div class="course-meta-info">
                                         <div class="course-meta-author">
                                             <div class="author-avatar">
@@ -357,19 +265,20 @@
                                             <p>51 Students</p>
                                         </div>
                                     </div>
-                                    <div class="course-footer">
-                                        <div class="course-price">1.299.000đ</div>
-                                        <a href="#">Mua Ngay</a>
+                                    <div class="progress mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </section>
-            <!-- End: Section Content -->
+            <!-- End: Section My Course -->
         </div>
+
 
         <!-- Begin: Footer -->
         <footer style="margin-left: 100px;">
@@ -430,16 +339,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"
         integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-        $('.autoplay').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 5000,
-            speed: 1500,
-            dots: true
-        });
-    </script>
 </body>
 
 </html>
