@@ -7,11 +7,16 @@
 body {
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
+    background-color: #f4f6fa;
 }
 
 a {
     text-decoration: none;
     color:#1a1a1a;
+}
+
+p {
+    margin-bottom: 0px;
 }
 
 /* Side bar section */
@@ -23,6 +28,7 @@ a {
     padding-top: 20px;
     position: fixed;
     top: 66px;
+    background-color: white;
 }
 
 #side-bar .button-hover {
@@ -66,12 +72,10 @@ a {
 
 /* Content Section */
 section {
-    position: absolute;
     margin-left: 100px;
     width: calc(100% - 100px);
-    height: calc(100vh - 66px);
-    top: 66px;
     padding: 20px;
+    margin-top: 66px;
 }
 
 /* Slider */
@@ -437,6 +441,29 @@ section {
     .course {
         height: 540px;
     }
+}
+
+
+/* My Course */
+/* .my-course-container {
+    width: 100%;
+    height: 600px;
+} */
+
+.section-home {
+    display: none;
+}
+
+.my-course {
+    min-width: 240px;
+} 
+
+.section-my-course {
+    display: none;
+}
+
+.show {
+    display: block !important;
 }
 
 
