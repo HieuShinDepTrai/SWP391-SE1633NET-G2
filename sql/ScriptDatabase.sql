@@ -7,13 +7,23 @@ CREATE TABLE Answer (
 CREATE TABLE Blog (
   BlogID      int IDENTITY NOT NULL, 
   UserID      int NOT NULL, 
-  BlogDate    date NULL, 
-  BlogContent int NULL, 
+  BlogDate    datetime NULL, 
+  BlogContent nvarchar(max) NULL, 
+  BlogTilte   nvarchar(256) NOT NULL, 
+  BlogImage   varbinary(max) NULL, 
   PRIMARY KEY (BlogID));
-CREATE TABLE Comment (
+CREATE TABLE CommentBlog (
   CommentID      int IDENTITY NOT NULL, 
   CommentContent nvarchar(max) NOT NULL, 
-  CommentDate    date NOT NULL, 
+  CommentDate    datetime NOT NULL, 
+  Likes          int NOT NULL, 
+  BlogID         int NOT NULL, 
+  isReported     bit NOT NULL, 
+  PRIMARY KEY (CommentID));
+CREATE TABLE CommentVideo (
+  CommentID      int IDENTITY NOT NULL, 
+  CommentContent nvarchar(max) NOT NULL, 
+  CommentDate    datetime NOT NULL, 
   Likes          int NOT NULL, 
   UserID         int NOT NULL, 
   VideoID        int NOT NULL, 
@@ -22,12 +32,12 @@ CREATE TABLE Comment (
 CREATE TABLE Course (
   CourseID       int IDENTITY NOT NULL, 
   CourseName     nvarchar(200) NOT NULL, 
-  DateCreate     date NOT NULL, 
+  DateCreate     datetime NOT NULL, 
   Author         nvarchar(200) NOT NULL, 
   Category       nvarchar(200) NOT NULL, 
   NumberEnrolled int NOT NULL, 
   CoursePrice    float(10) NOT NULL, 
-  CourseImage    varchar(max) NOT NULL, 
+  CourseImage    varbinary(max) NOT NULL, 
   PRIMARY KEY (CourseID));
 CREATE TABLE Message (
   [from]     int NOT NULL, 
@@ -39,7 +49,7 @@ CREATE TABLE Message (
 CREATE TABLE Notification (
   NoticeID      int IDENTITY NOT NULL, 
   NoticeContent nvarchar(max) NULL, 
-  NoticeDate    date NULL, 
+  NoticeDate    datetime NULL, 
   isSeen        bit NOT NULL, 
   PRIMARY KEY (NoticeID));
 CREATE TABLE Question (
@@ -54,7 +64,7 @@ CREATE TABLE Quiz (
   PRIMARY KEY (QuizID));
 CREATE TABLE Recharge (
   RechargeID   int IDENTITY NOT NULL, 
-  RechargeDate date NOT NULL, 
+  RechargeDate datetime NOT NULL, 
   UserID       int NOT NULL, 
   Amount       float(10) NOT NULL, 
   status       bit NOT NULL, 
@@ -71,7 +81,7 @@ CREATE TABLE [User] (
   DoB         date NOT NULL, 
   PostCode    varchar(10) NULL, 
   Balance     float(10) NULL, 
-  Avatar      varchar(max) NULL, 
+  Avatar      varbinary(max) NULL, 
   Username    varchar(50) NOT NULL, 
   Password    varchar(64) NOT NULL, 
   Role        nvarchar(50) NOT NULL, 
@@ -83,7 +93,7 @@ CREATE TABLE User_Course (
   CourseRating   float(10) NULL, 
   CourseFeedback nvarchar(max) NULL, 
   Process        float(10) NULL, 
-  PayDate        date NULL, 
+  PayDate        datetime NULL, 
   isFavourite    bit NOT NULL, 
   PRIMARY KEY (UserID, 
   CourseID));
@@ -108,8 +118,8 @@ CREATE INDEX Answer_AnswerID
   ON Answer (AnswerID);
 CREATE INDEX Blog_BlogID 
   ON Blog (BlogID);
-CREATE INDEX Comment_CommentID 
-  ON Comment (CommentID);
+CREATE INDEX CommentVideo_CommentID 
+  ON CommentVideo (CommentID);
 CREATE INDEX Course_CourseID 
   ON Course (CourseID);
 CREATE INDEX Notification_NoticeID 
@@ -129,7 +139,7 @@ ALTER TABLE User_Course ADD CONSTRAINT FKUser_Cours952265 FOREIGN KEY (CourseID)
 ALTER TABLE Video ADD CONSTRAINT FKVideo487133 FOREIGN KEY (CourseID) REFERENCES Course (CourseID);
 ALTER TABLE User_Video ADD CONSTRAINT FKUser_Video483149 FOREIGN KEY (UserID) REFERENCES [User] (UserID);
 ALTER TABLE User_Video ADD CONSTRAINT FKUser_Video248293 FOREIGN KEY (VideoID) REFERENCES Video (VideoID);
-ALTER TABLE Comment ADD CONSTRAINT FKComment175169 FOREIGN KEY (UserID, VideoID) REFERENCES User_Video (UserID, VideoID);
+ALTER TABLE CommentVideo ADD CONSTRAINT FKCommentVid42371 FOREIGN KEY (UserID, VideoID) REFERENCES User_Video (UserID, VideoID);
 ALTER TABLE Quiz ADD CONSTRAINT FKQuiz365735 FOREIGN KEY (CourseID) REFERENCES Course (CourseID);
 ALTER TABLE Recharge ADD CONSTRAINT FKRecharge738481 FOREIGN KEY (UserID) REFERENCES [User] (UserID);
 ALTER TABLE User_Notification ADD CONSTRAINT FKUser_Notif445216 FOREIGN KEY (UserID) REFERENCES [User] (UserID);
@@ -139,3 +149,4 @@ ALTER TABLE Message ADD CONSTRAINT FKMessage65145 FOREIGN KEY ([to]) REFERENCES 
 ALTER TABLE Question ADD CONSTRAINT FKQuestion143290 FOREIGN KEY (QuizID) REFERENCES Quiz (QuizID);
 ALTER TABLE Answer ADD CONSTRAINT FKAnswer353317 FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID);
 ALTER TABLE Blog ADD CONSTRAINT FKBlog360084 FOREIGN KEY (UserID) REFERENCES [User] (UserID);
+ALTER TABLE CommentBlog ADD CONSTRAINT FKCommentBlo644738 FOREIGN KEY (BlogID) REFERENCES Blog (BlogID);
