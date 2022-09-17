@@ -42,7 +42,7 @@
                         </a>
 
                         <div class="col-md-6 form">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-left: 120px;">
                                 <p class="login-card-description text">Create new account</p>
                                 <p style="color: rgb(179, 177, 177);">Start for free</p>
 
