@@ -5,7 +5,7 @@
 
 package Controller.AccountProfile;
 
-import Models.User;
+import Model.User;
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
