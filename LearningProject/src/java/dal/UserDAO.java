@@ -19,7 +19,7 @@ public class UserDAO extends DBContext {
 
     public void addUser(User u) {
         execute("EXEC [sp_create_account] ?, ?, ?, ?, ? ,?, ?",
-                u.getUserName(),
+                u.getUsername(),
                 u.getPassword(),
                 u.getFirstName(),
                 u.getLastName(),
