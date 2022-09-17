@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package Model;
 
 import java.sql.Date;
 
 /**
  *
- * @author vuman
+ * @author Hieu Shin
  */
 public class User {
     private int userId;
@@ -22,26 +23,24 @@ public class User {
     private Date dob;
     private String postCode;
     private float balance;
-    private String avatar;
-
+    private byte[] avatar;
+    private String userName;
+    private String password;
+    private String role;
+    
     public User() {
     }
 
-    public User(String firstName, String lastName, Date dob) {
+    public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
-    
-    public User(int userId, String firstName, String lastName, Date dob) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-    }
-    
-       
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar) {
+
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, byte[] avatar, String userName, String password, String role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,6 +53,9 @@ public class User {
         this.postCode = postCode;
         this.balance = balance;
         this.avatar = avatar;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
 
     public int getUserId() {
@@ -88,11 +90,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
+    public String getPhoneNumber() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhoneNumber(String phone) {
         this.phone = phone;
     }
 
@@ -144,13 +146,36 @@ public class User {
         this.balance = balance;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
-    
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     
 }

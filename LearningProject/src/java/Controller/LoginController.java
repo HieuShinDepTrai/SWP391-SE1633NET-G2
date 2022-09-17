@@ -4,8 +4,7 @@
  */
 package Controller;
 
-import VIew.AccountDAO;
-import VIew.UserDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -27,22 +26,20 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
         UserDAO userDAO = new UserDAO();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (accountDAO.checkLogin(username, password)) {
+        if (userDAO.checkLogin(username, password)) {
             // save into session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            session.setAttribute("firstname", userDAO.getUserInforByUsername1(username).getFirstName());
-            session.setAttribute("lastname", userDAO.getUserInforByUsername1(username).getLastName());
-            session.setAttribute("role", new AccountDAO().getRoleByUsername(username));
+            session.setAttribute("user", userDAO.getAllUserInformation(username));
+            session.setAttribute("role", userDAO.getRoleByUsername(username));
 
             response.sendRedirect("HomePage.html");
         } else {
-            if (accountDAO.isAccountExist(username)) {
+            if (userDAO.isAccountExist(username)) {
                 request.setAttribute("result", "Wrong password, please try again!");
             } else {
                 request.setAttribute("result", "Login Failed, your account does not exist!!");

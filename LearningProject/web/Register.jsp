@@ -42,7 +42,7 @@
                         </a>
 
                         <div class="col-md-6 form">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-left: 120px;">
                                 <p class="login-card-description text">Create new account</p>
                                 <p style="color: rgb(179, 177, 177);">Start for free</p>
 
@@ -83,7 +83,7 @@
 
                                 <div style="margin-left: 40px;">
                                     <span>Already have an account?</span>
-                                    <a class="move" href="forgot-password" style="color: rgb(92, 88, 88); font-weight: bold;">Sign in</a>
+                                    <a class="move" href="login" style="color: rgb(92, 88, 88); font-weight: bold;">Sign in</a>
                                 </div>
 
                                 <div class="text-danger text-center" style="margin-bottom: 20px; margin-right: 120px">${result}</div>

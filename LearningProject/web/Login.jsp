@@ -67,7 +67,7 @@
 
                                 <div>
                                     <span style="color: rgb(179, 177, 177);">Don't have an account?</span>
-                                    <a class="move" href="signup" style="color: rgb(92, 88, 88); font-weight: bold;">Sign up for free</a>
+                                    <a class="move" href="register" style="color: rgb(92, 88, 88); font-weight: bold;">Sign up for free</a>
                                 </div>
                             </div>
                         </div>
