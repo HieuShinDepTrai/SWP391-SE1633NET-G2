@@ -1,4 +1,4 @@
-package VIew;
+package dal;
 
 
 import java.sql.Date;
