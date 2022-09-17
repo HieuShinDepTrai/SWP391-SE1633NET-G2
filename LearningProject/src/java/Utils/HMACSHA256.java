@@ -4,7 +4,9 @@
  */
 package Utils;
 
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -26,6 +28,12 @@ public class HMACSHA256 {
         return bytesToHex(mac.doFinal(data.getBytes()));
     }
 
+    public static String textToSHA256(String data) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+        return bytesToHex(hash);
+    }
+
     public static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte hashByte : bytes) {
@@ -35,6 +43,6 @@ public class HMACSHA256 {
             }
             sb.append(Integer.toHexString(intVal));
         }
-        return sb.toString();    
+        return sb.toString();
     }
 }

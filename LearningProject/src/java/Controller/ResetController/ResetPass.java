@@ -4,20 +4,18 @@
  */
 package Controller.ResetController;
 
-import Context.DBContext;
+import Utils.HMACSHA256;
 import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Date;
-import Utils.HMACSHA256;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,22 +23,18 @@ import java.util.logging.Logger;
  *
  * @author NamDepTraiVL
  */
-@WebServlet(name = "ResetPass", urlPatterns = {"/resetpass"})
 public class ResetPass extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("ResetPass.jsp").forward(request, response);
+        String token = request.getParameter("token");
+        if (isTokenValid(token)) {
+            request.setAttribute("token", token);
+            request.getRequestDispatcher("ResetPass.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -54,39 +48,60 @@ public class ResetPass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String payload = "";
-        AccountDBContext accDB = new AccountDBContext();
-        if (accDB.findAcc(username) != null) {
-            try {
-                String password = accDB.findOldPass(username);
-                response.getWriter().println(password);
-                long now = new Date().getTime() + 5 * 60 * 1000;
-                payload += "user: " + username + " ex: " + String.valueOf(now);
-                String sig = HMACSHA256.hmacWithJava(payload, password);
-                String res = Base64.getEncoder().encodeToString(payload.getBytes()) + ";" + sig;
-                response.getWriter().println("Res:" + res);
-                String encode = Base64.getEncoder().encodeToString(res.getBytes());
-                response.getWriter().println("Encode: " + encode);    
-                
-                Base64.Decoder decoder = Base64.getDecoder();  
-                //String decode = Base64.getDecoder().decode(encode.getBytes());
-                //response.getWriter().println("Decode: " + HMACSHA256.bytesToHex(Base64.getDecoder().decode(base64.getBytes())));                
-                response.getWriter().println("Decode: " + new String(decoder.decode(encode)));
-            } catch (Exception ex) {
-                System.out.print(ex.getMessage().toString());
-            }
+        try {
+            String password = HMACSHA256.textToSHA256(request.getParameter("password"));
+            String email = getUserFromToken(request.getParameter("token"));
+            AccountDBContext accDB = new AccountDBContext();
+            accDB.update(email, password);           
+            request.getRequestDispatcher("PasswordResetSuccess.jsp").forward(request, response);
+        } catch (Exception ex) {
+            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private boolean isTokenValid(String token) {
+        try {
+            Base64.Decoder decoder = Base64.getDecoder();
 
+            //Decode the token
+            String decode = new String(decoder.decode(token));
+
+            //Split the decode token into payload and signature
+            String[] decodeArr = decode.split(";");
+            String payload = new String(decoder.decode(decodeArr[0]));
+            String sig = decodeArr[1];
+
+            //Split the payload and get the expire time, username
+            String[] sarray = payload.split("\\s");
+            String email = sarray[1];
+            long exp = Long.parseLong(sarray[3]);
+            AccountDBContext accDb = new AccountDBContext();
+            String key = accDb.findOldPassWithEmail(email);
+            String sig2 = HMACSHA256.hmacWithJava(payload, key);
+            long now = new Date().getTime();
+            if (sig2.equals(sig) && exp > now) {
+                return true;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+        return false;
+    }
+
+    private String getUserFromToken(String token) {
+        Base64.Decoder decoder = Base64.getDecoder();
+
+        //Decode the token
+        String decode = new String(decoder.decode(token));
+
+        //Split the decode token into payload and signature
+        String[] decodeArr = decode.split(";");
+        String payload = new String(decoder.decode(decodeArr[0]));
+        String sig = decodeArr[1];
+
+        //Split the payload and get the expire time, username
+        String[] sarray = payload.split("\\s");
+        String username = sarray[1];
+        return username;
+    }
 }

@@ -5,6 +5,7 @@
 package dal;
 
 import Context.DBContext;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +17,12 @@ import java.util.logging.Logger;
  * @author NamDepTraiVL
  */
 public class AccountDBContext extends DBContext {
-
-    public String findAcc(String username) {
+       
+    public String findAccWithEmail(String email) {
         try {
-            ResultSet rs = executeQuery("SELECT * FROM Account where UserName = ?", username);
+            ResultSet rs = executeQuery("SELECT * FROM [User] where Email = ?", email);
             if (rs.next()) {
-                return rs.getString("UserName");
+                return rs.getString("Email");
             }
 //            String sql = "select * from Account";                                    
 //            ResultSet rs = executeQuery(sql);
@@ -30,12 +31,12 @@ public class AccountDBContext extends DBContext {
         } catch (Exception ex) {
             return ex.getMessage().toString();
         }
-        return "Not found";
+        return null;
     }
-    
-    public String findOldPass(String username) {
+
+    public String findOldPassWithEmail(String email) {
         try {
-            ResultSet rs = executeQuery("SELECT * FROM Account where UserName = ?", username);
+            ResultSet rs = executeQuery("SELECT * FROM [User] where Email = ?", email);
             if (rs.next()) {
                 return rs.getString("Password");
             }
@@ -47,5 +48,11 @@ public class AccountDBContext extends DBContext {
             return ex.getMessage().toString();
         }
         return "Not found";
+    }
+
+    public void update(String email, String password) {
+        executeUpdate("update [User] \n"
+                + "set Password = ?\n"
+                + "where Email = ? ", password, email);
     }
 }
