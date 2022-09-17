@@ -24,6 +24,14 @@
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AccountProfile</servlet-name>
+        <servlet-class>Controller.AccountProfile.AccountProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountProfile</servlet-name>
+        <url-pattern>/AccountProfile</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
