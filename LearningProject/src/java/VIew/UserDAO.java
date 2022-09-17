@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal;
+package VIew;
 
 import Model.User;
 import java.sql.Date;
@@ -15,68 +15,60 @@ import java.util.Map;
  *
  * @author vuman
  */
-public class UserDAO extends DBContext {
-
+public class UserDAO extends DBContext{
     public void addUser(User u) {
-        execute("EXEC [sp_create_account] ?, ?, ?, ?, ? ,?, ?",
+        execute("EXEC [sp_create_account] ?, ?, ?, ?, ? ,?",
                 u.getUserName(),
                 u.getPassword(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getDob(),
-                "User",
-                0
+                u.getRole()
         );
     }
-
-    public User getAllUserInformation(String username) {
-        try ( ResultSet rs = executeQuery("SELECT UserID,"
-                + " FirstName,"
-                + " LastName,"
-                + " Email,"
-                + " PhoneNumber, Country, City, Address, DoB, PostCode, Balance, Avatar, Password, Role FROM [User] WHERE [User].Username = ?", username)) {
+    
+    public User getUserInforByUsername(String username) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE [User].Username = ?", username)) {
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
                 String firstName = rs.getNString("FirstName");
                 String lastName = rs.getNString("LastName");
-                String email = "";
-                String phoneNum = "";
-                String country = "";
-                String city = "";
-                String address = "";
-                String postCode = "";
-                byte[] avatar = rs.getBytes("Avatar");
-                if (rs.getString("Email") != null) {
-                    email = rs.getString("Email");    
-                }
-                if(rs.getString("PhoneNumber") != null){
-                    phoneNum = rs.getString("PhoneNumber");
-                }
-                if(rs.getNString("Country") != null){
-                    country = rs.getNString("Country");
-                }
-                if(rs.getNString("City") != null){
-                    city = rs.getNString("City");
-                }
-                if(rs.getNString("Address") != null){
-                    address = rs.getNString("Address");
-                }
-                if(rs.getString("PostCode") != null){
-                    postCode = rs.getString("PostCode");
-                }
+                String email = rs.getString("Email");
+                String phoneNum = rs.getString("PhoneNumber");
+                String country = rs.getNString("Country");
+                String city = rs.getNString("City");
+                String address = rs.getNString("Address");
                 Date dob = rs.getDate("DoB");
+                String postCode = rs.getString("PostCode");
                 float balance = rs.getFloat("Balance");
+                String avatar = rs.getString("Avatar");
                 String password = rs.getString("Password");
                 String role = rs.getNString("Role");
-
-                return new User(userId, firstName, lastName, email, phoneNum, country, city, address, dob, postCode, balance, avatar, username, password, role);
+                
+                return new User(userId, firstName, lastName, email, role, country, city, address, dob, postCode, balance, avatar, username, password, role);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
+    public User getUserInforByUsername1(String username) {
+        try ( ResultSet rs = executeQuery("SELECT UserID, FirstName, LastName, DoB FROM [User] WHERE Username = ?", username)) {
+            if (rs.next()) {
+                int userId = rs.getInt("UserID");
+                String firstName = rs.getNString("FirstName");
+                String lastName = rs.getNString("LastName");               
+                Date dob = rs.getDate("DoB");
+                
+                return new User(userId, firstName, lastName, dob);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
@@ -85,7 +77,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean isAccountExist(String username) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ?", username)) {
             return rs.next();
@@ -94,7 +86,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
+    
     public String getRoleByUsername(String username) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ?", username)) {
             if (rs.next()) {
@@ -104,14 +96,6 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void changePassword(String username, String password) {
-        try {
-            executeUpdate("UPDATE [User] SET [Password] = ? WHERE [Username] = ?", password, username);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

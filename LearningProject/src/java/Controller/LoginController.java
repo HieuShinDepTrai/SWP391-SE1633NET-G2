@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import dal.UserDAO;
+import VIew.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
             // save into session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            session.setAttribute("user", userDAO.getAllUserInformation(username));
+            session.setAttribute("user", userDAO.getUserInforByUsername1(username));
             session.setAttribute("role", userDAO.getRoleByUsername(username));
 
             response.sendRedirect("HomePage.html");

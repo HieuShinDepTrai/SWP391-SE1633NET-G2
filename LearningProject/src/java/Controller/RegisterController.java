@@ -4,9 +4,9 @@
  */
 package Controller;
 
-import dal.UserDAO;
+import VIew.UserDAO;
 import Model.User;
-import dal.Validation;
+import VIew.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

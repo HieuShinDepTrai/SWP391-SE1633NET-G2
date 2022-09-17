@@ -1,4 +1,4 @@
-package dal;
+package VIew;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -67,6 +67,6 @@ public class DBContext {
     private final String dbName = "SWP391";
     private final String portNumber = "1433";
     private final String userID = "sa";
-    private final String password = "1";
+    private final String password = "123";
 
 }
