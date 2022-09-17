@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.AccountProfile;
+package Controller;
 
 import Model.User;
-import dal.UserDBContext;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,11 +70,11 @@ public class AccountProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = session.getAttribute("username").toString();
-        UserDBContext userDBContext = new UserDBContext();
-        User user = userDBContext.getUserByUsername(username);
+        String username = (String) session.getAttribute("username");
+        UserDAO udao = new UserDAO();
+        User user = udao.getAllUserInformation(username);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("view/AccountProfile/AccountProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("AccountProfile.jsp").forward(request, response);
     }
 
     /** 
