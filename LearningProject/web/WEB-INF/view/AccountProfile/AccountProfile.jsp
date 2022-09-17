@@ -108,7 +108,7 @@
                             </div>
                             <div class="menu-element">
                                 Account Balance:
-                                <a href="" class="menu-title">200.000đ</a>
+                                <a href="" class="menu-title">{user.getBalance()}đ</a>
                             </div>
                             <div class="menu-element">
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -187,7 +187,7 @@
                                 <div class="user-avatar">
                                     <img src="assets/img/f8-logo.png" alt="">
                                     <div class="user-action">
-                                        <p>Quang Dung</p>
+                                        <p>{user.getFirstName()} {user.getLastName()}</p>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Change avatar
                                         </button>
@@ -204,15 +204,15 @@
                                 <div class="row mt-3">
                                     <div class="col-md-6 mt-3">
                                         <label for="FirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value="${user.getFirstName()}" disabled>
                                     </div>
                                     <div class="col-md-6 mt-3">
-                                        <label for="SecondName" class="form-label">Second Name</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <label for="SecondName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" value="${user.getLastName()}" disabled>
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label for="Date Of Birth" class="form-label">Date of Birth</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value="${user.getDob()}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                 <div class="row mt-3">
                                     <div class="col-md-6 mt-3">
                                         <label for="Country" class="form-label">Country</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value disabled>
                                     </div>
                                     <div class="col-md-6 mt-3">
                                         <label for="City" class="form-label">City</label>

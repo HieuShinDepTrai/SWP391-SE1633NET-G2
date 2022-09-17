@@ -5,12 +5,15 @@
 
 package Controller.AccountProfile;
 
+import Models.User;
+import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -66,7 +69,12 @@ public class AccountProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String username = session.getAttribute("username").toString();
+        UserDBContext userDBContext = new UserDBContext();
+        User user = userDBContext.getUserByUsername(username);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("view/AccountProfile/AccountProfile.jsp").forward(request, response);
     }
 
     /** 
