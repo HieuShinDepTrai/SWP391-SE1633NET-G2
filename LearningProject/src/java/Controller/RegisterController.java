@@ -6,7 +6,7 @@ package Controller;
 
 import dal.UserDAO;
 import Model.User;
-import VIew.Validation;
+import dal.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
