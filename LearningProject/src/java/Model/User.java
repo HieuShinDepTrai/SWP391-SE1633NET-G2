@@ -23,7 +23,10 @@ public class User {
     private String postCode;
     private float balance;
     private String avatar;
-
+    private String userName;
+    private String password;
+    private String role;
+    
     public User() {
     }
 
@@ -32,6 +35,15 @@ public class User {
         this.lastName = lastName;
         this.dob = dob;
     }
+
+    public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+    }
     
     public User(int userId, String firstName, String lastName, Date dob) {
         this.userId = userId;
@@ -39,9 +51,8 @@ public class User {
         this.lastName = lastName;
         this.dob = dob;
     }
-    
-       
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar) {
+
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,6 +65,9 @@ public class User {
         this.postCode = postCode;
         this.balance = balance;
         this.avatar = avatar;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
 
     public int getUserId() {
@@ -151,6 +165,31 @@ public class User {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
     
     
 }

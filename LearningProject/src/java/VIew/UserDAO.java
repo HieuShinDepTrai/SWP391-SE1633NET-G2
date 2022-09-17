@@ -4,7 +4,6 @@
  */
 package VIew;
 
-import Model.Account;
 import Model.User;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -17,19 +16,19 @@ import java.util.Map;
  * @author vuman
  */
 public class UserDAO extends DBContext{
-    public void addUser(User u, Account a) {
+    public void addUser(User u) {
         execute("EXEC [sp_create_account] ?, ?, ?, ?, ? ,?",
-                a.getUserName(),
-                a.getPassword(),
+                u.getUserName(),
+                u.getPassword(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getDob(),
-                a.getRoleName()
+                u.getRole()
         );
     }
     
     public User getUserInforByUsername(String username) {
-        try ( ResultSet rs = executeQuery("SELECT [User].UserID, [User].FirstName, [User].LastName, [User].Email, [User].PhoneNumber, [User].Country, [User].City, [User].Address, [User].DoB, [User].PostCode, [User].Balance, [User].Avatar FROM [User], Account WHERE [User].UserID = Account.UserID AND [Account].UserName = ?", username)) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE [User].Username = ?", username)) {
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
                 String firstName = rs.getNString("FirstName");
@@ -43,8 +42,10 @@ public class UserDAO extends DBContext{
                 String postCode = rs.getString("PostCode");
                 float balance = rs.getFloat("Balance");
                 String avatar = rs.getString("Avatar");
+                String password = rs.getString("Password");
+                String role = rs.getNString("Role");
                 
-                return new User(userId, firstName, lastName,  email, phoneNum, country, city, address, dob, postCode, balance, avatar);
+                return new User(userId, firstName, lastName, email, role, country, city, address, dob, postCode, balance, avatar, username, password, role);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +54,7 @@ public class UserDAO extends DBContext{
     }
     
     public User getUserInforByUsername1(String username) {
-        try ( ResultSet rs = executeQuery("SELECT [User].UserID, [User].FirstName, [User].LastName, [User].DoB FROM [User], Account WHERE [User].UserID = Account.UserID AND Account.UserName = ?", username)) {
+        try ( ResultSet rs = executeQuery("SELECT UserID, FirstName, LastName, DoB FROM [User] WHERE Username = ?", username)) {
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
                 String firstName = rs.getNString("FirstName");
@@ -61,6 +62,35 @@ public class UserDAO extends DBContext{
                 Date dob = rs.getDate("DoB");
                 
                 return new User(userId, firstName, lastName, dob);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public boolean checkLogin(String username, String password) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean isAccountExist(String username) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ?", username)) {
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public String getRoleByUsername(String username) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ?", username)) {
+            if (rs.next()) {
+                return rs.getString("Role");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,9 +4,7 @@
  */
 package Controller;
 
-import VIew.AccountDAO;
 import VIew.UserDAO;
-import Model.Account;
 import Model.User;
 import VIew.Validation;
 import java.io.IOException;
@@ -34,7 +32,6 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Validation valid = new Validation();
-            AccountDAO accountDAO = new AccountDAO();
             UserDAO userDAO = new UserDAO();
             SimpleDateFormat sdm = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -45,10 +42,9 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String cfpassword = request.getParameter("cfpassword");
 
-            User user = new User(firstName, lastName, date);
-            Account account = new Account(userName, password, "User");
+            User user = new User(firstName, lastName, date, userName, password, userName);
 
-            if (accountDAO.isAccountExist(userName)) {
+            if (userDAO.isAccountExist(userName)) {
                 request.setAttribute("result", "Tài khoản của bạn đã tồn tại, vui lòng thử lại");
             }else if(userName.length() < 3){
                 request.setAttribute("result", "Tên đăng nhập phải có nhiều hơn 3 kí tự");
@@ -63,7 +59,7 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
             }
             else {
-                userDAO.addUser(user, account);
+                userDAO.addUser(user);
                 response.sendRedirect("login");
             }
 
