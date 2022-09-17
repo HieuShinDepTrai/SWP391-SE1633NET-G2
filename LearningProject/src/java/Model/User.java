@@ -22,18 +22,12 @@ public class User {
     private Date dob;
     private String postCode;
     private float balance;
-    private String avatar;
+    private byte[] avatar;
     private String userName;
     private String password;
     private String role;
     
     public User() {
-    }
-
-    public User(String firstName, String lastName, Date dob) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
     }
 
     public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
@@ -44,15 +38,8 @@ public class User {
         this.password = password;
         this.role = role;
     }
-    
-    public User(int userId, String firstName, String lastName, Date dob) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-    }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role) {
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, byte[] avatar, String userName, String password, String role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -158,11 +145,11 @@ public class User {
         this.balance = balance;
     }
 
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
