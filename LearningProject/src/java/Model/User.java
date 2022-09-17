@@ -67,123 +67,115 @@ public class User {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phone;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phone) {
+        this.phone = phone;
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
-    public void setCountry(String Country) {
-        this.Country = Country;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
-    public void setCity(String City) {
-        this.City = City;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getDob() {
-        return Dob;
+        return dob;
     }
 
-    public void setDob(Date Dob) {
-        this.Dob = Dob;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getPostCode() {
-        return PostCode;
+        return postCode;
     }
 
-    public void setPostCode(String PostCode) {
-        this.PostCode = PostCode;
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public float getBalance() {
-        return Balance;
+        return balance;
     }
 
-    public void setBalance(float Balance) {
-        this.Balance = Balance;
+    public void setBalance(float balance) {
+        this.balance = balance;
     }
 
     public byte[] getAvatar() {
-<<<<<<< HEAD
         return avatar;
     }
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
-=======
-        return Avatar;
-    }
-
-    public void setAvatar(byte[] Avatar) {
-        this.Avatar = Avatar;
->>>>>>> d91f407cb3703d21d02b53fd7a34cf4221484546
     }
 
     public String getUsername() {
-        return Username;
+        return userName;
     }
 
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {
-        return Role;
+        return role;
     }
 
-    public void setRole(String Role) {
-        this.Role = Role;
+    public void setRole(String role) {
+        this.role = role;
     }
     
 }
