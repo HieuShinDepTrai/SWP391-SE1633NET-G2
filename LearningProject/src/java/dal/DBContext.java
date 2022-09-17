@@ -75,5 +75,10 @@ public class DBContext {
     private final String dbName = "ElearningProject";
     private final String portNumber = "1433";
     private final String userID = "sa";
+<<<<<<< HEAD
+    private final String password = "1";
+
+=======
     private final String password = "12345";
+>>>>>>> d91f407cb3703d21d02b53fd7a34cf4221484546
 }

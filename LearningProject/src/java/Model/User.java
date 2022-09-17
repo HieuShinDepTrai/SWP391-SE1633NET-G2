@@ -12,58 +12,58 @@ import java.sql.Date;
  * @author Hieu Shin
  */
 public class User {
-    private int UserID;
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String PhoneNumber;
-    private String Country;
-    private String City;
-    private String Address;
-    private Date Dob;
-    private String PostCode;
-    private float Balance;
-    private byte[] Avatar;
-    private String Username;
-    private String Password;
-    private String Role;
-
+    private int userId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String country;
+    private String city;
+    private String address;
+    private Date dob;
+    private String postCode;
+    private float balance;
+    private byte[] avatar;
+    private String userName;
+    private String password;
+    private String role;
+    
     public User() {
     }
 
-    public User(String FirstName, String LastName, Date Dob, String Username, String Password, String Role) {
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Dob = Dob;
-        this.Username = Username;
-        this.Password = Password;
-        this.Role = Role;
+    public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
 
-    public User(int UserID, String FirstName, String LastName, String Email, String PhoneNumber, String Country, String City, String Address, Date Dob, String PostCode, float Balance, byte[] Avatar, String Username, String Password, String Role) {
-        this.UserID = UserID;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Email = Email;
-        this.PhoneNumber = PhoneNumber;
-        this.Country = Country;
-        this.City = City;
-        this.Address = Address;
-        this.Dob = Dob;
-        this.PostCode = PostCode;
-        this.Balance = Balance;
-        this.Avatar = Avatar;
-        this.Username = Username;
-        this.Password = Password;
-        this.Role = Role;
-    }
-    
-    public int getUserID() {
-        return UserID;
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, byte[] avatar, String userName, String password, String role) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.country = country;
+        this.city = city;
+        this.address = address;
+        this.dob = dob;
+        this.postCode = postCode;
+        this.balance = balance;
+        this.avatar = avatar;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
     }
 
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -147,11 +147,19 @@ public class User {
     }
 
     public byte[] getAvatar() {
+<<<<<<< HEAD
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+=======
         return Avatar;
     }
 
     public void setAvatar(byte[] Avatar) {
         this.Avatar = Avatar;
+>>>>>>> d91f407cb3703d21d02b53fd7a34cf4221484546
     }
 
     public String getUsername() {
