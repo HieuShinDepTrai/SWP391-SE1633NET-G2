@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package dal;
 
 import java.sql.Connection;
@@ -5,10 +9,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ *
+ * @author Hieu Shin
+ */
 public class DBContext {
 
     protected Connection connection;
-    
+
     public PreparedStatement createStatement(String sql, Object... params) {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -58,15 +66,19 @@ public class DBContext {
     }
 
     public Connection getConnection() throws Exception {
-        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName + ";encrypt=true;trustServerCertificate=true";
+        String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return DriverManager.getConnection(url, userID, password);
     }
 
     private final String serverName = "localhost";
-    private final String dbName = "SWP391";
+    private final String dbName = "ElearningProject";
     private final String portNumber = "1433";
     private final String userID = "sa";
+<<<<<<< HEAD
     private final String password = "1";
 
+=======
+    private final String password = "12345";
+>>>>>>> d91f407cb3703d21d02b53fd7a34cf4221484546
 }

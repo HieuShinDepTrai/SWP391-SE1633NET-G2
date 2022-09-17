@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package Model;
 
 import java.sql.Date;
 
 /**
  *
- * @author vuman
+ * @author Hieu Shin
  */
 public class User {
     private int userId;
@@ -66,117 +67,123 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return PhoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
     }
 
     public String getCountry() {
-        return country;
+        return Country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountry(String Country) {
+        this.Country = Country;
     }
 
     public String getCity() {
-        return city;
+        return City;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(String City) {
+        this.City = City;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
     public Date getDob() {
-        return dob;
+        return Dob;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(Date Dob) {
+        this.Dob = Dob;
     }
 
     public String getPostCode() {
-        return postCode;
+        return PostCode;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setPostCode(String PostCode) {
+        this.PostCode = PostCode;
     }
 
     public float getBalance() {
-        return balance;
+        return Balance;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
+    public void setBalance(float Balance) {
+        this.Balance = Balance;
     }
 
     public byte[] getAvatar() {
+<<<<<<< HEAD
         return avatar;
     }
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+=======
+        return Avatar;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setAvatar(byte[] Avatar) {
+        this.Avatar = Avatar;
+>>>>>>> d91f407cb3703d21d02b53fd7a34cf4221484546
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
     public String getRole() {
-        return role;
+        return Role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String Role) {
+        this.Role = Role;
     }
-    
-    
     
 }
