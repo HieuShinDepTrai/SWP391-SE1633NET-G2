@@ -63,7 +63,7 @@ public class AccountProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO userDAO = new UserDAO();
+         UserDAO userDAO = new UserDAO();
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
             String username = (String) session.getAttribute("username");
