@@ -265,7 +265,7 @@ CREATE TABLE [dbo].[User](
 	[DoB] [date] NOT NULL,
 	[PostCode] [varchar](10) NULL,
 	[Balance] [real] NULL,
-	[Avatar] [varbinary](max) NULL,
+	[Avatar] [varchar](max) NULL,
 	[Username] [varchar](50) NOT NULL,
 	[Password] [varchar](64) NOT NULL,
 	[Role] [nvarchar](50) NOT NULL,

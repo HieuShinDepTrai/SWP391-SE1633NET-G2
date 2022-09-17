@@ -199,21 +199,21 @@
                                 </div>
                                 <!-- End: Avatar Profile -->
                                 <!-- Begin: Account Information Section -->
-                                <form>
+                                <form action="AccountProfile" method="POST">
                                     <div class="account-information-section mt-4">
                                         <h6>Account Information</h6>
                                         <div class="row mt-3">
                                             <div class="col-md-6 mt-3">
                                                 <label for="FirstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" value="${user.getFirstName()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getFirstName()}" name="firstname" disabled>
                                             </div>
                                             <div class="col-md-6 mt-3">
                                                 <label for="SecondName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" value="${user.getLastName()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getLastName()}" name="lastname" disabled>
                                             </div>
                                             <div class="col-md-12 mt-3">
                                                 <label for="Date Of Birth" class="form-label">Date of Birth</label>
-                                                <input type="text" class="form-control" value="${user.getDob()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getDob()}" name="dob" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -223,27 +223,28 @@
                                         <div class="row mt-3">
                                             <div class="col-md-6 mt-3">
                                                 <label for="Country" class="form-label">Country</label>
-                                                <input type="text" class="form-control" value="${user.getCountry()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getCountry()}" name="country" disabled>
                                             </div>
                                             <div class="col-md-6 mt-3">
                                                 <label for="City" class="form-label">City</label>
-                                                <input type="text" class="form-control" value="${user.getCity()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getCity()}" name="city" disabled>
                                             </div>
                                             <div class="col-md-6 mt-4">
                                                 <label for="Address" class="form-label">Address</label>
-                                                <input type="text" class="form-control" value="${user.getAddress()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getAddress()}" name="address" disabled>
                                             </div>
                                             <div class="col-md-6 mt-4">
                                                 <label for="PostalCode" class="form-label">Postal Code</label>
-                                                <input type="text" class="form-control" value="${user.getPostCode()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getPostCode()}" name="postcode" disabled>
                                             </div>
                                             <div class="col-md-12 mt-4">
                                                 <label for="Phone Number" class="form-label">Phone Number</label>
-                                                <input type="text" class="form-control" value="${user.getPhoneNumber()}" disabled>
+                                                <input type="text" class="form-control" value="${user.getPhoneNumber()}" name="phonenumber" disabled>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-3" onclick="disable Off(this)">Edit Profile</button>
+                                    <div class="btn btn-primary mt-3" onclick="disableOff(this)">Edit Profile</div>
+                                    <button type="submit" class="btn btn-primary mt-3 d-none" id="save">Save</button>
                                 </form>
                             </div>
                         </div>
