@@ -97,5 +97,13 @@ public class UserDAO extends DBContext{
         }
         return null;
     }
+    
+     public void changePassword(String username, String password) {
+        try {
+            executeUpdate("UPDATE [User] SET [Password] = ? WHERE [Username] = ?", password, username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
