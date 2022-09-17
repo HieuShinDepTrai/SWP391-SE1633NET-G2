@@ -34,7 +34,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>AccountProfile</servlet-name>
-        <servlet-class>Controller.AccountProfile.AccountProfile</servlet-class>
+        <servlet-class>Controller.AccountProfile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfile</servlet-name>
