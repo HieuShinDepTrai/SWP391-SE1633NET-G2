@@ -243,7 +243,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-3" onclick="disableOff(this)">Edit Profile</button>
+                                    <button type="submit" class="btn btn-primary mt-3" onclick="disable Off(this)">Edit Profile</button>
                                 </form>
                             </div>
                         </div>
