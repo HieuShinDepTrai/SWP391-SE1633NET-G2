@@ -28,6 +28,27 @@ public class User {
     private String Password;
     private String Role;
 
+    public User() {
+    }
+
+    public User(int UserID, String FirstName, String LastName, String Email, String PhoneNumber, String Country, String City, String Address, Date Dob, String PostCode, float Balance, byte[] Avatar, String Username, String Password, String Role) {
+        this.UserID = UserID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.Country = Country;
+        this.City = City;
+        this.Address = Address;
+        this.Dob = Dob;
+        this.PostCode = PostCode;
+        this.Balance = Balance;
+        this.Avatar = Avatar;
+        this.Username = Username;
+        this.Password = Password;
+        this.Role = Role;
+    }
+    
     public int getUserID() {
         return UserID;
     }
