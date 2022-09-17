@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package VIew;
+package dal;
 
 import Model.User;
 import java.sql.Date;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserDAO extends DBContext{
     public void addUser(User u) {
         execute("EXEC [sp_create_account] ?, ?, ?, ?, ? ,?",
-                u.getUserName(),
+                u.getUsername(),
                 u.getPassword(),
                 u.getFirstName(),
                 u.getLastName(),

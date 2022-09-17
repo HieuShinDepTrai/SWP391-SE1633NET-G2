@@ -2,194 +2,180 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package Model;
 
 import java.sql.Date;
 
 /**
  *
- * @author vuman
+ * @author Hieu Shin
  */
 public class User {
-    private int userId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String country;
-    private String city;
-    private String address;
-    private Date dob;
-    private String postCode;
-    private float balance;
-    private String avatar;
-    private String userName;
-    private String password;
-    private String role;
-    
+    private int UserID;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String PhoneNumber;
+    private String Country;
+    private String City;
+    private String Address;
+    private Date Dob;
+    private String PostCode;
+    private float Balance;
+    private byte[] Avatar;
+    private String Username;
+    private String Password;
+    private String Role;
+
     public User() {
     }
 
-    public User(String firstName, String lastName, Date dob) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
+    public User(String FirstName, String LastName, Date Dob, String Username, String Password, String Role) {
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Dob = Dob;
+        this.Username = Username;
+        this.Password = Password;
+        this.Role = Role;
     }
 
-    public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.userName = userName;
-        this.password = password;
-        this.role = role;
+    public User(int UserID, String FirstName, String LastName, String Email, String PhoneNumber, String Country, String City, String Address, Date Dob, String PostCode, float Balance, byte[] Avatar, String Username, String Password, String Role) {
+        this.UserID = UserID;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.Country = Country;
+        this.City = City;
+        this.Address = Address;
+        this.Dob = Dob;
+        this.PostCode = PostCode;
+        this.Balance = Balance;
+        this.Avatar = Avatar;
+        this.Username = Username;
+        this.Password = Password;
+        this.Role = Role;
     }
     
-    public User(int userId, String firstName, String lastName, Date dob) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
+    public int getUserID() {
+        return UserID;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.country = country;
-        this.city = city;
-        this.address = address;
-        this.dob = dob;
-        this.postCode = postCode;
-        this.balance = balance;
-        this.avatar = avatar;
-        this.userName = userName;
-        this.password = password;
-        this.role = role;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return PhoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
     }
 
     public String getCountry() {
-        return country;
+        return Country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountry(String Country) {
+        this.Country = Country;
     }
 
     public String getCity() {
-        return city;
+        return City;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(String City) {
+        this.City = City;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
     public Date getDob() {
-        return dob;
+        return Dob;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(Date Dob) {
+        this.Dob = Dob;
     }
 
     public String getPostCode() {
-        return postCode;
+        return PostCode;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setPostCode(String PostCode) {
+        this.PostCode = PostCode;
     }
 
     public float getBalance() {
-        return balance;
+        return Balance;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
+    public void setBalance(float Balance) {
+        this.Balance = Balance;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public byte[] getAvatar() {
+        return Avatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatar(byte[] Avatar) {
+        this.Avatar = Avatar;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
     public String getRole() {
-        return role;
+        return Role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String Role) {
+        this.Role = Role;
     }
-    
-    
     
 }
