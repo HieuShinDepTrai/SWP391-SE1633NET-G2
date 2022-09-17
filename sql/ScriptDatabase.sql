@@ -36,8 +36,8 @@ CREATE TABLE Course (
   Author         nvarchar(200) NOT NULL, 
   Category       nvarchar(200) NOT NULL, 
   NumberEnrolled int NOT NULL, 
-  CoursePrice    float(10) NOT NULL, 
-  CourseImage    varbinary(max) NOT NULL, 
+  CoursePrice    float(10) NULL, 
+  CourseImage    varbinary(max) NULL, 
   PRIMARY KEY (CourseID));
 CREATE TABLE Message (
   [from]     int NOT NULL, 
@@ -73,8 +73,8 @@ CREATE TABLE [User] (
   UserID      int IDENTITY NOT NULL, 
   FirstName   nvarchar(30) NOT NULL, 
   LastName    nvarchar(30) NOT NULL, 
-  Email       varchar(50) NOT NULL, 
-  PhoneNumber varchar(12) NOT NULL, 
+  Email       varchar(50) NULL, 
+  PhoneNumber varchar(12) NULL, 
   Country     nvarchar(50) NULL, 
   City        nvarchar(50) NULL, 
   Address     nvarchar(200) NULL, 
