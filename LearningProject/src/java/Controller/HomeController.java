@@ -62,14 +62,9 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
-        HttpSession session = request.getSession();
-        if (session.getAttribute("user") != null) {
-            ArrayList<Course> courses = cdao.ListAllCourses();
-            request.setAttribute("courses", courses);
-            request.getRequestDispatcher("HomePage.jsp").forward(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + "/login");
-        }
+        ArrayList<Course> courses = cdao.ListAllCourses();
+        request.setAttribute("courses", courses);
+        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 
     /**
