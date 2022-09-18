@@ -35,9 +35,8 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("user", userDAO.getAllUserInformation(username));
-            session.setAttribute("role", userDAO.getRoleByUsername(username));
 
-            response.sendRedirect("HomePage.html");
+            response.sendRedirect("home");
         } else {
             if (userDAO.isAccountExist(username)) {
                 request.setAttribute("result", "Wrong password, please try again!");
