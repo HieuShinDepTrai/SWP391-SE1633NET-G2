@@ -51,18 +51,7 @@ public class User {
         this.bankNum = bankNum;
         this.bankName = bankName;
     }
-    
-    //firstName, lastName, date, userName, password, userName
 
-    public User(String firstName, String lastName, Date dob, String userName, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.userName = userName;
-        this.password = password;
-    }
-    
-    
     public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role, String bankNum, String bankName) {
         this.userId = userId;
         this.firstName = firstName;

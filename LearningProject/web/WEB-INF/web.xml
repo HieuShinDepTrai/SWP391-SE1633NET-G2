@@ -48,21 +48,13 @@
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>controller.NewServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/NewServlet</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordController</servlet-name>
         <url-pattern>/changepassword</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>AccountProfile</servlet-name>
-        <servlet-class>Controller.AccountProfile.AccountProfile</servlet-class>
+        <servlet-class>Controller.AccountProfile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfile</servlet-name>
@@ -75,10 +67,13 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
+<<<<<<< HEAD
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BecomeMentorController</servlet-name>
         <url-pattern>/becomementor</url-pattern>
+=======
+>>>>>>> 59686121f64a6efa9c56bc32d9e5e6f5da7730c9
     </servlet-mapping>
     <session-config>
         <session-timeout>
