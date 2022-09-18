@@ -4,7 +4,7 @@
  */
 package Controller.ResetController;
 
-import Utils.HMACSHA256;
+import utils.HMACSHA256;
 import dal.AccountDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
