@@ -33,7 +33,7 @@ var avatar_preview = document.querySelector('.avatar-preview img');
 var formFile = document.querySelector('.modal-body #formFile');
 
 formFile.addEventListener('change', (e) => {
-    if(e.target.files.length) {
+    if (e.target.files.length) {
         const src = URL.createObjectURL(e.target.files[0]);
         avatar_preview.src = src;
     }
@@ -41,11 +41,13 @@ formFile.addEventListener('change', (e) => {
 
 /* Disable input form */
 var isDisaled = true;
+var saveBtn = document.querySelector('#save');
 function disableOff(button) {
     var input = document.querySelectorAll('.account-information-section input');
     input.forEach((item) => {
         item.disabled = false;
     })
-    button.innerHTML = "Save";
+    button.classList.add('d-none');
+    saveBtn.classList.remove('d-none');
     isDisaled = false;
 }

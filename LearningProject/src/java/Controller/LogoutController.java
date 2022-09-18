@@ -3,10 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.AccountProfile;
+package Controller;
 
-import Model.User;
-import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Hieu Shin
  */
-public class AccountProfile extends HttpServlet {
+public class LogoutController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +34,10 @@ public class AccountProfile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AccountProfile</title>");  
+            out.println("<title>Servlet LogoutController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AccountProfile at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet LogoutController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,7 +54,9 @@ public class AccountProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect(request.getContextPath()+"/login");
     } 
 
     /** 
@@ -69,12 +69,7 @@ public class AccountProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = session.getAttribute("username").toString();
-        UserDBContext userDBContext = new UserDBContext();
-        User user = userDBContext.getUserByUsername(username);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("view/AccountProfile/AccountProfile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /** 

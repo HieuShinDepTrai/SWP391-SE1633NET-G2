@@ -31,10 +31,11 @@
                     <div class="header-title">
                         Học Lập Trình FPT
                     </div>
-                </div>
-                <div class="header-search">
-                    <div class="icon-search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="header-search">
+                        <div class="icon-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
                     </div>
                     <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
                 </div>
@@ -75,7 +76,35 @@
                                             một tháng trước
                                         </div>
                                     </div>
-                                    <div class="noti-remind">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="avatar" onclick="event.stopPropagation()">
+                            <img src="assets/img/user.png" alt="">
+                            <div class="account-menu">
+                                <div class="menu-content">
+                                    <div class="menu-element">
+                                        <i class="fa-solid fa-user"></i>
+                                        <a href="" class="menu-title">Trang cá nhân</a>
+                                    </div>
+                                    <div class="menu-element">
+                                        <i class="fa-solid fa-list"></i>
+                                        <a href="" class="menu-title">Khóa học của tôi</a>
+                                    </div>
+                                    <div class="menu-element">
+                                        <i class="fa-solid fa-gear"></i>
+                                        <a href="" class="menu-title">Cài đặt</a>
+                                    </div>
+                                    <div class="line">
+
+                                    </div>
+                                    <div class="menu-element">
+                                        Account Balance:
+                                        <a href="" class="menu-title">200.000đ</a>
+                                    </div>
+                                    <div class="menu-element menu-logout">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <a href="" class="menu-title">Đăng xuất</a>
                                     </div>
                                 </div>
                             </div>
@@ -87,15 +116,29 @@
                             <div class="menu-content">
                                 <div class="menu-element">
                                     <i class="fa-solid fa-user"></i>
-                                    <a href="AccountProfile.html" class="menu-title">Trang cá nhân</a>
+                                    <a href="AccountProfile.jsp" class="menu-title">Trang cá nhân</a>
                                 </div>
-                                <div class="menu-element">
-                                    <i class="fa-solid fa-list"></i>
-                                    <a href="" class="menu-title">Khóa học của tôi</a>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-meta">
+                                    <div class="category">Programming</div>
+                                    <div class="difficulty">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <p>Beginner</p>
+                                    </div>
                                 </div>
-                                <div class="menu-element">
-                                    <i class="fa-solid fa-gear"></i>
-                                    <a href="" class="menu-title">Cài đặt</a>
+                                <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                <div class="course-meta-info">
+                                    <div class="course-meta-author">
+                                        <div class="author-avatar">
+                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+                                        </div>
+                                        <p>By <a href="#" class="author-name">Lynda</a></p>
+                                    </div>
+                                    <div class="course-meta-student">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>51 Students</p>
+                                    </div>
                                 </div>
                                 <div class="line">
 
@@ -106,11 +149,210 @@
                                 </div>
                                 <div class="menu-element menu-logout">
                                     <i class="fa-solid fa-right-from-bracket"></i>
-                                    <a href="" class="menu-title">Đăng xuất</a>
+                                    <a href="logout" class="menu-title">Đăng xuất</a>
                                 </div>
                             </div>
                         </div>
+                        <div class="course">
+                            <div class="course-header">
+                                <div class="course-img" style="background-image: url(https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);">
+                                    <div class="course-img-opacity">
+                                        <button>Xem khóa học</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-meta">
+                                    <div class="category">Programming</div>
+                                    <div class="difficulty">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <p>Beginner</p>
+                                    </div>
+                                </div>
+                                <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                <div class="course-meta-info">
+                                    <div class="course-meta-author">
+                                        <div class="author-avatar">
+                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+                                        </div>
+                                        <p>By <a href="#" class="author-name">Lynda</a></p>
+                                    </div>
+                                    <div class="course-meta-student">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>51 Students</p>
+                                    </div>
+                                </div>
+                                <div class="course-footer">
+                                    <div class="course-price">1.299.000đ</div>
+                                    <a href="#">Mua Ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course">
+                            <div class="course-header">
+                                <div class="course-img" style="background-image: url(https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);">
+                                    <div class="course-img-opacity">
+                                        <button>Xem khóa học</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-meta">
+                                    <div class="category">Programming</div>
+                                    <div class="difficulty">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <p>Beginner</p>
+                                    </div>
+                                </div>
+                                <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                <div class="course-meta-info">
+                                    <div class="course-meta-author">
+                                        <div class="author-avatar">
+                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+                                        </div>
+                                        <p>By <a href="#" class="author-name">Lynda</a></p>
+                                    </div>
+                                    <div class="course-meta-student">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>51 Students</p>
+                                    </div>
+                                </div>
+                                <div class="course-footer">
+                                    <div class="course-price">1.299.000đ</div>
+                                    <a href="#">Mua Ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course">
+                            <div class="course-header">
+                                <div class="course-img" style="background-image: url(https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);">
+                                    <div class="course-img-opacity">
+                                        <button>Xem khóa học</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-meta">
+                                    <div class="category">Programming</div>
+                                    <div class="difficulty">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <p>Beginner</p>
+                                    </div>
+                                </div>
+                                <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                <div class="course-meta-info">
+                                    <div class="course-meta-author">
+                                        <div class="author-avatar">
+                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+                                        </div>
+                                        <p>By <a href="#" class="author-name">Lynda</a></p>
+                                    </div>
+                                    <div class="course-meta-student">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>51 Students</p>
+                                    </div>
+                                </div>
+                                <div class="course-footer">
+                                    <div class="course-price">1.299.000đ</div>
+                                    <a href="#">Mua Ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course">
+                            <div class="course-header">
+                                <div class="course-img" style="background-image: url(https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80);">
+                                    <div class="course-img-opacity">
+                                        <button>Xem khóa học</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-meta">
+                                    <div class="category">Programming</div>
+                                    <div class="difficulty">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <p>Beginner</p>
+                                    </div>
+                                </div>
+                                <h3 class="course-title"><a href="#">HTML CSS Pro</a></h3>
+                                <div class="course-meta-info">
+                                    <div class="course-meta-author">
+                                        <div class="author-avatar">
+                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
+                                        </div>
+                                        <p>By <a href="#" class="author-name">Lynda</a></p>
+                                    </div>
+                                    <div class="course-meta-student">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>51 Students</p>
+                                    </div>
+                                </div>
+                                <div class="course-footer">
+                                    <div class="course-price">1.299.000đ</div>
+                                    <a href="#">Mua Ngay</a>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
+
+            </section>
+            <!-- End: Section Content -->
+
+            <!-- Begin: Footer -->
+            <footer>
+
+            </footer>
+            <!-- End: Footer -->
+        </div>
+        <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
+        <script src="assets/js/home_page.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js" integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript">
+                            $('.autoplay').slick({
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                autoplay: true,
+                                autoplaySpeed: 5000,
+                                speed: 1500,
+                                dots: true
+                            });
+        </script>
+    </body>
+    <footer class="new_footer_area bg_color">
+        <div class="new_footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 text-center">
+                        <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s"
+                             style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
+                            <h3 class="f-title f_600 t_color f_size_18">About us</h3>
+                            <p>We are group 2, class SE1633-NET. This is our project in subject SWP391. This project is guided by
+                                lecturer Pham Duc Thang. This is an online learning platform through video lectures. We hope this
+                                platform will help you learn better in programming, moreover in soft skills. Thank you!</p>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-center">
+                        <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s"
+                             style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+                            <h3 class="f-title f_600 t_color f_size_18">Contact us</h3>
+                            <ul class="list-unstyled f_list">
+                                <li>
+                                    <a href="#"><i class="lnr lnr-phone-handset"></i> +84 988 561
+                                        896</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="lnr lnr-envelope"></i>
+                                        hieunvhe163104@fpt.edu.vn</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </header>
