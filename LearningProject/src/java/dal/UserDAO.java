@@ -137,10 +137,11 @@ public class UserDAO extends DBContext {
                     + "[City] = ?,\n"
                     + "[Address] = ?,\n"
                     + "[PostCode] = ?,\n"
-                    + "[PhoneNumber] = ?\n"
+                    + "[PhoneNumber] = ?,\n"
+                    + "[Email] = ?\n"
                     + "WHERE [User].[UserID] = ?", 
                     user.getFirstName(), user.getLastName(), user.getDob(), user.getCountry()
-            , user.getCity(), user.getAddress(), user.getPostCode(), user.getPhone(), 
+            , user.getCity(), user.getAddress(), user.getPostCode(), user.getPhone(), user.getEmail(),
             user.getUserId());
         } catch (Exception e) {
             e.printStackTrace();
