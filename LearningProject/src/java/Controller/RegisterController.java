@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import utils.SHA256;
 
 /**
  *
@@ -57,7 +58,7 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
             }
             else {
-                User user = new User(firstName, lastName, "", "", "", "", "", date, "", 0, "", userName, password, "User", "", "");
+                User user = new User(firstName, lastName, "", "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "");
                 userDAO.addUser(user);
                 response.sendRedirect("login");
             }

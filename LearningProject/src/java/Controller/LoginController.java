@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.SHA256;
 
 /**
  *
@@ -30,7 +31,7 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (userDAO.checkLogin(username, password)) {
+        if (userDAO.checkLogin(username, SHA256.SHA256(password))) {
             // save into session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
