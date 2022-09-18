@@ -53,7 +53,7 @@ public class BecomeMentorController extends HttpServlet {
             User user = new User(((User)session.getAttribute("user")).getFirstName(), 
                     ((User)session.getAttribute("user")).getLastName(), 
                     ((User)session.getAttribute("user")).getEmail(), 
-                    ((User)session.getAttribute("user")).getPhone(), 
+                    ((User)session.getAttribute("user")).getPhoneNumber(), 
                     ((User)session.getAttribute("user")).getCountry(), 
                     ((User)session.getAttribute("user")).getCity(), 
                     ((User)session.getAttribute("user")).getAddress(), 
