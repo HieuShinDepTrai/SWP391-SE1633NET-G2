@@ -67,13 +67,10 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
-<<<<<<< HEAD
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BecomeMentorController</servlet-name>
         <url-pattern>/becomementor</url-pattern>
-=======
->>>>>>> 59686121f64a6efa9c56bc32d9e5e6f5da7730c9
     </servlet-mapping>
     <session-config>
         <session-timeout>
