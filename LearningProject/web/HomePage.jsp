@@ -244,7 +244,7 @@
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
-                                <div class="col-xl-3 col-lg-4 col-md-6" >
+                                <div class="col-xl-3 col-lg-4 col-md-6">
                                     <div class="card">
                                         <img src="assets/img/htmlcss.avif" alt="" class="card-top-img">
                                         <div class="card-body">
