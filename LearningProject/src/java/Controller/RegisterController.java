@@ -42,7 +42,7 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String cfpassword = request.getParameter("cfpassword");
 
-            User user = new User(firstName, lastName, date, userName, password, userName);
+            User user = new User(firstName, lastName, date, userName, password);
 
             if (userDAO.isAccountExist(userName)) {
                 request.setAttribute("result", "Tài khoản của bạn đã tồn tại, vui lòng thử lại");
