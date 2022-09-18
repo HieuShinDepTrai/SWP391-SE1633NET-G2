@@ -33,7 +33,7 @@
         <header>
             <div class="header-content">
                 <div class="logo">
-                    <img src="assets/img/Logo-FPT.webp" alt="">
+                    <a href="home"><img src="assets/img/Logo-FPT.webp" alt=""></a>
                     <div class="header-title">
                         Học Lập Trình FPT
                     </div>
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="menu-element">
                                     <i class="fa-solid fa-right-from-bracket"></i>
-                                    <a href="" class="menu-title">Đăng xuất</a>
+                                    <a href="logout" class="menu-title">Đăng xuất</a>
                                 </div>
                             </div>
                         </div>
@@ -165,11 +165,11 @@
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-lock menu-security"></i>
-                            <a href="#" class="menu-title">Security</a>
+                            <a href="changepassword" class="menu-title">Change Password</a>
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-right-from-bracket menu-logout"></i>
-                            <a href="#" class="menu-title">Log Out</a>
+                            <a href="logout" class="menu-title">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
                                         </div>
                                     </div>
                                     <div class="account-type">
-                                        Member Account
+                                        ${user.getRole()} Account
                                     </div>
                                 </div>
                                 <!-- End: Avatar Profile -->
@@ -211,9 +211,13 @@
                                                 <label for="SecondName" class="form-label">Last Name</label>
                                                 <input type="text" class="form-control" value="${user.getLastName()}" name="lastname" disabled>
                                             </div>
-                                            <div class="col-md-12 mt-3">
+                                            <div class="col-md-6 mt-3">
                                                 <label for="Date Of Birth" class="form-label">Date of Birth</label>
                                                 <input type="text" class="form-control" value="${user.getDob()}" name="dob" disabled>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <label for="Email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" value="${user.getEmail()}" name="email" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +243,7 @@
                                             </div>
                                             <div class="col-md-12 mt-4">
                                                 <label for="Phone Number" class="form-label">Phone Number</label>
-                                                <input type="text" class="form-control" value="${user.getPhoneNumber()}" name="phonenumber" disabled>
+                                                <input type="text" class="form-control" value="${user.getPhone()}" name="phonenumber" disabled>
                                             </div>
                                         </div>
                                     </div>
