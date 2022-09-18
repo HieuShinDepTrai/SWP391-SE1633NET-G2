@@ -33,7 +33,7 @@ var avatar_preview = document.querySelector('.avatar-preview img');
 var formFile = document.querySelector('.modal-body #formFile');
 
 formFile.addEventListener('change', (e) => {
-    if (e.target.files.length) {
+    if(e.target.files.length) {
         const src = URL.createObjectURL(e.target.files[0]);
         avatar_preview.src = src;
     }
