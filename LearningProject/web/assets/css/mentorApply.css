@@ -1,3 +1,9 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    height: 100vh;
+}
+
 header {
     height: 66px;
     border-bottom: 1px solid #e8ebed;
@@ -6,9 +12,7 @@ header {
     z-index: 1;
     background-color: #fff;
     font-family: 'Montserrat', sans-serif;
-    top: 0;
 }
-
 
 .header-content {
     display: flex;
@@ -79,13 +83,13 @@ header {
     width: 240px;
 }
 
-.avatar > img {
+.avatar>img {
     cursor: pointer;
 }
 
 
 /* Account Menu */
-.header-profile  .avatar .show-accmenu {
+.header-profile .avatar .show-accmenu {
     opacity: 1;
     visibility: visible;
 }
@@ -113,7 +117,7 @@ header {
     border-radius: 8px;
 }
 
-.menu-element + .menu-element {
+.menu-element+.menu-element {
     margin-top: 6px;
 }
 
@@ -135,7 +139,7 @@ header {
 }
 
 .menu-content .line {
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
     margin: 2px 0px;
 }
 
@@ -143,10 +147,11 @@ header {
 .menu-content .menu-logout .menu-title {
     color: #e7302f;
 }
+
 /* Notification */
 .show-noti {
     display: block !important;
-    
+
 }
 
 .header-notification .notification-cotainer {
@@ -167,7 +172,7 @@ header {
     cursor: pointer;
 }
 
-.header-notification > i:hover{
+.header-notification>i:hover {
     color: black;
 }
 
@@ -181,7 +186,7 @@ header {
 }
 
 
-.notification-header h3{
+.notification-header h3 {
     font-weight: 600;
     font-size: 18px;
 }
@@ -204,10 +209,10 @@ header {
 }
 
 .notification:hover {
-    background-color: rgba(22,24,35,.05);
+    background-color: rgba(22, 24, 35, .05);
 }
 
-.notification + .notification {
+.notification+.notification {
     margin-top: 8px;
 }
 
@@ -260,6 +265,134 @@ header {
 
 }
 
-.header-profile img{
+.header-profile img {
     width: 32px;
+}
+
+.overview {
+    margin-left: 30px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.billboard {
+    display: flex;
+    justify-content: center;
+    padding-top: 66px;
+}
+
+.billboard img {
+    width: 100%;
+    height: 100%;
+}
+
+.billboard .img-text {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+}
+
+.become-mentor {
+    background-color: black;
+    color: #fff;
+    width: 300px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.introduction {
+    text-align: center;
+    flex-wrap: nowrap;
+    background-color: rgb(220, 220, 220);
+}
+
+.introduction h1 {
+    padding: 60px 0px;
+    margin: 0;
+}
+
+.introduction div {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.main-reason {        
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reason {
+    text-align: center;
+    flex-direction: column;
+    padding: 0px 70px;
+    padding-bottom: 30px;
+}
+
+/*
+.reason{    
+    margin: 0 auto;
+    padding: 0 auto;
+    width: 25%;
+    display: inline-block;
+    flex-direction: column;    
+    align-items: center;
+}
+*/
+.reason-img {
+    width: 100%;
+    margin: 0 auto;    
+}
+.reason-img img {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    vertical-align: center;
+}
+
+.mentor-begin-tur{    
+    padding: 0px 200px;
+    text-align: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.mentor-begin-tur h1{
+    padding-top: 30px ;
+}
+
+.begin-bar{    
+    text-align: center;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.begin-bar button{    
+    padding: 0px 50px;    
+    margin: 0px 30px;
+    font-size: 25px;
+    font-weight: 500;
+    border: none;
+}
+
+.begin-bar span:hover{
+    color: #fff;
+}
+
+.bar-1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar-1-des{
+    flex-direction: column;
+    padding: 0px 100px;
 }
