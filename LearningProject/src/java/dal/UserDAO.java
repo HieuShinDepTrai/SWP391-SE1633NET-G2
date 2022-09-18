@@ -56,8 +56,8 @@ public class UserDAO extends DBContext {
 
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
-                String firstName = rs.getString("FirstName");
-                String lastName = rs.getString("LastName");
+                String firstName = rs.getNString("FirstName");
+                String lastName = rs.getNString("LastName");
                 String email = "";
                 String phoneNum = "";
                 String country = "";
@@ -87,7 +87,7 @@ public class UserDAO extends DBContext {
                     address = rs.getNString("Address");
                 }
                 if (rs.getString("PostCode") != null) {
-                    postCode = rs.getString("[PostCode]");
+                    postCode = rs.getString("PostCode");
                 }
                 if (rs.getString("Avatar") != null) {
                     avatar = rs.getString("Avatar");
