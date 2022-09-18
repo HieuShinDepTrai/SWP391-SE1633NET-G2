@@ -37,27 +37,20 @@
                                  alt="login" class="img-fluid rounded-4" style="height: 700px; object-fit: cover;">
                         </div>
 
-                        <div class="col-md-1">
-                            <a href="home" style="color: black;" title="Return home">
-                                <i class="fa-solid fa-circle-left home"></i>
-                            </a>
-                        </div>
+                        <a href="home" style="color: black;" title="Return home" class="back">
+                            <i class="fa-solid fa-circle-left home"></i>
+                        </a>
 
-                        <div class="col-md-5 form">
-                            <div class="card-body">
+                        <div class="col-md-6 form">
+                            <div class="card-body" style="margin-left: 120px;">
                                 <p class="login-card-description text">Create new account</p>
                                 <p style="color: rgb(179, 177, 177);">Start for free</p>
 
-                                <form action="login" method="post">
+                                <form action="register" method="post">
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="account" class="form-control">
+                                        <input type="text" name="username" class="form-control">
                                         <label class="form-label">Username</label>
-                                    </div>
-
-                                    <div class="form-outline mb-3 input">
-                                        <input type="text" name="email" class="form-control">
-                                        <label class="form-label">Email</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
@@ -66,8 +59,13 @@
                                     </div>
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="account" class="form-control">
+                                        <input type="text" name="lastname" class="form-control">
                                         <label class="form-label">Lastname</label>
+                                    </div>
+
+                                    <div class="form-outline mb-3 input">
+                                        <input type="date" name="dob" class="form-control">
+                                        <label class="form-label">Date of Birth</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
@@ -85,8 +83,10 @@
 
                                 <div style="margin-left: 40px;">
                                     <span>Already have an account?</span>
-                                    <a class="move" href="forgot-password" style="color: rgb(92, 88, 88); font-weight: bold;">Sign in</a>
+                                    <a class="move" href="login" style="color: rgb(92, 88, 88); font-weight: bold;">Sign in</a>
                                 </div>
+
+                                <div class="text-danger text-center" style="margin-bottom: 20px; margin-right: 120px">${result}</div>
                             </div>
                         </div>
                     </div>

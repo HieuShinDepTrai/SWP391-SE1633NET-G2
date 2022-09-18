@@ -41,11 +41,13 @@ formFile.addEventListener('change', (e) => {
 
 /* Disable input form */
 var isDisaled = true;
+var saveBtn = document.querySelector('#save');
 function disableOff(button) {
     var input = document.querySelectorAll('.account-information-section input');
     input.forEach((item) => {
         item.disabled = false;
     })
-    button.innerHTML = "Save";
+    button.classList.add('d-none');
+    saveBtn.classList.remove('d-none');
     isDisaled = false;
 }

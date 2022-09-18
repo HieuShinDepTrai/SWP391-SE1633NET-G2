@@ -43,7 +43,7 @@
                                 <form action="login" method="post">
 
                                     <div class="form-outline mb-3">
-                                        <input type="text" name="account" class="form-control enter">
+                                        <input type="text" name="username" class="form-control enter">
                                         <label class="form-label">Username</label>
                                     </div>
 
@@ -59,19 +59,21 @@
                                     <button class="btn mb-4" type="submit" style="background-color: black; color: white;">Sign in</button>
 
                                     <button class="btn mb-4" type="submit"><img
-                                            src="assets/img/images.png" style="height: 18px">
+                                            src="assets/img/Log-Reg/Google-Icon.png" style="height: 18px">
                                         Sign in with Google</button>
+                                    
+                                    <div class="text-danger" style="margin-bottom: 20px">${result}</div>
                                 </form>
 
                                 <div>
                                     <span style="color: rgb(179, 177, 177);">Don't have an account?</span>
-                                    <a class="move" href="signup" style="color: rgb(92, 88, 88); font-weight: bold;">Sign up for free</a>
+                                    <a class="move" href="register" style="color: rgb(92, 88, 88); font-weight: bold;">Sign up for free</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                            <img src="assets/img/photo-1549082984-1323b94df9a6.png"
+                            <img src="assets/img/Log-Reg/Log-Reg-Image.png"
                                  alt="login" class="img-fluid rounded-4" style="height: 700px; object-fit: cover;">
                         </div>
                     </div>
