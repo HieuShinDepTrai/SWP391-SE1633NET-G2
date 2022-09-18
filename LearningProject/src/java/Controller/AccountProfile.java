@@ -105,7 +105,7 @@ public class AccountProfile extends HttpServlet {
             user.setCity(city);
             user.setAddress(address);
             user.setPostCode(postcode);
-            user.setPhoneNumber(phonenumber);
+            user.setPhone(phonenumber);
             
             UserDAO udao = new UserDAO();
             udao.updateProfile(user);
