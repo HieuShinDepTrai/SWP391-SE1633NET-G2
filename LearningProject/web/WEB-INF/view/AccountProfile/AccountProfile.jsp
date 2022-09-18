@@ -1,3 +1,10 @@
+<%-- 
+    Document   : AccountProfile
+    Created on : Sep 17, 2022, 11:02:54 AM
+    Author     : HieuShin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,13 +17,13 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/account_profile.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
         integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
         integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/footer.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
     </style>
@@ -25,8 +32,8 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="logo ">
-                <a href="HomePage.html"><img src="assets/img/Logo-FPT.webp" alt=""></a>
+            <div class="logo">
+                <img src="assets/img/Logo-FPT.webp" alt="">
                 <div class="header-title">
                     Học Lập Trình FPT
                 </div>
@@ -101,7 +108,7 @@
                             </div>
                             <div class="menu-element">
                                 Account Balance:
-                                <a href="" class="menu-title">200.000đ</a>
+                                <a href="" class="menu-title">{user.getBalance()}đ</a>
                             </div>
                             <div class="menu-element">
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -180,7 +187,7 @@
                                 <div class="user-avatar">
                                     <img src="assets/img/f8-logo.png" alt="">
                                     <div class="user-action">
-                                        <p>Quang Dung</p>
+                                        <p>{user.getFirstName()} {user.getLastName()}</p>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Change avatar
                                         </button>
@@ -197,15 +204,15 @@
                                 <div class="row mt-3">
                                     <div class="col-md-6 mt-3">
                                         <label for="FirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value="${user.getFirstName()}" disabled>
                                     </div>
                                     <div class="col-md-6 mt-3">
-                                        <label for="SecondName" class="form-label">Second Name</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <label for="SecondName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" value="${user.getLastName()}" disabled>
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label for="Date Of Birth" class="form-label">Date of Birth</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value="${user.getDob()}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +222,7 @@
                                 <div class="row mt-3">
                                     <div class="col-md-6 mt-3">
                                         <label for="Country" class="form-label">Country</label>
-                                        <input type="text" class="form-control" disabled>
+                                        <input type="text" class="form-control" value disabled>
                                     </div>
                                     <div class="col-md-6 mt-3">
                                         <label for="City" class="form-label">City</label>
@@ -401,44 +408,8 @@
     </section>
     <!-- End: Account Profile Section -->
     <!-- Begin: Footer -->
-    <footer class="new_footer_area bg_color">
-        <div class="new_footer_top">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-6 col-md-12 text-center">
-                <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s"
-                  style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
-                  <h3 class="f-title f_600 t_color f_size_18">About us</h3>
-                  <p>We are group 2, class SE1633-NET. This is our project in subject SWP391. This project is guided by
-                    lecturer Pham Duc Thang. This is an online learning platform through video lectures. We hope this
-                    platform will help you learn better in programming, moreover in soft skills. Thank you!</p>
-                  </form>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-12 text-center">
-                <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s"
-                  style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
-                  <h3 class="f-title f_600 t_color f_size_18">Contact us</h3>
-                  <ul class="list-unstyled f_list">
-                    <li>
-                      <a href="#"><i class="lnr lnr-phone-handset"></i> +84 988 561
-                        896</a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="lnr lnr-envelope"></i>
-                          hieunvhe163104@fpt.edu.vn</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-    
-            </div>
-          </div>
-          <div class="footer_bg">
-            <div class="footer_bg_one"></div>
-            <div class="footer_bg_two"></div>
-          </div>
-        </div>
+    <footer>
+
     </footer>
     <!-- End: Footer -->
     <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
@@ -448,5 +419,45 @@
         crossorigin="anonymous"></script>
     <script src="assets/js/account_profile.js"></script>
 </body>
+
+<footer class="new_footer_area bg_color">
+    <div class="new_footer_top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 text-center">
+            <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s"
+              style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
+              <h3 class="f-title f_600 t_color f_size_18">About us</h3>
+              <p>We are group 2, class SE1633-NET. This is our project in subject SWP391. This project is guided by
+                lecturer Pham Duc Thang. This is an online learning platform through video lectures. We hope this
+                platform will help you learn better in programming, moreover in soft skills. Thank you!</p>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12 text-center">
+            <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.6s"
+              style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+              <h3 class="f-title f_600 t_color f_size_18">Contact us</h3>
+              <ul class="list-unstyled f_list">
+                <li>
+                  <a href="#"><i class="lnr lnr-phone-handset"></i> +84 988 561
+                    896</a>
+                </li>
+                <li>
+                  <a href="#"><i class="lnr lnr-envelope"></i>
+                      hieunvhe163104@fpt.edu.vn</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer_bg">
+        <div class="footer_bg_one"></div>
+        <div class="footer_bg_two"></div>
+      </div>
+    </div>
+  </footer>
 
 </html>

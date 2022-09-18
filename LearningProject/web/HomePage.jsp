@@ -135,14 +135,30 @@
                         <i class="fa-solid fa-house"></i>
                         <p class="button-title">Home</p>
                     </a>
-                    <a class="bar-button " href="HomePage_MyCourse.html">
-                        <i class="fa-solid fa-road"></i>
-                        <p class="button-title">My Course</p>
-                    </a>
+                    <c:if test="${user.role == 'User'}">
+                        <a class="bar-button " href="#">
+                            <i class="fa-solid fa-road"></i>
+                            <p class="button-title text-center">User Dashboard</p>
+                        </a>
+                    </c:if>
+                    <c:if test="${user.role == 'Admin'}">
+                        <a class="bar-button " href="#">
+                            <i class="fa-solid fa-road"></i>
+                            <p class="button-title text-center">Admin Dashboard</p>
+                        </a>
+                    </c:if>
+                    <c:if test="${user.role == 'Mentor'}">
+                        <a class="bar-button " href="#">
+                            <i class="fa-solid fa-road"></i>
+                            <p class="button-title text-center">Mentor Dashboard</p>
+                        </a>
+                    </c:if>
                     <a class="bar-button">
                         <i class="fa-solid fa-newspaper"></i>
                         <p class="button-title">Blog</p>
                     </a>
+
+
                 </div>
                 <!-- End: Side Bar -->
 
