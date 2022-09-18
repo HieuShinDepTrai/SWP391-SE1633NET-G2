@@ -5,11 +5,6 @@
 
 package Controller;
 
-<<<<<<<< HEAD:LearningProject/src/java/Controller/AccountProfile.java
-import Controller.AccountProfile.*;
-import Model.User;
-========
->>>>>>>> 144211f4376a3c61e7a376fdbcf2b025982c63d4:LearningProject/src/java/Controller/LogoutController.java
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -74,13 +69,7 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-<<<<<<<< HEAD:LearningProject/src/java/Controller/AccountProfile.java
-        HttpSession session = request.getSession();
-        String username = session.getAttribute("username").toString();
-        request.getRequestDispatcher("view/AccountProfile/AccountProfile.jsp").forward(request, response);
-========
         processRequest(request, response);
->>>>>>>> 144211f4376a3c61e7a376fdbcf2b025982c63d4:LearningProject/src/java/Controller/LogoutController.java
     }
 
     /** 

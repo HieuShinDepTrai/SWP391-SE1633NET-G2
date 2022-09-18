@@ -13,17 +13,12 @@
         <servlet-class>Controller.ChangePasswordController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
-        <servlet-name>BecomeMentorController</servlet-name>
-        <servlet-class>Controller.BecomeMentorController</servlet-class>
-=======
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>Controller.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.HomeController</servlet-class>
->>>>>>> 144211f4376a3c61e7a376fdbcf2b025982c63d4
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -46,17 +41,12 @@
         <url-pattern>/AccountProfile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
-        <servlet-name>BecomeMentorController</servlet-name>
-        <url-pattern>/becomementor</url-pattern>
-=======
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
->>>>>>> 144211f4376a3c61e7a376fdbcf2b025982c63d4
     </servlet-mapping>
     <session-config>
         <session-timeout>
