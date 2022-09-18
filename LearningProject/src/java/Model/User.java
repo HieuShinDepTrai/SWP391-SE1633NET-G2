@@ -23,24 +23,36 @@ public class User {
     private Date dob;
     private String postCode;
     private float balance;
-    private byte[] avatar;
+    private String avatar;
     private String userName;
     private String password;
     private String role;
+    private String bankNum;
+    private String bankName;
     
     public User() {
     }
 
-    public User(String firstName, String lastName, Date dob, String userName, String password, String role) {
+    public User(String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role, String bankNum, String bankName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.country = country;
+        this.city = city;
+        this.address = address;
         this.dob = dob;
+        this.postCode = postCode;
+        this.balance = balance;
+        this.avatar = avatar;
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.bankNum = bankNum;
+        this.bankName = bankName;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, byte[] avatar, String userName, String password, String role) {
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role, String bankNum, String bankName) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,7 +68,11 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.bankNum = bankNum;
+        this.bankName = bankName;
     }
+
+    
 
     public int getUserId() {
         return userId;
@@ -90,11 +106,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhoneNumber(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -146,19 +162,19 @@ public class User {
         this.balance = balance;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -177,5 +193,22 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNum() {
+        return bankNum;
+    }
+
+    public void setBankNum(String bankNum) {
+        this.bankNum = bankNum;
+    }
+    
     
 }
