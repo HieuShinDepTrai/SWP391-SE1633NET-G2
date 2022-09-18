@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
                 <i class="fa-regular fa-envelope my-3" style="padding: 14px; background-color: #f4eafe; color: #7f55da; border-radius: 30px; font-size: 24px;"></i>
             </div>
             <h3 class="text-center mb-3">Check your email</h3>
-            <p style="font-size: 14px; color: rgba(0, 0, 0, 0.6)" class="text-center my-3">We send a password reset link to <span style="color:rgba(0, 0, 0, 0.8); font-weight: 500;">olivia@gmail.com</span></p>
+            <p style="font-size: 14px; color: rgba(0, 0, 0, 0.6)" class="text-center my-3">We send a password reset link to <span style="color:rgba(0, 0, 0, 0.8); font-weight: 500;">${email}</span></p>
             <a href="https://mail.google.com/mail/"><button class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">Open email web</button></a>
             <p class="mb-4 text-center" style="font-size: 13px;">Didn't receive the email? <a href="" style="text-decoration: none; color: #7f55da; font-weight: 500;">Click to resend</a></p>
             <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;">
