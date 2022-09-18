@@ -49,6 +49,10 @@
                                                     <input type="password" class="form-control" placeholder="Enter your re-password" name="cfpassword">
                                                 </div>
                                                 <div class="px-5 my-3">
+                                                    <label for="DoB">Date of Birth</label>
+                                                    <input type="date" class="form-control" placeholder="Enter your date of birth" name="dob">
+                                                </div>
+                                                <div class="px-5 my-3">
                                                     <label for="BankAccount">Bank account number</label>
                                                     <input type="text" class="form-control" placeholder="Enter your bank account number" name="banknumber">
                                                 </div>
