@@ -34,7 +34,6 @@ public class ChangePasswordController extends HttpServlet {
         String oldPassword = request.getParameter("old-password");
         String newPassword = request.getParameter("new-password");
         
-        
         String hashedPassword = userDAO.getAllUserInformation(username).getPassword();
 
         if (hashedPassword.equals(SHA256.SHA256(oldPassword))) {

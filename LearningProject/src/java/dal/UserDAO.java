@@ -145,31 +145,85 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            String sql = "UPDATE [User]\n"
-//                    + "SET [FirstName] = ?,\n"
-//                    + "[LastName] = ?,\n"
-//                    + "[DoB] = ?,\n"
-//                    + "[Country] = ?,\n"
-//                    + "[City] = ?,\n"
-//                    + "[Address] = ?,\n"
-//                    + "[PostCode] = ?,\n"
-//                    + "[PhoneNumber] = ?\n"
-//                    + "WHERE [User].[Username] = ?";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, user.getFirstName());
-//            stm.setString(2, user.getLastName());
-//            stm.setDate(3, user.getDob());
-//            stm.setString(4, user.getCountry());
-//            stm.setString(5, user.getCity());
-//            stm.setString(6, user.getAddress());
-//            stm.setString(7, user.getPostCode());
-//            stm.setString(8, user.getPhoneNumber());
-//            stm.setString(9, user.getUsername());
-//            stm.executeUpdate();
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+                
+                 
+        try {
+            String sql = "UPDATE [User]\n"
+                    + "SET [FirstName] = ?,\n"
+                    + "[LastName] = ?,\n"
+                    + "[DoB] = ?,\n"
+                    + "[Country] = ?,\n"
+                    + "[City] = ?,\n"
+                    + "[Address] = ?,\n"
+                    + "[PostCode] = ?,\n"
+                    + "[PhoneNumber] = ?\n"
+                    + "WHERE [User].[Username] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFirstName());
+            stm.setString(2, user.getLastName());
+            stm.setDate(3, user.getDob());
+            stm.setString(4, user.getCountry());
+            stm.setString(5, user.getCity());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, user.getPostCode());
+            stm.setString(8, user.getPhoneNumber());
+            stm.setString(9, user.getUsername());
+            stm.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
+         try {
+            String sql = "UPDATE [User]\n"
+                    + "SET [FirstName] = ?,\n"
+                    + "[LastName] = ?,\n"
+                    + "[DoB] = ?,\n"
+                    + "[Country] = ?,\n"
+                    + "[City] = ?,\n"
+                    + "[Address] = ?,\n"
+                    + "[PostCode] = ?,\n"
+                    + "[PhoneNumber] = ?\n"
+                    + "WHERE [User].[Username] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFirstName());
+            stm.setString(2, user.getLastName());
+            stm.setDate(3, user.getDob());
+            stm.setString(4, user.getCountry());
+            stm.setString(5, user.getCity());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, user.getPostCode());
+            stm.setString(8, user.getPhoneNumber());
+            stm.setString(9, user.getUsername());
+            stm.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         
+          try {
+            String sql = "UPDATE [User]\n"
+                    + "SET [FirstName] = ?,\n"
+                    + "[LastName] = ?,\n"
+                    + "[DoB] = ?,\n"
+                    + "[Country] = ?,\n"
+                    + "[City] = ?,\n"
+                    + "[Address] = ?,\n"
+                    + "[PostCode] = ?,\n"
+                    + "[PhoneNumber] = ?\n"
+                    + "WHERE [User].[Username] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFirstName());
+            stm.setString(2, user.getLastName());
+            stm.setDate(3, user.getDob());
+            stm.setString(4, user.getCountry());
+            stm.setString(5, user.getCity());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, user.getPostCode());
+            stm.setString(8, user.getPhoneNumber());
+            stm.setString(9, user.getUsername());
+            stm.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
     }
 }
