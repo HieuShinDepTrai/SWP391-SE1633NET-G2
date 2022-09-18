@@ -70,7 +70,7 @@ public class ForgotPass extends HttpServlet {
                 SendEmail sendemail = new SendEmail();
 //                sendemail.send("elearningswp391@gmail.com", "Verify Account","Test send email", "elearningswp391@gmail.com", "jtjnnqdicshtevlw");                            
                 token = "http://localhost:8080/LearningProject/resetpass?token=" + encode;
-                sendemail.sendEmail("elearningswp391@gmail.com", "Reset Password", token);
+                sendemail.sendEmail(email, "Reset Password", token);
                 request.setAttribute("email", email);
                 request.getRequestDispatcher("CheckYourMail.jsp").forward(request, response);
                 response.getWriter().println("Decode: " + encode);

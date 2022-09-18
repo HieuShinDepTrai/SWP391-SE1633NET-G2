@@ -32,7 +32,7 @@ public class SendEmail {
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
             props.put("mail.smtp.port", "587"); //TLS Port
-            //props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.auth", "true"); //enable authentication
             props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
             Authenticator auth = new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
