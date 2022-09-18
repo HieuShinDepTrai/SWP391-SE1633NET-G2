@@ -56,8 +56,8 @@ public class UserDAO extends DBContext {
 
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
-                String firstName = rs.getString("FirstName");
-                String lastName = rs.getString("LastName");
+                String firstName = rs.getNString("FirstName");
+                String lastName = rs.getNString("LastName");
                 String email = "";
                 String phoneNum = "";
                 String country = "";

@@ -239,7 +239,7 @@
                                             </div>
                                             <div class="col-md-12 mt-4">
                                                 <label for="Phone Number" class="form-label">Phone Number</label>
-                                                <input type="text" class="form-control" value="${user.getPhone()}" name="phonenumber" disabled>
+                                                <input type="text" class="form-control" value="${user.getPhoneNumber()}" name="phonenumber" disabled>
                                             </div>
                                         </div>
                                     </div>
