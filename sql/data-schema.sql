@@ -107,9 +107,9 @@ CREATE TABLE [dbo].[Blog](
 	[BlogID] [int] IDENTITY(1,1) NOT NULL,
 	[UserID] [int] NOT NULL,
 	[BlogDate] [datetime] NULL,
-	[BlogContent] [nvarchar](max) NULL,
+	[BlogContent] [text] NULL,
 	[BlogTilte] [nvarchar](256) NOT NULL,
-	[BlogImage] [varbinary](max) NULL,
+	[BlogImage] [text] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[BlogID] ASC
@@ -123,7 +123,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CommentBlog](
 	[CommentID] [int] IDENTITY(1,1) NOT NULL,
-	[CommentContent] [nvarchar](max) NOT NULL,
+	[CommentContent] [text] NOT NULL,
 	[CommentDate] [datetime] NOT NULL,
 	[Likes] [int] NOT NULL,
 	[BlogID] [int] NOT NULL,
@@ -141,7 +141,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[CommentVideo](
 	[CommentID] [int] IDENTITY(1,1) NOT NULL,
-	[CommentContent] [nvarchar](max) NOT NULL,
+	[CommentContent] [text] NOT NULL,
 	[CommentDate] [datetime] NOT NULL,
 	[Likes] [int] NOT NULL,
 	[UserID] [int] NOT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE [dbo].[Course](
 	[Category] [nvarchar](200) NOT NULL,
 	[NumberEnrolled] [int] NOT NULL,
 	[CoursePrice] [real] NULL,
-	[CourseImage] [varbinary](max) NULL,
+	[CourseImage] [text] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[CourseID] ASC
@@ -182,7 +182,7 @@ CREATE TABLE [dbo].[Message](
 	[from] [int] NOT NULL,
 	[to] [int] NOT NULL,
 	[created_at] [datetime] NULL,
-	[content] [nvarchar](max) NULL
+	[content] [text] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[Notification]    Script Date: 9/17/2022 6:39:05 PM ******/
@@ -192,7 +192,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Notification](
 	[NoticeID] [int] IDENTITY(1,1) NOT NULL,
-	[NoticeContent] [nvarchar](max) NULL,
+	[NoticeContent] [text] NULL,
 	[NoticeDate] [datetime] NULL,
 	[isSeen] [bit] NOT NULL,
 PRIMARY KEY CLUSTERED 
@@ -208,7 +208,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Question](
 	[QuestionID] [int] IDENTITY(1,1) NOT NULL,
-	[QuestionContent] [nvarchar](max) NOT NULL,
+	[QuestionContent] [text] NOT NULL,
 	[QuizID] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -265,7 +265,7 @@ CREATE TABLE [dbo].[User](
 	[DoB] [date] NOT NULL,
 	[PostCode] [varchar](10) NULL,
 	[Balance] [real] NULL,
-	[Avatar] [varchar](max) NULL,
+	[Avatar] [text] NULL,
 	[Username] [varchar](50) NOT NULL,
 	[Password] [varchar](64) NOT NULL,
 	[Role] [nvarchar](50) NOT NULL,
@@ -287,7 +287,7 @@ CREATE TABLE [dbo].[User_Course](
 	[CourseID] [int] NOT NULL,
 	[isStudied] [bit] NOT NULL,
 	[CourseRating] [real] NULL,
-	[CourseFeedback] [nvarchar](max) NULL,
+	[CourseFeedback] [text] NULL,
 	[Process] [real] NULL,
 	[PayDate] [datetime] NULL,
 	[isFavourite] [bit] NOT NULL,
@@ -545,11 +545,14 @@ CREATE PROCEDURE [dbo].[sp_create_account]
 	@FirstName	Nvarchar(30),
 	@LastName	Nvarchar(30),
 	@DoB		date,
-	@Role	varchar(50)
+	@Role		varchar(50),
+	@Balance	float(10),
+	@BankNum	varchar(20),
+	@BankName	nvarchar(50)
 AS 
 BEGIN
-	INSERT INTO [User](UserName, Password, FirstName, LastName, DoB, Role) 
-	VALUES (@UserName, @Password,@FirstName, @LastName, @DoB, @Role);
+	INSERT INTO [User]([UserName], [Password], [FirstName], [LastName], [DoB], [Role], [Balance], [BankNumber], [BankName]) 
+	VALUES (@UserName, @Password,@FirstName, @LastName, @DoB, @Role, @Balance, @BankNum, @BankName);
 END;
 
 GO
