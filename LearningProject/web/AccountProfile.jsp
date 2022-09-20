@@ -88,7 +88,8 @@
                         </div>
                     </div>
                     <div class="avatar" onclick="event.stopPropagation()">
-                        <img src="assets/img/user.png" alt="">
+                        <img style="border-radius: 50%;
+                             width: 32px; height: 32px;" src="${user.getAvatar()}" alt="">
                         <div class="account-menu">
                             <div class="menu-content">
                                 <div class="menu-element">
@@ -124,29 +125,33 @@
         <!-- Begin: Account Profile Section -->
         <section>
             <!-- Begin: Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Change Avatar</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="avatar-preview">
-                                <img src="" alt="" style="object-fit: cover; width: 100%; height: 100%;">
+            <form action="avatarupdate" method="POST">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Change Avatar</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="mb-3 mt-3">
-                                <label for="formFile" class="form-label">Upload your image</label>
-                                <input class="form-control" type="file" id="formFile" onchange="console.log(this)">
+                            <div class="modal-body">
+                                <div class="avatar-preview">
+                                    <img src="" alt="" style="object-fit: cover; width: 100%; height: 100%;">
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="formFile" class="form-label">Upload your image</label>
+                                    <input class="form-control" type="file" id="formFile" onchange="UploadAvatar(this)">
+                                    <textarea name="avatar" class="d-none" id="AvatarProfile"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
             <!-- End: Modal -->
 
             <div class="account-profile-container">
@@ -185,7 +190,7 @@
                                 <!-- Begin: Avatar Profile -->
                                 <div class="account-avatar">
                                     <div class="user-avatar">
-                                        <img src="assets/img/f8-logo.png" alt="">
+                                        <img src="${user.getAvatar()}" alt="">
                                         <div class="user-action">
                                             <p>${user.getFirstName()} ${user.getLastName()}</p>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">

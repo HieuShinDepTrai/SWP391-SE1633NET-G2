@@ -99,7 +99,7 @@
                                     <div class="menu-content">
                                         <div class="menu-element">
                                             <i class="fa-solid fa-user"></i>
-                                            <a href="AccountProfile.jsp" class="menu-title">Trang cá nhân</a>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
                                         </div>
                                         <div class="menu-element">
                                             <i class="fa-solid fa-list"></i>
