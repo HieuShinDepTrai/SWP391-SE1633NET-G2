@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import dal.UserDAO;
 import Model.User;
+import dal.UserDAO;
 import dal.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,20 +13,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import utils.SHA256;
 
 /**
  *
  * @author vuman
  */
-public class RegisterController extends HttpServlet {
+public class BecomeMentorController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Register.jsp").forward(request, response);
+        request.getRequestDispatcher("BecomeMentor.jsp").forward(request, response);
     }
 
     @Override
@@ -37,30 +36,28 @@ public class RegisterController extends HttpServlet {
             SimpleDateFormat sdm = new SimpleDateFormat("yyyy-MM-dd");
 
             String userName = request.getParameter("username");
-            String firstName = request.getParameter("firstname");
-            String lastName = request.getParameter("lastname");
-            Date date = new Date(sdm.parse(request.getParameter("dob")).getTime());
             String password = request.getParameter("password");
             String cfpassword = request.getParameter("cfpassword");
+            String bankNum = request.getParameter("banknumber");
+            String bankName = request.getParameter("bankname");
+            Date date = new Date(sdm.parse(request.getParameter("dob")).getTime());
+            HttpSession session = request.getSession();
 
             if (userDAO.isAccountExist(userName)) {
                 request.setAttribute("result", "Tài khoản của bạn đã tồn tại, vui lòng thử lại");
-            }else if(userName.length() < 3){
+            } else if (userName.length() < 3) {
                 request.setAttribute("result", "Tên đăng nhập phải có nhiều hơn 3 kí tự");
+            } else if (!valid.checkPasswordFormat(password)) {
+                request.setAttribute("result", "Mật khẩu của bạn phải có độ dài từ 8 - 25 ký tự, bao gồm ít nhất 1 chữ cái viết hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt");
+            } else if (!cfpassword.equals(password)) {
+                request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
             }
             else if(!valid.checkBirthDay(date)){
                 request.setAttribute("result", "Bạn phải trên 16 tuổi mới có thể đăng ký tài khoản");
-            }
-            else if(!valid.checkPasswordFormat(password)){
-                request.setAttribute("result", "Mật khẩu của bạn phải có độ dài từ 8 - 25 ký tự, bao gồm ít nhất 1 chữ cái viết hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt");
-            }
-            else if(!cfpassword.equals(password)){
-                request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
-            }
-            else {
-                User user = new User(firstName, lastName, "", "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "");
+            }else {
+                User user = new User("", "", "", "", "", "", "", date, "", 0, "", userName, password, "Mentor", bankNum, bankName);
                 userDAO.addUser(user);
-                response.sendRedirect("login");
+                response.sendRedirect(request.getContextPath() + "/login");
             }
 
             doGet(request, response);

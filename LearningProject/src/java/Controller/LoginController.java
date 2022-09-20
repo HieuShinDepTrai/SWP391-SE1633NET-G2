@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.SHA256;
 
 /**
  *
@@ -30,14 +31,13 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (userDAO.checkLogin(username, password)) {
+        if (userDAO.checkLogin(username, SHA256.SHA256(password))) {
             // save into session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("user", userDAO.getAllUserInformation(username));
-            session.setAttribute("role", userDAO.getRoleByUsername(username));
 
-            response.sendRedirect(request.getContextPath()+"/home");
+            response.sendRedirect("home");
         } else {
             if (userDAO.isAccountExist(username)) {
                 request.setAttribute("result", "Wrong password, please try again!");

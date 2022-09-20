@@ -95,6 +95,7 @@ public class AccountProfile extends HttpServlet {
             String address = request.getParameter("address");
             String postcode = request.getParameter("postcode");
             String phonenumber = request.getParameter("phonenumber");
+            String email = request.getParameter("email");
             
             User user = new User();
             user.setUserId(((User) (request.getSession().getAttribute("user"))).getUserId());
@@ -105,7 +106,8 @@ public class AccountProfile extends HttpServlet {
             user.setCity(city);
             user.setAddress(address);
             user.setPostCode(postcode);
-            user.setPhoneNumber(phonenumber);
+            user.setPhone(phonenumber);
+            user.setEmail(email);
             
             UserDAO udao = new UserDAO();
             udao.updateProfile(user);

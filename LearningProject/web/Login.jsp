@@ -53,7 +53,7 @@
                                     </div>
 
                                     <div class="move mb-4">
-                                        <a style="font-weight: bold; color: rgb(92, 88, 88); margin-left: 180px;" href="">Forgot password</a>
+                                        <a style="font-weight: bold; color: rgb(92, 88, 88); margin-left: 180px;" href="forgotpass">Forgot password</a>
                                     </div>
 
                                     <button class="btn mb-4" type="submit" style="background-color: black; color: white;">Sign in</button>

@@ -33,7 +33,7 @@
         <header>
             <div class="header-content">
                 <div class="logo">
-                    <img src="assets/img/Logo-FPT.webp" alt="">
+                    <a href="home"><img src="assets/img/Logo-FPT.webp" alt=""></a>
                     <div class="header-title">
                         Học Lập Trình FPT
                     </div>
@@ -88,7 +88,8 @@
                         </div>
                     </div>
                     <div class="avatar" onclick="event.stopPropagation()">
-                        <img src="assets/img/user.png" alt="">
+                        <img style="border-radius: 50%;
+                             width: 32px; height: 32px;" src="${user.getAvatar()}" alt="">
                         <div class="account-menu">
                             <div class="menu-content">
                                 <div class="menu-element">
@@ -112,7 +113,7 @@
                                 </div>
                                 <div class="menu-element">
                                     <i class="fa-solid fa-right-from-bracket"></i>
-                                    <a href="" class="menu-title">Đăng xuất</a>
+                                    <a href="logout" class="menu-title">Đăng xuất</a>
                                 </div>
                             </div>
                         </div>
@@ -124,29 +125,33 @@
         <!-- Begin: Account Profile Section -->
         <section>
             <!-- Begin: Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Change Avatar</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="avatar-preview">
-                                <img src="" alt="" style="object-fit: cover; width: 100%; height: 100%;">
+            <form action="avatarupdate" method="POST">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Change Avatar</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="mb-3 mt-3">
-                                <label for="formFile" class="form-label">Upload your image</label>
-                                <input class="form-control" type="file" id="formFile" onchange="console.log(this)">
+                            <div class="modal-body">
+                                <div class="avatar-preview">
+                                    <img src="" alt="" style="object-fit: cover; width: 100%; height: 100%;">
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="formFile" class="form-label">Upload your image</label>
+                                    <input class="form-control" type="file" id="formFile" onchange="UploadAvatar(this)">
+                                    <textarea name="avatar" class="d-none" id="AvatarProfile"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
             <!-- End: Modal -->
 
             <div class="account-profile-container">
@@ -165,11 +170,11 @@
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-lock menu-security"></i>
-                            <a href="#" class="menu-title">Security</a>
+                            <a href="changepassword" class="menu-title">Change Password</a>
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-right-from-bracket menu-logout"></i>
-                            <a href="#" class="menu-title">Log Out</a>
+                            <a href="logout" class="menu-title">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -185,7 +190,7 @@
                                 <!-- Begin: Avatar Profile -->
                                 <div class="account-avatar">
                                     <div class="user-avatar">
-                                        <img src="assets/img/f8-logo.png" alt="">
+                                        <img src="${user.getAvatar()}" alt="">
                                         <div class="user-action">
                                             <p>${user.getFirstName()} ${user.getLastName()}</p>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -194,7 +199,7 @@
                                         </div>
                                     </div>
                                     <div class="account-type">
-                                        Member Account
+                                        ${user.getRole()} Account
                                     </div>
                                 </div>
                                 <!-- End: Avatar Profile -->
@@ -211,9 +216,13 @@
                                                 <label for="SecondName" class="form-label">Last Name</label>
                                                 <input type="text" class="form-control" value="${user.getLastName()}" name="lastname" disabled>
                                             </div>
-                                            <div class="col-md-12 mt-3">
+                                            <div class="col-md-6 mt-3">
                                                 <label for="Date Of Birth" class="form-label">Date of Birth</label>
                                                 <input type="text" class="form-control" value="${user.getDob()}" name="dob" disabled>
+                                            </div>
+                                            <div class="col-md-6 mt-3">
+                                                <label for="Email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" value="${user.getEmail()}" name="email" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +248,7 @@
                                             </div>
                                             <div class="col-md-12 mt-4">
                                                 <label for="Phone Number" class="form-label">Phone Number</label>
-                                                <input type="text" class="form-control" value="${user.getPhoneNumber()}" name="phonenumber" disabled>
+                                                <input type="text" class="form-control" value="${user.getPhone()}" name="phonenumber" disabled>
                                             </div>
                                         </div>
                                     </div>

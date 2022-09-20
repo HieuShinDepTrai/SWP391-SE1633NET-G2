@@ -165,7 +165,7 @@ CREATE TABLE [dbo].[Course](
 	[AuthorID] [int] NOT NULL,
 	[Category] [nvarchar](200) NOT NULL,
 	[NumberEnrolled] [int] NOT NULL,
-	[CoursePrice] [real] NULL,
+	[CoursePrice] [int] NULL,
 	[CourseImage] [text] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -541,7 +541,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[sp_create_account]
 	@UserName	varchar(50),
-	@Password	varchar(32),
+	@Password	varchar(64),
 	@FirstName	Nvarchar(30),
 	@LastName	Nvarchar(30),
 	@DoB		date,

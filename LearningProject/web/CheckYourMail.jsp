@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,21 +12,23 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
         </style>
-        <title>Forgot password</title>
+        <title>Check your mail</title>
 </head>
 
 <body>
     <div class="d-flex justify-content-center vh-100 align-items-center">
         <div style="width: 300px;height: 400px; margin-bottom: 200px;">
             <div class="d-flex justify-content-center">
-                <i class="fa-solid fa-key my-3" style="padding: 14px; background-color: #f4eafe; color: #7f55da; border-radius: 30px; font-size: 20px;"></i>
+                <i class="fa-regular fa-envelope my-3" style="padding: 14px; background-color: #f4eafe; color: #7f55da; border-radius: 30px; font-size: 24px;"></i>
             </div>
-            <h3 class="text-center mb-3">Forgot password?</h3>
-            <p style="font-size: 14px;" class="text-center my-3">No worries, we'll send you reset password</p>
-            <label for="Email" class="form-label" style="font-size: 14px; font-weight: 500; color: rgba(0, 0, 0, 0.7)">Email</label>
-            <input type="Email" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your email">
-            <button class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">Reset password</button>
-            <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;"><i class="fa-solid fa-arrow-left me-2"></i>Back to log in</p>
+            <h3 class="text-center mb-3">Check your email</h3>
+            <p style="font-size: 14px; color: rgba(0, 0, 0, 0.6)" class="text-center my-3">We send a password reset link to <span style="color:rgba(0, 0, 0, 0.8); font-weight: 500;">${email}</span></p>
+            <a href="https://mail.google.com/mail/"><button class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">Open email web</button></a>
+            <p class="mb-4 text-center" style="font-size: 13px;">Didn't receive the email? <a href="" style="text-decoration: none; color: #7f55da; font-weight: 500;">Click to resend</a></p>
+            <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;">
+                <i class="fa-solid fa-arrow-left me-2"></i>
+                <a href="Login.html" style="text-decoration: none; color: rgba(0, 0, 0, 0.5); font-weight: 500;">Back to log in</a>
+            </p>
         </div>
     </div>
     
