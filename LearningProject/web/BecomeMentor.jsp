@@ -38,27 +38,27 @@
                                             <form action="becomementor" method="post">
                                                 <div class="px-5 my-3">
                                                     <label for="Username">Username</label>
-                                                    <input type="text" class="form-control" placeholder="Enter your username" name="username">
+                                                    <input type="text" class="form-control" placeholder="Enter your username" name="username" required="true">
                                                 </div>
                                                 <div class="px-5 my-3">
                                                     <label for="Password">Password</label>
-                                                    <input type="password" class="form-control"placeholder="Enter your password" name="password">
+                                                    <input type="password" class="form-control"placeholder="Enter your password" name="password" required="true">
                                                 </div>
                                                 <div class="px-5 my-3">
                                                     <label for="Re-password">Re-password</label>
-                                                    <input type="password" class="form-control" placeholder="Enter your re-password" name="cfpassword">
+                                                    <input type="password" class="form-control" placeholder="Enter your re-password" name="cfpassword" required="true">
                                                 </div>
                                                 <div class="px-5 my-3">
                                                     <label for="DoB">Date of Birth</label>
-                                                    <input type="date" class="form-control" placeholder="Enter your date of birth" name="dob">
+                                                    <input type="date" class="form-control" placeholder="Enter your date of birth" name="dob" required="true">
                                                 </div>
                                                 <div class="px-5 my-3">
                                                     <label for="BankAccount">Bank account number</label>
-                                                    <input type="text" class="form-control" placeholder="Enter your bank account number" name="banknumber">
+                                                    <input type="text" class="form-control" placeholder="Enter your bank account number" name="banknumber" required="true">
                                                 </div>
                                                 <div class="px-5 my-3">
                                                     <label for="Bank">Bank</label>
-                                                    <input type="text" class="form-control" placeholder="Enter your bank name" name="bankname">
+                                                    <input type="text" class="form-control" placeholder="Enter your bank name" name="bankname" required="true">
                                                 </div>
 
                                                 <div class="px-5 my-3">
@@ -69,6 +69,8 @@
                                             <div class="px-5 text-center ">
                                                 <p>Already have an account ? <a href="" class="bold">Sign In</a></p>
                                             </div>
+                                            
+                                            <div class="px-5 text-danger text-center" style="margin-bottom: 20px">${result}</div>
                                         </div>
 
                                     </div>
