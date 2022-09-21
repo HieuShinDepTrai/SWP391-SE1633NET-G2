@@ -35,7 +35,7 @@
             <header>
                 <div class="header-content">
                     <div class="logo">
-                        <a href="HomePage.html"><img src="assets/img/Logo-FPT.webp" alt=""></a>
+                        <a href="home"><img src="assets/img/Logo-FPT.webp" alt=""></a>
                         <div class="header-title">
                             Học Lập Trình FPT
                         </div>
@@ -99,7 +99,7 @@
                                     <div class="menu-content">
                                         <div class="menu-element">
                                             <i class="fa-solid fa-user"></i>
-                                            <a href="AccountProfile.jsp" class="menu-title">Trang cá nhân</a>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
                                         </div>
                                         <div class="menu-element">
                                             <i class="fa-solid fa-list"></i>
@@ -114,7 +114,7 @@
                                         </div>
                                         <div class="menu-element">
                                             Account Balance:
-                                            <a href="" class="menu-title">200.000đ</a>
+                                            <a href="" class="menu-title">${user.getBalance()}</a>
                                         </div>
                                         <div class="menu-element menu-logout">
                                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -131,7 +131,7 @@
             <div id="content" >
                 <!-- Begin: Side Bar -->
                 <div id="side-bar">
-                    <a class="bar-button button-hover" href="HomePage.html">
+                    <a class="bar-button button-hover" href="home">
                         <i class="fa-solid fa-house"></i>
                         <p class="button-title">Home</p>
                     </a>
@@ -167,9 +167,9 @@
                     <div class="section-slider autoplay">
                         <div class="slider-content">
                             <div class="slider-content-left">
-                                <h1>Upgrade your learning skill</h1>
-                                <p>Đây là khóa học đầy đủ và chi tiết nhất bạn có thể tìm thấy được ở trên Internet!</p>
-                                <a href="#">Tìm hiểu thêm</a>
+                                <h1>Become a mentor on our web</h1>
+                                <p>Come and register as a mentor to post course on our website</p>
+                                <a href="becomementor">Register</a>
                             </div>
                             <div class="slider-content-right">
                                 <img src="assets/img/slider-img/slide-img.png" alt=""
@@ -237,8 +237,15 @@
                                                 </div>
                                             </div>
                                             <div class="course-footer">
-                                                <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                <a href="#">Mua Ngay</a>
+                                                <c:if test="${course.getCoursePrice() == 0}">
+                                                    <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
+                                                    <a href="#">Enroll</a>
+                                                </c:if>
+                                                <c:if test="${course.getCoursePrice() != 0}">
+                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                    <a href="#">Buy now</a>
+                                                </c:if>
+                                                
                                             </div>
                                         </div>
                                     </div>
