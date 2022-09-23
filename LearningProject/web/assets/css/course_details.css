@@ -85,7 +85,7 @@ section {
     
 }
 
-.course-details-description {
+.course-details-left .course-details-description {
     font-size: 14px;
     margin-top: 16px;
 }
@@ -130,5 +130,68 @@ section {
 }
 
 /* Course thumbnail */
+.course-details-thumbnail {
+    width: 100%;
+    display: flex;
+}
+
+.course-details-thumbnail img {
+    margin: 0 auto;
+    width: 86%; 
+    height: 240px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.course-details-price {
+    color: var(--bs-orange);
+    font-size: 30px;
+}
+
+.enroll-button {
+    padding: 8px 60px;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    border-radius: 32px;
+    background-color: var(--bs-orange);
+    text-decoration: none;
+    text-transform: none;
+}
+
+.enroll-button:hover {
+    color: white;
+    opacity: 0.8;
+}
+/* Course description */
+.course-details-right .course-details-description {
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.course-details-description .description{
+    margin-top: 16px;
+    font-size: 14px;
+    opacity: 0.92;
+}
+
+.course-details-description .description i {
+    margin-right: 12px;
+}
+
+.description + .description {
+    margin-top: 12px;
+}
+
+.description .lessons {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+
+
+
 
 
