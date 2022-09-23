@@ -318,15 +318,24 @@
 
     let expand_all = document.querySelector('.course-agenda-right p');
     let course_lesson = document.querySelectorAll('.course-section-content');
+    let course_section_icon = document.querySelectorAll('.course-section i');
     expand_all.onclick = function() {
       if(expand_all.innerHTML == 'Hide') {
         course_lesson.forEach(function(current) {
           current.style.display = 'none';
+          course_section_icon.forEach(function(current) {
+            current.classList.remove('fa-minus');
+            current.classList.add('fa-plus');
+          })
         })
         expand_all.innerHTML = 'Expand all';
       } else {
         course_lesson.forEach(function(current) {
           current.style.display = 'block';
+          course_section_icon.forEach(function(current) {
+            current.classList.remove('fa-plus');
+            current.classList.add('fa-minus');
+          })
         })
         expand_all.innerHTML = 'Hide';
       }
