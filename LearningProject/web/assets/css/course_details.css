@@ -26,10 +26,15 @@ section {
 }
 
 /* Side bar */
-#side-bar {
+#side-bar-container {
     min-height: 100vh;
     padding-top: 20px;
     background-color: white;
+    width: 100px;
+}
+
+#side-bar {
+    position: fixed;
     width: 100px;
 }
 
@@ -96,8 +101,8 @@ section {
 }
 
 .course-objective-title {
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 .course-objective-list {
@@ -124,9 +129,48 @@ section {
     font-size: 14px;
 }
 
+/* Course agenda */
+.course-agenda {
+    margin-top: 30px;
+}
+
+.course-agenda .course-agenda-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.course-agenda-description {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.course-agenda-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 360px;
+}
+
+.course-agenda-right p {
+    color: var(--bs-orange);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Course detail right */
+
+.course-details-right-content {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 460px;
+}
+
 .course-details-right {
     flex: 1;
-    margin-left: 50px;
 }
 
 /* Course thumbnail */
@@ -189,6 +233,56 @@ section {
     font-weight: 600;
     font-size: 15px;
 }
+
+/* Course section */
+.course-agenda-section {
+    margin-top: 20px;
+}
+
+.course-section-container + .course-section-container {
+    margin-top: 8px;
+}
+
+.course-section {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.course-section + .course-section {
+    margin-top: 8px;
+}
+
+.course-section i {
+    color: var(--bs-orange);
+    margin-right: 10px;
+}
+
+.course-section p {
+    font-weight: 600;
+}
+
+.course-section-content {
+    color:rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+}
+
+.course-content {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.course-content i{
+    color: var(--bs-orange);
+    opacity: 0.6;
+}
+
+
+
+
+
 
 
 
