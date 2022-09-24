@@ -80,6 +80,8 @@ section {
 .course-watch-right {
     flex: 1;
     background-color: rgba(0, 0, 0, 0.02);
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .course-content-title {
