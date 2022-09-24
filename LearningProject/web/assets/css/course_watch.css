@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    background-color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color:#1a1a1a;
+}
+
+a:hover {
+    color: unset;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+#main {
+    overflow: hidden;
+    height: 100vh;
+}
+
+section {
+    display: flex;
+    height: calc(100vh - 66px);
+    margin-top: 66px;
+}
+
+/* Course watch left content */
+.course-watch-left {
+    flex: 3;
+}
+
+.course-watch-left-content {
+    height: 100%;
+}
+
+.lesson-video {
+    width: 100%;
+    height: 80%;
+}
+
+.lesson-information {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+}
+
+.lesson-description {
+
+}
+
+.lesson-title {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.lesson-date {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.lesson-comment {
+    background-color: var(--bs-orange);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+/* Course watch right content */
+.course-watch-right {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.course-content-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.course-lesson-container {
+    cursor: pointer;
+}
+
+.course-lesson-list {
+
+}
+
+.course-lesson {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: rgba(0, 0, 0, 0.05) 1px solid;
+}
+
+.course-lesson-left-title {
+    font-weight: 600;
+}
+
+.course-lesson-left-description {
+    font-size: 13px;
+}
+
+.course-lesson-child {
+    font-size: 14px;   
+}
+
+.course-lesson-child:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.course-lesson-child + .course-lesson-child {
+    margin-top: 14px;
+}
+
+.course-lesson-child i {
+    color: green;
+}
+
+.course-lesson-child-footer {
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.course-lesson-child-footer i {
+    color: rgba(0, 0, 0, 0.5);
+}
