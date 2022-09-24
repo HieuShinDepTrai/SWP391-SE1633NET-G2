@@ -50,6 +50,11 @@ section {
     margin-right: auto;
 }
 
+#side-bar .button-hover {
+    background-color: #e8e8e8;
+}
+
+
 .bar-button + .bar-button {
     margin-top: 20px;
 }
@@ -122,6 +127,7 @@ section {
 
 .objective i {
     margin-right: 10px;
+    color: var(--bs-orange);
 }
 
 .objective p {
