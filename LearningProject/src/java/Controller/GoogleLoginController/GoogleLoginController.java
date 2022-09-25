@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.GoogleUtils;
 import utils.HMACSHA256;
+import utils.SHA256;
 
 /**
  *
@@ -49,7 +50,7 @@ public class GoogleLoginController extends HttpServlet {
             } else {                
                 try {                    
                     Date date = new Date(serialVersionUID);
-                    User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, "", ggUser.getId(), HMACSHA256.hmacWithJava(ggUser.getId(), ggUser.getId()), "User", "", "");
+                    User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, "", ggUser.getId(), SHA256.SHA256(ggUser.getId()), "User", "", "");
                     userDAO.addUser(user);
                     HttpSession session = request.getSession();
                     session.setAttribute("username", user.getUserName());
