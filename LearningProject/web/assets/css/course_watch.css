@@ -150,6 +150,13 @@ section {
     z-index: 10;
 }
 
+.course-comment-close {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
 .course-comment {
     width: 46%;
     height: 100vh;

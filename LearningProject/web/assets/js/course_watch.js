@@ -38,3 +38,11 @@ function active_comment_button(current) {
 function show_reply_post_comment(elem) {
     $(elem).parent().next().toggleClass('d-none');
 }
+
+$("#course-comment-close").click(function(){
+    $('.course-comment-container').hide();
+});
+
+$('.lesson-comment').click(function(){
+    $('.course-comment-container').show();
+})
