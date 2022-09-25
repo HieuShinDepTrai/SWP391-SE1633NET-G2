@@ -39,7 +39,7 @@ public class ForgotPass extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {        
         request.getRequestDispatcher("ForgotPass.jsp").forward(request, response);
     }
 
@@ -55,6 +55,7 @@ public class ForgotPass extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
+        String status = "";
         String payload = "";
         AccountDBContext accDB = new AccountDBContext();
         String token = "";
@@ -75,11 +76,11 @@ public class ForgotPass extends HttpServlet {
                 request.getRequestDispatcher("CheckYourMail.jsp").forward(request, response);
                 response.getWriter().println("Decode: " + encode);
             } catch (Exception ex) {
-                response.getWriter().println(token);
-                response.getWriter().println(ex.getMessage().toString());
+                request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
             }
         } else {
-            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+            request.setAttribute("status", "Email not found");
+            doGet(request, response);
         }
     }
 

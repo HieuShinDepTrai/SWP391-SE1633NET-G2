@@ -26,10 +26,10 @@
                 <form action="forgotpass" method="POST">          
                     <label for="Email" class="form-label" style="font-size: 14px; font-weight: 500; color: rgba(0, 0, 0, 0.7)">Email</label>
                     <input type="Email" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your email" name="email">
-                    <span style="color: red">${text}</span>
+                    <span style="color: red">${status}</span>
                     <input type="submit" class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;" value="Reset Password">                   
                 </form>
-                <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;"><i class="fa-solid fa-arrow-left me-2"></i>Back to log in</p>
+                <a href="login" class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;"><i class="fa-solid fa-arrow-left me-2"></i>Back to log in</a>
             </div>
         </div>
 
