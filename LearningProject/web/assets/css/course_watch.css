@@ -137,3 +137,117 @@ section {
 .course-lesson-child-footer i {
     color: rgba(0, 0, 0, 0.5);
 }
+
+/* Course Comment */
+
+.course-comment-container {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.course-comment {
+    width: 46%;
+    height: 100vh;
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    padding: 30px 28px;
+}
+
+.course-comment-title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.course-comment-title span {
+    display: block;
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.course-comment-postcomment {
+    margin-top: 36px;
+    margin-bottom: 36px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; 
+    object-fit: cover;
+}
+
+/* Comment */
+.comment {
+    width: 100%;
+}
+.comment-content {
+    
+}
+
+.comment-content .comment-user {
+    min-width: 300px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 20px;
+}
+
+.comment-content .user-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.comment-content .user-comment-content {
+    font-size: 14px;
+    line-height: 24px;
+    width: 100%;
+}
+
+.comment-action {
+    margin-top: 10px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    gap: 8px;
+    color: var(--bs-orange);
+}
+
+.comment-action-content {
+    cursor: pointer;
+}
+
+.dot {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* Reply comment */
+.reply-comment .course-comment-postcomment {
+    margin-left: 20px;
+}
+
+
+/* Show reply comment */
+.show-reply-comment {
+    cursor: pointer;
+}
+
+.show-reply-comment h6{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+h6 i {
+    margin-left: 10px;
+}
+
+
