@@ -157,6 +157,8 @@ section {
     position: absolute;
     right: 0;
     padding: 30px 28px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .course-comment-title {
@@ -172,10 +174,59 @@ section {
     color: rgba(0, 0, 0, 0.7);
 }
 
-.course-comment-postcomment {
+.course-post-comment-container {
     margin-top: 36px;
     margin-bottom: 36px;
 }
+
+.course-comment-postcomment {
+    margin-bottom: 16px;
+}
+
+.course-comment-postcomment textarea {
+    width: 90%; 
+    resize: none; 
+    height: 28px;
+    border: none;
+    outline: none;
+    overflow-y: hidden;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.course-postcomment-action {
+    margin-bottom: 30px;
+}
+
+.course-postcomment-action .post-cancel{
+    color: rgba(0, 0, 0, 0.2);
+    padding: 4px 16px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.course-postcomment-action .post-cancel:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.submit-comment {
+    padding: 4px 20px;
+    border-radius: 24px;
+    outline: none;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.submit-comment-active {
+    background-color: var(--bs-orange);
+}
+
+.submit-comment-active:hover {
+    opacity: 0.85;
+}
+
 
 .user-avatar {
     width: 36px;
