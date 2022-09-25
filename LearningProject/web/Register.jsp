@@ -73,9 +73,14 @@
                                         <label class="form-label">Password</label>
                                     </div>
 
-                                    <div class="form-outline mb-5 input ">
+                                    <div class="form-outline mb-3 input ">
                                         <input type="password" name="cfpassword" class="form-control">
                                         <label class="form-label">Confirm password</label>
+                                    </div>
+                                    
+                                    <div class="form-outline mb-3 input">
+                                        <input type="text" name="email" class="form-control">
+                                        <label class="form-label">Email</label>
                                     </div>
 
                                     <button class="btn btn-block login-btn mb-4" type="submit" style="background-color: black; color: white;">Sign up</button>
