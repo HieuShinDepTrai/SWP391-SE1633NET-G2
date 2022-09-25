@@ -4,7 +4,7 @@
  */
 package utils;
 
-import Model.GooglePojo;
+import Model.GoogleUser;
 import Model.User;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
@@ -22,17 +22,17 @@ import com.google.gson.JsonObject;
 //                            .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
 //                            .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
 //                    .execute().returnContent().asString();
-            String uri = "https://accounts.google.com/o/oauth2/token?code="+code+"&client_id=360712733433-ptfqp15obi7kif9bh3ao7te2ia6gd1nb.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost:8080/LoginWithGmail/login-google&grant_type=authorization_code";
+            String uri = "https://accounts.google.com/o/oauth2/token?code="+code+"&client_id=360712733433-c1sc36s6apgp7gvfojp8fj00er2art2e.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost:8080/LearningProject/login-google&grant_type=authorization_code";
             String response = Request.Post(uri).execute().returnContent().asString();
             JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
             String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
             return accessToken;
         }
 
-        public static GooglePojo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+        public static GoogleUser getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
             String link = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + accessToken;
             String response = Request.Get(link).execute().returnContent().asString();
-            GooglePojo googlePojo = new Gson().fromJson(response, GooglePojo.class);            
+            GoogleUser googlePojo = new Gson().fromJson(response, GoogleUser.class);            
             return googlePojo;
         }
     }

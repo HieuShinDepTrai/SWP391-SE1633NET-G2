@@ -4,7 +4,7 @@
  */
 package Model;
 
-public class GooglePojo {
+public class GoogleUser {
 
     private String id;
     private String email;

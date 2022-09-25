@@ -72,13 +72,6 @@ public class User {
         this.bankName = bankName;
     }
 
-    public User(String firstName, String lastName, String email, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.userName = username;
-    }
-
     public int getUserId() {
         return userId;
     }
