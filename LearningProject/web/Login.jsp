@@ -63,10 +63,6 @@
                                             src="assets/img/Log-Reg/Google-Icon.png" style="height: 18px">
                                         Sign in with Google</a>                                    
                                 </form>
-                                <!--Test link to gg -->
-                                <form method="POST" action="https://accounts.google.com/o/oauth2/token?code=4/0ARtbsJqMWmNFvexhfw6OZbO2HzhUZf9iRlmYEab14k2VKv7S1MYlrAvUfe16Dg47k8sA5Q&client_id=360712733433-ptfqp15obi7kif9bh3ao7te2ia6gd1nb.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost:8080/LoginWithGmail/login-google&grant_type=authorization_code">
-                                    <input type="submit">This is submit
-                                </form>
 
                                 <div class="text-danger" style="margin-bottom: 20px">${result}</div>
 

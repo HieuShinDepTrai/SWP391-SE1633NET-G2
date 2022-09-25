@@ -47,8 +47,8 @@ public class GoogleLoginController extends HttpServlet {
                 session.setAttribute("user", userDAO.getAllUserInformation(ggUser.getId()));
                 response.sendRedirect("home");
             } else {                
-                try {
-                    Date date = Date.valueOf("2000-01-01");
+                try {                    
+                    Date date = new Date(serialVersionUID);
                     User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, "", ggUser.getId(), HMACSHA256.hmacWithJava(ggUser.getId(), ggUser.getId()), "User", "", "");
                     userDAO.addUser(user);
                     HttpSession session = request.getSession();
