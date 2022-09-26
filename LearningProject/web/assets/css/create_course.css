@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    background-color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color:#1a1a1a;
+}
+
+a:hover {
+    color: unset;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+#main {
+    overflow: hidden;
+    height: 100vh;
+}
+
+section {
+    display: flex;
+    height: calc(100vh - 66px);
+    margin-top: 66px;
+}

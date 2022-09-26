@@ -81,7 +81,7 @@ section {
     flex: 1;
     background-color: rgba(0, 0, 0, 0.02);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .course-content-title {
