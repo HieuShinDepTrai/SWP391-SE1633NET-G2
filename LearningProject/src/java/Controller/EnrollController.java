@@ -26,7 +26,7 @@ public class EnrollController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("Lesson.jsp").forward(request, response);
+        request.getRequestDispatcher("home").forward(request, response);
     } 
 
     @Override
@@ -34,18 +34,15 @@ public class EnrollController extends HttpServlet {
     throws ServletException, IOException {
         UserDAO u = new UserDAO();
         HttpSession ses = request.getSession();
+        int CourseID = Integer.parseInt(request.getParameter("courseID"));
         int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-        u.insertIntoUserCourse(UserID, UserID);
-        
+        u.insertIntoUserCourse(UserID, CourseID);
         doGet(request, response);
         
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
