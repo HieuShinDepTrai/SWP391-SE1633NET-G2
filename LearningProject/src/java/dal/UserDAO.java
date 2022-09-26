@@ -6,6 +6,7 @@ package dal;
 
 import Model.User;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -93,8 +94,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
-        public User getAllUserInformationByID(int userID) {
+
+    public User getAllUserInformationByID(int userID) {
         try ( ResultSet rs = executeQuery("SELECT [UserName],"
                 + " [FirstName],"
                 + " [LastName],"
@@ -204,88 +205,6 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
-                
-                 
-        try {
-            String sql = "UPDATE [User]\n"
-                    + "SET [FirstName] = ?,\n"
-                    + "[LastName] = ?,\n"
-                    + "[DoB] = ?,\n"
-                    + "[Country] = ?,\n"
-                    + "[City] = ?,\n"
-                    + "[Address] = ?,\n"
-                    + "[PostCode] = ?,\n"
-                    + "[PhoneNumber] = ?\n"
-                    + "WHERE [User].[Username] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, user.getFirstName());
-            stm.setString(2, user.getLastName());
-            stm.setDate(3, user.getDob());
-            stm.setString(4, user.getCountry());
-            stm.setString(5, user.getCity());
-            stm.setString(6, user.getAddress());
-            stm.setString(7, user.getPostCode());
-            stm.setString(8, user.getPhoneNumber());
-            stm.setString(9, user.getUsername());
-            stm.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-         try {
-            String sql = "UPDATE [User]\n"
-                    + "SET [FirstName] = ?,\n"
-                    + "[LastName] = ?,\n"
-                    + "[DoB] = ?,\n"
-                    + "[Country] = ?,\n"
-                    + "[City] = ?,\n"
-                    + "[Address] = ?,\n"
-                    + "[PostCode] = ?,\n"
-                    + "[PhoneNumber] = ?\n"
-                    + "WHERE [User].[Username] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, user.getFirstName());
-            stm.setString(2, user.getLastName());
-            stm.setDate(3, user.getDob());
-            stm.setString(4, user.getCountry());
-            stm.setString(5, user.getCity());
-            stm.setString(6, user.getAddress());
-            stm.setString(7, user.getPostCode());
-            stm.setString(8, user.getPhoneNumber());
-            stm.setString(9, user.getUsername());
-            stm.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-         
-          try {
-            String sql = "UPDATE [User]\n"
-                    + "SET [FirstName] = ?,\n"
-                    + "[LastName] = ?,\n"
-                    + "[DoB] = ?,\n"
-                    + "[Country] = ?,\n"
-                    + "[City] = ?,\n"
-                    + "[Address] = ?,\n"
-                    + "[PostCode] = ?,\n"
-                    + "[PhoneNumber] = ?\n"
-                    + "WHERE [User].[Username] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, user.getFirstName());
-            stm.setString(2, user.getLastName());
-            stm.setDate(3, user.getDob());
-            stm.setString(4, user.getCountry());
-            stm.setString(5, user.getCity());
-            stm.setString(6, user.getAddress());
-            stm.setString(7, user.getPostCode());
-            stm.setString(8, user.getPhoneNumber());
-            stm.setString(9, user.getUsername());
-            stm.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-=======
     }
 
     public void updateAvatar(User user) {
@@ -298,6 +217,16 @@ public class UserDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
->>>>>>> 1f3df2ca73bcae8acf161cfaf057927b65dba949
     }
+
+    public void insertIntoUserCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
+                    + ",?)",
+                    UserID, CourseID);
+        } catch (Exception e) {
+        }
+
+    }
+
 }
