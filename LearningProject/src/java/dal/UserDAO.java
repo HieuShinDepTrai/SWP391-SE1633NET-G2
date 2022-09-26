@@ -225,8 +225,18 @@ public class UserDAO extends DBContext {
                     + ",?)",
                     UserID, CourseID);
         } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
+    public void unenrollCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("DELETE FROM [User_Course] WHERE UserID = ? AND CourseID = ?",
+                    UserID, CourseID);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
