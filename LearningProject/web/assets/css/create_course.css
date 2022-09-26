@@ -29,7 +29,120 @@ p {
 }
 
 section {
-    display: flex;
     height: calc(100vh - 66px);
     margin-top: 66px;
+}
+
+
+/* Create Course Content */
+.create-course-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.content-1 {
+    flex: 1;
+}
+
+.section-create {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.section-title {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.add-section {
+    width:fit-content;
+    font-weight: 600;
+    background-color: var(--bs-orange);
+    padding: 12px 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.content-2 {
+    flex: 1;
+}
+
+.course-thumbnail {
+
+}
+
+.course-thumbnail-footer {
+    background-color: var(--bs-orange);
+}
+
+.course-thumbnail-img {
+    height: 360px;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.course-thumbnail-img .image-thumbnail{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.course-thumbnail-img .icon {
+    margin: auto;
+}
+
+.content-3 {
+    flex: 1;
+}
+
+.course-publish {
+    margin-top: 24px;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+    cursor: pointer;
+}
+
+.save-draft {
+    font-size: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.save-draft:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.delete-course {
+    color: rgba(234, 50, 50, 0.7);;
+    font-size: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.delete-course:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.description {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.course-option {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.course-option-content {
+
+}
+
+.course-option-content-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.course-option-content-des {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6)
 }
