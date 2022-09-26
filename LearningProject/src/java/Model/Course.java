@@ -21,13 +21,13 @@ public class Course {
     private String Category;
     private int NumberEnrolled;
     private double CoursePrice;
-    private byte[] CourseImage;
+    private String CourseImage;
     private User Author;
 
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, byte[] CourseImage, User Author) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, User Author) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -97,11 +97,11 @@ public class Course {
         this.CoursePrice = CoursePrice;
     }
 
-    public byte[] getCourseImage() {
+    public String getCourseImage() {
         return CourseImage;
     }
 
-    public void setCourseImage(byte[] CourseImage) {
+    public void setCourseImage(String CourseImage) {
         this.CourseImage = CourseImage;
     }
 

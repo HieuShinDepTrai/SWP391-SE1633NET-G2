@@ -53,17 +53,18 @@
                                     </div>
 
                                     <div class="move mb-4">
-                                        <a style="font-weight: bold; color: rgb(92, 88, 88); margin-left: 180px;" href="">Forgot password</a>
+                                        <a style="font-weight: bold; color: rgb(92, 88, 88); margin-left: 180px;" href="forgotpass">Forgot password</a>
                                     </div>
 
-                                    <button class="btn mb-4" type="submit" style="background-color: black; color: white;">Sign in</button>
-
-                                    <button class="btn mb-4" type="submit"><img
-                                            src="assets/img/Log-Reg/Google-Icon.png" style="height: 18px">
-                                        Sign in with Google</button>
-                                    
-                                    <div class="text-danger" style="margin-bottom: 20px">${result}</div>
+                                    <button class="btn mb-4" type="submit" style="background-color: black; color: white;">Sign in</button>                                                                           
                                 </form>
+                                <form action="login-google" method="POST">
+                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.profile+email&client_id=360712733433-c1sc36s6apgp7gvfojp8fj00er2art2e.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:8080/LearningProject/login-google&approval_prompt=force" class="btn mb-4" type="submit" ><img
+                                            src="assets/img/Log-Reg/Google-Icon.png" style="height: 18px">
+                                        Sign in with Google</a>                                    
+                                </form>
+
+                                <div class="text-danger" style="margin-bottom: 20px">${result}</div>
 
                                 <div>
                                     <span style="color: rgb(179, 177, 177);">Don't have an account?</span>

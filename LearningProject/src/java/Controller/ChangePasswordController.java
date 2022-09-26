@@ -44,6 +44,7 @@ public class ChangePasswordController extends HttpServlet {
         }
         
         doGet(request, response);
+        session.invalidate();
     }
 
 }
