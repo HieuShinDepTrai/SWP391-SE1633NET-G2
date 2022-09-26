@@ -239,8 +239,8 @@
                                             <div class="course-footer">
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                    <form id="enroll" action="Enroll" method="POST">                                                        
-                                                        <a href="#" onclick="document.getElementById('enroll').submit()">Enroll</a>
+                                                    <form id="enroll" action="enroll" method="POST">                                                        
+                                                        <input type="submit" value="Enroll">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
                                                     </form>
                                                 </c:if>

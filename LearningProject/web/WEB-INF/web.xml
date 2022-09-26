@@ -102,7 +102,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EnrollController</servlet-name>
-        <url-pattern>/Enroll</url-pattern>
+        <url-pattern>/enroll</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

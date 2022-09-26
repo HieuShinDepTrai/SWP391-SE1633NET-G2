@@ -19,15 +19,11 @@ import jakarta.servlet.http.HttpSession;
  * @author ASUS
  */
 public class EnrollController extends HttpServlet {
-   
-
- 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("home").forward(request, response);
-    } 
+        response.sendRedirect("home");
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -35,17 +31,13 @@ public class EnrollController extends HttpServlet {
         UserDAO u = new UserDAO();
         HttpSession ses = request.getSession();
         int CourseID = Integer.parseInt(request.getParameter("courseID"));
+        
         int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
         u.insertIntoUserCourse(UserID, CourseID);
-        doGet(request, response);
-        
+        response.sendRedirect("home");                         
     }
 
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
