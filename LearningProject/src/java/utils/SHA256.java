@@ -27,6 +27,7 @@ public class SHA256 {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedhash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            String bytess = encodedhash.toString();
             return bytesToHex(encodedhash);
         } catch (Exception e) {
             e.printStackTrace();

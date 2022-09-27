@@ -4,8 +4,6 @@ package dal;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-
 import Model.Course;
 import Model.User;
 import java.sql.PreparedStatement;
@@ -25,7 +23,7 @@ public class CourseDAO extends DBContext {
         ArrayList<Course> courses = new ArrayList<>();
         try {
             String sql = "SELECT \n"
-                    + "[C].[CourseName], [C].[NumberEnrolled],\n"
+                    + "[C].[CourseName], [C].[NumberEnrolled],[C].[CourseID],\n"
                     + "[C].[CoursePrice], [U].[FirstName] \n"
                     + "FROM [Course] C INNER JOIN [User] U\n"
                     + "ON [C].[AuthorID] = [U].[UserID]";
@@ -37,6 +35,7 @@ public class CourseDAO extends DBContext {
                 course.setCourseName(rs.getString("CourseName"));
                 course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 course.setCoursePrice(rs.getDouble("CoursePrice"));
+                course.setCourseID(rs.getInt("CourseID"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
 
@@ -77,5 +76,31 @@ public class CourseDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    public ArrayList<Course> getAllUserCourse(String username) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        UserDAO userDao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("select c.CourseID, c.CourseName, c.DateCreate, c.AuthorID, c.Category, c.NumberEnrolled, c.CoursePrice, c.CourseImage\n"
+                    + "from [Course] c\n"
+                    + "inner join [User_Course] uc on c.CourseID=uc.CourseID\n"
+                    + "inner join [User] u on u.UserID = uc.UserID\n"
+                    + "where u.Username=?", username);
+            while (rs.next()) {
+                Course c = new Course();
+                c.setCourseID(rs.getInt("CourseID"));
+                c.setCourseName(rs.getString("CourseName"));
+                c.setDateCreate(rs.getTimestamp("DateCreate"));
+                c.setAuthor(userDao.getAllUserInformationByID(rs.getInt("AuthorID")));
+                c.setCategory(rs.getString("Category"));
+                c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
+                c.setCoursePrice(rs.getDouble("CoursePrice"));
+                c.setCourseImage(rs.getString("CourseImage"));
+                courseList.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseList;
     }
 }
