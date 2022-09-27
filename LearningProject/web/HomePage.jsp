@@ -94,7 +94,7 @@
                         </c:if>
                         <c:if test="${user!=null}">
                             <div class="avatar" onclick="event.stopPropagation()">
-                                <img src="assets/img/user.png" alt="">
+                                <img src="${avatar}" alt="">
                                 <div class="account-menu">
                                     <div class="menu-content">
                                         <div class="menu-element">

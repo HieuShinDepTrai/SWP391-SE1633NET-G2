@@ -25,7 +25,7 @@
             <p style="font-size: 14px; color: rgba(0, 0, 0, 0.6)" class="text-center my-3">Your password has been successfully reset.
                 <span style="color:rgba(0, 0, 0, 0.8); font-weight: 500; display: block;">Click below to log in again</span>
             </p>
-            <a href="https://mail.google.com/mail/">
+            <a href="home">
                 <button class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">Continue</button>
             </a>
         </div>

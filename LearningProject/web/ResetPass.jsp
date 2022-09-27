@@ -44,7 +44,7 @@
         function validate_password() {
             var pass = document.getElementById('password').value;
             var confirm_pass = document.getElementById('confirm_password').value;
-            if (pass != confirm_pass) {
+            if (pass != confirm_pass && pass!=='') {
                 document.getElementById('wrong_pass_alert').style.color = 'red';
                 document.getElementById('wrong_pass_alert').innerHTML
                         = 'Use same password';
