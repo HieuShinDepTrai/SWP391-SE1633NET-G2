@@ -47,4 +47,35 @@ public class CourseDAO extends DBContext {
         }
         return courses;
     }
+    
+    public Course getAllCourseInformation(int courseId){
+        try(ResultSet rs = executeQuery("SELECT [CourseName],"
+                + "[DateCreate],"
+                + "[AuthorID],"
+                + "[Category],"
+                + "[NumberEnrolled],"
+                + "[CoursePrice],"
+                + "[CourseImage] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
+            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getBytes("CourseImage"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void disableCourse(int courseId){
+        try {
+            executeUpdate("UPDATE [dbo].[Course] SET WHERE [CourseID] = ? ", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void disableSection(int courseId){
+        try {
+            executeUpdate("UPDATE [dbo].[Section] SET WHERE [CourseID] = ? ", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
