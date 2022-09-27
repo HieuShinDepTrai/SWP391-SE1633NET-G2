@@ -183,3 +183,16 @@ section {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.video-preview {
+    border: 1px dashed black;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-preview .icon-youtube {
+    font-size: 60px;
+    color: red;
+}
