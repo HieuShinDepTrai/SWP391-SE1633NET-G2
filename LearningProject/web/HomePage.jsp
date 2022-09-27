@@ -99,7 +99,7 @@
                                     <div class="menu-content">
                                         <div class="menu-element">
                                             <i class="fa-solid fa-user"></i>
-                                            <a href="AccountProfile.jsp" class="menu-title">Trang cá nhân</a>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
                                         </div>
                                         <div class="menu-element">
                                             <i class="fa-solid fa-list"></i>
@@ -239,13 +239,16 @@
                                             <div class="course-footer">
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                    <a href="#">Enroll</a>
+                                                    <form id="enroll" action="enroll" method="POST">                                                        
+                                                        <a href="#" onclick="document.getElementById('enroll').submit()">Enroll</a>
+                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                    </form>
                                                 </c:if>
                                                 <c:if test="${course.getCoursePrice() != 0}">
                                                     <div class="course-price">${course.getCoursePrice()} đ</div>
                                                     <a href="#">Buy now</a>
                                                 </c:if>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -318,14 +321,14 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-                                $('.autoplay').slick({
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1,
-                                    autoplay: true,
-                                    autoplaySpeed: 5000,
-                                    speed: 1500,
-                                    dots: true
-                                });
+                                                            $('.autoplay').slick({
+                                                                slidesToShow: 1,
+                                                                slidesToScroll: 1,
+                                                                autoplay: true,
+                                                                autoplaySpeed: 5000,
+                                                                speed: 1500,
+                                                                dots: true
+                                                            });
         </script>
     </body>
 

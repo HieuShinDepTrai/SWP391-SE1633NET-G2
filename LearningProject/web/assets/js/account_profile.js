@@ -51,3 +51,12 @@ function disableOff(button) {
     saveBtn.classList.remove('d-none');
     isDisaled = false;
 }
+
+var reader = new FileReader();
+var avatar = document.getElementById("AvatarProfile");
+function UploadAvatar(target) {
+    reader.onload = e => {
+        avatar.innerText = e.target.result;
+    }
+    reader.readAsDataURL(target.files[0]);
+}

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package Model;
 
 import java.sql.Date;
@@ -12,6 +11,7 @@ import java.sql.Date;
  * @author Hieu Shin
  */
 public class User {
+
     private int userId;
     private String firstName;
     private String lastName;
@@ -29,7 +29,7 @@ public class User {
     private String role;
     private String bankNum;
     private String bankName;
-    
+
     public User() {
     }
 
@@ -71,8 +71,6 @@ public class User {
         this.bankNum = bankNum;
         this.bankName = bankName;
     }
-
-    
 
     public int getUserId() {
         return userId;
@@ -209,6 +207,5 @@ public class User {
     public void setBankNum(String bankNum) {
         this.bankNum = bankNum;
     }
-    
-    
+
 }
