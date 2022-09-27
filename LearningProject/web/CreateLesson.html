@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elearning</title>
+    <link rel="stylesheet" href="assets/css/create_course.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/css/header.css" />
-    <link rel="stylesheet" href="assets/css/create_course.css" />
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
     </style>
@@ -106,114 +106,110 @@
         <section>
             <div class="create-course px-5 py-3">
                 <div class="create-course-header mb-3">
-                    <h3 class="fw-bold">Create Course</h3>
+                    <h3 class="fw-bold">Create Lesson</h3>
                     <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                         <ol class="breadcrumb" style="font-size: 13px">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Create Course</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Create Course
+                                Create Lesson
                             </li>
                         </ol>
                     </nav>
-                    <h4 class="mb-3 fw-bold mb-1">Basic Infromation</h4>
+                    <h4 class="mb-3 fw-bold mb-1">Create lesson for Section 1</h4>
                 </div>
-                <div class="create-course-content">
-                    <div class="content-1">
-                        <div class="create-course-title-container mb-3">
-                            <div class="create-course-title mb-1 fw-bold">Course Title</div>
-                            <input type="text" class="w-100 mb-1" />
-                            <div class="description mb-1">
-                                Please enter your course title
+                <table class="table table-striped">
+                    <thead>
+                        <th>Lesson No</th>
+                        <th>Lesson Name</th>
+                        <th>Lesson Type</th>
+                        <th>Create Date</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Lesson 1</td>
+                            <td>Video</td>
+                            <td>26/09/2022</td>
+                            <td>
+                                <button class="btn btn-primary">Delete</button>
+                                <button class="btn btn-primary">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add New Lesson
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold" id="exampleModalLabel">Add Lesson</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-                        </div>
-                        <div class="create-course-title-container mb-3">
-                            <div class="create-course-title mb-1 fw-bold">
-                                Course description
-                            </div>
-                            <textarea name="" id="" class="w-100" style="height: 100px"></textarea>
-                            <div class="description mb-1">
-                                Please enter your course description
-                            </div>
-                        </div>
-                        <div class="create-section">
-                            <div class="create-section-title fw-bold mb-3">Sections</div>
-                            <div class="section-list">
-                                <div class="section-create mb-2">
-                                    <div class="section-title">1. Section 1</div>
+                            <div class="modal-body">
+                                <h3 class="text-center">Select type of lesson you want to add</h3>
+                                <div class="type-lesson-list mt-5">
+                                    <div class="type-lesson shadow"  data-bs-toggle="modal" data-bs-target="#document">
+                                        <img src="assets/img/Asset 1.png" alt="">
+                                        <div class="type-lesson-title">Document</div>
+                                    </div>
+                                    <div class="type-lesson shadow">
+                                        <img src="assets/img/vidoe.png" alt="">
+                                        <div class="type-lesson-title">Video</div>
+                                    </div>
+                                    <div class="type-lesson shadow">
+                                        <img src="assets/img/Quizz.png" alt="">
+                                        <div class="type-lesson-title">Quizzes</div>
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Add Section
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-2">
-                        <div class="course-thumbnail-header fw-bold">
-                            Course Thumbnail
-                        </div>
-                        <div class="course-thumbnail">
-                            <div class="course-thumbnail-content">
-                                <div class="course-thumbnail-img d-flex">
-                                    <img src="" alt="" style="display: none" class="image-thumbnail" />
-                                    <img src="assets/img/icon-image.png" alt="" class="icon" width="36px"
-                                        height="36px" />
-                                </div>
-                                <div class="course-thumbnail-footer p-3">
-                                    <input type="file" name="" id="thumbnail" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-3">
-                        <div class="course-publish mb-3">
-                            <div class="publish-button d-flex justify-content-center p-4">
-                                <div class="btn btn-dark">Publish</div>
-                            </div>
-                            <div class="save-draft px-3 py-3">Save draft</div>
-                            <div class="delete-course px-3 py-3">Delete course</div>
-                        </div>
-                        <div class="course-option p-3">
-                            <div class="course-option-content mb-2">
-                                <div class="course-option-content-title mb-1">Category</div>
-                                <div class="course-option-content-input mb-1">
-                                    <input type="text" class="w-100" />
-                                </div>
-                                <div class="course-option-content-des">Select a Category</div>
-                            </div>
-                            <div class="course-option-content mb-2">
-                                <div class="course-option-content-title mb-1">Price</div>
-                                <div class="course-option-content-input mb-1">
-                                    <input type="text" class="w-100" />
-                                </div>
-                                <div class="course-option-content-des">
-                                    Enter price of course
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
+                <!-- Modal Document-->
+                <div class="modal fade" id="document" tabindex="-1"
+                aria-labelledby="document" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">
-                                Add section
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
+                                Document</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <label for="Section name" class="form-label">Section Name</label>
-                            <input type="text" class="form-control" />
+                        <div class="modal-body py-5" style="padding-left: 240px; padding-right: 240px;">
+                            <h4 class="fw-bolder">Create Document</h4>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label for="LessonTitle" class="form-label fw-bold">Lesson Title</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="LessonTitle" class="form-label fw-bold">Time to read</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
+                                    <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">
-                                Add Section
-                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save
+                                changes</button>
                         </div>
                     </div>
                 </div>
@@ -224,6 +220,9 @@
         <!-- Begin: Footer -->
         <!-- End: Footer -->
     </div>
+    <script>
+        var editor = new FroalaEditor('#example');
+    </script>
     <script src="assets/js/create_course.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
