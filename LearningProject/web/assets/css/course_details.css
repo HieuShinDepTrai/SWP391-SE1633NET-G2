@@ -77,7 +77,7 @@ section {
 }
 
 .course-details-container{
-    flex: 1;
+    width: 100%;
 }
 
 .course-details {
@@ -87,7 +87,7 @@ section {
 }
 
 .course-details-left {
-    flex: 2;
+    width: 58%;
 }
 
 .course-details-title {
@@ -176,7 +176,7 @@ section {
 }
 
 .course-details-right {
-    flex: 1;
+    width: 36%;
 }
 
 /* Course thumbnail */
