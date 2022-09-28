@@ -5,6 +5,7 @@ package dal;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import Model.Course;
+import Model.Section;
 import Model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,8 +55,9 @@ public class CourseDAO extends DBContext {
                 + "[Category],"
                 + "[NumberEnrolled],"
                 + "[CoursePrice],"
-                + "[CourseImage] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
-            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+                + "[CourseImage],"
+                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
+            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getByte("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -64,17 +66,18 @@ public class CourseDAO extends DBContext {
     
     public void disableCourse(int courseId){
         try {
-            executeUpdate("UPDATE [dbo].[Course] SET WHERE [CourseID] = ? ", courseId);
+            executeUpdate("UPDATE [dbo].[Course] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    public void disableSection(int courseId){
+    public void createClone(int courseId){
         try {
-            executeUpdate("UPDATE [dbo].[Section] SET WHERE [CourseID] = ? ", courseId);
+            Course course = getAllCourseInformation(courseId);
+            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
     

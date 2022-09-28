@@ -59,7 +59,7 @@ public class RegisterController extends HttpServlet {
                 request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
             }
             else {
-                User user = new User(firstName, lastName, email, "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "");
+                User user = new User(firstName, lastName, email, "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "", false);
                 userDAO.addUser(user);
                 response.sendRedirect("login");
             }

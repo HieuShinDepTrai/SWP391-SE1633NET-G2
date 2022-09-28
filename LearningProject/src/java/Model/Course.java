@@ -22,12 +22,13 @@ public class Course {
     private int NumberEnrolled;
     private double CoursePrice;
     private String CourseImage;
+    private byte isDisable;
     private User Author;
 
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, User Author) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, byte isDisable, User Author) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -36,10 +37,17 @@ public class Course {
         this.NumberEnrolled = NumberEnrolled;
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
+        this.isDisable = isDisable;
         this.Author = Author;
     }
 
-    
+    public byte getIsDisable() {
+        return isDisable;
+    }
+
+    public void setIsDisable(byte isDisable) {
+        this.isDisable = isDisable;
+    }
 
     public int getCourseID() {
         return CourseID;
