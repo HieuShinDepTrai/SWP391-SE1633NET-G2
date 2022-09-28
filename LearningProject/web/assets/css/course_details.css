@@ -168,11 +168,11 @@ section {
 /* Course detail right */
 
 .course-details-right-content {
-    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 460px;
+    width: 96%;
+    margin: 0 auto;
 }
 
 .course-details-right {
@@ -187,8 +187,8 @@ section {
 
 .course-details-thumbnail img {
     margin: 0 auto;
-    width: 86%; 
-    height: 240px;
+    width: 86%;
+    height: 300px;
     object-fit: cover;
     border-radius: 16px;
 }
