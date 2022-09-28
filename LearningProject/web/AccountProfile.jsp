@@ -89,7 +89,7 @@
                     </div>
                     <div class="avatar" onclick="event.stopPropagation()">
                         <img style="border-radius: 50%;
-                             width: 32px; height: 32px;" src="${user.getAvatar()}" alt="">
+                             width: 32px; height: 32px; object-fit: cover;" src="${user.getAvatar()}" alt="">
                         <div class="account-menu">
                             <div class="menu-content">
                                 <div class="menu-element">
@@ -190,7 +190,7 @@
                                 <!-- Begin: Avatar Profile -->
                                 <div class="account-avatar">
                                     <div class="user-avatar">
-                                        <img src="${user.getAvatar()}" alt="">
+                                        <img style="object-fit: cover;" src="${user.getAvatar()}" alt="">
                                         <div class="user-action">
                                             <p>${user.getFirstName()} ${user.getLastName()}</p>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
