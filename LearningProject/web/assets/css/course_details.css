@@ -23,7 +23,11 @@ section {
     display: flex;
     margin-top: 66px;
     height: calc(100vh - 66px);
-    overflow-y: auto;
+    overflow: hidden;
+}
+
+#main {
+    overflow: hidden;
 }
 
 /* Side bar */
@@ -81,6 +85,7 @@ section {
 
 .course-details-container{
     width: 100%;
+    overflow-y: auto;
 }
 
 .course-details {
@@ -180,6 +185,8 @@ section {
 
 .course-details-right {
     width: 36%;
+    position: fixed;
+    right: 0;
 }
 
 /* Course thumbnail */
@@ -288,8 +295,12 @@ section {
     opacity: 0.6;
 }
 
+/* Course Feedback */
 
-
+.feed-back-star {
+    font-size: 14px;
+    color: #FF9529;
+}
 
 
 
