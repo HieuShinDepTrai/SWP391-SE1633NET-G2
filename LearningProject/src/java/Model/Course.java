@@ -42,7 +42,6 @@ public class Course {
         this.Author = Author;
     }
 
-<<<<<<< HEAD
     public Course(int CourseID, String CourseName, String Category, Double CourseProgress) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
@@ -51,7 +50,6 @@ public class Course {
     }
 
     
-=======
     public byte getIsDisable() {
         return isDisable;
     }
@@ -59,7 +57,6 @@ public class Course {
     public void setIsDisable(byte isDisable) {
         this.isDisable = isDisable;
     }
->>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
 
     public int getCourseID() {
         return CourseID;

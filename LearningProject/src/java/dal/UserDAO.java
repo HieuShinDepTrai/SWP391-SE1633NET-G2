@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 public class UserDAO extends DBContext {
 
     public void addUser(User u) {
-        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
+        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?,?,?",
                 u.getUserName(),
                 u.getPassword(),
                 u.getEmail(),
@@ -27,13 +27,44 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-<<<<<<< HEAD
-                u.getEmail(),
+                0,
                 u.getAvatar()
-=======
-                u.getIsDisable()
->>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
         );
+    }
+
+    public void addGoogleUser(User u) {
+        execute("INSERT INTO [dbo].[User]\n"
+                + "           ([FirstName]\n"
+                + "           ,[LastName]\n"
+                + "           ,[Email]           \n"
+                + "           ,[DoB]\n"
+                + "           ,[Balance]\n"
+                + "           ,[Avatar]\n"
+                + "           ,[Username]\n"
+                + "           ,[Password]\n"
+                + "           ,[Role]\n"
+                + "           ,[isDisable])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)           \n", 
+                u.getFirstName(),
+                u.getLastName(),
+                u.getEmail(),
+                u.getDob(),
+                0,
+                u.getAvatar(),
+                u.getUserName(),
+                u.getPassword(),
+                u.getRole(),
+                0);
     }
 
     public User getAllUserInformation(String username) {
@@ -169,7 +200,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
