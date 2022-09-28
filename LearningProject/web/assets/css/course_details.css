@@ -22,20 +22,26 @@ p {
 section {
     display: flex;
     margin-top: 66px;
-    flex-direction: row;
+    height: calc(100vh - 66px);
+    overflow-y: auto;
 }
 
 /* Side bar */
 #side-bar-container {
-    min-height: 100vh;
-    padding-top: 20px;
     background-color: white;
     width: 100px;
 }
 
 #side-bar {
-    position: fixed;
     width: 100px;
+    height: 100vh;
+    padding-top: 20px;
+    position: fixed;
+    background-color: white;
+}
+
+#side-bar .button-hover {
+    background-color: #e8e8e8;
 }
 
 #side-bar .bar-button {
@@ -50,18 +56,15 @@ section {
     margin-right: auto;
 }
 
-#side-bar .button-hover {
-    background-color: #e8e8e8;
+#side-bar .bar-button:hover {
+    background-color: #f5f5f5;
+    color: #1a1a1a;
 }
+
 
 
 .bar-button + .bar-button {
     margin-top: 20px;
-}
-
-#side-bar .bar-button:hover {
-    background-color: #f5f5f5;
-    color: #1a1a1a;
 }
 
 #side-bar .button-title  {
