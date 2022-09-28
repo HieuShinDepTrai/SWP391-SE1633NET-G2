@@ -57,7 +57,7 @@ public class CourseDAO extends DBContext {
                 + "[CoursePrice],"
                 + "[CourseImage],"
                 + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
-            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getByte("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getBoolean("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -75,8 +75,19 @@ public class CourseDAO extends DBContext {
     public void createClone(int courseId){
         try {
             Course course = getAllCourseInformation(courseId);
-            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            SectionDAO sd = new SectionDAO();
+            LessonDAO ld = new LessonDAO();
+            DocsDAO dd = new DocsDAO();
+            VideoDAO vd = new VideoDAO();
+            QuizDAO qd = new QuizDAO();
+            QuestionDAO qtd = new QuestionDAO();
+            AnswerDAO ad = new AnswerDAO();
             
+            ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
+            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            for (Section section : sectionlist) {
+                executeUpdate("INSERT INTO [dbo].[Section] VALUES(?, ?, ?, ?)", section.getSectionId() * (-1), courseId * (-1), section.getSectionName(), 0);
+            }
         } catch (Exception e) {
         }
     }
