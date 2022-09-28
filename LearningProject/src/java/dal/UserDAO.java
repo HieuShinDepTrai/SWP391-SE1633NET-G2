@@ -16,9 +16,10 @@ import java.sql.ResultSet;
 public class UserDAO extends DBContext {
 
     public void addUser(User u) {
-        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?",
+        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
                 u.getUserName(),
                 u.getPassword(),
+                u.getEmail(),
                 u.getFirstName(),
                 u.getLastName(),
                 u.getDob(),
@@ -26,7 +27,7 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-                u.getEmail()
+                u.getIsDisable()
         );
     }
 
@@ -46,7 +47,8 @@ public class UserDAO extends DBContext {
                 + " [Password],"
                 + " [Role], "
                 + "[BankNumber], "
-                + "[BankName] FROM [User] WHERE [Username] = ?", username)) {
+                + "[BankName],"
+                + "[isDisable] FROM [User] WHERE [Username] = ?", username)) {
 
             if (rs.next()) {
                 int userId = rs.getInt("UserID");
@@ -65,6 +67,7 @@ public class UserDAO extends DBContext {
                 float balance = rs.getFloat("Balance");
                 String password = rs.getString("Password");
                 String role = rs.getNString("Role");
+                boolean isDisable = rs.getBoolean("isDisable");
                 if (rs.getString("Email") != null) {
                     email = rs.getString("Email");
                 }
@@ -87,7 +90,7 @@ public class UserDAO extends DBContext {
                     avatar = rs.getString("Avatar");
                 }
 
-                return new User(userId, firstName, lastName, email, phoneNum, country, city, address, dob, postCode, balance, avatar, username, password, role, bankNum, bankName);
+                return new User(userId, firstName, lastName, email, phoneNum, country, city, address, dob, postCode, balance, avatar, username, password, role, bankNum, bankName, isDisable);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +114,8 @@ public class UserDAO extends DBContext {
                 + " [Password],"
                 + " [Role], "
                 + "[BankNumber], "
-                + "[BankName] FROM [User] WHERE [UserID] = ?", userID)) {
+                + "[BankName],"
+                + "[isDisable] FROM [User] WHERE [UserID] = ?", userID)) {
 
             if (rs.next()) {
                 String username = rs.getString("Username");
@@ -130,6 +134,7 @@ public class UserDAO extends DBContext {
                 float balance = rs.getFloat("Balance");
                 String password = rs.getString("Password");
                 String role = rs.getNString("Role");
+                boolean isDisable = rs.getBoolean("isDisable");
                 if (rs.getString("Email") != null) {
                     email = rs.getString("Email");
                 }
@@ -152,14 +157,14 @@ public class UserDAO extends DBContext {
                     avatar = rs.getString("Avatar");
                 }
 
-                return new User(userID, firstName, lastName, email, phoneNum, country, city, address, dob, postCode, balance, avatar, username, password, role, bankNum, bankName);
+                return new User(userID, firstName, lastName, email, phoneNum, country, city, address, dob, postCode, balance, avatar, username, password, role, bankNum, bankName, isDisable);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
