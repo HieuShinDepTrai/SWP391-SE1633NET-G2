@@ -43,7 +43,7 @@ public class ChangePasswordController extends HttpServlet {
                 userDAO.changePassword(username, SHA256.SHA256(newPassword));
                 request.setAttribute("result", "Change password successfully");
             } else {
-                request.setAttribute("result", "Your password must be between 8-25 characters long, including at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character");
+                request.setAttribute("result", "Your new password must be between 8-25 characters long, including at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character");
             }                
         }         
         else {
