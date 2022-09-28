@@ -6,6 +6,7 @@ package dal;
 
 import Model.User;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -96,7 +97,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public User getAllUserInformationByID(int userID) {
         try ( ResultSet rs = executeQuery("SELECT [UserName],"
                 + " [FirstName],"
@@ -222,4 +223,25 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+    public void insertIntoUserCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
+                    + ",?)",
+                    UserID, CourseID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unenrollCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("DELETE FROM [User_Course] WHERE UserID = ? AND CourseID = ?",
+                    UserID, CourseID);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
