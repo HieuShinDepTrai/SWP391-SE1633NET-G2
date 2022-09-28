@@ -27,7 +27,12 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
+<<<<<<< HEAD
+                u.getEmail(),
+                u.getAvatar()
+=======
                 u.getIsDisable()
+>>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
         );
     }
 

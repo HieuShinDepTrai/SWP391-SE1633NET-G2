@@ -24,6 +24,7 @@ public class Course {
     private String CourseImage;
     private byte isDisable;
     private User Author;
+    private Double CourseProgress;
 
     public Course() {
     }
@@ -41,6 +42,16 @@ public class Course {
         this.Author = Author;
     }
 
+<<<<<<< HEAD
+    public Course(int CourseID, String CourseName, String Category, Double CourseProgress) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.Category = Category;
+        this.CourseProgress = CourseProgress;
+    }
+
+    
+=======
     public byte getIsDisable() {
         return isDisable;
     }
@@ -48,6 +59,7 @@ public class Course {
     public void setIsDisable(byte isDisable) {
         this.isDisable = isDisable;
     }
+>>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
 
     public int getCourseID() {
         return CourseID;
@@ -119,6 +131,14 @@ public class Course {
 
     public void setAuthor(User Author) {
         this.Author = Author;
+    }
+
+    public Double getCourseProgress() {
+        return CourseProgress;
+    }
+
+    public void setCourseProgress(Double CourseProgress) {
+        this.CourseProgress = CourseProgress;
     }
     
 }

@@ -35,8 +35,7 @@ public class LoginController extends HttpServlet {
             // save into session
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            session.setAttribute("user", userDAO.getAllUserInformation(username));
-
+            session.setAttribute("user", userDAO.getAllUserInformation(username));            
             response.sendRedirect("home");
         } else {
             if (userDAO.isAccountExist(username)) {
