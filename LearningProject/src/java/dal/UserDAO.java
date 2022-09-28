@@ -15,8 +15,8 @@ import java.sql.ResultSet;
  */
 public class UserDAO extends DBContext {
 
-    public void addUser(User u) {
-        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?,?,?",
+     public void addUser(User u) {
+        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
                 u.getUserName(),
                 u.getPassword(),
                 u.getEmail(),
@@ -27,8 +27,6 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-                0,
-                u.getAvatar(),
                 u.getIsDisable()
         );
     }
