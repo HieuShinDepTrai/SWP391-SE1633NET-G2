@@ -50,11 +50,7 @@ public class GoogleLoginController extends HttpServlet {
             } else {
                 try {
                     Date date = new Date(serialVersionUID);
-<<<<<<< HEAD
-                    User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, ggUser.getPicture(), ggUser.getId(), SHA256.SHA256(ggUser.getId()), "User", "", "");
-=======
-                    User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, "", ggUser.getId(), SHA256.SHA256(ggUser.getId()), "User", "", "", false);
->>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
+                    User user = new User(ggUser.getGiven_name(), ggUser.getFamily_name(), ggUser.getEmail(), "", "", "", "", date, "", 0, ggUser.getPicture(), ggUser.getId(), SHA256.SHA256(ggUser.getId()), "User", "", "", false);
                     userDAO.addUser(user);
                     HttpSession session = request.getSession();
                     session.setAttribute("username", user.getUserName());
