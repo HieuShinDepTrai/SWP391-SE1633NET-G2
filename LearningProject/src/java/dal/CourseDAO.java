@@ -51,11 +51,11 @@ public class CourseDAO extends DBContext {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
-            ResultSet rs = executeQuery("select c.CourseID, c.CourseName, c.DateCreate, c.AuthorID, c.Category, c.NumberEnrolled, c.CoursePrice, c.CourseImage\n"
+            ResultSet rs = executeQuery("select c.CourseID, c.CourseName, c.DateCreate, c.AuthorID, c.Category, c.NumberEnrolled, c.CoursePrice, c.CourseImage, uc.Progress\n"
                     + "from [Course] c\n"
                     + "inner join [User_Course] uc on c.CourseID=uc.CourseID\n"
                     + "inner join [User] u on u.UserID = uc.UserID\n"
-                    + "where u.Username=?", username);
+                    + "where u.Username= ?", username);
             while (rs.next()) {
                 Course c = new Course();
                 c.setCourseID(rs.getInt("CourseID"));
@@ -66,6 +66,7 @@ public class CourseDAO extends DBContext {
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 c.setCoursePrice(rs.getDouble("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
+                c.setCourseProgress(rs.getDouble("Progress"));
                 courseList.add(c);
             }
         } catch (Exception e) {

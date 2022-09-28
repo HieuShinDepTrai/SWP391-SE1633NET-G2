@@ -23,6 +23,7 @@ public class Course {
     private double CoursePrice;
     private String CourseImage;
     private User Author;
+    private Double CourseProgress;
 
     public Course() {
     }
@@ -37,6 +38,13 @@ public class Course {
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
         this.Author = Author;
+    }
+
+    public Course(int CourseID, String CourseName, String Category, Double CourseProgress) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.Category = Category;
+        this.CourseProgress = CourseProgress;
     }
 
     
@@ -111,6 +119,14 @@ public class Course {
 
     public void setAuthor(User Author) {
         this.Author = Author;
+    }
+
+    public Double getCourseProgress() {
+        return CourseProgress;
+    }
+
+    public void setCourseProgress(Double CourseProgress) {
+        this.CourseProgress = CourseProgress;
     }
     
 }
