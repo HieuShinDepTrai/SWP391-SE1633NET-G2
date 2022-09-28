@@ -24,6 +24,14 @@
         <servlet-name>AvatarUpdate</servlet-name>
         <servlet-class>Controller.AvatarUpdate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateCourseController</servlet-name>
+        <servlet-class>Controller.UpdateCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSectionController</servlet-name>
+        <servlet-class>Controller.UpdateSectionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ResetPass</servlet-name>
         <url-pattern>/resetpass</url-pattern>
@@ -91,6 +99,14 @@
     <servlet-mapping>
         <servlet-name>AvatarUpdate</servlet-name>
         <url-pattern>/avatarupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCourseController</servlet-name>
+        <url-pattern>/updatecourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSectionController</servlet-name>
+        <url-pattern>/updatecoursecontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserCourseController</servlet-name>

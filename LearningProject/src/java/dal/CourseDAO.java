@@ -5,6 +5,7 @@ package dal;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import Model.Course;
+import Model.Section;
 import Model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,40 @@ public class CourseDAO extends DBContext {
         }
         return courses;
     }
-
+    
+    public Course getAllCourseInformation(int courseId){
+        try(ResultSet rs = executeQuery("SELECT [CourseName],"
+                + "[DateCreate],"
+                + "[AuthorID],"
+                + "[Category],"
+                + "[NumberEnrolled],"
+                + "[CoursePrice],"
+                + "[CourseImage],"
+                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
+            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getByte("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void disableCourse(int courseId){
+        try {
+            executeUpdate("UPDATE [dbo].[Course] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void createClone(int courseId){
+        try {
+            Course course = getAllCourseInformation(courseId);
+            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            
+        } catch (Exception e) {
+        }
+    }
+    
     public ArrayList<Course> getAllUserCourse(String username) {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
