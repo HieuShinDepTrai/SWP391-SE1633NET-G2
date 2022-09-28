@@ -6,6 +6,7 @@ package dal;
 
 import Model.User;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
@@ -26,7 +27,12 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
+<<<<<<< HEAD
+                u.getEmail(),
+                u.getAvatar()
+=======
                 u.getIsDisable()
+>>>>>>> 42832c2b88003c8e008140363e15812c1e0263f2
         );
     }
 
@@ -96,7 +102,7 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
     public User getAllUserInformationByID(int userID) {
         try ( ResultSet rs = executeQuery("SELECT [UserName],"
                 + " [FirstName],"
@@ -222,4 +228,25 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+    public void insertIntoUserCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
+                    + ",?)",
+                    UserID, CourseID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unenrollCourse(int UserID, int CourseID) {
+        try {
+            executeQuery("DELETE FROM [User_Course] WHERE UserID = ? AND CourseID = ?",
+                    UserID, CourseID);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

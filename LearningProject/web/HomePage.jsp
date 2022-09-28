@@ -94,7 +94,7 @@
                         </c:if>
                         <c:if test="${user!=null}">
                             <div class="avatar" onclick="event.stopPropagation()">
-                                <img src="assets/img/user.png" alt="">
+                                <img src="${avatar}" alt="">                                
                                 <div class="account-menu">
                                     <div class="menu-content">
                                         <div class="menu-element">
@@ -240,7 +240,7 @@
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
                                                     <form id="enroll" action="enroll" method="POST">                                                        
-                                                        <a href="#" onclick="document.getElementById('enroll').submit()">Enroll</a>
+                                                        <input type="submit" value="Enroll">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
                                                     </form>
                                                 </c:if>
