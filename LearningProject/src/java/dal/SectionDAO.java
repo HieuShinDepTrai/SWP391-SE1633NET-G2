@@ -23,7 +23,7 @@ public class SectionDAO extends DBContext{
     
     public ArrayList<Section> getAllSectionOfCourse(int courseid){
         ArrayList<Section> sectionlist = new ArrayList<Section>();
-        try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = 1", courseid)){
+        try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = 0", courseid)){
             while(rs.next()){
                 sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getByte("isDisable")));
             }
