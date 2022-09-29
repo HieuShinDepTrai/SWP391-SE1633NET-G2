@@ -15,9 +15,9 @@ import java.sql.ResultSet;
  */
 public class UserDAO extends DBContext {
 
-     public void addUser(User u) {
-        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
-                u.getUserName(),
+    public void addUser(User u) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[User]([Username], [Password], [Email], [Firstname], [LastName], [DoB], [Role], [Balance], [BankNumber], [BankName], [isDisable]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",  u.getUserName(),
                 u.getPassword(),
                 u.getEmail(),
                 u.getFirstName(),
@@ -27,8 +27,10 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-                u.getIsDisable()
-        );
+                0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addGoogleUser(User u) {
@@ -53,7 +55,7 @@ public class UserDAO extends DBContext {
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
-                + "           ,?)           \n", 
+                + "           ,?)           \n",
                 u.getFirstName(),
                 u.getLastName(),
                 u.getEmail(),

@@ -27,23 +27,27 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDAO userDAO = new UserDAO();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        try {
+            UserDAO userDAO = new UserDAO();
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
-        if (userDAO.checkLogin(username, SHA256.SHA256(password))) {
-            // save into session
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            session.setAttribute("user", userDAO.getAllUserInformation(username));            
-            response.sendRedirect("home");
-        } else {
-            if (userDAO.isAccountExist(username)) {
-                request.setAttribute("result", "Wrong password, please try again!");
+            if (userDAO.checkLogin(username, SHA256.SHA256(password))) {
+                // save into session
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("user", userDAO.getAllUserInformation(username));
+                response.sendRedirect("home");
             } else {
-                request.setAttribute("result", "Login Failed, your account does not exist!!");
+                if (userDAO.isAccountExist(username)) {
+                    request.setAttribute("result", "Wrong password, please try again!");
+                } else {
+                    request.setAttribute("result", "Login Failed, your account does not exist!!");
+                }
+                doGet(request, response);
             }
-            doGet(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
