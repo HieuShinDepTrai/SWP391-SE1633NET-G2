@@ -56,6 +56,8 @@ public class AvatarUpdate extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String avatar = request.getParameter("avatar");
+//        String[] subStrings = avatar.split(",");
+//        String base64avatar = subStrings[1];
         
         User user = new User();
         user.setUserId(((User) (request.getSession().getAttribute("user"))).getUserId());
