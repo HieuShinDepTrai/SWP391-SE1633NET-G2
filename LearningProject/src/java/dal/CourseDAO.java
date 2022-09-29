@@ -107,6 +107,7 @@ public class CourseDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             Course c = new Course();
             if (rs.next()) {
+                c.setCourseID(courseId);
                 c.setCourseImage(rs.getNString("CourseName"));
                 c.setDateCreate(rs.getTimestamp("DateCreate"));
                 c.setAuthorID(rs.getInt("AuthorID"));
