@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class SectionDAO extends DBContext{
-    public void disableSection(int sectionId){
+    public void disableSection(int courseId){
         try {
-            executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", sectionId);
+            executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,7 +25,7 @@ public class SectionDAO extends DBContext{
         ArrayList<Section> sectionlist = new ArrayList<Section>();
         try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = 0", courseid)){
             while(rs.next()){
-                sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getBoolean("isDisable")));
+                sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getByte("isDisable")));
             }
         }
         catch(Exception e){

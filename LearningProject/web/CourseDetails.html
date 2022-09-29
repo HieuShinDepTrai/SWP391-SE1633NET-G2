@@ -1,10 +1,3 @@
-<%-- 
-    Document   : CourseDetail
-    Created on : Sep 29, 2022, 4:55:34 PM
-    Author     : vuman
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -531,7 +524,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+              <h5 class="modal-title fw-bold" id="exampleModalLabel">Feedback</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -540,21 +533,29 @@
               ></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                  <div class="col-12">
-                    <h5 class="mb-3">Rating</h5>
-                    <div class="star-rating mb-3">
-                      <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                      <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                      <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                      <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                      <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                    </div>
-                    <input type="text" class="d-none" value="0" id="rate-star">
-                    <h5 class="mb-3">Feedback</h5>
-                    <textarea name="" id="" style="width: 100%; height: 200px;"></textarea>
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="mb-3">Rating</h5>
+                  <!-- <select name="" id="" class="form-select" aria-label="Default select example"> 
+                  <option selected>Open this select menu</option>
+                  <option value="">1 star</option>
+                  <option value="">2 star</option>
+                  <option value="">3 star</option>
+                  <option value="">4 star</option>
+                  <option value="">5 star</option>
+                </select> -->
+                  <div class="star-rating mb-3">
+                    <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                    <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                    <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                    <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                    <i class="fa-solid fa-star fs-3 star-rating-element"></i>
                   </div>
+                  <input type="text" value="0" id="rate-star" class="d-none">
+                  <h5 class="mb-3">Feedback</h5>
+                  <textarea name="" id="" style="width: 100%; height: 200px; outline: none;"></textarea>
                 </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -632,4 +633,3 @@
     ></script>
   </body>
 </html>
-
