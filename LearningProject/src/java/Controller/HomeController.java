@@ -5,6 +5,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import Model.Course;
+import Model.User;
 import dal.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,6 +77,12 @@ public class HomeController extends HttpServlet {
         } catch (Exception e) {
         }
 
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User user = (User) session.getAttribute("user");
+            String avatar = user.getAvatar();
+            request.setAttribute("avatar", avatar);
+        }
         request.setAttribute("courses", courses);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }

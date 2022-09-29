@@ -57,7 +57,7 @@ public class CourseDAO extends DBContext {
                 + "[CoursePrice],"
                 + "[CourseImage],"
                 + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
-            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getByte("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getBoolean("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -75,8 +75,19 @@ public class CourseDAO extends DBContext {
     public void createClone(int courseId){
         try {
             Course course = getAllCourseInformation(courseId);
-            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            SectionDAO sd = new SectionDAO();
+            LessonDAO ld = new LessonDAO();
+            DocsDAO dd = new DocsDAO();
+            VideoDAO vd = new VideoDAO();
+            QuizDAO qd = new QuizDAO();
+            QuestionDAO qtd = new QuestionDAO();
+            AnswerDAO ad = new AnswerDAO();
             
+            ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
+            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 0);
+            for (Section section : sectionlist) {
+                executeUpdate("INSERT INTO [dbo].[Section] VALUES(?, ?, ?, ?)", section.getSectionId() * (-1), courseId * (-1), section.getSectionName(), 0);
+            }
         } catch (Exception e) {
         }
     }
@@ -85,11 +96,11 @@ public class CourseDAO extends DBContext {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
         try {
-            ResultSet rs = executeQuery("select c.CourseID, c.CourseName, c.DateCreate, c.AuthorID, c.Category, c.NumberEnrolled, c.CoursePrice, c.CourseImage\n"
+            ResultSet rs = executeQuery("select c.CourseID, c.CourseName, c.DateCreate, c.AuthorID, c.Category, c.NumberEnrolled, c.CoursePrice, c.CourseImage, uc.Progress\n"
                     + "from [Course] c\n"
                     + "inner join [User_Course] uc on c.CourseID=uc.CourseID\n"
                     + "inner join [User] u on u.UserID = uc.UserID\n"
-                    + "where u.Username=?", username);
+                    + "where u.Username= ?", username);
             while (rs.next()) {
                 Course c = new Course();
                 c.setCourseID(rs.getInt("CourseID"));
@@ -100,6 +111,7 @@ public class CourseDAO extends DBContext {
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 c.setCoursePrice(rs.getDouble("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
+                c.setCourseProgress(rs.getDouble("Progress"));
                 courseList.add(c);
             }
         } catch (Exception e) {
