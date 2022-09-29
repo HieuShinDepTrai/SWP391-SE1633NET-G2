@@ -62,8 +62,31 @@ public class CourseDAO extends DBContext {
                 + "[NumberEnrolled],"
                 + "[CoursePrice],"
                 + "[CourseImage],"
-                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
-            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getBoolean("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ?", courseId)){
+            double price = 0;
+            String image = "";
+            price = rs.getDouble("CoursePrice");
+            
+            if(rs.wasNull()){
+                price = 0;
+            }
+            if(rs.getString("CourseImage") != null){
+                image = rs.getString("CourseImage");
+            }
+            if(rs.next()){
+                return new Course(
+                        courseId, 
+                        rs.getNString("CourseName"), 
+                        rs.getTimestamp("DateCreate"), 
+                        rs.getInt("AuthorID"), 
+                        rs.getNString("Category"), 
+                        rs.getInt("NumberEnrolled"), 
+                        price, 
+                        image, 
+                        rs.getBoolean("isDisable"), 
+                        new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID"))
+                );
+            }
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -23,10 +23,11 @@ public class SectionDAO extends DBContext{
     
     public ArrayList<Section> getAllSectionOfCourse(int courseid){
         ArrayList<Section> sectionlist = new ArrayList<Section>();
-        try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = 0", courseid)){
+        try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = ?", courseid, 0)){
             while(rs.next()){
                 sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getBoolean("isDisable")));
             }
+            return sectionlist;
         }
         catch(Exception e){
             e.printStackTrace();
