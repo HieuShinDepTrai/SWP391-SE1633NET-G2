@@ -12,12 +12,12 @@ public class Section {
     private int sectionId;
     private int courseId;
     private String sectionName;
-    private boolean isDisable;
+    private byte isDisable;
 
     public Section() {
     }
 
-    public Section(int sectionId, int courseId, String sectionName, boolean isDisable) {
+    public Section(int sectionId, int courseId, String sectionName, byte isDisable) {
         this.sectionId = sectionId;
         this.courseId = courseId;
         this.sectionName = sectionName;
@@ -48,11 +48,11 @@ public class Section {
         this.sectionName = sectionName;
     }
 
-    public boolean getIsDisable() {
+    public byte getIsDisable() {
         return isDisable;
     }
 
-    public void setIsDisable(boolean isDisable) {
+    public void setIsDisable(byte isDisable) {
         this.isDisable = isDisable;
     }
     

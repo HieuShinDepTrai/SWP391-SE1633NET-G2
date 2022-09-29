@@ -12,13 +12,13 @@ public class Lesson {
     private int lessonId;
     private int sectionId;
     private String lessonName;
-    private boolean isDisable;
+    private byte isDisable;
     private String type;
 
     public Lesson() {
     }
 
-    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type) {
+    public Lesson(int lessonId, int sectionId, String lessonName, byte isDisable, String type) {
         this.lessonId = lessonId;
         this.sectionId = sectionId;
         this.lessonName = lessonName;
@@ -50,11 +50,11 @@ public class Lesson {
         this.lessonName = lessonName;
     }
 
-    public boolean getIsDisable() {
+    public byte getIsDisable() {
         return isDisable;
     }
 
-    public void setIsDisable(boolean isDisable) {
+    public void setIsDisable(byte isDisable) {
         this.isDisable = isDisable;
     }
 
