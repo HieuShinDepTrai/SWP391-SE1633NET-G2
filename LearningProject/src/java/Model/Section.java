@@ -56,5 +56,4 @@ public class Section {
         this.isDisable = isDisable;
     }
 
-    
 }
