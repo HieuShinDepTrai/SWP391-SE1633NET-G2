@@ -27,6 +27,9 @@
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
         </style>
+
+        <script src="assets/js/account_profile.js"></script>
+
     </head>
 
     <body>
@@ -429,7 +432,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-        <script src="assets/js/account_profile.js"></script>
     </body>
 
     <footer class="new_footer_area bg_color">
