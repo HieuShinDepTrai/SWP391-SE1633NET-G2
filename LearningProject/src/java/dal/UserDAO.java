@@ -200,6 +200,7 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
