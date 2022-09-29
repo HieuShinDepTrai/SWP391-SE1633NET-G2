@@ -25,8 +25,9 @@ public class SectionDAO extends DBContext{
         ArrayList<Section> sectionlist = new ArrayList<Section>();
         try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = 0", courseid)){
             while(rs.next()){
-                sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getByte("isDisable")));
+                sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getBoolean("isDisable")));
             }
+            return sectionlist;
         }
         catch(Exception e){
             e.printStackTrace();
