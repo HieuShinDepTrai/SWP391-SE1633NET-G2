@@ -27,6 +27,7 @@ public class SectionDAO extends DBContext{
             while(rs.next()){
                 sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getBoolean("isDisable")));
             }
+            return sectionlist;
         }
         catch(Exception e){
             e.printStackTrace();
