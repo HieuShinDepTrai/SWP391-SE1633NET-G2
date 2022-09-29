@@ -56,7 +56,7 @@ public class BecomeMentorController extends HttpServlet {
             else if(!valid.checkBirthDay(date)){
                 request.setAttribute("result", "Bạn phải trên 16 tuổi mới có thể đăng ký tài khoản");
             }else {
-                User user = new User("", "", "", "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "Mentor", bankNum, bankName);
+                User user = new User("", "", "", "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "Mentor", bankNum, bankName, false);
                 userDAO.addUser(user);
                 response.sendRedirect(request.getContextPath() + "/login");
             }

@@ -22,12 +22,14 @@ public class Course {
     private int NumberEnrolled;
     private double CoursePrice;
     private String CourseImage;
+    private boolean isDisable;
     private User Author;
+    private Double CourseProgress;
 
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, User Author) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -36,10 +38,25 @@ public class Course {
         this.NumberEnrolled = NumberEnrolled;
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
+        this.isDisable = isDisable;
         this.Author = Author;
     }
 
-    
+    public Course(int CourseID, String CourseName, String Category, Double CourseProgress) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.Category = Category;
+        this.CourseProgress = CourseProgress;
+    }
+
+   
+    public boolean getIsDisable() {
+        return isDisable;
+    }
+
+    public void setIsDisable(boolean isDisable) {
+        this.isDisable = isDisable;
+    }
 
     public int getCourseID() {
         return CourseID;
@@ -111,6 +128,14 @@ public class Course {
 
     public void setAuthor(User Author) {
         this.Author = Author;
+    }
+
+    public Double getCourseProgress() {
+        return CourseProgress;
+    }
+
+    public void setCourseProgress(Double CourseProgress) {
+        this.CourseProgress = CourseProgress;
     }
     
 }
