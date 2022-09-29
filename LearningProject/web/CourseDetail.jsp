@@ -1,3 +1,10 @@
+<%-- 
+    Document   : CourseDetail
+    Created on : Sep 29, 2022, 4:55:34 PM
+    Author     : vuman
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -625,3 +632,4 @@
     ></script>
   </body>
 </html>
+
