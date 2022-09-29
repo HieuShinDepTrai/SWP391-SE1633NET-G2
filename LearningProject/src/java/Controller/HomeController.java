@@ -7,6 +7,7 @@ package Controller;
 import Model.Course;
 import Model.User;
 import dal.CourseDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,6 +63,7 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
         ArrayList<Course> courses = cdao.ListAllCourses();
+
         HttpSession session = request.getSession();
 
         if (session.getAttribute("username") != null) {
@@ -74,13 +76,12 @@ public class HomeController extends HttpServlet {
                 courseIDs.add(course.getCourseID());
             }
 
-            // if (session != null) {
-            User user = (User) session.getAttribute("user");
-            String avatar = user.getAvatar();
-            request.setAttribute("avatar", avatar);
-            //}
-
             request.setAttribute("courseIDs", courseIDs);
+
+            User user = (User) session.getAttribute("user");
+            UserDAO userDAO = new UserDAO();
+            user = userDAO.getAllUserInformation(user.getUserName());
+            request.setAttribute("user", user);
         }
 
         request.setAttribute("courses", courses);
