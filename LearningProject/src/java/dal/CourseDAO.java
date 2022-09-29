@@ -93,6 +93,36 @@ public class CourseDAO extends DBContext {
         return null;
     }
     
+    public Course getCourseInformation(int courseId) {
+        try {
+            String sql = "SELECT [CourseName],"
+                + "[DateCreate],"
+                + "[AuthorID],"
+                + "[Category],"
+                + "[NumberEnrolled],"
+                + "[CoursePrice],"
+                + "[CourseImage],"
+                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            Course c = new Course();
+            if (rs.next()) {
+                c.setCourseImage(rs.getNString("CourseName"));
+                c.setDateCreate(rs.getTimestamp("DateCreate"));
+                c.setAuthorID(rs.getInt("AuthorID"));
+                c.setCategory(rs.getString("Category"));
+                c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
+                c.setCoursePrice(rs.getDouble("CoursePrice"));
+                c.setCourseImage(rs.getString("CourseImage"));
+                c.setIsDisable(rs.getBoolean("isDisable"));
+            }
+            return c;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public void disableCourse(int courseId){
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [isDisable] = 1 WHERE [CourseID] = ? ", courseId);

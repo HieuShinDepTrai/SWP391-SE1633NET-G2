@@ -65,7 +65,7 @@ public class CourseDetailsController extends HttpServlet {
         LessonDAO lessonDAO = new LessonDAO();
         int id = Integer.parseInt(request.getParameter("id"));
         
-        Course course = cdao.getAllCourseInformation(id);
+        Course course = cdao.getCourseInformation(id);
         ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
         ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
         for (Section section : sectionList) {
@@ -74,13 +74,12 @@ public class CourseDetailsController extends HttpServlet {
                 lessonList.add(lesson);
             }
         }
-        
         request.setAttribute("course", course);
         request.setAttribute("sectionList", sectionList);
         request.setAttribute("lessonList", lessonList);
         
         request.getRequestDispatcher("CourseDetails.jsp").forward(request, response);
-        
+        response.getWriter().print(id);
     } 
 
     /** 
