@@ -147,7 +147,7 @@
                 Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên
                 xem các videos tại khóa này trước nhé.
               </p>
-              <div class="course-objectives">
+<!--              <div class="course-objectives">
                 <div class="course-objective-title">Bạn sẽ học được gì?</div>
                 <div class="course-objective-list">
                   <div class="objective">
@@ -167,7 +167,7 @@
                     <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
                   </div>
                 </div>
-              </div>
+              </div>-->
 
               <!-- Course Agenda -->
               <div class="course-agenda">
