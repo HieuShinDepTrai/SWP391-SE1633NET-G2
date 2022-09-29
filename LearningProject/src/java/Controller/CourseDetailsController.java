@@ -5,6 +5,9 @@
 
 package Controller;
 
+import Model.Course;
+import Model.Lesson;
+import Model.Section;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
@@ -14,6 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -59,7 +63,18 @@ public class CourseDetailsController extends HttpServlet {
         CourseDAO cdao = new CourseDAO();
         SectionDAO sectionDao = new SectionDAO();
         LessonDAO lessonDAO = new LessonDAO();
+        int id = Integer.parseInt(request.getParameter("id"));
+        
+        Course course = cdao.getAllCourseInformation(id);
+        ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
+        ArrayList<Lesson> lessonList = lessonDAO.getAllLessonOfSection(sectionList.get(0).getSectionId());
+        
+        request.setAttribute("course", course);
+        request.setAttribute("sectionList", sectionList);
+        request.setAttribute("lessonList", lessonList);
+        
         request.getRequestDispatcher("CourseDetails.jsp").forward(request, response);
+        
     } 
 
     /** 
