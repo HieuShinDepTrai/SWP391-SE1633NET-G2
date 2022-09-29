@@ -25,7 +25,7 @@ public class LessonDAO extends DBContext{
         ArrayList<Lesson> lessonlist = new ArrayList<Lesson>();
         try(ResultSet rs = executeQuery("SELECT [LessonID], [LessonName], [isDisable], [type] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)){
             while(rs.next()){
-                lessonlist.add(new Lesson(rs.getInt("LessonID"), sectionId, rs.getNString("LessonName"), rs.getByte("isDisable"), rs.getString("types")));
+                lessonlist.add(new Lesson(rs.getInt("LessonID"), sectionId, rs.getNString("LessonName"), rs.getBoolean("isDisable"), rs.getString("types")));
             }
         }
         catch(Exception e){

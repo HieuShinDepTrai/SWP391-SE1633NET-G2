@@ -27,7 +27,7 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-                u.getIsDisable()
+                0
         );
     }
 
