@@ -27,7 +27,7 @@ public class UserDAO extends DBContext {
                 0,
                 u.getBankNum(),
                 u.getBankName(),
-                u.getIsDisable()
+                0
         );
     }
 
@@ -200,6 +200,7 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
@@ -261,8 +262,7 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
-                    + ",?)",
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID, isFavourite, isStudied) VALUES (?, ?, 0, 0)",
                     UserID, CourseID);
         } catch (Exception e) {
             e.printStackTrace();
