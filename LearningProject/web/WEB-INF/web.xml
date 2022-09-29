@@ -16,6 +16,14 @@
         <servlet-name>UserCourseController</servlet-name>
         <servlet-class>Controller.UserCourse.UserCourseController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EnrollController</servlet-name>
+        <servlet-class>Controller.EnrollController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnenrollController</servlet-name>
+        <servlet-class>Controller.UnenrollController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
         <url-pattern>/login-google</url-pattern>
@@ -23,6 +31,14 @@
     <servlet>
         <servlet-name>AvatarUpdate</servlet-name>
         <servlet-class>Controller.AvatarUpdate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCourseController</servlet-name>
+        <servlet-class>Controller.UpdateCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSectionController</servlet-name>
+        <servlet-class>Controller.UpdateSectionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ResetPass</servlet-name>
@@ -93,8 +109,24 @@
         <url-pattern>/avatarupdate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdateCourseController</servlet-name>
+        <url-pattern>/updatecourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSectionController</servlet-name>
+        <url-pattern>/updatecoursecontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UserCourseController</servlet-name>
         <url-pattern>/mycourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnrollController</servlet-name>
+        <url-pattern>/enroll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnenrollController</servlet-name>
+        <url-pattern>/unenroll</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
