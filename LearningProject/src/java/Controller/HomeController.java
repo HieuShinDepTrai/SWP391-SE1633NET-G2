@@ -62,12 +62,27 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
         ArrayList<Course> courses = cdao.ListAllCourses();
-        HttpSession session = request.getSession(false);
-        if (session != null) {
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("username") != null) {
+            String username = session.getAttribute("username").toString();
+
+            ArrayList<Course> courseList = cdao.getAllUserCourse(username);
+            ArrayList<Integer> courseIDs = new ArrayList<>();
+
+            for (Course course : courseList) {
+                courseIDs.add(course.getCourseID());
+            }
+
+            // if (session != null) {
             User user = (User) session.getAttribute("user");
             String avatar = user.getAvatar();
             request.setAttribute("avatar", avatar);
+            //}
+
+            request.setAttribute("courseIDs", courseIDs);
         }
+
         request.setAttribute("courses", courses);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
