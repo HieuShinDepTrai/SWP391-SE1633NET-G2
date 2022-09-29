@@ -24,6 +24,10 @@
         <servlet-name>UnenrollController</servlet-name>
         <servlet-class>Controller.UnenrollController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourseDetailsController</servlet-name>
+        <servlet-class>Controller.CourseDetailsController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
         <url-pattern>/login-google</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>UnenrollController</servlet-name>
         <url-pattern>/unenroll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseDetailsController</servlet-name>
+        <url-pattern>/CourseDetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
