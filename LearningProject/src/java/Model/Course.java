@@ -49,7 +49,7 @@ public class Course {
         this.CourseProgress = CourseProgress;
     }
 
-    
+   
     public boolean getIsDisable() {
         return isDisable;
     }

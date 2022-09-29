@@ -15,7 +15,7 @@ import java.sql.ResultSet;
  */
 public class UserDAO extends DBContext {
 
-    public void addUser(User u) {
+     public void addUser(User u) {
         execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
                 u.getUserName(),
                 u.getPassword(),
@@ -29,6 +29,41 @@ public class UserDAO extends DBContext {
                 u.getBankName(),
                 0
         );
+    }
+
+    public void addGoogleUser(User u) {
+        execute("INSERT INTO [dbo].[User]\n"
+                + "           ([FirstName]\n"
+                + "           ,[LastName]\n"
+                + "           ,[Email]           \n"
+                + "           ,[DoB]\n"
+                + "           ,[Balance]\n"
+                + "           ,[Avatar]\n"
+                + "           ,[Username]\n"
+                + "           ,[Password]\n"
+                + "           ,[Role]\n"
+                + "           ,[isDisable])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?)           \n", 
+                u.getFirstName(),
+                u.getLastName(),
+                u.getEmail(),
+                u.getDob(),
+                0,
+                u.getAvatar(),
+                u.getUserName(),
+                u.getPassword(),
+                u.getRole(),
+                0);
     }
 
     public User getAllUserInformation(String username) {
@@ -164,7 +199,8 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
-    
+
+
     public boolean checkLogin(String username, String password) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User] WHERE Username = ? AND Password = ?", username, password)) {
             return rs.next();
@@ -226,8 +262,7 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
-                    + ",?)",
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID, isFavourite, isStudied) VALUES (?, ?, 0, 0)",
                     UserID, CourseID);
         } catch (Exception e) {
             e.printStackTrace();
