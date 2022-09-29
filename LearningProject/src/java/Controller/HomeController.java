@@ -4,8 +4,6 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
-
 import Model.Course;
 import dal.CourseDAO;
 import java.io.IOException;
@@ -63,6 +61,21 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
         ArrayList<Course> courses = cdao.ListAllCourses();
+        try {
+            HttpSession ses = request.getSession();
+            String username = ses.getAttribute("username").toString();
+
+            ArrayList<Course> courseList = cdao.getAllUserCourse(username);
+            ArrayList<Integer> courseIDs = new ArrayList<>();
+
+            for (Course course : courseList) {
+                courseIDs.add(course.getCourseID());
+            }
+
+            request.setAttribute("courseIDs", courseIDs);
+        } catch (Exception e) {
+        }
+
         request.setAttribute("courses", courses);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }

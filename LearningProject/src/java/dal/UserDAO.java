@@ -226,8 +226,7 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
-                    + ",?)",
+            executeQuery("INSERT INTO [User_Course](UserID, CourseID, isFavourite, isStudied) VALUES (?, ?, 0, 0)",
                     UserID, CourseID);
         } catch (Exception e) {
             e.printStackTrace();
