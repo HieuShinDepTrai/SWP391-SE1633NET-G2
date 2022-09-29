@@ -5,7 +5,7 @@
 
 package Controller;
 
-import dal.SectionDAO;
+import dal.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -25,11 +25,11 @@ public class UpdateSectionController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SectionDAO sd = new SectionDAO();
+        CourseDAO cd = new CourseDAO();
         int sectionId = Integer.parseInt(request.getParameter("sectionid"));
         if(request.getParameter("button") != null){
             if(request.getParameter("button").equals("delete")){
-                sd.disableSection(sectionId);
+                cd.disableCourse(sectionId);
             }
             else{
                 response.sendRedirect("updatesection");

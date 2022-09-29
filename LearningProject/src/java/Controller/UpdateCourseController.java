@@ -27,12 +27,10 @@ public class UpdateCourseController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CourseDAO cd = new CourseDAO();
         int courseId = Integer.parseInt(request.getParameter("courseid"));
-        cd.createClone(courseId);
-        request.setAttribute("Course", cd.getAllCourseInformation(courseId * (-1)));
+        request.setAttribute("Course", cd.getAllCourseInformation(courseId));
         if(request.getParameter("button") != null){
             if(request.getParameter("button").equals("delete")){
                 cd.disableCourse(courseId);
-                response.sendRedirect("home");
             }
             else{
                 response.sendRedirect("updatesection");

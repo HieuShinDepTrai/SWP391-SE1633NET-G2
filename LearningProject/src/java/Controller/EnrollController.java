@@ -5,17 +5,14 @@
 
 package Controller;
 
-import Model.Course;
-import dal.CourseDAO;
 import dal.UserDAO;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 /**
  *
@@ -25,24 +22,20 @@ public class EnrollController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        response.sendRedirect("home");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CourseDAO cd = new CourseDAO();
-        
         UserDAO u = new UserDAO();
         HttpSession ses = request.getSession();
-        String username = ses.getAttribute("username").toString();
         int CourseID = Integer.parseInt(request.getParameter("courseID"));
         
         int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-        ArrayList<Course> courseList = cd.getAllUserCourse(username);
-        request.setAttribute("courseList", courseList);
-               
+        
+        
         u.insertIntoUserCourse(UserID, CourseID);
         response.sendRedirect("home");                         
     }

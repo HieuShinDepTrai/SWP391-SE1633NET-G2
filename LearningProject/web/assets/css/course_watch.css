@@ -23,10 +23,6 @@ p {
     margin-bottom: 0px;
 }
 
-select {
-    font-family: 'FontAwesome', 'sans-serif';
-  }
-
 #main {
     overflow: hidden;
     height: 100vh;
