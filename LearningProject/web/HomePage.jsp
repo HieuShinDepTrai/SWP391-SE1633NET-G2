@@ -141,7 +141,7 @@
                         <p class="button-title">Home</p>
                     </a>
                     <c:if test="${user.role == 'User'}">
-                        <a class="bar-button " href="#">
+                        <a class="bar-button " href="userdashboard">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">User Dashboard</p>
                         </a>
