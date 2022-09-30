@@ -53,28 +53,92 @@ public class CourseDAO extends DBContext {
         }
         return courses;
     }
-
-    public Course getAllCourseInformation(int courseId) {
+    
+//    public Course getAllCourseInformation(int courseId){
+//        try(ResultSet rs = executeQuery("SELECT [CourseName],"
+//                + "[DateCreate],"
+//                + "[AuthorID],"
+//                + "[Category],"
+//                + "[NumberEnrolled],"
+//                + "[CoursePrice],"
+//                + "[CourseImage],"
+//                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ", courseId)){
+//            return new Course(courseId, rs.getNString("CourseName"), rs.getTimestamp("DateCreate"), rs.getInt("AuthorID"), rs.getNString("Category"), rs.getInt("NumberEnrolled"), rs.getDouble("CoursePrice"), rs.getString("CourseImage"), rs.getBoolean("isDisable"), new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//    public Course getAllCourseInformation(int courseId){
+//        try(ResultSet rs = executeQuery("SELECT [CourseName],"
+//                + "[DateCreate],"
+//                + "[AuthorID],"
+//                + "[Category],"
+//                + "[NumberEnrolled],"
+//                + "[CoursePrice],"
+//                + "[CourseImage],"
+//                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ?", courseId)){
+//            double price = 0;
+//            String image = "";
+//            price = rs.getDouble("CoursePrice");
+//            
+//            if(rs.wasNull()){
+//                price = 0;
+//            }
+//            if(rs.getString("CourseImage") != null){
+//                image = rs.getString("CourseImage");
+//            }
+//            if(rs.next()){
+//                return new Course(
+//                        courseId, 
+//                        rs.getNString("CourseName"), 
+//                        rs.getTimestamp("DateCreate"), 
+//                        rs.getInt("AuthorID"), 
+//                        rs.getNString("Category"), 
+//                        rs.getInt("NumberEnrolled"), 
+//                        price, 
+//                        image, 
+//                        rs.getBoolean("isDisable"), 
+//                        new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID"))
+//                );
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+    
+    public Course getCourseInformation(int courseId) {
         try {
-            ResultSet rs = executeQuery("SELECT [CourseName],"
-                    + "[DateCreate],"
-                    + "[AuthorID],"
-                    + "[Category],"
-                    + "[NumberEnrolled],"
-                    + "[CoursePrice],"
-                    + "[CourseImage],"
-                    + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = ?", courseId);
+            String sql = "SELECT [CourseName],"
+                + "[DateCreate],"
+                + "[AuthorID],"
+                + "[Category],"
+                + "[NumberEnrolled],"
+                + "[CoursePrice],"
+                + "[CourseImage],"
+                + "[isDisable], "
+                + "[Description], "
+                + "[Objectives],"
+                + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            Course c = new Course();
             if (rs.next()) {
-                Course course = new Course();
-                course.setCourseID(courseId);
-                course.setDateCreate(rs.getTimestamp("DateCreate"));
-                course.setAuthorID(rs.getInt("AuthorID"));
-                course.setCategory("Category");
-                course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
-                course.setCoursePrice(0);
-                course.setIsDisable(false);
-                return course;
+                c.setCourseID(courseId);
+                c.setCourseName(rs.getNString("CourseName"));
+                c.setDateCreate(rs.getTimestamp("DateCreate"));
+                c.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+                c.setCategory(rs.getString("Category"));
+                c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
+                c.setCoursePrice(rs.getDouble("CoursePrice"));
+                c.setCourseImage(rs.getString("CourseImage"));
+                c.setIsDisable(rs.getBoolean("isDisable"));
+                c.setDescription(rs.getString("Description"));
+                c.setObjectives(rs.getString("Objectives"));
+                c.setDifficulty(rs.getString("Difficulty"));
             }
+            return c;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +155,7 @@ public class CourseDAO extends DBContext {
 
     public void createClone(int courseId) {
         try {
-            Course course = getAllCourseInformation(courseId);
+            Course course = getCourseInformation(courseId);
             SectionDAO sd = new SectionDAO();
             LessonDAO ld = new LessonDAO();
             DocsDAO dd = new DocsDAO();

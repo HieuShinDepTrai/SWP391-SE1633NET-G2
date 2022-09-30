@@ -29,8 +29,7 @@ public class UserCourseController extends HttpServlet {
         String name = "";
         name = session.getAttribute("username").toString();
         ArrayList<Course> courseList = courseDao.getAllUserCourse(session.getAttribute("username").toString());
-        CourseDAO courseDAO = new CourseDAO();
-        Course course = courseDAO.getAllCourseInformation(1);
+        CourseDAO courseDAO = new CourseDAO();       
     }
 
     /**

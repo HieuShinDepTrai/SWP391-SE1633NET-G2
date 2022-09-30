@@ -93,8 +93,13 @@
                             <button class="btn btn-info"><a href="login" class="text-white fw-bold">Login</a></button>
                         </c:if>
                         <c:if test="${user!=null}">
-                            <div class="avatar" onclick="event.stopPropagation()">                                                       
-                                <img src="assets/img/user.png" alt=""/>
+                            <div class="avatar" onclick="event.stopPropagation()">
+                                <c:if test="${user.getAvatar() != null}">
+                                    <img src="${user.getAvatar()}" alt="">                                
+                                </c:if>
+                                <c:if test="${user.getAvatar() == null}">
+                                    <img src="assets/img/user.png">
+                                </c:if>
                                 <div class="account-menu">
                                     <div class="menu-content">
                                         <div class="menu-element">
@@ -240,7 +245,16 @@
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
                                                     <form id="enroll" action="enroll" method="POST">                                                        
-                                                        <input type="submit" value="Enroll">
+
+                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                            <input type="submit" value="Enroll">
+                                                        </c:if>
+
+                                                        <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                            <input type="submit" value="Go to Course">
+                                                        </c:if>
+
+
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
                                                     </form>
                                                 </c:if>
@@ -321,14 +335,14 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-                                                            $('.autoplay').slick({
-                                                                slidesToShow: 1,
-                                                                slidesToScroll: 1,
-                                                                autoplay: true,
-                                                                autoplaySpeed: 5000,
-                                                                speed: 1500,
-                                                                dots: true
-                                                            });
+                                $('.autoplay').slick({
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1,
+                                    autoplay: true,
+                                    autoplaySpeed: 5000,
+                                    speed: 1500,
+                                    dots: true
+                                });
         </script>
     </body>
 

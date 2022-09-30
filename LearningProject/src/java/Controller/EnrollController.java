@@ -33,8 +33,7 @@ public class EnrollController extends HttpServlet {
         int CourseID = Integer.parseInt(request.getParameter("courseID"));
         
         int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-        
-        
+               
         
         u.insertIntoUserCourse(UserID, CourseID);
         response.sendRedirect("home");                         
