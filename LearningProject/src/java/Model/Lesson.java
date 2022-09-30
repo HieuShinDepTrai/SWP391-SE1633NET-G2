@@ -71,7 +71,7 @@ public class Lesson {
         this.lessonName = lessonName;
     }
 
-    public boolean getIsDisable() {
+    public boolean isIsDisable() {
         return isDisable;
     }
 

@@ -299,14 +299,16 @@
                         <div class="row px-4">
                             <div class="">
                                 <h4 class="fw-bold mb-3">Course Feedback</h4>
-                                <p
-                                    class="mb-3 btn btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#Feedback"
-                                    onclick="rating()"
-                                    >
-                                    Post Feedback
-                                </p>
+                                <c:if test="${checkDup == true}">
+                                    <p
+                                        class="mb-3 btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#Feedback"
+                                        onclick="rating()"
+                                        >
+                                        Post Feedback
+                                    </p>
+                                </c:if>
                             </div>
                             <!-- Begin: Feedback -->
                             <div class="row col-8 mb-4">
@@ -497,41 +499,45 @@
                                 aria-label="Close"
                                 ></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h5 class="mb-3">Rating</h5>
-                                    <!-- <select name="" id="" class="form-select" aria-label="Default select example"> 
-                                    <option selected>Open this select menu</option>
-                                    <option value="">1 star</option>
-                                    <option value="">2 star</option>
-                                    <option value="">3 star</option>
-                                    <option value="">4 star</option>
-                                    <option value="">5 star</option>
-                                  </select> -->
-                                    <div class="star-rating mb-3">
-                                        <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                        <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                        <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                        <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                        <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                        <form action="CourseDetails" method="POST">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="mb-3">Rating</h5>
+                                        <!-- <select name="" id="" class="form-select" aria-label="Default select example"> 
+                                        <option selected>Open this select menu</option>
+                                        <option value="">1 star</option>
+                                        <option value="">2 star</option>
+                                        <option value="">3 star</option>
+                                        <option value="">4 star</option>
+                                        <option value="">5 star</option>
+                                      </select> -->
+                                        <div class="star-rating mb-3">
+                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
+                                        </div>
+                                        <input type="text" name="star" value="0" id="rate-star" class="d-none">
+                                        <h5 class="mb-3">Feedback</h5>
+                                        <textarea name="feedback" id="" style="width: 100%; height: 200px; outline: none;"></textarea>
+                                        <input type="hidden" name="courseid" value="${course.getCourseID()}"/>
+
                                     </div>
-                                    <input type="text" value="0" id="rate-star" class="d-none">
-                                    <h5 class="mb-3">Feedback</h5>
-                                    <textarea name="" id="" style="width: 100%; height: 200px; outline: none;"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                                >
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">Save</button>
-                        </div>
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                    >
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
