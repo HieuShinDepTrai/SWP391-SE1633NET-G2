@@ -128,7 +128,6 @@ section {
 
 .course-objective-list .objective {
     display: flex;
-    align-items: center;
     min-width: 40%;
     width: 48%;
 }

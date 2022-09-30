@@ -4,6 +4,9 @@
     Author     : Dung
 --%>
 
+<%@page import="Model.Lesson"%>
+<%@page import="Model.Section"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,34 +90,46 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="avatar" onclick="event.stopPropagation()">
-                            <img src="assets/img/user.png" alt="" />
-                            <div class="account-menu">
-                                <div class="menu-content">
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-user"></i>
-                                        <a href="" class="menu-title">Trang cá nhân</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <a href="" class="menu-title">Cài đặt</a>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="menu-element">
-                                        Account Balance:
-                                        <a href="" class="menu-title">200.000đ</a>
-                                    </div>
-                                    <div class="menu-element menu-logout">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        <a href="" class="menu-title">Đăng xuất</a>
+                        <c:if test="${user==null}">
+                            <button class="btn btn-info"><a href="login" class="text-white fw-bold">Login</a></button>
+                        </c:if>
+                        <c:if test="${user!=null}">
+                            <div class="avatar" onclick="event.stopPropagation()">
+                                <c:if test="${user.getAvatar() != null}">
+                                    <img src="${user.getAvatar()}" alt="">                                
+                                </c:if>
+                                <c:if test="${user.getAvatar() == null}">
+                                    <img src="assets/img/user.png">
+                                </c:if>
+                                <div class="account-menu">
+                                    <div class="menu-content">
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-user"></i>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-list"></i>
+                                            <a href="" class="menu-title">Khóa học của tôi</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-gear"></i>
+                                            <a href="" class="menu-title">Cài đặt</a>
+                                        </div>
+                                        <div class="line">
+
+                                        </div>
+                                        <div class="menu-element">
+                                            Account Balance:
+                                            <a href="" class="menu-title">${user.getBalance()}</a>
+                                        </div>
+                                        <div class="menu-element menu-logout">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                            <a href="logout" class="menu-title">Đăng xuất</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </header>
@@ -147,30 +162,19 @@
                             <h2 class="course-details-title">${course.getCourseName()}</h2>
 
                             <p class="course-details-description">
-                                Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên
-                                xem các videos tại khóa này trước nhé.
+                                ${course.getDescription()}
                             </p>
-                            <!--              <div class="course-objectives">
-                                            <div class="course-objective-title">Bạn sẽ học được gì?</div>
-                                            <div class="course-objective-list">
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                            </div>
-                                          </div>-->
+                            <div class="course-objectives">
+                                <div class="course-objective-title">Bạn sẽ học được gì?</div>
+                                <div class="course-objective-list">
+                                    <c:forEach items="${objective}" var="obj">
+                                        <div class="objective">
+                                            <i class="fa-solid fa-check"></i>
+                                            <p>${obj}</p>
+                                        </div>
+                                    </c:forEach>                                            
+                                </div>
+                            </div>
 
                             <!-- Course Agenda -->
                             <div class="course-agenda">
@@ -207,7 +211,18 @@
                                                         <i class="fa-solid fa-plus"></i>
                                                         <p>${section.getSectionName()}</p>
                                                     </div>
-                                                    <div class="course-section-right">${lessonList.size()}</div>
+                                                    <%
+                                                        int count = 0;
+                                                    %>
+                                                    <c:forEach items="${lessonList}" var="lesson">
+                                                        <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                            <%
+                                                                count++;
+                                                            %>
+                                                        </c:if>
+                                                    </c:forEach>
+
+                                                    <div class="course-section-right"><%=count%> lesson</div>
                                                 </div>
                                                 <!-- Lesson content -->
                                                 <div class="course-section-content" style="display: none">
@@ -249,16 +264,21 @@
                                 <div class="course-details-thumbnail">
                                     <img src="assets/img/htmlcss.avif" alt="" />
                                 </div>
-                                <div class="course-details-price my-2">Free</div>
+                                <c:if test="${course.getCoursePrice() == 0}">
+                                   <div class="course-details-price my-2">Free</div> 
+                                </c:if>
+                                <c:if test="${course.getCoursePrice() != 0}">
+                                    <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
+                                </c:if>   
                                 <a href="#" class="enroll-button my-1">Enroll</a>
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>
-                                        Beginner
+                                        ${course.getDifficulty()}
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-video"></i>
-                                        This course have <span class="lessons">12</span> lessons
+                                        This course have <span class="lessons">${lessonList.size()}</span> lessons
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-clock"></i>

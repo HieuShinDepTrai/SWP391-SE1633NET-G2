@@ -62,6 +62,10 @@ public class CourseDetailsController extends HttpServlet {
         }
         
         Course course = cdao.getCourseInformation(id);
+        // Add course objectives
+        String courseObjectives = course.getObjectives();
+        String[] objective = courseObjectives.split("[/]+");
+        request.setAttribute("objective", objective);
         
         ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
         
