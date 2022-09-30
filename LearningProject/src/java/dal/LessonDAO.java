@@ -18,30 +18,18 @@ import java.util.logging.Logger;
  */
 public class LessonDAO extends DBContext {
 
-    public void addLessonVideo(Lesson lesson) {
+    public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL) {
         try {
-            String sql = "INSERT INTO [dbo].[Lesson] \n"
-                    + "([SectionID], [LessonName], [isDisable], [types], [isChecked]) \n"
-                    + "VALUES (?, ?, 0, Video, 0)";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, lesson.getSectionId());
-            stm.setString(2, lesson.getLessonName());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
+            execute("EXEC [sp_create_video] ?, ?, ?, ?", sectionId, lessonName, videoName, videoURL);
+        } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void addLessonDoc(Lesson lesson) {
+
+    public void addLessonDoc(int sectionId, String lessonName, String content) {
         try {
-            String sql = "INSERT INTO [dbo].[Lesson] \n"
-                    + "([SectionID], [LessonName], [isDisable], [types], [isChecked]) \n"
-                    + "VALUES (?, ?, 0, Docs, 0)";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, lesson.getSectionId());
-            stm.setString(2, lesson.getLessonName());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
+            execute("EXEC [sp_create_docs] ?, ?, ?", sectionId, lessonName, content);
+        } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -56,13 +44,12 @@ public class LessonDAO extends DBContext {
 
     public ArrayList<Lesson> getAllLessonOfSection(int sectionId) {
         ArrayList<Lesson> lessonlist = new ArrayList<Lesson>();
-        try(ResultSet rs = executeQuery("SELECT [LessonID], [LessonName], [isDisable], [types], [isChecked] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)){
-            while(rs.next()){
+        try ( ResultSet rs = executeQuery("SELECT [LessonID], [LessonName], [isDisable], [types], [isChecked] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)) {
+            while (rs.next()) {
                 lessonlist.add(new Lesson(rs.getInt("LessonID"), sectionId, rs.getNString("LessonName"), rs.getBoolean("isDisable"), rs.getString("types"), rs.getBoolean("isChecked")));
             }
             return lessonlist;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

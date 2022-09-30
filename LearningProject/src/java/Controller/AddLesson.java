@@ -46,6 +46,9 @@ public class AddLesson extends HttpServlet {
         String type = request.getParameter("type");
         
         if(type.compareTo("Video") == 0) {
+            String videotitle = request.getParameter("video_title");
+            String videolink = request.getParameter("video_url");
+            Lesson lesson = new Lesson();
             
         }
     } 
