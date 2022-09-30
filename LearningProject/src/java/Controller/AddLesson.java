@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Lesson;
+import dal.LessonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -41,15 +42,13 @@ public class AddLesson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String title = request.getParameter("lesson_tilte");
-        String content = request.getParameter("lesson_content");
         String type = request.getParameter("type");
         
         if(type.compareTo("Video") == 0) {
             String videotitle = request.getParameter("video_title");
             String videolink = request.getParameter("video_url");
-            Lesson lesson = new Lesson();
-            
+            LessonDAO ldao = new LessonDAO();
+            ldao.addLessonVideo(2, videotitle, videotitle, videolink);
         }
     } 
 

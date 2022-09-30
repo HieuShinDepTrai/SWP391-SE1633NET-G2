@@ -256,13 +256,13 @@
                                                     <label for="Lesson title">Video URL</label>
                                                     <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
-                                                <input type="text" value="Video" class="d-none">
+                                                <input type="text" value="Video" class="d-none" name="type">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save
+                                        <button type="submit" class="btn btn-primary">Save
                                             changes</button>
                                     </div>
                                 </div>
