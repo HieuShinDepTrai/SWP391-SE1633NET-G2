@@ -143,11 +143,22 @@
                             </div>
                             <div class="col-8">
                                 <h5 class="fw-bold">Overview</h5>
-                                <div class="row gy-3">
-                                    <div class="col-3">
+                                <div class="row gy-3">                                                                        
+                                    <div class="col-6">
                                         <div class="overview p-4">
                                             <div class="overview-header mb-2">
                                                 <h6>Course Enroll</h6>
+                                            </div>
+                                            <div class="overview-content d-flex justify-content-between">
+                                                <p>${allUserCourse}</p>
+                                                <i class="fa-solid fa-laptop overview-content-img"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="overview p-4">
+                                            <div class="overview-header mb-2">
+                                                <h6>Time studied</h6>
                                             </div>
                                             <div class="overview-content d-flex justify-content-between">
                                                 <p>02</p>
@@ -155,10 +166,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="overview p-4">
                                             <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
+                                                <h6>Blog details</h6>
                                             </div>
                                             <div class="overview-content d-flex justify-content-between">
                                                 <p>02</p>
@@ -166,10 +177,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <div class="overview p-4">
                                             <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
+                                                <h6>Quizzes detail</h6>
                                             </div>
                                             <div class="overview-content d-flex justify-content-between">
                                                 <p>02</p>
@@ -177,61 +188,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-3">
-                                        <div class="overview p-4">
-                                            <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
-                                            </div>
-                                            <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
-                                                <i class="fa-solid fa-laptop overview-content-img"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="overview p-4">
-                                            <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
-                                            </div>
-                                            <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
-                                                <i class="fa-solid fa-laptop overview-content-img"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="overview p-4">
-                                            <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
-                                            </div>
-                                            <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
-                                                <i class="fa-solid fa-laptop overview-content-img"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="overview p-4">
-                                            <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
-                                            </div>
-                                            <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
-                                                <i class="fa-solid fa-laptop overview-content-img"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="overview p-4">
-                                            <div class="overview-header mb-2">
-                                                <h6>Course Enroll</h6>
-                                            </div>
-                                            <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
-                                                <i class="fa-solid fa-laptop overview-content-img"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="col-4">
@@ -239,14 +196,15 @@
                                 <div class="row flex-column gy-2">
                                     <c:forEach var="course" items="${courseList}">
                                         <div class="col-12">
-                                            <div class="card shadow-sm overflow-hidden">
-                                                <img src="assets/img/user.png" alt=""/>
+                                            <div class="card shadow-sm overflow-hidden">                                                
                                                 <div class="row my-course g-0">
                                                     <div class="col-3">
                                                         <img src="https://images.unsplash.com/photo-1610360655260-decd32e267aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" style="width: 100%; height: 96px; object-fit: cover;">
                                                     </div>
                                                     <div class="col-9 px-3 m-auto">
-                                                        <div class="fw-bold mb-1">${course.getCourseName()}</div>
+                                                        <div class="fw-bold mb-1">
+                                                            <a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a>
+                                                        </div>
                                                         <div class="mb-2" style="font-size: 14px;">${course.getAuthor().getFirstName()}</div>
                                                         <div class="progress mb-2">
                                                             <div class="progress-bar" role="progressbar" style="width: ${course.getCourseProgress()}%;" aria-valuenow="${course.getCourseProgress()}" aria-valuemin="0" aria-valuemax="100">${course.getCourseProgress()}%</div>

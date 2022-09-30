@@ -7,6 +7,7 @@ package dal;
 import Model.Answer;
 import Model.Course;
 import Model.Docs;
+import Model.Feedback;
 import Model.Lesson;
 import Model.Question;
 import Model.Quiz;
@@ -53,7 +54,7 @@ public class CourseDAO extends DBContext {
         }
         return courses;
     }
-    
+
 //    public Course getAllCourseInformation(int courseId){
 //        try(ResultSet rs = executeQuery("SELECT [CourseName],"
 //                + "[DateCreate],"
@@ -107,20 +108,19 @@ public class CourseDAO extends DBContext {
 //        }
 //        return null;
 //    }
-    
     public Course getCourseInformation(int courseId) {
         try {
             String sql = "SELECT [CourseName],"
-                + "[DateCreate],"
-                + "[AuthorID],"
-                + "[Category],"
-                + "[NumberEnrolled],"
-                + "[CoursePrice],"
-                + "[CourseImage],"
-                + "[isDisable], "
-                + "[Description], "
-                + "[Objectives],"
-                + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
+                    + "[DateCreate],"
+                    + "[AuthorID],"
+                    + "[Category],"
+                    + "[NumberEnrolled],"
+                    + "[CoursePrice],"
+                    + "[CourseImage],"
+                    + "[isDisable], "
+                    + "[Description], "
+                    + "[Objectives],"
+                    + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             Course c = new Course();
@@ -166,7 +166,7 @@ public class CourseDAO extends DBContext {
 
             ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
 
-            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), course.getAuthorID(), course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 1);
+            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", courseId * -1, course.getCourseName(), course.getDateCreate(), "", course.getCategory(), course.getNumberEnrolled(), course.getCoursePrice(), course.getCourseImage(), 1);
 
             for (Section section : sectionlist) {
                 executeUpdate("INSERT INTO [dbo].[Section] VALUES(?, ?, ?, ?)", section.getSectionId() * (-1), courseId * (-1), section.getSectionName(), 0);
@@ -230,4 +230,28 @@ public class CourseDAO extends DBContext {
         }
         return courseList;
     }
+
+    public ArrayList<Feedback> getFeedBack(int courseID) {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<Feedback> feedbackList = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("select UserID, CourseRating, CourseFeedback from User_Course\n"
+                    + "where CourseID = ?", courseID);
+            while (rs.next()) {
+                Feedback feedback = new Feedback(userDAO.getAllUserInformationByID(rs.getInt("UserID")), rs.getInt("CourseRating"), rs.getString("CourseFeedback"));
+                feedbackList.add(feedback);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return feedbackList;
+    }
 }
+
+//SQL for getCurrentCourse
+//select top 10 *
+//from User_Lesson ul
+//inner join Lesson l on l.LessonID = ul.LessonID
+//inner join Section s on s.SectionID = l.SectionID
+//where s.CourseID = 5 and ul.UserID = 10 
+//order by ul.LessonID desc

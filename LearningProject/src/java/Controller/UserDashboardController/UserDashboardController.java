@@ -27,7 +27,8 @@ public class UserDashboardController extends HttpServlet {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
         String username = session.getAttribute("username").toString();
-        ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());
+        ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());                
+        request.setAttribute("allUserCourse", courseList.size());
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("UserDashboard.jsp").forward(request, response);
     }
@@ -35,7 +36,7 @@ public class UserDashboardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
     }
 
     @Override

@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Course;
+import Model.Feedback;
 import Model.Lesson;
 import Model.Section;
 import Model.User;
@@ -65,8 +66,8 @@ public class CourseDetailsController extends HttpServlet {
         // Add course objectives
         String courseObjectives = course.getObjectives();
         String[] objective = courseObjectives.split("[/]+");
-        request.setAttribute("objective", objective);
-        
+        request.setAttribute("objective", objective);        
+        ArrayList<Feedback> feedbackList = cdao.getFeedBack(id);
         ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
         
         ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
@@ -77,7 +78,7 @@ public class CourseDetailsController extends HttpServlet {
                 lessonList.add(lesson);
             }
         }
-        
+        request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), id));
         request.setAttribute("course", course);
         request.setAttribute("sectionList", sectionList);
