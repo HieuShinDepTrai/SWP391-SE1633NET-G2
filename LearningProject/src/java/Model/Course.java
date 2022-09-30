@@ -17,7 +17,6 @@ public class Course {
     private int CourseID;
     private String CourseName;
     private Timestamp DateCreate;
-    private int AuthorID;
     private String Category;
     private int NumberEnrolled;
     private double CoursePrice;
@@ -25,37 +24,40 @@ public class Course {
     private boolean isDisable;
     private User Author;
     private Double CourseProgress;
+    private String description;
+    private String objectives;
+    private String difficulty;
 
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, int AuthorID, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
-        this.AuthorID = AuthorID;
         this.Category = Category;
         this.NumberEnrolled = NumberEnrolled;
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
         this.isDisable = isDisable;
         this.Author = Author;
-    }
-
-    public Course(int CourseID, String CourseName, String Category, Double CourseProgress) {
-        this.CourseID = CourseID;
-        this.CourseName = CourseName;
-        this.Category = Category;
         this.CourseProgress = CourseProgress;
     }
 
-   
-    public boolean getIsDisable() {
-        return isDisable;
-    }
-
-    public void setIsDisable(boolean isDisable) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress, String description, String objectives, String difficulty) {
+        this.CourseID = CourseID;
+        this.CourseName = CourseName;
+        this.DateCreate = DateCreate;
+        this.Category = Category;
+        this.NumberEnrolled = NumberEnrolled;
+        this.CoursePrice = CoursePrice;
+        this.CourseImage = CourseImage;
         this.isDisable = isDisable;
+        this.Author = Author;
+        this.CourseProgress = CourseProgress;
+        this.description = description;
+        this.objectives = objectives;
+        this.difficulty = difficulty;
     }
 
     public int getCourseID() {
@@ -80,14 +82,6 @@ public class Course {
 
     public void setDateCreate(Timestamp DateCreate) {
         this.DateCreate = DateCreate;
-    }
-
-    public int getAuthorID() {
-        return AuthorID;
-    }
-
-    public void setAuthorID(int AuthorID) {
-        this.AuthorID = AuthorID;
     }
 
     public String getCategory() {
@@ -122,6 +116,14 @@ public class Course {
         this.CourseImage = CourseImage;
     }
 
+    public boolean isIsDisable() {
+        return isDisable;
+    }
+
+    public void setIsDisable(boolean isDisable) {
+        this.isDisable = isDisable;
+    }
+
     public User getAuthor() {
         return Author;
     }
@@ -137,5 +139,7 @@ public class Course {
     public void setCourseProgress(Double CourseProgress) {
         this.CourseProgress = CourseProgress;
     }
+
+    
     
 }
