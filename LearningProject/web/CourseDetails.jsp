@@ -162,30 +162,19 @@
                             <h2 class="course-details-title">${course.getCourseName()}</h2>
 
                             <p class="course-details-description">
-                                Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên
-                                xem các videos tại khóa này trước nhé.
+                                ${course.getDescription()}
                             </p>
-                            <!--              <div class="course-objectives">
-                                            <div class="course-objective-title">Bạn sẽ học được gì?</div>
-                                            <div class="course-objective-list">
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                              <div class="objective">
-                                                <i class="fa-solid fa-check"></i>
-                                                <p>Các kiến thức cơ bản, nền móng của ngành IT</p>
-                                              </div>
-                                            </div>
-                                          </div>-->
+                            <div class="course-objectives">
+                                <div class="course-objective-title">Bạn sẽ học được gì?</div>
+                                <div class="course-objective-list">
+                                    <c:forEach items="${objective}" var="obj">
+                                        <div class="objective">
+                                            <i class="fa-solid fa-check"></i>
+                                            <p>${obj}</p>
+                                        </div>
+                                    </c:forEach>                                            
+                                </div>
+                            </div>
 
                             <!-- Course Agenda -->
                             <div class="course-agenda">
@@ -222,17 +211,17 @@
                                                         <i class="fa-solid fa-plus"></i>
                                                         <p>${section.getSectionName()}</p>
                                                     </div>
-                                                        <%
-                                                            int count = 0;
-                                                        %>
-                                                        <c:forEach items="${lessonList}" var="lesson">
-                                                            <c:if test="${lesson.getSectionId() == section.getSectionId()}">
-                                                                <%
-                                                                    count++;
-                                                                %>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        
+                                                    <%
+                                                        int count = 0;
+                                                    %>
+                                                    <c:forEach items="${lessonList}" var="lesson">
+                                                        <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                            <%
+                                                                count++;
+                                                            %>
+                                                        </c:if>
+                                                    </c:forEach>
+
                                                     <div class="course-section-right"><%=count%> lesson</div>
                                                 </div>
                                                 <!-- Lesson content -->
@@ -275,16 +264,21 @@
                                 <div class="course-details-thumbnail">
                                     <img src="assets/img/htmlcss.avif" alt="" />
                                 </div>
-                                <div class="course-details-price my-2">Free</div>
+                                <c:if test="${course.getCoursePrice() == 0}">
+                                   <div class="course-details-price my-2">Free</div> 
+                                </c:if>
+                                <c:if test="${course.getCoursePrice() != 0}">
+                                    <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
+                                </c:if>   
                                 <a href="#" class="enroll-button my-1">Enroll</a>
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>
-                                        Beginner
+                                        ${course.getDifficulty()}
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-video"></i>
-                                        This course have <span class="lessons">12</span> lessons
+                                        This course have <span class="lessons">${lessonList.size()}</span> lessons
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-clock"></i>

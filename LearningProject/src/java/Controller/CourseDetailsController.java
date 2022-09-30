@@ -66,6 +66,11 @@ public class CourseDetailsController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         
         Course course = cdao.getCourseInformation(id);
+        // Add course objectives
+        String courseObjectives = course.getObjectives();
+        String[] objective = courseObjectives.split("[/]+");
+        request.setAttribute("objective", objective);
+        
         ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
         ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
         for (Section section : sectionList) {

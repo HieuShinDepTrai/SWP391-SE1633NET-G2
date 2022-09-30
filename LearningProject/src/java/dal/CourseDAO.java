@@ -79,7 +79,10 @@ public class CourseDAO extends DBContext {
                 + "[NumberEnrolled],"
                 + "[CoursePrice],"
                 + "[CourseImage],"
-                + "[isDisable] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
+                + "[isDisable], "
+                + "[Description], "
+                + "[Objectives],"
+                + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             Course c = new Course();
@@ -92,6 +95,9 @@ public class CourseDAO extends DBContext {
                 c.setCoursePrice(rs.getDouble("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
                 c.setIsDisable(rs.getBoolean("isDisable"));
+                c.setDescription(rs.getString("Description"));
+                c.setObjectives(rs.getString("Objectives"));
+                c.setDifficulty(rs.getString("Difficulty"));
             }
             return c;
         } catch (Exception e) {
