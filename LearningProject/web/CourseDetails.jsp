@@ -4,6 +4,9 @@
     Author     : Dung
 --%>
 
+<%@page import="Model.Lesson"%>
+<%@page import="Model.Section"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,34 +90,46 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="avatar" onclick="event.stopPropagation()">
-                            <img src="assets/img/user.png" alt="" />
-                            <div class="account-menu">
-                                <div class="menu-content">
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-user"></i>
-                                        <a href="" class="menu-title">Trang cá nhân</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <a href="" class="menu-title">Cài đặt</a>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="menu-element">
-                                        Account Balance:
-                                        <a href="" class="menu-title">200.000đ</a>
-                                    </div>
-                                    <div class="menu-element menu-logout">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        <a href="" class="menu-title">Đăng xuất</a>
+                        <c:if test="${user==null}">
+                            <button class="btn btn-info"><a href="login" class="text-white fw-bold">Login</a></button>
+                        </c:if>
+                        <c:if test="${user!=null}">
+                            <div class="avatar" onclick="event.stopPropagation()">
+                                <c:if test="${user.getAvatar() != null}">
+                                    <img src="${user.getAvatar()}" alt="">                                
+                                </c:if>
+                                <c:if test="${user.getAvatar() == null}">
+                                    <img src="assets/img/user.png">
+                                </c:if>
+                                <div class="account-menu">
+                                    <div class="menu-content">
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-user"></i>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-list"></i>
+                                            <a href="" class="menu-title">Khóa học của tôi</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-gear"></i>
+                                            <a href="" class="menu-title">Cài đặt</a>
+                                        </div>
+                                        <div class="line">
+
+                                        </div>
+                                        <div class="menu-element">
+                                            Account Balance:
+                                            <a href="" class="menu-title">${user.getBalance()}</a>
+                                        </div>
+                                        <div class="menu-element menu-logout">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                            <a href="logout" class="menu-title">Đăng xuất</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </header>
@@ -207,7 +222,18 @@
                                                         <i class="fa-solid fa-plus"></i>
                                                         <p>${section.getSectionName()}</p>
                                                     </div>
-                                                    <div class="course-section-right">${lessonList.size()}</div>
+                                                        <%
+                                                            int count = 0;
+                                                        %>
+                                                        <c:forEach items="${lessonList}" var="lesson">
+                                                            <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                                <%
+                                                                    count++;
+                                                                %>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        
+                                                    <div class="course-section-right"><%=count%> lesson</div>
                                                 </div>
                                                 <!-- Lesson content -->
                                                 <div class="course-section-content" style="display: none">
