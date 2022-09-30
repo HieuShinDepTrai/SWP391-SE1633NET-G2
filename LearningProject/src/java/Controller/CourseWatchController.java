@@ -78,9 +78,6 @@ public class CourseWatchController extends HttpServlet {
             for (Section section : listSection) {
                 ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
                 for (Lesson lesson : tmp) {
-                    int lessonSecond = lesson.getTime();
-                    int Minute = lessonSecond / 60;
-                    int Second = lessonSecond % 60;
                     listLesson.add(lesson);
                 }
             }

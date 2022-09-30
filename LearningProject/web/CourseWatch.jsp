@@ -174,7 +174,10 @@
                                                         </div>
                                                         <div class="course-lesson-child-footer">
                                                             <i class="fa-solid fa-circle-play"></i>
-                                                            03:15
+                                                            <%
+                                                                int lessonSecond = ${lesson.getTime()}
+                                                            %>
+                                                            03:25
                                                         </div>
                                                     </div>
                                                 </a>
