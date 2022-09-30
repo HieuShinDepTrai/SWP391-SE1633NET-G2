@@ -6,6 +6,7 @@ package Controller.ResetController;
 
 import utils.HMACSHA256;
 import dal.AccountDBContext;
+import dal.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -49,11 +50,19 @@ public class ResetPass extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String password = HMACSHA256.textToSHA256(request.getParameter("password"));
-            String email = getUserFromToken(request.getParameter("token"));
-            AccountDBContext accDB = new AccountDBContext();
-            accDB.update(email, password);           
-            request.getRequestDispatcher("PasswordResetSuccess.jsp").forward(request, response);
+            Validation val = new Validation();
+            String newpassword = request.getParameter("password");
+            if (val.checkPasswordFormat(newpassword)) {
+                String password = HMACSHA256.textToSHA256(newpassword);
+                String email = getUserFromToken(request.getParameter("token"));
+                AccountDBContext accDB = new AccountDBContext();
+                accDB.update(email, password);
+                request.getRequestDispatcher("PasswordResetSuccess.jsp").forward(request, response);
+            }else{
+                String status = "Password format wrong, please re-input password";
+                request.setAttribute("status", status);
+                doGet(request, response);
+            }
         } catch (Exception ex) {
             request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
         }
@@ -65,21 +74,24 @@ public class ResetPass extends HttpServlet {
 
             //Decode the token
             String decode = new String(decoder.decode(token));
+            //Base64(Payload);Signature
 
             //Split the decode token into payload and signature
             String[] decodeArr = decode.split(";");
-            String payload = new String(decoder.decode(decodeArr[0]));
             String sig = decodeArr[1];
-
-            //Split the payload and get the expire time, username
+            
+            //Split the payload and decode Base64 to get the expire time, username
+            String payload = new String(decoder.decode(decodeArr[0]));
             String[] sarray = payload.split("\\s");
             String email = sarray[1];
-            long exp = Long.parseLong(sarray[3]);
             AccountDBContext accDb = new AccountDBContext();
+            
+            
             String key = accDb.findOldPassWithEmail(email);
-            String sig2 = HMACSHA256.hmacWithJava(payload, key);
+            String checksig = HMACSHA256.hmacWithJava(payload, key);
+            long exp = Long.parseLong(sarray[3]);
             long now = new Date().getTime();
-            if (sig2.equals(sig) && exp > now) {
+            if (checksig.equals(sig) && exp > now) {
                 return true;
             }
         } catch (Exception ex) {
@@ -101,7 +113,7 @@ public class ResetPass extends HttpServlet {
 
         //Split the payload and get the expire time, username
         String[] sarray = payload.split("\\s");
-        String username = sarray[1];
-        return username;
+        String email = sarray[1];
+        return email;
     }
 }

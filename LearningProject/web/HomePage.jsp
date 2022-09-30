@@ -94,7 +94,12 @@
                         </c:if>
                         <c:if test="${user!=null}">
                             <div class="avatar" onclick="event.stopPropagation()">
-                                <img src="${avatar}" alt="">                                
+                                <c:if test="${user.getAvatar() != null}">
+                                    <img src="${user.getAvatar()}" alt="">                                
+                                </c:if>
+                                <c:if test="${user.getAvatar() == null}">
+                                    <img src="assets/img/user.png">
+                                </c:if>
                                 <div class="account-menu">
                                     <div class="menu-content">
                                         <div class="menu-element">
@@ -136,7 +141,7 @@
                         <p class="button-title">Home</p>
                     </a>
                     <c:if test="${user.role == 'User'}">
-                        <a class="bar-button " href="#">
+                        <a class="bar-button " href="userdashboard">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">User Dashboard</p>
                         </a>
@@ -222,7 +227,7 @@
                                             <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="course-title"><a href="#">${course.getCourseName()}</a></h5>
+                                            <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
                                             <div class="course-meta-info">
                                                 <div class="course-meta-author">
                                                     <div class="author-avatar">
@@ -240,7 +245,16 @@
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
                                                     <form id="enroll" action="enroll" method="POST">                                                        
-                                                        <input type="submit" value="Enroll">
+
+                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                            <input type="submit" value="Enroll">
+                                                        </c:if>
+
+                                                        <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                            <input type="submit" value="Go to Course">
+                                                        </c:if>
+
+
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
                                                     </form>
                                                 </c:if>
@@ -321,14 +335,14 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-                                                            $('.autoplay').slick({
-                                                                slidesToShow: 1,
-                                                                slidesToScroll: 1,
-                                                                autoplay: true,
-                                                                autoplaySpeed: 5000,
-                                                                speed: 1500,
-                                                                dots: true
-                                                            });
+                                $('.autoplay').slick({
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1,
+                                    autoplay: true,
+                                    autoplaySpeed: 5000,
+                                    speed: 1500,
+                                    dots: true
+                                });
         </script>
     </body>
 

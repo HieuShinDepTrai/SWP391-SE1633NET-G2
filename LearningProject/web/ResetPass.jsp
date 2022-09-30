@@ -28,11 +28,12 @@
                     <input type="password" id="password" name="password" onkeyup="validate_password()" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your new password">
                     <label for="password"  class="form-label" style="font-size: 14px; font-weight: 500; color: rgba(0, 0, 0, 0.7)">Confirm password</label>
                     <input type="password" id="confirm_password" onkeyup="validate_password()" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your new password">
+                    <p style="color:red">${status}</p>
                     <span id="wrong_pass_alert"></span>
-                    <input type="submit" class="btn btn-info w-100 mb-4 btnLogin" id="create" disabled="true" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">Reset password
+                    <input type="submit" class="btn btn-info w-100 mb-4 btnLogin" id="create" disabled="true" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;">
                     <input type="hidden" name="token" value="${requestScope.token}">      
                 </form>
-                <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;"><i class="fa-solid fa-arrow-left me-2"></i>Back to log in</p>
+                <p class="text-center" style="color:rgba(0, 0, 0, 0.5); font-size: 14px; font-weight: 500;"><i class="fa-solid fa-arrow-left me-2"></i><a href="login">Back to log in</a></p>
             </div>
         </div>
 

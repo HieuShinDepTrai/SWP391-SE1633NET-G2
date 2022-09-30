@@ -12,20 +12,41 @@ public class Lesson {
     private int lessonId;
     private int sectionId;
     private String lessonName;
-    private byte isDisable;
+    private boolean isDisable;
     private String type;
-
+    private boolean isChecked;
+    private int time;
+    
     public Lesson() {
     }
 
-    public Lesson(int lessonId, int sectionId, String lessonName, byte isDisable, String type) {
+    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type, boolean isChecked) {
         this.lessonId = lessonId;
         this.sectionId = sectionId;
         this.lessonName = lessonName;
         this.isDisable = isDisable;
         this.type = type;
+        this.isChecked = isChecked;
     }
 
+    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type, boolean isChecked, int time) {
+        this.lessonId = lessonId;
+        this.sectionId = sectionId;
+        this.lessonName = lessonName;
+        this.isDisable = isDisable;
+        this.type = type;
+        this.isChecked = isChecked;
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+    
     public int getLessonId() {
         return lessonId;
     }
@@ -50,11 +71,11 @@ public class Lesson {
         this.lessonName = lessonName;
     }
 
-    public byte getIsDisable() {
+    public boolean isIsDisable() {
         return isDisable;
     }
 
-    public void setIsDisable(byte isDisable) {
+    public void setIsDisable(boolean isDisable) {
         this.isDisable = isDisable;
     }
 
@@ -65,6 +86,13 @@ public class Lesson {
     public void setType(String type) {
         this.type = type;
     }
-    
+
+    public boolean isIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
     
 }

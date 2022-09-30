@@ -15,20 +15,22 @@ import java.sql.ResultSet;
  */
 public class UserDAO extends DBContext {
 
-     public void addUser(User u) {
-        execute("EXEC [dbo].[sp_create_account] ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?",
-                u.getUserName(),
-                u.getPassword(),
-                u.getEmail(),
-                u.getFirstName(),
-                u.getLastName(),
-                u.getDob(),
-                u.getRole(),
-                0,
-                u.getBankNum(),
-                u.getBankName(),
-                u.getIsDisable()
-        );
+    public void addUser(User u) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[User]([Username], [Password], [Email], [Firstname], [LastName], [DoB], [Role], [Balance], [BankNumber], [BankName], [isDisable]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", u.getUserName(),
+                    u.getPassword(),
+                    u.getEmail(),
+                    u.getFirstName(),
+                    u.getLastName(),
+                    u.getDob(),
+                    u.getRole(),
+                    0,
+                    u.getBankNum(),
+                    u.getBankName(),
+                    0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addGoogleUser(User u) {
@@ -53,7 +55,7 @@ public class UserDAO extends DBContext {
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
-                + "           ,?)           \n", 
+                + "           ,?)           \n",
                 u.getFirstName(),
                 u.getLastName(),
                 u.getEmail(),
@@ -261,8 +263,7 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeQuery("INSERT INTO [User_Course](UserID, CourseID) VALUES (?"
-                    + ",?)",
+            executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite) VALUES (? ,?, 0 ,0)",
                     UserID, CourseID);
         } catch (Exception e) {
             e.printStackTrace();
@@ -271,9 +272,51 @@ public class UserDAO extends DBContext {
 
     public void unenrollCourse(int UserID, int CourseID) {
         try {
-            executeQuery("DELETE FROM [User_Course] WHERE UserID = ? AND CourseID = ?",
+            executeUpdate("DELETE FROM [User_Course] WHERE UserID = ? AND CourseID = ?",
                     UserID, CourseID);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkDupFeedback(int userId, int courseId) {
+        try {
+            ResultSet rs = executeQuery("SELECT [UserID] FROM [dbo].[User_Course] WHERE [UserID] = ? AND [CourseID] = ? AND [CourseFeedback] IS NOT NULL", userId, courseId);
+
+            if (rs.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+        }
+        return true;
+    }
+    
+    public boolean checkEnroll(int userId, int courseId) {
+        try {
+            ResultSet rs = executeQuery("SELECT [UserID] FROM [dbo].[User_Course] WHERE [UserID] = ? AND [CourseID] = ?", userId, courseId);
+
+            if (rs.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+        }
+        return true;
+    }
+
+    public void insertFeedbackAndStar(int userId, int courseId, double rating, String feedback) {
+        try {
+            if(checkEnroll(userId, courseId)){
+            executeUpdate("INSERT INTO [dbo].[User_Course]([UserID],"
+                    + " [CourseID],"
+                    + " [isStudied],"
+                    + " [CourseRating],"
+                    + " [CourseFeedback],"
+                    + "[isFavourite]) VALUES (?, ?, ?, ?, ?, ?)", userId, courseId, 0, rating, feedback, 0);
+            }
+            else{
+                executeUpdate("UPDATE [dbo].[User_Course] SET [CourseFeedback] = ?, [CourseRating] = ? WHERE [UserID] = ? AND [CourseID] = ?", feedback, rating, userId, courseId);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

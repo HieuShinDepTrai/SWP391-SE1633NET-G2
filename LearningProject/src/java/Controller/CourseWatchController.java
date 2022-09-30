@@ -1,27 +1,28 @@
-package Controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package Controller;
+
 import Model.Course;
-import Model.User;
+import Model.Lesson;
+import Model.Section;
 import dal.CourseDAO;
-import dal.UserDAO;
+import dal.LessonDAO;
+import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
  *
- * @author Hieu Shin
+ * @author Dung
  */
-public class HomeController extends HttpServlet {
+public class CourseWatchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +41,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet CourseWatchController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CourseWatchController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,31 +62,36 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CourseDAO cdao = new CourseDAO();
-        ArrayList<Course> courses = cdao.ListAllCourses();
+        // Check if user login or not
+//        if (request.getSession().getAttribute("user") != null) {
+            // Get course id 
+            int id = Integer.parseInt(request.getParameter("id"));
 
-        HttpSession session = request.getSession();
+            CourseDAO cdao = new CourseDAO();
+            SectionDAO sdao = new SectionDAO();
+            LessonDAO ldao = new LessonDAO();
 
-        if (session.getAttribute("username") != null) {
-            String username = session.getAttribute("username").toString();
-
-            ArrayList<Course> courseList = cdao.getAllUserCourse(username);
-            ArrayList<Integer> courseIDs = new ArrayList<>();
-
-            for (Course course : courseList) {
-                courseIDs.add(course.getCourseID());
+            // Get data from dao
+            Course c = cdao.getCourseInformation(id);
+            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(id);
+            ArrayList<Lesson> listLesson = new ArrayList<>();
+            for (Section section : listSection) {
+                ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
+                for (Lesson lesson : tmp) {
+                    listLesson.add(lesson);
+                }
             }
 
-            request.setAttribute("courseIDs", courseIDs);
+            // Send to jsp
+            request.setAttribute("course", c);
+            request.setAttribute("listSection", listSection);
+            request.setAttribute("listLesson", listLesson);
 
-            User user = (User) session.getAttribute("user");
-            UserDAO userDAO = new UserDAO();
-            user = userDAO.getAllUserInformation(user.getUserName());
-            request.setAttribute("user", user);
-        }
-
-        request.setAttribute("courses", courses);
-        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+            request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+//        } else {
+//            // Send back to home pages
+//            response.sendRedirect("home");
+//        }
     }
 
     /**
