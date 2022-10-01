@@ -55,19 +55,66 @@ public class UpdateCourseController extends HttpServlet {
             LessonDAO pd = new LessonDAO();
             
             int courseId = Integer.parseInt(request.getParameter("courseid"));
+            Course course = cd.getAllCourseInformation(courseId);
             
             if (request.getParameter("button") != null) {
                 if (request.getParameter("button").equals("Add Objectives")){
+                    String courseName = course.getCourseName();
+                    if(request.getParameter("CourseTitle") != null){
+                        courseName = request.getParameter("CourseTitle");
+                    }
+                    String description = course.getDescription();
+                    if(request.getParameter("CourseDes") != null){
+                        description = request.getParameter("CourseDes");
+                    }
+                    String image = course.getCourseImage();
+                    if(request.getParameter("imageBase64") != null){
+                        image = request.getParameter("imageBase64");
+                    }
+                    String category = course.getCategory();
+                    if(request.getParameter("category") != null){
+                        category = request.getParameter("category");
+                    }
+                    double price = course.getCoursePrice();
+                    if(request.getParameter("CoursePrice") != null){
+                        price = Double.parseDouble(request.getParameter("CoursePrice"));
+                    }
+                    
+                    cd.updateSaveChangesCourse(courseId, courseName, description, image, category, price);;
                     String objective = request.getParameter("objectivename");
                     cd.insertNewObjective(objective, courseId);
                     
                     doGet(request, response);
                 }
                 if (request.getParameter("button").equals("Delete course")) {
-                    cd.disableCourse(courseId);
                     response.sendRedirect("home");
-                } else {
-                    response.sendRedirect("updatesection");
+                } 
+                if (request.getParameter("button").equals("Save changes")) {
+                    String courseName = course.getCourseName();
+                    if(request.getParameter("CourseTitle") != null){
+                        courseName = request.getParameter("CourseTitle");
+                    }
+                    String description = course.getDescription();
+                    if(request.getParameter("CourseDes") != null){
+                        description = request.getParameter("CourseDes");
+                    }
+                    String image = course.getCourseImage();
+                    if(request.getParameter("imageBase64") != null){
+                        image = request.getParameter("imageBase64");
+                    }
+                    String category = request.getParameter("category");
+                    if(request.getParameter("category") != null){
+                        category = request.getParameter("category");
+                    }
+                    double price = course.getCoursePrice();
+                    if(request.getParameter("CoursePrice") != null){
+                        price = Double.parseDouble(request.getParameter("CoursePrice"));
+                    }
+                    
+                    cd.updateSaveChangesCourse(courseId, courseName, description, image, category, price);
+                    cd.createSaveChangesCourse(courseId);
+                    
+                    response.sendRedirect("home");
                 }
             }
         } catch (Exception e) {

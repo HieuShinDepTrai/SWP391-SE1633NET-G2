@@ -113,6 +113,7 @@
             <!-- Begin: Create Course -->
             <section>
                 <form action="updatecourse" method="POST">
+                    <input type="hidden" name="courseid" value="${course.getCourseID()}">
                     <div class="create-course px-5 py-3">
                         <div class="create-course-header mb-3">
                             <h3 class="fw-bold">Create Course</h3>
@@ -139,7 +140,7 @@
                                     <div class="create-course-title mb-1 fw-bold">
                                         Course description
                                     </div>
-                                    <textarea name="" id="" class="w-100" style="height: 100px" name="CourseDes">${course.getDescription()}</textarea>
+                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes">${course.getDescription()}</textarea>
                                     <div class="description mb-1">
                                         Please enter your course description
                                     </div>
@@ -169,20 +170,18 @@
                                             <img src="${course.getCourseImage()}" alt="" class="icon img-fluid" />
                                         </div>
                                         <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="courseimage" id="thumbnail"/>
-                                            <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
+                                            <input type="file" id="thumbnail" onchange="UploadThumbnail(this)"/>
+                                            <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none">${course.getCourseImage()}</textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="content-3">
                                 <div class="course-publish mb-3">
-                                    <form action="updatesection" method="POST">
                                         <div class="publish-button d-flex justify-content-center p-4">
                                             <input type="hidden" name="courseid" value="${course.getCourseID()}">
                                             <input type="submit" value="Edit section" class="btn btn-dark"/>
                                         </div>
-                                    </form>
                                     <div class="save-draft px-3 py-3"><input type="submit" value="Save changes" class="btn btn-dark"/></div>
                                     <div class="save-draft px-3 py-3"><input type="submit" value="Delete course" class="btn btn-dark"/></div>
                                 </div>
@@ -191,7 +190,7 @@
                                         <div class="course-option-content-title mb-1">Category</div>
                                         <div class="course-option-content-input mb-1">
                                             <select class="form-select w-100" aria-label="Default select example" name="category">
-                                                <option selected>Select course category</option>
+                                                <option selected>${course.getCategory()}</option>
                                                 <option value="Front-end">Front-end</option>
                                                 <option value="Back-end">Back-end</option>
                                                 <option value="Database">Database</option>
@@ -202,7 +201,7 @@
                                     <div class="course-option-content mb-2">
                                         <div class="course-option-content-title mb-1">Price</div>
                                         <div class="course-option-content-input mb-1">
-                                            <input type="text" class="w-100" name="CoursePrice"/>
+                                            <input type="text" class="w-100" name="CoursePrice" value="${course.getCoursePrice()}"/>
                                         </div>
                                         <div class="course-option-content-des">
                                             Enter price of course
@@ -212,9 +211,9 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                
                 <!-- Modal Add Section-->
-                <form action="updatecourse" method="POST">
+
                     <input type="hidden" name="courseid" value="${course.getCourseID()}">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
@@ -254,9 +253,9 @@
         crossorigin="anonymous"></script>
         <script src="assets/js/home_page.js"></script>
         <script>
-                            function UploadAvatar(target) {
+                            function UploadThumbnail(target) {
                                 var reader = new FileReader();
-                                var avatar = document.getElementById("thumbnail");
+                                var avatar = document.getElementById("imageBase64");
 
                                 reader.onloadend = function () {
                                     const img = new Image();
