@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * @author Hieu Shin
  */
 public class CourseDAO extends DBContext {
-
+    
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
         try {
@@ -46,7 +46,7 @@ public class CourseDAO extends DBContext {
                 course.setCourseID(rs.getInt("CourseID"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
-
+                
                 courses.add(course);
             }
         } catch (SQLException ex) {
@@ -144,7 +144,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void disableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disable' WHERE [CourseID] = ? ", courseId);
@@ -202,7 +202,6 @@ public class CourseDAO extends DBContext {
 //            e.printStackTrace();
 //        }
 //    }
-
     public ArrayList<Course> getAllUserCourse(String username) {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
@@ -230,7 +229,7 @@ public class CourseDAO extends DBContext {
         }
         return courseList;
     }
-
+    
     public ArrayList<Feedback> getFeedBack(int courseID) {
         UserDAO userDAO = new UserDAO();
         ArrayList<Feedback> feedbackList = new ArrayList<>();
@@ -245,6 +244,40 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return feedbackList;
+    }
+    
+    public void addNewCourse(Course c) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[Course]\n"
+                    + "           ([CourseName]\n"
+                    + "           ,[DateCreate]\n"
+                    + "           ,[AuthorID]\n"
+                    + "           ,[Category]\n"
+                    + "           ,[NumberEnrolled]\n"
+                    + "           ,[CoursePrice]\n"
+                    + "           ,[CourseImage]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[Description]\n"
+                    + "           ,[Objectives]\n"
+                    + "           ,[Difficulty])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)", 
+                    c.getCourseName(), c.getDateCreate(), c.getAuthor().getUserId(), 
+                    c.getCategory(), c.getNumberEnrolled(), c.getCoursePrice(), 
+                    c.getCourseImage(), c.getStatus(), c.getDescription(), c.getObjectives(), c.getDifficulty());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

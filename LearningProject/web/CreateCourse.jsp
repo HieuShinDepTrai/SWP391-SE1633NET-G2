@@ -138,7 +138,7 @@
                                     <div class="create-course-title mb-1 fw-bold">
                                         Course description
                                     </div>
-                                    <textarea name="" id="" class="w-100" style="height: 100px" name="CourseDes"></textarea>
+                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes"></textarea>
                                     <div class="description mb-1">
                                         Please enter your course description
                                     </div>
@@ -146,9 +146,6 @@
                                 <div class="create-objectives">
                                     <div class="create-section-title fw-bold mb-3">Objectives</div>
                                     <div class="section-list">
-                                        <div class="section-create mb-2">
-                                            <div class="section-title">1. Section 1</div>
-                                        </div>
                                     </div>
                                     <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         Add Objectives
@@ -167,7 +164,7 @@
                                                  height="36px" />
                                         </div>
                                         <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="" id="thumbnail"/>
+                                            <input type="file" name="" id="thumbnail" onchange="UploadThumbnail(this)"/>
                                             <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
                                         </div>
                                     </div>
@@ -176,10 +173,10 @@
                             <div class="content-3">
                                 <div class="course-publish mb-3">
                                     <div class="publish-button d-flex justify-content-center p-4">
-                                        <input type="submit" value="Publish" class="btn btn-dark"/>
+                                        <input type="submit" value="Next Step" class="btn btn-primary"/>
                                     </div>
-                                    <div class="save-draft px-3 py-3">Save draft</div>
-                                    <div class="delete-course px-3 py-3">Delete course</div>
+<!--                                    <div class="save-draft px-3 py-3">Save draft</div>
+                                    <div class="delete-course px-3 py-3">Delete course</div>-->
                                 </div>
                                 <div class="course-option p-3">
                                     <div class="course-option-content mb-2">
@@ -203,13 +200,24 @@
                                             Enter price of course
                                         </div>
                                     </div>
+                                    <div class="course-option-content mb-2">
+                                        <div class="course-option-content-title mb-1">Category</div>
+                                        <div class="course-option-content-input mb-1">
+                                            <select class="form-select w-100" aria-label="Default select example" name="difficulty">
+                                                <option selected>Select course difficult0</option>
+                                                <option value="easy">Easy</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="hard">Hard</option>
+                                            </select>
+                                        </div>
+                                        <div class="course-option-content-des">Select difficulty</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- Modal Add Section-->
-                <form action="CreateCourse" method="POST">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -222,18 +230,17 @@
                                 <div class="modal-body">
                                     <label for="Section name" class="form-label">Objective Name</label>
                                     <!-- Section name must not null -->
-                                    <input type="text" class="form-control" name="SectionName" required="true"/>
+                                    <input id="value" type="text" class="form-control" name="SectionName" required="true" />
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <input type="submit" class="btn btn-primary" value="Add Objectives">
+                                    <input type="button" class="btn btn-primary" value="Add Objectives" onclick="createObjective()">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
             </section>
             <!-- End: Create Course -->
 

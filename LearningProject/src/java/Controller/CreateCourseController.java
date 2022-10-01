@@ -5,7 +5,11 @@
 
 package Controller;
 
+import Model.Course;
 import Model.Section;
+import Model.User;
+import dal.CourseDAO;
+import dal.LessonDAO;
 import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +17,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import javax.mail.Session;
 
 /**
  *
@@ -70,11 +79,30 @@ public class CreateCourseController extends HttpServlet {
     throws ServletException, IOException {
         // Check if mentor then accept
         
-        SectionDAO sdao = new SectionDAO();
+        CourseDAO cdao = new CourseDAO();
         
-        // Add section
-        String sectionName = request.getParameter("SectionName");
-        sdao.addSection(new Section(1, 0, sectionName, true));
+//        User author = (User) request.getSession().getAttribute("user");
+        User author = new User();
+        author.setUserId(4);
+        String courseTitle = request.getParameter("CourseTitle");
+        String courseDes = request.getParameter("CourseDes");
+        String[] courseObjectives = request.getParameterValues("Objectives");
+        String objective = "";
+        for(String s : courseObjectives) {
+            objective += s + "/";
+        }
+        String image = request.getParameter("imageBase64");
+        Date date = new Date();
+        Timestamp createdDate = new Timestamp(date.getTime());
+        String category = request.getParameter("category");
+        int coursePrice = Integer.parseInt(request.getParameter("CoursePrice"));
+        int numberEnroll = 0;
+        String status = "Pending";
+        String difficulty = request.getParameter("difficulty");
+        double courseProgress = 0;
+        cdao.addNewCourse(new Course(0, courseTitle, createdDate, category, 
+                numberEnroll, coursePrice, image, status, author, courseProgress, 
+                courseDes, objective, difficulty));
     }
 
     /** 
