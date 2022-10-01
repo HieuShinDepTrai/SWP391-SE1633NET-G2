@@ -1,9 +1,10 @@
 <%-- 
     Document   : CourseWatch
-    Created on : Sep 30, 2022, 12:51:53 AM
-    Author     : ASUS
+    Created on : Sep 30, 2022, 8:26:22 PM
+    Author     : Dung
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -141,85 +142,41 @@
                     <div class="course-watch-right-content">
                         <h4 class="course-content-title px-4 py-3">Course Content</h4>
                         <div class="course-lesson-list">
-                            <!-- Course lesson -->
-                            <div class="course-lesson-container">
-                                <div class="course-lesson d-flex justify-content-between px-4 align-items-center">
-                                    <div class="course-lesson-left">
-                                        <div class="course-lesson-left-title">
-                                            1. Lesson 1
-                                        </div>
-                                        <div class="course-lesson-left-description">
-                                            <div class="course-lesson-progress d-inline">12/12</div>
-                                            <div class="d-inline">|</div>
-                                            <div class="course-lesson-time d-inline">14:36</div>
-                                        </div>
-                                    </div>
-                                    <div class="course-lesson-right">
-                                        <i class="fa-solid fa-chevron-down"></i>
-                                    </div>
-                                </div>
-                                <!-- Course lesson child container -->
-                                <div class="course-lesson-child-container" style="display: none;">
-                                    <!-- course lesson child -->
-                                    <a href="#">
-                                        <div class="course-lesson-child  px-4 py-2">
-                                            <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                <div class="course-lesson-child-content-title">1. Introduce abour DOM in HTMl</div>
-                                                <i class="fa-solid fa-circle-check"></i>
-                                            </div>
-                                            <div class="course-lesson-child-footer">
-                                                <i class="fa-solid fa-circle-play"></i>
-                                                03:15
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- course lesson child -->
+                            <c:forEach items="${listSection}" var="section">
 
-                                    <!-- course lesson child -->
-                                    <a href="#">
-                                        <div class="course-lesson-child  px-4 py-2">
-                                            <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                <div class="course-lesson-child-content-title">1. Introduce abour DOM in HTMl</div>
-                                                <i class="fa-solid fa-circle-check"></i>
-                                            </div>
-                                            <div class="course-lesson-child-footer">
-                                                <i class="fa-solid fa-circle-play"></i>
-                                                03:15
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- course lesson child -->
-
-                                    <!-- course lesson child -->
-                                    <a href="#">
-                                        <div class="course-lesson-child  px-4 py-2">
-                                            <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                <div class="course-lesson-child-content-title">1. Introduce abour DOM in HTMl</div>
-                                                <i class="fa-solid fa-circle-check"></i>
-                                            </div>
-                                            <div class="course-lesson-child-footer">
-                                                <i class="fa-solid fa-circle-play"></i>
-                                                03:15
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- course lesson child -->
-                                    <!-- Course lesson child container -->
-                                </div>
-
-                                <!-- Course lesson --> 
-
-                                <!-- Course lesson -->
+                                <!-- Course section -->
                                 <div class="course-lesson-container">
                                     <div class="course-lesson d-flex justify-content-between px-4 align-items-center">
                                         <div class="course-lesson-left">
                                             <div class="course-lesson-left-title">
-                                                2. Lesson 2
+                                                ${section.getSectionName()}
                                             </div>
                                             <div class="course-lesson-left-description">
+                                                
+                                                <!-- Begin: Lesson Progress -->
                                                 <div class="course-lesson-progress d-inline">12/12</div>
                                                 <div class="d-inline">|</div>
-                                                <div class="course-lesson-time d-inline">14:36</div>
+                                                <!-- End: Lesson Progress -->
+                                                
+                                                <!-- Begin: Section Time -->
+                                                <%
+                                                    int sectionTime = 0;
+                                                %>
+                                                <c:forEach items="${listLesson}" var="lesson">
+                                                    <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                        <c:set var="lessonTime" value="${lesson.getTime()}"></c:set>
+                                                        <%
+                                                            int lessonTime = Integer.parseInt(pageContext.getAttribute("lessonTime").toString());
+                                                            sectionTime +=  lessonTime;
+                                                        %>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <%
+                                                    int minute = sectionTime / 60;
+                                                    int second = sectionTime % 60;
+                                                %>
+                                                <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
+                                                <!-- End: Section Time -->
                                             </div>
                                         </div>
                                         <div class="course-lesson-right">
@@ -227,245 +184,195 @@
                                         </div>
                                     </div>
                                     <!-- Course lesson child container -->
-                                    <div class="course-lesson-child-container" style="display: none;">
-                                        <!-- course lesson child -->
-                                        <a href="#">
-                                            <div class="course-lesson-child  px-4 py-2">
-                                                <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                    <div class="course-lesson-child-content-title">2. Introduce abour DOM in HTMl</div>
-                                                    <i class="fa-solid fa-circle-check"></i>
-                                                </div>
-                                                <div class="course-lesson-child-footer">
-                                                    <i class="fa-solid fa-circle-play"></i>
-                                                    03:15
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- course lesson child -->
+                                    <div class="course-lesson-child-container" style="display: none;">        
+                                        <c:forEach items="${listLesson}" var="lesson">
+                                            <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
-                                        <!-- course lesson child -->
-                                        <a href="#">
-                                            <div class="course-lesson-child  px-4 py-2">
-                                                <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                    <div class="course-lesson-child-content-title">2. Introduce abour DOM in HTMl</div>
-                                                    <i class="fa-solid fa-circle-check"></i>
-                                                </div>
-                                                <div class="course-lesson-child-footer">
-                                                    <i class="fa-solid fa-circle-play"></i>
-                                                    03:15
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- course lesson child -->
-
-                                        <!-- course lesson child -->
-                                        <a href="#">
-                                            <div class="course-lesson-child  px-4 py-2">
-                                                <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                    <div class="course-lesson-child-content-title">2. Introduce abour DOM in HTMl</div>
-                                                    <i class="fa-solid fa-circle-check"></i>
-                                                </div>
-                                                <div class="course-lesson-child-footer">
-                                                    <i class="fa-solid fa-circle-play"></i>
-                                                    03:15
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <!-- course lesson child -->
-                                        <!-- Course lesson child container -->
-                                    </div>
-
-                                    <!-- Course lesson -->     
-
-                                    <!-- Course lesson -->
-                                    <div class="course-lesson-container">
-                                        <div class="course-lesson d-flex justify-content-between px-4 align-items-center">
-                                            <div class="course-lesson-left">
-                                                <div class="course-lesson-left-title">
-                                                    3. Lesson 3
-                                                </div>
-                                                <div class="course-lesson-left-description">
-                                                    <div class="course-lesson-progress d-inline">12/12</div>
-                                                    <div class="d-inline">|</div>
-                                                    <div class="course-lesson-time d-inline">14:36</div>
-                                                </div>
-                                            </div>
-                                            <div class="course-lesson-right">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            </div>
-                                        </div>
-                                        <!-- Course lesson child container -->
-                                        <div class="course-lesson-child-container" style="display: none;">
-                                            <!-- course lesson child -->
-                                            <a href="#">
-                                                <div class="course-lesson-child  px-4 py-2">
-                                                    <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                        <div class="course-lesson-child-content-title">3. Introduce abour DOM in HTMl</div>
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                    </div>
-                                                    <div class="course-lesson-child-footer">
-                                                        <i class="fa-solid fa-circle-play"></i>
-                                                        03:15
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <!-- course lesson child -->
-
-                                            <!-- course lesson child -->
-                                            <a href="#">
-                                                <div class="course-lesson-child  px-4 py-2">
-                                                    <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                        <div class="course-lesson-child-content-title">3. Introduce abour DOM in HTMl</div>
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                    </div>
-                                                    <div class="course-lesson-child-footer">
-                                                        <i class="fa-solid fa-circle-play"></i>
-                                                        03:15
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <!-- course lesson child -->
-
-                                            <!-- course lesson child -->
-                                            <a href="#">
-                                                <div class="course-lesson-child  px-4 py-2">
-                                                    <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
-                                                        <div class="course-lesson-child-content-title">3. Introduce abour DOM in HTMl</div>
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                    </div>
-                                                    <div class="course-lesson-child-footer">
-                                                        <i class="fa-solid fa-circle-play"></i>
-                                                        03:15
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <!-- course lesson child -->
-                                            <!-- Course lesson child container -->
-                                        </div>
-
-                                        <!-- Course lesson -->     
-                                    </div>
-                                </div>
-                            </div>
-
-                            </section>
-                            <!-- Course Comment -->
-                            <div class="course-comment-container" style="display: none;">
-                                <div class="course-comment">
-                                    <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
-                                    <div class="course-comment-title">
-                                        88 Comment
-                                        <span>(If you see spam comment, please report to admin)</span>
-                                    </div>
-
-                                    <!-- Begin: Course post comment -->
-                                    <form action="postvideocomment" method="GET">
-                                        <div class="course-post-comment-container">
-                                            <div class="course-comment-postcomment d-flex justify-content-between">
-                                                <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                                border: none;
-                                                border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                                            </div>
-                                            <div class="course-postcomment-action" style="float: right;">
-                                                <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-
-
-                                                <input class="submit-comment" name="op" type="submit" value="Comment">
-
-
-                                            </div>
-                                        </div>
-                                    
-
-                                    <!-- End: Course post comment -->
-
-                                    <!-- Comment List -->
-                                    <div class="course-comment-list d-flex flex-column w-100 gap-4">
-                                        <!-- Begin: Comment -->
-                                        <c:forEach items="${requestScope.commentList}" var="comment">
-                                            <c:if test="${comment.getParentId() == 0}">
-                                            <div class="comment d-flex align-items-start">
-                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                            <div class="comment-content">
-                                                <div class="comment-user">
-                                                    <div class="user-name">
-                                                        dungssj12
-                                                    </div>
-                                                    <div class="user-comment-content">
-                                                        ${comment.getCommentContent()}
-                                                    </div>
-                                                </div>
-                                                <div class="comment-action">
-                                                    <div class="comment-action-content">Like</div>
-                                                    <div class="dot">.</div>
-                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                                    <div class="dot">.</div>
-                                                    <div class="comment-action-content">Report</div>
-                                                    <div class="dot">.</div>
-                                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                                </div>
-
-                                                <!-- Reply Comment -->
-                                                
-                                                <div class="reply-comment d-none">
-                                                    <div class="course-post-comment-container">
-                                                        <div class="course-comment-postcomment d-flex justify-content-between">
-                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                                            border: none;
-                                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                            <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                <!-- course lesson child -->
+                                                <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
+                                                    <div class="course-lesson-child  px-4 py-2">
+                                                        <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
+                                                            <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
+                                                            <i class="fa-solid fa-circle-check"></i>
                                                         </div>
-                                                        <div class="course-postcomment-action" style="float: right;">
-                                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-                                                            
-                                                            <input type="submit" name="op" value="Reply" class="submit-comment">                                     
-                                                            <input type="hidden" name="pId" value="${comment.getCommentId()}">
-                                                            
-                                                            
+                                                        <div class="course-lesson-child-footer">
+                                                            <i class="fa-solid fa-circle-play"></i>
+                                                            <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                            <fmt:parseNumber var="minute" type="number" value="${time/60}" pattern="#"/>
+                                                            <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
+                                                            ${minute}:${second}
+
                                                         </div>
-                                                        
                                                     </div>
+                                                </a>
+                                                <!-- course lesson child -->
 
-                                                </div>
-                                                <!-- Reply Comment -->
-
-
-                                                <!-- Show Reply Comment -->
-                                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
-                                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
-                                                    <div class="show-reply-comment-content">
-
-                                                    </div>
-                                                </div>
-                                                <!-- Show Reply Comment -->
-                                            </div>
-                                        </div>
-                                                    </c:if>
-                                                    
+                                            </c:if>
                                         </c:forEach>
-                                        <!-- End: Comment -->
-                                       
+                                        <!-- Course lesson child container -->
                                     </div>
-                                    </form>
-                                    <!-- Comment List -->
-                                </div>
-                            </div>
-                            <!-- Course Comment -->
+                                </div>    
+                                <!-- Course section -->
+                            </c:forEach>
 
-                            <!-- Begin: Footer -->
-                            <!-- End: Footer -->
                         </div>
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                        <script src="assets/js/course_watch.js"></script>
-                        <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
-                        <script src="assets/js/home_page.js"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                        crossorigin="anonymous"></script>
-                        <script src="https://player.vimeo.com/api/player.js"></script>
-                        </body>
+                    </div>    
+                </div>
+            </section>
+            <!-- Course Comment -->
+            <div class="course-comment-container" style="display: none;">
+                <div class="course-comment">
+                    <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
+                    <div class="course-comment-title">
+                        88 Comment
+                        <span>(If you see spam comment, please report to admin)</span>
+                    </div>
 
-                        </html>
+                    <!-- Begin: Course post comment -->
+                    <div class="course-post-comment-container">
+                        <div class="course-comment-postcomment d-flex justify-content-between">
+                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                            border: none;
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                        </div>
+                        <div class="course-postcomment-action" style="float: right;">
+                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                            <button class="submit-comment">Comment</button>
+                        </div>
+                    </div>
+
+                    <!-- End: Course post comment -->
+
+                    <!-- Comment List -->
+                    <div class="course-comment-list d-flex flex-column w-100 gap-4">
+                        <!-- Begin: Comment -->
+                        <div class="comment d-flex align-items-start">
+                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                            <div class="comment-content">
+                                <div class="comment-user">
+                                    <div class="user-name">
+                                        dungssj12
+                                    </div>
+                                    <div class="user-comment-content">
+                                        HelloKitty xin chao toi la helasdkfjl aslkdfjaslk sdcxznzv,n sadfwqfadslfkasjdklfj  asldfjlkasdj
+                                    </div>
+                                </div>
+                                <div class="comment-action">
+                                    <div class="comment-action-content">Like</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-action-content">Report</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                </div>
+
+                                <!-- Reply Comment -->
+                                <div class="reply-comment d-none">
+                                    <div class="course-post-comment-container">
+                                        <div class="course-comment-postcomment d-flex justify-content-between">
+                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                            border: none;
+                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                        </div>
+                                        <div class="course-postcomment-action" style="float: right;">
+                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                            <button class="submit-comment">Reply</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Reply Comment -->
+
+
+                                <!-- Show Reply Comment -->
+                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
+                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                    <div class="show-reply-comment-content">
+
+                                    </div>
+                                </div>
+                                <!-- Show Reply Comment -->
+                            </div>
+                        </div>
+                        <!-- End: Comment -->
+
+
+                        <!-- Begin: Comment -->
+                        <div class="comment d-flex align-items-start">
+                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                            <div class="comment-content">
+                                <div class="comment-user">
+                                    <div class="user-name">
+                                        dungssj12
+                                    </div>
+                                    <div class="user-comment-content">
+                                        HelloKitty xin chao toi la helasdkfjl aslkdfjaslk sdcxznzv,n sadfwqfadslfkasjdklfj  asldfjlkasdj
+                                    </div>
+                                </div>
+                                <div class="comment-action">
+                                    <div class="comment-action-content">Like</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-action-content">Report</div>
+                                    <div class="dot">.</div>
+                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                </div>
+
+                                <!-- Reply Comment -->
+                                <div class="reply-comment d-none">
+                                    <div class="course-post-comment-container">
+                                        <div class="course-comment-postcomment d-flex justify-content-between">
+                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                            border: none;
+                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                        </div>
+                                        <div class="course-postcomment-action" style="float: right;">
+                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                            <button class="submit-comment">Reply</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Reply Comment -->
+
+
+                                <!-- Show Reply Comment -->
+                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
+                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                    <div class="show-reply-comment-content">
+
+                                    </div>
+                                </div>
+                                <!-- Show Reply Comment -->
+                            </div>
+                        </div>
+                        <!-- End: Comment -->
+
+                    </div>
+                    <!-- Comment List -->
+                </div>
+            </div>
+            <!-- Course Comment -->
+
+            <!-- Begin: Footer -->
+            <!-- End: Footer -->
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="assets/js/course_watch.js"></script>
+        <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
+        <script src="assets/js/home_page.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        <script src="https://player.vimeo.com/api/player.js"></script>
+    </body>
+
+</html>

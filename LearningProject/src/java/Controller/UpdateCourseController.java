@@ -25,20 +25,20 @@ public class UpdateCourseController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CourseDAO cd = new CourseDAO();
-        int courseId = Integer.parseInt(request.getParameter("courseid"));
-        cd.createClone(courseId);
-        request.setAttribute("Course", cd.getAllCourseInformation(courseId * (-1)));
-        if(request.getParameter("button") != null){
-            if(request.getParameter("button").equals("delete")){
-                cd.disableCourse(courseId);
-                response.sendRedirect("home");
-            }
-            else{
-                response.sendRedirect("updatesection");
-            }
-        }
-        doGet(request, response);
+//        CourseDAO cd = new CourseDAO();
+//        int courseId = Integer.parseInt(request.getParameter("courseid"));
+//        cd.createClone(courseId);
+//        request.setAttribute("Course", cd.getAllCourseInformation(courseId * (-1)));
+//        if(request.getParameter("button") != null){
+//            if(request.getParameter("button").equals("delete")){
+//                cd.disableCourse(courseId);
+//                response.sendRedirect("home");
+//            }
+//            else{
+//                response.sendRedirect("updatesection");
+//            }
+//        }
+//        doGet(request, response);
     }
 
 }

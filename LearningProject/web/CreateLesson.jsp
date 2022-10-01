@@ -1,3 +1,10 @@
+<%-- 
+    Document   : CreateLesson
+    Created on : Sep 30, 2022, 2:45:45 AM
+    Author     : HieuShin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +20,12 @@
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
         </style>
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#mytextarea'
+            });
+        </script>
     </head>
 
     <body>
@@ -180,7 +193,7 @@
                         </div>
                     </div>
                     <!-- Modal Document-->
-                    <form action="AddLesson" method="GET">
+                    <form action="AddLesson" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -198,19 +211,19 @@
                                                 <input type="text" class="form-control" name="lesson_tilte">
                                             </div>
                                             <div class="col-12 mb-3">
-                                                <label for="LessonTitle" class="form-label fw-bold">Time to read</label>
-                                                <input type="text" class="form-control">
+                                                <label for="LessonTitle" class="form-label fw-bold">Time to read (milliseconds)</label>
+                                                <input type="number" class="form-control" name="time_to_read">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
-                                                <textarea name="lesson_content" id="" cols="30" rows="10" class="form-control"></textarea>
+                                                <textarea name="lesson_content" id="mytextarea" cols="30" rows="10" class="form-control"></textarea>
                                             </div>
                                             <input type="text" value="Docs" class="d-none" name="type">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save
+                                        <button type="submit" class="btn btn-primary">Save
                                             changes</button>
                                     </div>
                                 </div>
@@ -221,7 +234,7 @@
                     <!-- Modal Document-->
 
                     <!-- Modal Video-->
-                    <form action="AddLesson" method="GET">
+                    <form action="AddLesson" method="POST">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -243,19 +256,19 @@
                                             <div class="col-4">
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Lesson title</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="video_title">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Video URL</label>
-                                                    <input type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                    <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
-                                                <input type="text" value="Video" class="d-none">
+                                                <input type="text" value="Video" class="d-none" name="type">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save
+                                        <button type="submit" class="btn btn-primary">Save
                                             changes</button>
                                     </div>
                                 </div>

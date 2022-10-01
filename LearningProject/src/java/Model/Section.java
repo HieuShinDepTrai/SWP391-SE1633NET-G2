@@ -48,13 +48,12 @@ public class Section {
         this.sectionName = sectionName;
     }
 
-    public boolean getIsDisable() {
+    public boolean isIsDisable() {
         return isDisable;
     }
 
     public void setIsDisable(boolean isDisable) {
         this.isDisable = isDisable;
     }
-    
-    
+
 }
