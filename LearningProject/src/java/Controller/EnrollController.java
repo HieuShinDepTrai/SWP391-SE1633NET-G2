@@ -30,13 +30,20 @@ public class EnrollController extends HttpServlet {
     throws ServletException, IOException {
         UserDAO u = new UserDAO();
         HttpSession ses = request.getSession();
-        int CourseID = Integer.parseInt(request.getParameter("courseID"));
+        int CourseID = Integer.parseInt(request.getParameter("courseID"));        
+        String op = request.getParameter("op");
         
-        int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-               
+        if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+            int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-        u.insertIntoUserCourse(UserID, CourseID);
-        response.sendRedirect("home");                         
+             u.insertIntoUserCourse(UserID, CourseID);
+            response.sendRedirect("home");
+            
+        } else {
+            response.sendRedirect("home");
+        }
+        
+                                
     }
 
 

@@ -249,7 +249,7 @@
                                                     <form id="enroll" action="enroll" method="POST">                                                        
 
                                                         <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            <input type="submit" value="Enroll">
+                                                            <input name="op"  type="submit" value="Enroll">
                                                         </c:if>
 
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
