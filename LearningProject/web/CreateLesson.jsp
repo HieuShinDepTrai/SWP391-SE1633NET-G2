@@ -4,6 +4,7 @@
     Author     : HieuShin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,16 +142,25 @@
                         <th>Action</th>
                         </thead>
                         <tbody>
+                            <%
+                                int count = 1;
+                            %>
+                        <c:forEach items="${lessons}" var="lesson">
                             <tr>
-                                <td>1</td>
-                                <td>Lesson 1</td>
+                                <td><%=count%></td>
+                                <td>${lesson.getLessonName()}</td>
                                 <td>Video</td>
-                                <td>26/09/2022</td>
+                                <td>${lesson.getTime()}</td>
                                 <td>
                                     <button class="btn btn-primary">Delete</button>
                                     <button class="btn btn-primary">Edit</button>
                                 </td>
                             </tr>
+                            <% 
+                                count++; 
+                            %>
+                        </c:forEach>
+
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">

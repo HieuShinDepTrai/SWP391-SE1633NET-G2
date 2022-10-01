@@ -14,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,9 +49,14 @@ public class AddLesson extends HttpServlet {
             throws ServletException, IOException {
         int sectionId = 0;
         if (request.getParameter("sectionID") != null) {
+            ArrayList<Lesson> lessons = new ArrayList<>();
             sectionId = Integer.parseInt(request.getParameter("sectionID"));
             SectionDAO sectionDAO = new SectionDAO();
+            LessonDAO ldao = new LessonDAO();
+            lessons = ldao.getAllLessonOfSection(sectionId);
             Section section = sectionDAO.getSectionBySectionID(sectionId);
+            
+            request.setAttribute("lessons", lessons);
             request.setAttribute("sectionID", sectionId);
             request.setAttribute("section", section);
             request.getRequestDispatcher("CreateLesson.jsp").forward(request, response);
