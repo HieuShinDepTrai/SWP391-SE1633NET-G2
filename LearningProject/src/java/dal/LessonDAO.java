@@ -5,9 +5,7 @@
 package dal;
 
 import Model.Lesson;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +24,9 @@ public class LessonDAO extends DBContext {
         }
     }
 
-    public void addLessonDoc(int sectionId, String lessonName, String content) {
+    public void addLessonDoc(int sectionId, String lessonName, int time, String content) {
         try {
-            execute("EXEC [sp_create_docs] ?, ?, ?", sectionId, lessonName, content);
+            execute("EXEC [sp_create_docs] ?, ?, ?, ?", sectionId, lessonName, time, content);
         } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -44,9 +42,9 @@ public class LessonDAO extends DBContext {
 
     public ArrayList<Lesson> getAllLessonOfSection(int sectionId) {
         ArrayList<Lesson> lessonlist = new ArrayList<Lesson>();
-        try ( ResultSet rs = executeQuery("SELECT [LessonID], [LessonName], [isDisable], [types], [isChecked] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)) {
-            while (rs.next()) {
-                lessonlist.add(new Lesson(rs.getInt("LessonID"), sectionId, rs.getNString("LessonName"), rs.getBoolean("isDisable"), rs.getString("types"), rs.getBoolean("isChecked")));
+        try(ResultSet rs = executeQuery("SELECT [LessonID], [LessonName], [isDisable], [types], [isChecked], [Time] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)){
+            while(rs.next()){
+                lessonlist.add(new Lesson(rs.getInt("LessonID"), sectionId, rs.getNString("LessonName"), rs.getBoolean("isDisable"), rs.getString("types"), rs.getBoolean("isChecked"), rs.getInt("Time")));
             }
             return lessonlist;
         } catch (Exception e) {

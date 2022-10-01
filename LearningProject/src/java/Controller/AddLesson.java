@@ -42,14 +42,7 @@ public class AddLesson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String type = request.getParameter("type");
-        
-        if(type.compareTo("Video") == 0) {
-            String videotitle = request.getParameter("video_title");
-            String videolink = request.getParameter("video_url");
-            LessonDAO ldao = new LessonDAO();
-            ldao.addLessonVideo(2, videotitle, videotitle, videolink);
-        }
+       
     } 
 
     /** 
@@ -62,7 +55,21 @@ public class AddLesson extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String type = request.getParameter("type");
+        LessonDAO ldao = new LessonDAO();
+        
+        if(type.compareTo("Video") == 0) {
+            String videotitle = request.getParameter("video_title");
+            String videolink = request.getParameter("video_url");
+            ldao.addLessonVideo(2, videotitle, videotitle, videolink);
+        }
+        
+        if(type.compareTo("Docs") == 0) {
+            String lesson_tilte = request.getParameter("lesson_tilte");
+            int time_to_read = Integer.parseInt(request.getParameter("time_to_read"));
+            String lesson_content = request.getParameter("lesson_content");
+            ldao.addLessonDoc(2, lesson_tilte, time_to_read, lesson_content);
+        }
     }
 
     /** 

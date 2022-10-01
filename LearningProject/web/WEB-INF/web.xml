@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
+        <servlet-name>UserDashboardController</servlet-name>
+        <servlet-class>Controller.UserDashboardController.UserDashboardController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserDashboardController</servlet-name>
+        <url-pattern>/userdashboard</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ResetPass</servlet-name>
         <servlet-class>Controller.ResetController.ResetPass</servlet-class>
     </servlet>
@@ -31,6 +39,10 @@
     <servlet>
         <servlet-name>CourseDetailsController</servlet-name>
         <servlet-class>Controller.CourseDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseWatchController</servlet-name>
+        <servlet-class>Controller.CourseWatchController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
@@ -143,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>CourseDetailsController</servlet-name>
         <url-pattern>/CourseDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseWatchController</servlet-name>
+        <url-pattern>/WatchCourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
