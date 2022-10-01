@@ -5,7 +5,9 @@
 package Controller.UserDashboardController;
 
 import Model.Course;
+import Model.User;
 import dal.CourseDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,8 +28,14 @@ public class UserDashboardController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
+        UserDAO userDao = new UserDAO();
         String username = session.getAttribute("username").toString();
-        ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());                
+        ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());
+        User user = (User)session.getAttribute("user");        
+        int time = userDao.getUserTotalTime(user.getUserId());
+        String totalTime = (time / 1000) / 60 / 60 % 24 + " hours " + (time / 1000) / 60 % 60 + " minutes " + (time / 1000) % 60 + " seconds ";
+        request.setAttribute("totalTime", totalTime);
+        request.setAttribute("user", user);
         request.setAttribute("allUserCourse", courseList.size());
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("UserDashboard.jsp").forward(request, response);
