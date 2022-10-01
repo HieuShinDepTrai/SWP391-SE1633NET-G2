@@ -7,9 +7,7 @@ package Controller;
 
 import Model.Course;
 import Model.Section;
-import Model.User;
 import dal.CourseDAO;
-import dal.LessonDAO;
 import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,17 +15,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import javax.mail.Session;
 
 /**
  *
  * @author Dung
  */
-public class CreateCourseController extends HttpServlet {
+public class CreateSectionController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +38,10 @@ public class CreateCourseController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateCourseController</title>");  
+            out.println("<title>Servlet CreateSectionController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateCourseController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CreateSectionController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,9 +58,23 @@ public class CreateCourseController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        // Check if mentor
+        SectionDAO sdao = new SectionDAO();
+        CourseDAO cdao = new  CourseDAO();
         
-        response.sendRedirect("CreateCourse.jsp");
+        int courseId = 0;
+        if(request.getParameter("courseId") != null) {
+            courseId = Integer.parseInt(request.getParameter("courseId"));
+            Course c = cdao.getCourseInformation(courseId);
+            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseId);
+            
+            request.setAttribute("listSection", listSection);
+            request.setAttribute("courseID", courseId);
+            request.setAttribute("course", c);
+            
+                    request.getRequestDispatcher("CreateSection.jsp").forward(request, response);
+            return;
+        }
+        response.sendRedirect("CreateSection.jsp");
     } 
 
     /** 
@@ -79,35 +87,11 @@ public class CreateCourseController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        // Check if mentor then accept
-        
-        CourseDAO cdao = new CourseDAO();
-        
-//        User author = (User) request.getSession().getAttribute("user");
-        User author = new User();
-        author.setUserId(4);
-        String courseTitle = request.getParameter("CourseTitle");
-        String courseDes = request.getParameter("CourseDes");
-        String[] courseObjectives = request.getParameterValues("Objectives");
-        String objective = "";
-        for(String s : courseObjectives) {
-            objective += s + "/";
-        }
-        String image = request.getParameter("imageBase64");
-        Date date = new Date();
-        Timestamp createdDate = new Timestamp(date.getTime());
-        String category = request.getParameter("category");
-        int coursePrice = Integer.parseInt(request.getParameter("CoursePrice"));
-        int numberEnroll = 0;
-        String status = "Pending";
-        String difficulty = request.getParameter("difficulty");
-        double courseProgress = 0;
-        int newCourseID = cdao.getNewCourseID() + 1;
-        cdao.addNewCourse(new Course(0, courseTitle, createdDate, category, 
-                numberEnroll, coursePrice, image, status, author, courseProgress, 
-                courseDes, objective, difficulty));
-//        request.getRequestDispatcher("CreateSection?courseId=" + newCourseID);
-        response.sendRedirect("CreateSection?courseId=" + newCourseID);
+        SectionDAO sdao = new SectionDAO();
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String sectionName = request.getParameter("SectionName");
+        sdao.addSection(new Section(0, courseId, sectionName, false));
+        response.sendRedirect("CreateSection?courseId=" + courseId);
     }
 
     /** 

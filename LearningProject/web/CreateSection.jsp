@@ -1,9 +1,10 @@
 <%-- 
-    Document   : CreateCourse
-    Created on : Oct 1, 2022, 10:34:28 AM
+    Document   : CreatSection
+    Created on : Oct 1, 2022, 5:03:30 PM
     Author     : Dung
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,121 +115,73 @@
                 <form action="CreateCourse" method="POST">
                     <div class="create-course px-5 py-3">
                         <div class="create-course-header mb-3">
-                            <h3 class="fw-bold">Create Course</h3>
+                            <h3 class="fw-bold">Create Section</h3>
                             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                                 <ol class="breadcrumb" style="font-size: 13px">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Create Course
+                                        Create Section
                                     </li>
                                 </ol>
                             </nav>
-                            <h4 class="mb-3 fw-bold mb-1">Basic Infromation</h4>
+                            <h4 class="mb-3 fw-bold mb-1">Create Section for ${course.getCourseName()}</h4>
                         </div>
                         <div class="create-course-content">
-                            <div class="content-1">
-                                <div class="create-course-title-container mb-3">
-                                    <div class="create-course-title mb-1 fw-bold">Course Title</div>
-                                    <input type="text" class="w-100 mb-1" name="CourseTitle"/>
-                                    <div class="description mb-1">
-                                        Please enter your course title
-                                    </div>
-                                </div>
-                                <div class="create-course-title-container mb-3">
-                                    <div class="create-course-title mb-1 fw-bold">
-                                        Course description
-                                    </div>
-                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes"></textarea>
-                                    <div class="description mb-1">
-                                        Please enter your course description
-                                    </div>
-                                </div>
+                            <div class="content-1" style="flex: 2;">
                                 <div class="create-objectives">
-                                    <div class="create-section-title fw-bold mb-3">Objectives</div>
-                                    <div class="section-list">
-                                    </div>
+                                    <div class="create-section-title fw-bold mb-3">Section</div>
+                                    <table class="table table-striped" id="table">
+                                        <thead>
+                                        <th>Section No</th>
+                                        <th>Section Name</th>
+                                        <th>Lesson</th>
+                                        <th>Action</th>
+                                        </thead>
+                                        <tbody>
+                                        <%
+                                            int count = 1;
+                                        %>
+                                        <c:forEach items="${listSection}" var="section">
+                                            <tr>
+                                                <td><%=count%></td>
+                                                <td>${section.getSectionName()}</td>
+                                                <td><a href="CreateLesson?sectionID=${section.getSectionId()}" class="btn btn-primary">Add Lesson</a></td>
+                                                <td>
+                                                    <button class="btn btn-primary">Delete</button>
+                                                    <button class="btn btn-primary">Edit</button>
+                                                </td>
+                                            </tr>
+                                            <% 
+                                                count++; 
+                                            %>
+                                        </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
                                     <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Add Objectives
+                                        Add Section
                                     </div>
                                 </div>
                             </div>
                             <div class="content-2">
-                                <div class="course-thumbnail-header fw-bold">
-                                    Course Thumbnail
-                                </div>
-                                <div class="course-thumbnail">
-                                    <div class="course-thumbnail-content">
-                                        <div class="course-thumbnail-img d-flex">
-                                            <img src="" alt="" style="display: none" class="image-thumbnail" />
-                                            <img src="assets/img/icon-image.png" alt="" class="icon" width="36px"
-                                                 height="36px" />
-                                        </div>
-                                        <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="" id="thumbnail" onchange="UploadThumbnail(this)"/>
-                                            <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content-3">
-                                <div class="course-publish mb-3">
-                                    <div class="publish-button d-flex justify-content-center p-4">
-                                        <input type="submit" value="Next Step" class="btn btn-primary"/>
-                                    </div>
-<!--                                    <div class="save-draft px-3 py-3">Save draft</div>
-                                    <div class="delete-course px-3 py-3">Delete course</div>-->
-                                </div>
-                                <div class="course-option p-3">
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Category</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <select class="form-select w-100" aria-label="Default select example" name="category">
-                                                <option selected>Select course category</option>
-                                                <option value="Front-end">Front-end</option>
-                                                <option value="Back-end">Back-end</option>
-                                                <option value="Database">Database</option>
-                                            </select>
-                                        </div>
-                                        <div class="course-option-content-des">Select a Category</div>
-                                    </div>
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Price</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <input type="text" class="w-100" name="CoursePrice"/>
-                                        </div>
-                                        <div class="course-option-content-des">
-                                            Enter price of course
-                                        </div>
-                                    </div>
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Category</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <select class="form-select w-100" aria-label="Default select example" name="difficulty">
-                                                <option selected>Select course difficult0</option>
-                                                <option value="easy">Easy</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="hard">Hard</option>
-                                            </select>
-                                        </div>
-                                        <div class="course-option-content-des">Select difficulty</div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- Modal Add Section-->
+                <form action="CreateSection?courseId=${courseID}" method="post">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">
-                                        Add Objectives
+                                        Add Section
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <label for="Section name" class="form-label">Objective Name</label>
+                                    <label for="Section name" class="form-label">Section Name</label>
                                     <!-- Section name must not null -->
                                     <input id="value" type="text" class="form-control" name="SectionName" required="true" />
                                 </div>
@@ -236,11 +189,12 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <input type="button" class="btn btn-primary" value="Add Objectives" onclick="createObjective()">
+                                    <input type="submit" class="btn btn-primary" value="Add Section" onclick="">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </form>
             </section>
             <!-- End: Create Course -->
 
@@ -248,7 +202,7 @@
             <!-- End: Footer -->
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="assets/js/create_course.js"></script>
+        <script src="assets/js/create_section.js"></script>
         <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
