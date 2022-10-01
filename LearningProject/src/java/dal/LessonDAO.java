@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  */
 public class LessonDAO extends DBContext {
 
-    public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL) {
+    public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL, int duration) {
         try {
-            execute("EXEC [sp_create_video] ?, ?, ?, ?", sectionId, lessonName, videoName, videoURL);
+            execute("EXEC [sp_create_video] ?, ?, ?, ?, ?", sectionId, lessonName, videoName, videoURL, duration);
         } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

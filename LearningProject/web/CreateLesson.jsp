@@ -26,6 +26,7 @@
                 selector: '#mytextarea'
             });
         </script>
+        <script src="assets/js/add_lesson.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -129,14 +130,14 @@
                                 </li>
                             </ol>
                         </nav>
-                        <h4 class="mb-3 fw-bold mb-1">Create lesson for Section 1</h4>
+                        <h4 class="mb-3 fw-bold mb-1">Create lesson for ${section.getSectionName()}</h4>
                     </div>
                     <table class="table table-striped">
                         <thead>
                         <th>Lesson No</th>
                         <th>Lesson Name</th>
                         <th>Lesson Type</th>
-                        <th>Create Date</th>
+                        <th>Time Duration</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
@@ -234,7 +235,7 @@
                     <!-- Modal Document-->
 
                     <!-- Modal Video-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?sectionID=${sectionID}" method="POST" data-type="video">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -263,12 +264,14 @@
                                                     <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
                                                 <input type="text" value="Video" class="d-none" name="type">
+                                                <input type="text" name="sectionID" value="${sectionID}" class="d-none">
+                                                <input type="text" class="d-none" name="duration">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
+                                        <button type="button" class="btn btn-primary" onclick="doSubmit()">Save
                                             changes</button>
                                     </div>
                                 </div>
