@@ -179,11 +179,11 @@
                             <div class="content-3">
                                 <div class="course-publish mb-3">
                                         <div class="publish-button d-flex justify-content-center p-4">
-                                            <input type="hidden" name="courseid" value="${course.getCourseID()}">
                                             <input type="submit" value="Edit section" class="btn btn-dark"/>
                                         </div>
-                                    <div class="save-draft px-3 py-3"><input type="submit" value="Save changes" class="btn btn-dark"/></div>
-                                    <div class="save-draft px-3 py-3"><input type="submit" value="Delete course" class="btn btn-dark"/></div>
+                                    <input name="button" type="hidden" value=""/>
+                                    <div class="save-draft px-3 py-3"><input type="button" value="Save changes" class="btn btn-dark" onclick="Submit(this)"/></div>
+                                            <div class="save-draft px-3 py-3"><input type="button" value="Delete course" class="btn btn-dark" onclick="Submit(this)"/></div>
                                 </div>
                                 <div class="course-option p-3">
                                     <div class="course-option-content mb-2">
@@ -214,7 +214,6 @@
                 
                 <!-- Modal Add Section-->
 
-                    <input type="hidden" name="courseid" value="${course.getCourseID()}">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -233,7 +232,7 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <input type="submit" name="button" class="btn btn-primary" value="Add Objectives">
+                                    <input type="button" class="btn btn-primary" value="Add Objectives" onclick="Submit(this)">
                                 </div>
                             </div>
                         </div>
@@ -253,6 +252,11 @@
         crossorigin="anonymous"></script>
         <script src="assets/js/home_page.js"></script>
         <script>
+            function Submit(target){
+                document.querySelector('input[name="button"]').value = target.value;
+                document.querySelector('#main > section > form').submit();
+            }
+            
                             function UploadThumbnail(target) {
                                 var reader = new FileReader();
                                 var avatar = document.getElementById("imageBase64");

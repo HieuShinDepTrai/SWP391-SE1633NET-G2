@@ -221,39 +221,41 @@
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
-                                <div class="col-xl-3 col-lg-4 col-md-6" >
-                                    <div class="card" style="min-height: 234px; height: 520px;">
-                                        <div class="card-top-img">
-                                            <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="course-title">${course.getCourseName()}</h5>
-                                            <div class="course-meta-info">
-                                                <div class="course-meta-author">
-                                                    <div class="author-avatar">
-                                                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                             alt="">
-                                                    </div>
-                                                    <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
-                                                </div>
-                                                <div class="course-meta-student">
-                                                    <i class="fa-solid fa-user"></i>
-                                                    <p>${course.getNumberEnrolled()} Students</p>
-                                                </div>
+                                <c:if test="${course.getStatus() == 'Enabled   '}">
+                                    <div class="col-xl-3 col-lg-4 col-md-6" >
+                                        <div class="card" style="min-height: 234px; height: 520px;">
+                                            <div class="card-top-img">
+                                                <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
                                             </div>
-                                            <div class="course-footer">
-                                                <form action="updatecourse">                                                        
+                                            <div class="card-body">
+                                                <h5 class="course-title">${course.getCourseName()}</h5>
+                                                <div class="course-meta-info">
+                                                    <div class="course-meta-author">
+                                                        <div class="author-avatar">
+                                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                                                                 alt="">
+                                                        </div>
+                                                        <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
+                                                    </div>
+                                                    <div class="course-meta-student">
+                                                        <i class="fa-solid fa-user"></i>
+                                                        <p>${course.getNumberEnrolled()} Students</p>
+                                                    </div>
+                                                </div>
+                                                <div class="course-footer">
+                                                    <form action="updatecourse">                                                        
 
-                                                    <input type="submit" value="Update">
+                                                        <input type="submit" value="Update">
 
 
-                                                    <input type="hidden" name="courseid" value="${course.getCourseID()}">
-                                                </form>
+                                                        <input type="hidden" name="courseid" value="${course.getCourseID()}">
+                                                    </form>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </c:if>
                             </c:forEach>
                         </div>
                     </div>

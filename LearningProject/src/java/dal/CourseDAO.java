@@ -32,8 +32,18 @@ public class CourseDAO extends DBContext {
         ArrayList<Course> courses = new ArrayList<>();
         try {
             String sql = "SELECT \n"
-                    + "[C].[CourseName], [C].[NumberEnrolled],[C].[CourseID],\n"
-                    + "[C].[CoursePrice], [U].[FirstName] \n"
+                    + "[C].[CourseName],"
+                    + "[c].[DateCreate],"
+                    + "[c].[Category],"
+                    + "[C].[CourseImage],"
+                    + "[C].[Status],"
+                    + "[C].[NumberEnrolled],"
+                    + "[C].[CourseID],"
+                    + "[C].[CoursePrice],"
+                    + "[C].[Description],"
+                    + "[C].[Objectives],"
+                    + "[C].[Difficulty],"
+                    + "[U].[FirstName] \n"
                     + "FROM [Course] C INNER JOIN [User] U\n"
                     + "ON [C].[AuthorID] = [U].[UserID]";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -42,9 +52,15 @@ public class CourseDAO extends DBContext {
                 Course course = new Course();
                 User user = new User();
                 course.setCourseName(rs.getString("CourseName"));
+                course.setDateCreate(rs.getTimestamp("DateCreate"));
+                course.setCategory(rs.getString("Category"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setStatus(rs.getString("Status"));
                 course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 course.setCoursePrice(rs.getDouble("CoursePrice"));
                 course.setCourseID(rs.getInt("CourseID"));
+                course.setObjectives(rs.getNString("Objectives"));
+                course.setDifficulty(rs.getString("Difficulty"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
                 
