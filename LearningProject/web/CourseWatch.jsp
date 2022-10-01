@@ -4,6 +4,7 @@
     Author     : Dung
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -151,9 +152,31 @@
                                                 ${section.getSectionName()}
                                             </div>
                                             <div class="course-lesson-left-description">
+                                                
+                                                <!-- Begin: Lesson Progress -->
                                                 <div class="course-lesson-progress d-inline">12/12</div>
                                                 <div class="d-inline">|</div>
-                                                <div class="course-lesson-time d-inline">14:36</div>
+                                                <!-- End: Lesson Progress -->
+                                                
+                                                <!-- Begin: Section Time -->
+                                                <%
+                                                    int sectionTime = 0;
+                                                %>
+                                                <c:forEach items="${listLesson}" var="lesson">
+                                                    <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                        <c:set var="lessonTime" value="${lesson.getTime()}"></c:set>
+                                                        <%
+                                                            int lessonTime = Integer.parseInt(pageContext.getAttribute("lessonTime").toString());
+                                                            sectionTime +=  lessonTime;
+                                                        %>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <%
+                                                    int minute = sectionTime / 60;
+                                                    int second = sectionTime % 60;
+                                                %>
+                                                <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
+                                                <!-- End: Section Time -->
                                             </div>
                                         </div>
                                         <div class="course-lesson-right">
@@ -174,7 +197,11 @@
                                                         </div>
                                                         <div class="course-lesson-child-footer">
                                                             <i class="fa-solid fa-circle-play"></i>
-                                                            03:25
+                                                            <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                            <fmt:parseNumber var="minute" type="number" value="${time/60}" pattern="#"/>
+                                                            <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
+                                                            ${minute}:${second}
+
                                                         </div>
                                                     </div>
                                                 </a>

@@ -92,6 +92,7 @@ public class CourseWatchController extends HttpServlet {
                     listLesson.add(lesson);
                 }
             }
+         
 
             // Send video list to jsp
             request.setAttribute("course", c);
