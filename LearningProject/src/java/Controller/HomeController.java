@@ -80,10 +80,8 @@ public class HomeController extends HttpServlet {
             User user = (User) session.getAttribute("user");
             String avatar = user.getAvatar();
             request.setAttribute("avatar", avatar);
-            //}
-                      
-            request.setAttribute("courseIDs", courseIDs);
-
+            //}                        
+            request.setAttribute("courseIDs", courseIDs);            
             UserDAO userDAO = new UserDAO();
             user = userDAO.getAllUserInformation(user.getUserName());
             request.setAttribute("user", user);
