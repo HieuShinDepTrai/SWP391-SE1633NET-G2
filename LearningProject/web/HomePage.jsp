@@ -230,6 +230,9 @@
                                             <div class="card-body">
 
                                                 <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
+                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                            <input name="op"  type="submit" value="Enroll">
+                                                        </c:if>
 
                                                 <div class="course-meta-info">
                                                     <div class="course-meta-author">
