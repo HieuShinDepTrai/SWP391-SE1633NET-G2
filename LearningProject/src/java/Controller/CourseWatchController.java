@@ -2,22 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-<<<<<<< HEAD
-
-package Controller;
-
-import Model.Comment;
-import dal.CommentDAO;
-=======
 package Controller;
 
 import Model.Course;
 import Model.Lesson;
 import Model.Section;
+import Model.Comment;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
+import dal.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,14 +22,6 @@ import java.util.ArrayList;
 
 /**
  *
-<<<<<<< HEAD
- * @author ASUS
- */
-public class CourseWatchController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-=======
  * @author Dung
  */
 public class CourseWatchController extends HttpServlet {
@@ -44,40 +30,19 @@ public class CourseWatchController extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-=======
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-<<<<<<< HEAD
-            out.println("<title>Servlet CourseWatchController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CourseWatchController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-=======
             out.println("<title>Servlet CourseWatchController</title>");
             out.println("</head>");
             out.println("<body>");
@@ -91,7 +56,6 @@ public class CourseWatchController extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -99,7 +63,6 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
     throws ServletException, IOException {
        
         CommentDAO cmtDao = new CommentDAO();
@@ -115,7 +78,6 @@ public class CourseWatchController extends HttpServlet {
 
     /** 
      * Handles the HTTP <code>POST</code> method.
-=======
             throws ServletException, IOException {
         // Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
@@ -169,7 +131,6 @@ public class CourseWatchController extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -177,22 +138,13 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
     throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /** 
-     * Returns a short description of the servlet.
-=======
-            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     /**
      * Returns a short description of the servlet.
      *
->>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
      * @return a String containing servlet description
      */
     @Override
