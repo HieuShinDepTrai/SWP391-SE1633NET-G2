@@ -4,7 +4,10 @@
  */
 package Controller;
 
+import Model.Course;
 import dal.CourseDAO;
+import dal.LessonDAO;
+import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,26 +23,53 @@ public class UpdateCourseController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("UpdateCourse.jsp").forward(request, response);
+        try {
+            CourseDAO cd = new CourseDAO();
+            LessonDAO pd = new LessonDAO();
+            int courseId = Integer.parseInt(request.getParameter("courseid"));
+
+            Course course = cd.getAllCourseInformation(courseId);
+            
+            if(course.getStatus().equals("Enabled   ")){
+                cd.disableCourse(courseId);
+                int newCourseId = cd.createClone(courseId);
+                course = cd.getAllCourseInformation(newCourseId);
+            }
+            
+            String tmp = course.getObjectives();
+            String[] objectiveList = tmp.split("[/]+");
+
+            request.setAttribute("course", course);
+            request.setAttribute("objectivelist", objectiveList);
+
+            request.getRequestDispatcher("UpdateCourse.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             CourseDAO cd = new CourseDAO();
+            LessonDAO pd = new LessonDAO();
+            
             int courseId = Integer.parseInt(request.getParameter("courseid"));
-            cd.disableCourse(courseId);
-            cd.createClone(courseId);
-            request.setAttribute("Course", cd.getAllCourseInformation(courseId * (-1)));
+            
             if (request.getParameter("button") != null) {
-                if (request.getParameter("button").equals("delete")) {
+                if (request.getParameter("button").equals("Add Objectives")){
+                    String objective = request.getParameter("objectivename");
+                    cd.insertNewObjective(objective, courseId);
+                    
+                    doGet(request, response);
+                }
+                if (request.getParameter("button").equals("Delete course")) {
                     cd.disableCourse(courseId);
                     response.sendRedirect("home");
                 } else {
                     response.sendRedirect("updatesection");
                 }
             }
-            doGet(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

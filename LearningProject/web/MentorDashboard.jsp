@@ -242,7 +242,7 @@
                                                 </div>
                                             </div>
                                             <div class="course-footer">
-                                                <form action="updatecourse" method="POST">                                                        
+                                                <form action="updatecourse">                                                        
 
                                                     <input type="submit" value="Update">
 

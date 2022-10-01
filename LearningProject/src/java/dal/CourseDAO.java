@@ -134,7 +134,8 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    public void createClone(int courseId) {
+    public int createClone(int courseId) {
+        int newCourseID = 0;
         try {
             Course course = getAllCourseInformation(courseId);
             SectionDAO sd = new SectionDAO();
@@ -160,9 +161,9 @@ public class CourseDAO extends DBContext {
                     course.getObjectives(),
                     course.getDifficulty());
             
-            if (!rs.next()) return;
+            if (!rs.next()) return 0;
             
-            int newCourseID = rs.getInt(1) + 1;
+            newCourseID = rs.getInt(1) + 1;
 
             for (Section section : sectionlist) {
                 rs = executeQuery("SELECT IDENT_CURRENT('Section')\nINSERT INTO [dbo].[Section] VALUES (?, ?, ?);",
@@ -170,7 +171,7 @@ public class CourseDAO extends DBContext {
                         section.getSectionName(),
                         0);
                 
-                if (!rs.next()) return;
+                if (!rs.next()) return 0;
                 
                 int newSectionID = rs.getInt(1) + 1;
                 
@@ -183,7 +184,7 @@ public class CourseDAO extends DBContext {
                             lesson.getType(),
                             lesson.getTime());                
                     
-                    if (!rs.next()) return;
+                    if (!rs.next()) return 0;
                     
                     int newLessonID = rs.getInt(1) + 1;
                     
@@ -206,7 +207,7 @@ public class CourseDAO extends DBContext {
                                 quiz.getMark(),
                                 newLessonID);
                         
-                        if (!rs.next()) return;
+                        if (!rs.next()) return 0;
                         
                         int newQuizId = rs.getInt(1) + 1;
                         
@@ -216,7 +217,7 @@ public class CourseDAO extends DBContext {
                                     question.getQuestionContent(),
                                     newQuizId);
                             
-                            if (!rs.next()) return;
+                            if (!rs.next()) return 0;
                             
                             int newQuestionId = rs.getInt(1) + 1;
                             
@@ -234,6 +235,7 @@ public class CourseDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return newCourseID;
     }
 
     public ArrayList<Course> getAllUserCourse(String username) {
@@ -329,6 +331,14 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public void insertNewObjective(String objective, int courseId){
+        try {
+            executeUpdate("UPDATE [dbo].[Course] SET [Objectives] = CONCAT([Objectives], ?) WHERE [CourseID] = ?", "/" + objective, courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
