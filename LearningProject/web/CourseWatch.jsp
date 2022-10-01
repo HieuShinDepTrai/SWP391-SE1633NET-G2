@@ -166,7 +166,7 @@
                                             <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
                                                 <!-- course lesson child -->
-                                                <a href="#">
+                                                <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                     <div class="course-lesson-child  px-4 py-2">
                                                         <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
                                                             <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
