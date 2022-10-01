@@ -64,16 +64,27 @@ public class CourseWatchController extends HttpServlet {
             throws ServletException, IOException {
         // Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
-            // Get course id 
-            int id = Integer.parseInt(request.getParameter("id"));
 
+            // Get course id 
+            int courseID = 0;
+            int sectionID = 0;
+            int lessonID = 0;
+            if(request.getParameter("courseID") != null) {
+                courseID = Integer.parseInt(request.getParameter("courseID"));                
+            }
+            if(request.getParameter("sectionID") != null) {
+                sectionID = Integer.parseInt(request.getParameter("sectionID"));                
+            }
+            if(request.getParameter("lessonID") != null) {
+                lessonID = Integer.parseInt(request.getParameter("lessonID"));                
+            }
             CourseDAO cdao = new CourseDAO();
             SectionDAO sdao = new SectionDAO();
             LessonDAO ldao = new LessonDAO();
 
             // Get data from dao
-            Course c = cdao.getCourseInformation(id);
-            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(id);
+            Course c = cdao.getCourseInformation(courseID);
+            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
             ArrayList<Lesson> listLesson = new ArrayList<>();
             for (Section section : listSection) {
                 ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
@@ -81,12 +92,18 @@ public class CourseWatchController extends HttpServlet {
                     listLesson.add(lesson);
                 }
             }
+         
 
-            // Send to jsp
+            // Send video list to jsp
             request.setAttribute("course", c);
             request.setAttribute("listSection", listSection);
             request.setAttribute("listLesson", listLesson);
 
+            // Send id of lesson to jsp
+            request.setAttribute("courseID", courseID);
+            request.setAttribute("sectionID", sectionID);
+            request.setAttribute("lessonID", lessonID);
+            
             request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {
 //            // Send back to home pages
