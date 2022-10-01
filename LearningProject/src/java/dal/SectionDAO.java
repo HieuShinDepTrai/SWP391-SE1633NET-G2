@@ -12,8 +12,9 @@ import java.util.ArrayList;
  *
  * @author vuman
  */
-public class SectionDAO extends DBContext{
-    public void disableSection(int courseId){
+public class SectionDAO extends DBContext {
+
+    public void disableSection(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
@@ -21,17 +22,31 @@ public class SectionDAO extends DBContext{
         }
     }
     
-    public ArrayList<Section> getAllSectionOfCourse(int courseid){
+    public ArrayList<Section> getAllSectionOfCourse(int courseid) {
         ArrayList<Section> sectionlist = new ArrayList<Section>();
-        try(ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = ?", courseid, 0)){
-            while(rs.next()){
+        try ( ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = ?", courseid, 0)) {
+            while (rs.next()) {
                 sectionlist.add(new Section(rs.getInt("SectionID"), courseid, rs.getNString("SectionName"), rs.getBoolean("isDisable")));
             }
             return sectionlist;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public void addSection(Section section) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[Section]\n"
+                    + "           ([CourseID]\n"
+                    + "           ,[SectionName]\n"
+                    + "           ,[isDisable])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?)", section.getSectionId(), section.getSectionName(), section.isIsDisable());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

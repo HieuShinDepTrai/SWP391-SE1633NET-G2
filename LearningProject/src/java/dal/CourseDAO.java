@@ -7,6 +7,7 @@ package dal;
 import Model.Answer;
 import Model.Course;
 import Model.Docs;
+import Model.Feedback;
 import Model.Lesson;
 import Model.Question;
 import Model.Quiz;
@@ -62,7 +63,7 @@ public class CourseDAO extends DBContext {
                 + "[NumberEnrolled],"
                 + "[CoursePrice],"
                 + "[CourseImage],"
-                + "[isDisable],"
+                + "[Status],"
                 + "[Description],"
                 + "[Objectives],"
                 + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = ?", courseId)) {
@@ -75,7 +76,7 @@ public class CourseDAO extends DBContext {
                         rs.getInt("NumberEnrolled"),
                         rs.getDouble("CoursePrice"),
                         rs.getString("CourseImage"),
-                        rs.getBoolean("isDisable"),
+                        rs.getString("Status"),
                         new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")),
                         rs.getNString("Description"),
                         rs.getNString("Objectives"),
@@ -97,7 +98,7 @@ public class CourseDAO extends DBContext {
                     + "[NumberEnrolled],"
                     + "[CoursePrice],"
                     + "[CourseImage],"
-                    + "[isDisable], "
+                    + "[Status], "
                     + "[Description], "
                     + "[Objectives],"
                     + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
@@ -113,7 +114,7 @@ public class CourseDAO extends DBContext {
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 c.setCoursePrice(rs.getDouble("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
-                c.setIsDisable(rs.getBoolean("isDisable"));
+                c.setStatus(rs.getString("Status"));
                 c.setDescription(rs.getString("Description"));
                 c.setObjectives(rs.getString("Objectives"));
                 c.setDifficulty(rs.getString("Difficulty"));
@@ -127,7 +128,7 @@ public class CourseDAO extends DBContext {
 
     public void disableCourse(int courseId) {
         try {
-            executeUpdate("UPDATE [dbo].[Course] SET [isDisable] = 1 WHERE [CourseID] = ? ", courseId);
+            executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disable' WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -257,4 +258,28 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Feedback> getFeedBack(int courseID) {
+        UserDAO userDAO = new UserDAO();
+        ArrayList<Feedback> feedbackList = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("select UserID, CourseRating, CourseFeedback from User_Course\n"
+                    + "where CourseID = ?", courseID);
+            while (rs.next()) {
+                Feedback feedback = new Feedback(userDAO.getAllUserInformationByID(rs.getInt("UserID")), rs.getInt("CourseRating"), rs.getString("CourseFeedback"));
+                feedbackList.add(feedback);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return feedbackList;
+    }
 }
+
+//SQL for getCurrentCourse
+//select top 10 *
+//from User_Lesson ul
+//inner join Lesson l on l.LessonID = ul.LessonID
+//inner join Section s on s.SectionID = l.SectionID
+//where s.CourseID = 5 and ul.UserID = 10 
+//order by ul.LessonID desc
