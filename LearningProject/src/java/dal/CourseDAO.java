@@ -13,7 +13,9 @@ import Model.Question;
 import Model.Quiz;
 import Model.Section;
 import Model.User;
+import Model.UserCourse;
 import Model.Video;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -506,6 +508,28 @@ public class CourseDAO extends DBContext {
         }
         return 0;
     }
+    
+     public UserCourse getUserCourseInformation(int courseId, int userId) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User_Course] WHERE CourseID = ? AND UserID = ?", courseId, userId)) {
+
+            if (rs.next()) {
+                int userID = rs.getInt("UserID");
+                int courseID = rs.getInt("CourseID") ;
+                boolean isStudied = rs.getBoolean("isStudied");
+                int courseRating = rs.getInt("CourseRating") ;
+                String CourseFeedback = rs.getNString("CourseFeedback");
+                double Progress = rs.getDouble("Progress") ;
+                Date Paydate = rs.getDate("Paydate");
+                boolean isFavourite =  rs.getBoolean("isFavourite");
+
+                return new UserCourse(userID, courseID, isStudied, courseRating, CourseFeedback, Progress, Paydate, isFavourite);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     
     public void insertNewObjective(String objective, int courseId){
         try {
