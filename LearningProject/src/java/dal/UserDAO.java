@@ -8,6 +8,9 @@ import Model.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -263,7 +266,7 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite) VALUES (? ,?, 0 ,0)",
+            executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite, Progress) VALUES (? ,?, 0 ,0, 0)",
                     UserID, CourseID);
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,7 +294,7 @@ public class UserDAO extends DBContext {
         }
         return true;
     }
-    
+
     public boolean checkEnroll(int userId, int courseId) {
         try {
             ResultSet rs = executeQuery("SELECT [UserID] FROM [dbo].[User_Course] WHERE [UserID] = ? AND [CourseID] = ?", userId, courseId);
@@ -306,20 +309,33 @@ public class UserDAO extends DBContext {
 
     public void insertFeedbackAndStar(int userId, int courseId, double rating, String feedback) {
         try {
-            if(checkEnroll(userId, courseId)){
-            executeUpdate("INSERT INTO [dbo].[User_Course]([UserID],"
-                    + " [CourseID],"
-                    + " [isStudied],"
-                    + " [CourseRating],"
-                    + " [CourseFeedback],"
-                    + "[isFavourite]) VALUES (?, ?, ?, ?, ?, ?)", userId, courseId, 0, rating, feedback, 0);
-            }
-            else{
+            if (checkEnroll(userId, courseId)) {
+                executeUpdate("INSERT INTO [dbo].[User_Course]([UserID],"
+                        + " [CourseID],"
+                        + " [isStudied],"
+                        + " [CourseRating],"
+                        + " [CourseFeedback],"
+                        + "[isFavourite]) VALUES (?, ?, ?, ?, ?, ?)", userId, courseId, 0, rating, feedback, 0);
+            } else {
                 executeUpdate("UPDATE [dbo].[User_Course] SET [CourseFeedback] = ?, [CourseRating] = ? WHERE [UserID] = ? AND [CourseID] = ?", feedback, rating, userId, courseId);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getUserTotalTime(int userID) {
+        try {
+            ResultSet rs = executeQuery("select SUM(Time) as 'TotalTime' from Lesson l\n"
+                    + "inner join User_Lesson ul on l.LessonID = ul.LessonID\n"
+                    + "where ul.UserID = ?", userID);
+            if (rs.next()) {
+                return rs.getInt("TotalTime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
 }

@@ -27,7 +27,7 @@ import org.apache.tomcat.util.net.SSLHostConfigCertificate;
  * @author Hieu Shin
  */
 public class CourseDAO extends DBContext {
-    
+
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
         try {
@@ -47,7 +47,7 @@ public class CourseDAO extends DBContext {
                 course.setCourseID(rs.getInt("CourseID"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
-                
+
                 courses.add(course);
             }
         } catch (SQLException ex) {
@@ -126,7 +126,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void disableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disabled' WHERE [CourseID] = ? ", courseId);
@@ -160,9 +160,11 @@ public class CourseDAO extends DBContext {
                     course.getDescription(),
                     course.getObjectives(),
                     course.getDifficulty());
-            
-            if (!rs.next()) return;
-            
+
+            if (!rs.next()) {
+                return;
+            }
+
             int newCourseID = rs.getInt(1) + 1;
 
             for (Section section : sectionlist) {
@@ -170,11 +172,13 @@ public class CourseDAO extends DBContext {
                         newCourseID,
                         section.getSectionName(),
                         0);
-                
-                if (!rs.next()) return;
-                
+
+                if (!rs.next()) {
+                    return;
+                }
+
                 int newSectionID = rs.getInt(1) + 1;
-                
+
                 ArrayList<Lesson> lessonlist = ld.getAllLessonOfSection(section.getSectionId());
                 for (Lesson lesson : lessonlist) {
                     rs = executeQuery("SELECT IDENT_CURRENT('Lesson')\nINSERT INTO [dbo].[Lesson] VALUES (?, ?, ?, ?, ?);",
@@ -182,12 +186,14 @@ public class CourseDAO extends DBContext {
                             lesson.getLessonName(),
                             0,
                             lesson.getType(),
-                            lesson.getTime());                
-                    
-                    if (!rs.next()) return;
-                    
+                            lesson.getTime());
+
+                    if (!rs.next()) {
+                        return;
+                    }
+
                     int newLessonID = rs.getInt(1) + 1;
-                    
+
                     if (lesson.getType().equals("Doc")) {
                         Docs docs = dd.getDocsOfLesson(lesson.getLessonId());
                         executeUpdate("INSERT INTO [dbo].[Docs] VALUES (?, ?)",
@@ -206,21 +212,25 @@ public class CourseDAO extends DBContext {
                         rs = executeQuery("SELECT IDENT_CURRENT('Quiz')\nINSERT INTO [dbo].[Quiz] VALUES (?, ?);",
                                 quiz.getMark(),
                                 newLessonID);
-                        
-                        if (!rs.next()) return;
-                        
+
+                        if (!rs.next()) {
+                            return;
+                        }
+
                         int newQuizId = rs.getInt(1) + 1;
-                        
+
                         ArrayList<Question> questionlist = qtd.getQuestionsOfQuiz(quiz.getQuizId());
                         for (Question question : questionlist) {
                             rs = executeQuery("SELECT IDENT_CURRENT('Question')\nINSERT INTO [dbo].[Question] VALUES (?, ?);",
                                     question.getQuestionContent(),
                                     newQuizId);
-                            
-                            if (!rs.next()) return;
-                            
+
+                            if (!rs.next()) {
+                                return;
+                            }
+
                             int newQuestionId = rs.getInt(1) + 1;
-                            
+
                             ArrayList<Answer> answerlist = ad.getAnswersOfQuestion(question.getQuestionId());
                             for (Answer answer : answerlist) {
                                 executeUpdate("INSERT INTO [dbo].[Answer] VALUES (?, ?, ?)",
@@ -307,7 +317,7 @@ public class CourseDAO extends DBContext {
         ArrayList<Feedback> feedbackList = new ArrayList<>();
         try {
             ResultSet rs = executeQuery("select UserID, CourseRating, CourseFeedback from User_Course\n"
-                    + "where CourseID = ?", courseID);
+                    + "where CourseID = ? and CourseRating is not null and CourseFeedback is not null", courseID);
             while (rs.next()) {
                 Feedback feedback = new Feedback(userDAO.getAllUserInformationByID(rs.getInt("UserID")), rs.getInt("CourseRating"), rs.getString("CourseFeedback"));
                 feedbackList.add(feedback);
@@ -317,7 +327,7 @@ public class CourseDAO extends DBContext {
         }
         return feedbackList;
     }
-    
+
     public void addNewCourse(Course c) {
         try {
             executeUpdate("INSERT INTO [dbo].[Course]\n"
@@ -343,20 +353,20 @@ public class CourseDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?)", 
-                    c.getCourseName(), c.getDateCreate(), c.getAuthor().getUserId(), 
-                    c.getCategory(), c.getNumberEnrolled(), c.getCoursePrice(), 
+                    + "           ,?)",
+                    c.getCourseName(), c.getDateCreate(), c.getAuthor().getUserId(),
+                    c.getCategory(), c.getNumberEnrolled(), c.getCoursePrice(),
                     c.getCourseImage(), c.getStatus(), c.getDescription(), c.getObjectives(), c.getDifficulty());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public int getNewCourseID() {
         int id = 0;
         try {
             ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')");
-            while(rs.next()) {
+            while (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (Exception e) {
