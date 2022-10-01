@@ -153,7 +153,7 @@
                         </a>
                     </c:if>
                     <c:if test="${user.role == 'Mentor'}">
-                        <a class="bar-button " href="mentordashboard">
+                        <a class="bar-button " href="#">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">Mentor Dashboard</p>
                         </a>

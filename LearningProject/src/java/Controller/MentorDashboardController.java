@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
+import Model.Course;
+import Model.User;
 import dal.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,33 +13,32 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
  * @author vuman
  */
-public class UpdateCourseController extends HttpServlet {
+public class MentorDashboardController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("").forward(request, response);
-    } 
+        try {
+            HttpSession session = request.getSession();
+            if (session.getAttribute("user") != null) {
+                User user = (User) session.getAttribute("user");
+                ArrayList<Course> list = new CourseDAO().getAllUserCourse(user.getUserName());
+                request.setAttribute("courses", list);
+                request.getRequestDispatcher("MentorDashboard.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CourseDAO cd = new CourseDAO();
-        int courseId = Integer.parseInt(request.getParameter("courseid"));
-        cd.createClone(courseId);
-        request.setAttribute("Course", cd.getAllCourseInformation(courseId * (-1)));
-        if(request.getParameter("button") != null){
-            if(request.getParameter("button").equals("delete")){
-                cd.disableCourse(courseId);
-                response.sendRedirect("home");
-            }
-            else{
-                response.sendRedirect("updatesection");
-            }
-        }
-        doGet(request, response);
+        super.doPost(request, response);
     }
 
 }

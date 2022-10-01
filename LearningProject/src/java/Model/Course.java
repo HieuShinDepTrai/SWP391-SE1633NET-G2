@@ -31,7 +31,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, String description, String objectives, String difficulty) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -41,9 +41,11 @@ public class Course {
         this.CourseImage = CourseImage;
         this.isDisable = isDisable;
         this.Author = Author;
-        this.CourseProgress = CourseProgress;
+        this.description = description;
+        this.objectives = objectives;
+        this.difficulty = difficulty;
     }
-
+    
     public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress, String description, String objectives, String difficulty) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
