@@ -131,7 +131,7 @@
                                 <div class="container-fluid d-flex align-items-center">
                                     <div class="user-dashboard-slide d-flex justify-content-between align-items-center w-100">
                                         <div class="slide-left">
-                                            <h4 class="fw-bold">Hi dungssj12</h4>
+                                            <h4 class="fw-bold">Hi ${user.getUserName()}</h4>
                                             <p class="mb-3">Welcome to your user dashboard</p>
                                             <button>Get Started</button>
                                         </div>
@@ -161,7 +161,7 @@
                                                 <h6>Time studied</h6>
                                             </div>
                                             <div class="overview-content d-flex justify-content-between">
-                                                <p>02</p>
+                                                <p>${totalTime}</p>
                                                 <i class="fa-solid fa-laptop overview-content-img"></i>
                                             </div>
                                         </div>
