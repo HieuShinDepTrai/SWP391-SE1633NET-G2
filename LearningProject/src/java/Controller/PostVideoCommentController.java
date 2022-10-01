@@ -84,7 +84,7 @@ public class PostVideoCommentController extends HttpServlet {
             //insert reply comment and the parent id
             String repComment = request.getParameter("repComment");
             int pId = Integer.parseInt(request.getParameter("pId"));
-            
+            //insert into comment that is a reply comment
             cmtDao.insertIntoCommentContentReply(repComment, 1, pId);            
         }
         
@@ -92,14 +92,9 @@ public class PostVideoCommentController extends HttpServlet {
             e.printStackTrace();
         }
         
-        //insert into comment that does not a reply comment
-                                     
-        //insert into comment that is a reply comment
-        
-        
         request.setAttribute("commentList", commentList);
-//        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
-        response.sendRedirect("CourseWatch");
+        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+        //response.sendRedirect("WatchCourse");
     }
 
     @Override
