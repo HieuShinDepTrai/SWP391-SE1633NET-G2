@@ -4,6 +4,10 @@
         <servlet-name>UserDashboardController</servlet-name>
         <servlet-class>Controller.UserDashboardController.UserDashboardController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateCourseController</servlet-name>
+        <servlet-class>Controller.CreateCourseController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>CourseWatchController</servlet-name>
         <url-pattern>/WatchCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateCourseController</servlet-name>
+        <url-pattern>/CreateCourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
