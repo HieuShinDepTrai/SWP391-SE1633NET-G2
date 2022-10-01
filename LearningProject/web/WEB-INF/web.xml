@@ -8,6 +8,10 @@
         <servlet-name>CreateCourseController</servlet-name>
         <servlet-class>Controller.CreateCourseController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateSectionController</servlet-name>
+        <servlet-class>Controller.CreateSectionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -43,6 +47,10 @@
     <servlet>
         <servlet-name>CourseDetailsController</servlet-name>
         <servlet-class>Controller.CourseDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostVideoCommentController</servlet-name>
+        <servlet-class>Controller.PostVideoCommentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MentorDashboardController</servlet-name>
@@ -165,6 +173,10 @@
         <url-pattern>/CourseDetails</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>PostVideoCommentController</servlet-name>
+        <url-pattern>/postvideocomment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MentorDashboardController</servlet-name>
         <url-pattern>/mentordashboard</url-pattern>
     </servlet-mapping>
@@ -175,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>CreateCourseController</servlet-name>
         <url-pattern>/CreateCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateSectionController</servlet-name>
+        <url-pattern>/CreateSection</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

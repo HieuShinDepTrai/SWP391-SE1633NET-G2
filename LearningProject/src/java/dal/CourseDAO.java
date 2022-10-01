@@ -20,13 +20,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.tomcat.util.net.SSLHostConfigCertificate;
 
 /**
  *
  * @author Hieu Shin
  */
 public class CourseDAO extends DBContext {
-
+    
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
         try {
@@ -46,7 +47,7 @@ public class CourseDAO extends DBContext {
                 course.setCourseID(rs.getInt("CourseID"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
-
+                
                 courses.add(course);
             }
         } catch (SQLException ex) {
@@ -125,7 +126,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void disableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disabled' WHERE [CourseID] = ? ", courseId);
@@ -317,6 +318,52 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return feedbackList;
+    }
+    
+    public void addNewCourse(Course c) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[Course]\n"
+                    + "           ([CourseName]\n"
+                    + "           ,[DateCreate]\n"
+                    + "           ,[AuthorID]\n"
+                    + "           ,[Category]\n"
+                    + "           ,[NumberEnrolled]\n"
+                    + "           ,[CoursePrice]\n"
+                    + "           ,[CourseImage]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[Description]\n"
+                    + "           ,[Objectives]\n"
+                    + "           ,[Difficulty])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)", 
+                    c.getCourseName(), c.getDateCreate(), c.getAuthor().getUserId(), 
+                    c.getCategory(), c.getNumberEnrolled(), c.getCoursePrice(), 
+                    c.getCourseImage(), c.getStatus(), c.getDescription(), c.getObjectives(), c.getDifficulty());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public int getNewCourseID() {
+        int id = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')");
+            while(rs.next()) {
+                id = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return id;
     }
 
     public int getCourseTime(int courseID) {
