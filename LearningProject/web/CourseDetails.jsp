@@ -190,7 +190,7 @@
                                         </div>
                                         <span>.</span>
                                         <div class="course-time">
-                                            Time <span class="fw-bold">03 hours 26 minutes</span>
+                                            Time <span class="fw-bold">${totalTime}</span>
                                         </div>
                                     </div>
                                     <div class="course-agenda-right">
@@ -262,7 +262,7 @@
                         <div class="course-details-right">
                             <div class="course-details-right-content">
                                 <div class="course-details-thumbnail">
-                                    <img src="assets/img/htmlcss.avif" alt="" />
+                                    <img src="${course.getCourseImage()}" alt="" />
                                 </div>
                                 <c:if test="${course.getCoursePrice() == 0}">
                                     <div class="course-details-price my-2">Free</div> 
@@ -282,8 +282,8 @@
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-clock"></i>
-                                        This course take
-                                        <span class="lessons">03 hours 26 minutes</span>
+                                        This course take                                        
+                                        <span class="lessons">${totalTime}</span>
                                     </div>
                                     <div class="description">
                                         <i class="fa-solid fa-battery-full"></i>
@@ -330,7 +330,7 @@
                                                 <c:forEach begin="1" end="${fb.getRating()}">                                                    
                                                     <i class="fa-solid fa-star"></i>                                                    
                                                 </c:forEach>
-                                                    <c:forEach begin="${fb.getRating()}" end="4">
+                                                <c:forEach begin="${fb.getRating()}" end="4">
                                                     <i class="fa-regular fa-star"></i>                                      
                                                 </c:forEach>
                                                 (${fb.getRating()} star)
@@ -501,6 +501,7 @@
                 }
             };
         </script>
+
         <script
             src="https://kit.fontawesome.com/7562df3d9f.js"
             crossorigin="anonymous"
