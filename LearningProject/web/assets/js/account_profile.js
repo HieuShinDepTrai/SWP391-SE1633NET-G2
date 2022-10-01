@@ -54,7 +54,7 @@ function disableOff(button) {
 function UploadAvatar(target) {
     var reader = new FileReader();
     var avatar = document.getElementById("AvatarProfile");
-
+    
     reader.onloadend = function () {
         const img = new Image();
         img.src = reader.result;

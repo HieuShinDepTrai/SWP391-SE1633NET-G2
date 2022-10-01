@@ -14,19 +14,18 @@ public class Lesson {
     private String lessonName;
     private boolean isDisable;
     private String type;
-    private boolean isChecked;
     private int time;
     
     public Lesson() {
     }
-
-    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type, boolean isChecked) {
+    
+    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type,  int time) {
         this.lessonId = lessonId;
         this.sectionId = sectionId;
         this.lessonName = lessonName;
         this.isDisable = isDisable;
         this.type = type;
-        this.isChecked = isChecked;
+        this.time = time;
     }
 
     public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type, boolean isChecked, int time) {
@@ -35,7 +34,6 @@ public class Lesson {
         this.lessonName = lessonName;
         this.isDisable = isDisable;
         this.type = type;
-        this.isChecked = isChecked;
         this.time = time;
     }
 
@@ -85,14 +83,6 @@ public class Lesson {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public boolean isIsChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(boolean isChecked) {
-        this.isChecked = isChecked;
     }
     
 }
