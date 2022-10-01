@@ -15,7 +15,9 @@ import java.util.ArrayList;
 public class DocsDAO extends DBContext{
     public Docs getDocsOfLesson(int lessonId){
         try(ResultSet rs = executeQuery("SELECT [DocsID], [Content] FROM [dbo].[Docs] WHERE [LessonID] = ?", lessonId)){
-            return new Docs(rs.getInt("DocsID"), lessonId, rs.getNString("Content"));
+            if(rs.next()){
+                return new Docs(rs.getInt("DocsID"), lessonId, rs.getNString("Content"));
+            }
         }
         catch(Exception e){
             e.printStackTrace();

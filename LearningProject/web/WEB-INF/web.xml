@@ -45,6 +45,10 @@
         <servlet-class>Controller.CourseDetailsController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>MentorDashboardController</servlet-name>
+        <servlet-class>Controller.MentorDashboardController</servlet-class>
+    </servlet>
+    <servlet>    
         <servlet-name>CourseWatchController</servlet-name>
         <servlet-class>Controller.CourseWatchController</servlet-class>
     </servlet>
@@ -138,7 +142,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateSectionController</servlet-name>
-        <url-pattern>/updatecoursecontroller</url-pattern>
+        <url-pattern>/updatesection</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserCourseController</servlet-name>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>CourseDetailsController</servlet-name>
         <url-pattern>/CourseDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MentorDashboardController</servlet-name>
+        <url-pattern>/mentordashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CourseWatchController</servlet-name>
