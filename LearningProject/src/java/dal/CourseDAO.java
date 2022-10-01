@@ -117,7 +117,7 @@ public class CourseDAO extends DBContext {
                     + "[NumberEnrolled],"
                     + "[CoursePrice],"
                     + "[CourseImage],"
-                    + "[isDisable], "
+                    + "[Status], "
                     + "[Description], "
                     + "[Objectives],"
                     + "[Difficulty] FROM [dbo].[Course] WHERE [CourseID] = " + courseId;
@@ -133,7 +133,7 @@ public class CourseDAO extends DBContext {
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 c.setCoursePrice(rs.getDouble("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
-                c.setIsDisable(rs.getBoolean("isDisable"));
+                c.setStatus(rs.getString("Status"));
                 c.setDescription(rs.getString("Description"));
                 c.setObjectives(rs.getString("Objectives"));
                 c.setDifficulty(rs.getString("Difficulty"));
@@ -147,7 +147,7 @@ public class CourseDAO extends DBContext {
 
     public void disableCourse(int courseId) {
         try {
-            executeUpdate("UPDATE [dbo].[Course] SET [isDisable] = 1 WHERE [CourseID] = ? ", courseId);
+            executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disable' WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }
