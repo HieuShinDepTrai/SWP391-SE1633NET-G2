@@ -265,7 +265,7 @@
                                     <img src="assets/img/htmlcss.avif" alt="" />
                                 </div>
                                 <c:if test="${course.getCoursePrice() == 0}">
-                                   <div class="course-details-price my-2">Free</div> 
+                                    <div class="course-details-price my-2">Free</div> 
                                 </c:if>
                                 <c:if test="${course.getCoursePrice() != 0}">
                                     <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
@@ -311,127 +311,38 @@
                                 </c:if>
                             </div>
                             <!-- Begin: Feedback -->
-                            <div class="row col-8 mb-4">
-                                <div class="col-1">
-                                    <img
-                                        src="assets/img/f8-logo.png"
-                                        alt=""
-                                        class="img-fluid rounded-circle"
-                                        />
-                                </div>
-                                <div class="col-11">
-                                    <div
-                                        class="feed-back-content rounded-3 shadow-sm px-4 py-3"
-                                        style="background-color: #fff"
-                                        >
-                                        <h6 class="fw-bold mb-2">dungssj12</h6>
-                                        <div class="feed-back-star mb-2">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            (5 star)
+                            <c:forEach var="fb" items="${feedbackList}">
+                                <div class="row col-8 mb-4">
+                                    <div class="col-1">
+                                        <img
+                                            src="assets/img/f8-logo.png"
+                                            alt=""
+                                            class="img-fluid rounded-circle"
+                                            />
+                                    </div>
+                                    <div class="col-11">
+                                        <div
+                                            class="feed-back-content rounded-3 shadow-sm px-4 py-3"
+                                            style="background-color: #fff"
+                                            >
+                                            <h6 class="fw-bold mb-2">${fb.getUser().getUserName()}</h6>
+                                            <div class="feed-back-star mb-2">
+                                                <c:forEach begin="1" end="${fb.getRating()}">                                                    
+                                                    <i class="fa-solid fa-star"></i>                                                    
+                                                </c:forEach>
+                                                    <c:forEach begin="${fb.getRating()}" end="4">
+                                                    <i class="fa-regular fa-star"></i>                                      
+                                                </c:forEach>
+                                                (${fb.getRating()} star)
+                                            </div>
+                                            <p class="fb-content">
+                                                ${fb.getFeedback()}
+                                            </p>
                                         </div>
-                                        <p class="fb-content">
-                                            Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's
-                                            standard dummy text ever since the 1500s, when an unknown
-                                            printer took a galley of type and scrambled it to make a
-                                            type specimen book. It has survived not only five
-                                            centuries, but also the leap into electronic typesetting,
-                                            remaining essentially unchanged. It was popularised in the
-                                            1960s with the release of Letraset sheets containing Lorem
-                                            Ipsum passages, and more recently with desktop publishing
-                                            software like Aldus PageMaker including versions of Lorem
-                                            Ipsum.
-                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- End: Feedback -->
-
-                            <!-- Begin: Feedback -->
-                            <div class="row col-8 mb-4">
-                                <div class="col-1">
-                                    <img
-                                        src="assets/img/f8-logo.png"
-                                        alt=""
-                                        class="img-fluid rounded-circle"
-                                        />
-                                </div>
-                                <div class="col-11">
-                                    <div
-                                        class="feed-back-content rounded-3 shadow-sm px-4 py-3"
-                                        style="background-color: #fff"
-                                        >
-                                        <h6 class="fw-bold mb-2">dungssj12</h6>
-                                        <div class="feed-back-star mb-2">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            (5 star)
-                                        </div>
-                                        <p class="fb-content">
-                                            Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's
-                                            standard dummy text ever since the 1500s, when an unknown
-                                            printer took a galley of type and scrambled it to make a
-                                            type specimen book. It has survived not only five
-                                            centuries, but also the leap into electronic typesetting,
-                                            remaining essentially unchanged. It was popularised in the
-                                            1960s with the release of Letraset sheets containing Lorem
-                                            Ipsum passages, and more recently with desktop publishing
-                                            software like Aldus PageMaker including versions of Lorem
-                                            Ipsum.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End: Feedback -->
-
-                            <!-- Begin: Feedback -->
-                            <div class="row col-8 mb-4">
-                                <div class="col-1">
-                                    <img
-                                        src="assets/img/f8-logo.png"
-                                        alt=""
-                                        class="img-fluid rounded-circle"
-                                        />
-                                </div>
-                                <div class="col-11">
-                                    <div
-                                        class="feed-back-content rounded-3 shadow-sm px-4 py-3"
-                                        style="background-color: #fff"
-                                        >
-                                        <h6 class="fw-bold mb-2">dungssj12</h6>
-                                        <div class="feed-back-star mb-2">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            (5 star)
-                                        </div>
-                                        <p class="fb-content">
-                                            Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's
-                                            standard dummy text ever since the 1500s, when an unknown
-                                            printer took a galley of type and scrambled it to make a
-                                            type specimen book. It has survived not only five
-                                            centuries, but also the leap into electronic typesetting,
-                                            remaining essentially unchanged. It was popularised in the
-                                            1960s with the release of Letraset sheets containing Lorem
-                                            Ipsum passages, and more recently with desktop publishing
-                                            software like Aldus PageMaker including versions of Lorem
-                                            Ipsum.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End: Feedback -->
+                            </c:forEach>
+                            <!-- End: Feedback -->                           
 
                             <!-- Begin: Feedback -->
                             <div class="row col-8 mb-4">

@@ -21,7 +21,7 @@ public class Course {
     private int NumberEnrolled;
     private double CoursePrice;
     private String CourseImage;
-    private boolean isDisable;
+    private String Status;
     private User Author;
     private Double CourseProgress;
     private String description;
@@ -31,7 +31,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, String Status, User Author, Double CourseProgress) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -39,12 +39,12 @@ public class Course {
         this.NumberEnrolled = NumberEnrolled;
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
-        this.isDisable = isDisable;
+        this.Status = Status;
         this.Author = Author;
         this.CourseProgress = CourseProgress;
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, boolean isDisable, User Author, Double CourseProgress, String description, String objectives, String difficulty) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, String Status, User Author, Double CourseProgress, String description, String objectives, String difficulty) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -52,7 +52,7 @@ public class Course {
         this.NumberEnrolled = NumberEnrolled;
         this.CoursePrice = CoursePrice;
         this.CourseImage = CourseImage;
-        this.isDisable = isDisable;
+        this.Status = Status;
         this.Author = Author;
         this.CourseProgress = CourseProgress;
         this.description = description;
@@ -138,16 +138,18 @@ public class Course {
 
     public void setCourseImage(String CourseImage) {
         this.CourseImage = CourseImage;
+    }   
+
+    public String getStatus() {
+        return Status;
     }
 
-    public boolean isIsDisable() {
-        return isDisable;
+    public void setStatus(String Status) {
+        this.Status = Status;
     }
 
-    public void setIsDisable(boolean isDisable) {
-        this.isDisable = isDisable;
-    }
-
+    
+    
     public User getAuthor() {
         return Author;
     }
