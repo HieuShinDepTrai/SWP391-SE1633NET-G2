@@ -1,12 +1,12 @@
-package Controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-import Model.Course;
-import Model.User;
-import dal.CourseDAO;
+package Controller;
+
+import Model.Comment;
+import dal.CommentDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,11 +16,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+
 /**
  *
- * @author Hieu Shin
+ * @author ASUS
  */
-public class HomeController extends HttpServlet {
+public class PostVideoCommentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet PostCommentVideoController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PostCommentVideoController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,59 +58,53 @@ public class HomeController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CourseDAO cdao = new CourseDAO();
-        ArrayList<Course> courses = cdao.ListAllCourses();
-        HttpSession session = request.getSession();
+            throws ServletException, IOException {       
+        
+        UserDAO userDAO = new UserDAO();
+        CommentDAO cmtDao = new CommentDAO();
+              
+        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+        HttpSession ses = request.getSession();        
+              
+        //get all comment to display into screen
+//      String username = (String) ses.getAttribute("username");
+//      int userId = userDAO.getAllUserInformation(username).getUserId();       
 
-        if (session.getAttribute("username") != null) {
-            String username = session.getAttribute("username").toString();
-
-            ArrayList<Course> courseList = cdao.getAllUserCourse(username);
-            ArrayList<Integer> courseIDs = new ArrayList<>();
-
-            for (Course course : courseList) {
-                courseIDs.add(course.getCourseID());
-            }
-
-            // if (session != null) {
-            User user = (User) session.getAttribute("user");
-            String avatar = user.getAvatar();
-            request.setAttribute("avatar", avatar);
-            //}
+        //cmtList for comment       
+        try {
+        String comment = request.getParameter("comment");
+        String op = request.getParameter("op");                       
+        
+        if (op.equals("Comment")) {
+            cmtDao.insertIntoCommentContentReply(comment, 1, 0);
+        } else if (op.equals("Reply")) {
+            //insert reply comment and the parent id
+            String repComment = request.getParameter("repComment");
+            int pId = Integer.parseInt(request.getParameter("pId"));
             
-            
-            request.setAttribute("courseIDs", courseIDs);
+            cmtDao.insertIntoCommentContentReply(repComment, 1, pId);            
         }
-
-        request.setAttribute("courses", courses);
-        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        //insert into comment that does not a reply comment
+                                     
+        //insert into comment that is a reply comment
+        
+        
+        request.setAttribute("commentList", commentList);
+//        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+        response.sendRedirect("CourseWatch");
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -13,23 +13,29 @@ import java.sql.Date;
 public class Comment {
     private int commentId;
     private int videoId;
+    private int UserId;
+    private int ParentId;
     private String commentContent;
     private Date commentDate;
     private int likes;
     private boolean isReported;
+    
 
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId,int UserId,int ParentId, String commentContent, Date commentDate, int likes, boolean isReported) {
         this.commentId = commentId;
         this.videoId = videoId;
+        this.UserId = UserId;
+        this.ParentId = ParentId;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
         this.likes = likes;
         this.isReported = isReported;
     }
 
+    
     public int getCommentId() {
         return commentId;
     }
@@ -45,6 +51,24 @@ public class Comment {
     public void setVideoId(int videoId) {
         this.videoId = videoId;
     }
+
+    public int getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(int UserId) {
+        this.UserId = UserId;
+    }
+
+    public int getParentId() {
+        return ParentId;
+    }
+
+    public void setParentId(int ParentId) {
+        this.ParentId = ParentId;
+    }
+    
+    
 
     public String getCommentContent() {
         return commentContent;

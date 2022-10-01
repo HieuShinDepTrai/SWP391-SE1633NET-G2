@@ -222,7 +222,9 @@
                                             <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
                                         </div>
                                         <div class="card-body">
+                                          
                                             <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
+                                           
                                             <div class="course-meta-info">
                                                 <div class="course-meta-author">
                                                     <div class="author-avatar">

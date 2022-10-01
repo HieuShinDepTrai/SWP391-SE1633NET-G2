@@ -560,7 +560,9 @@
                   </div>
                   <input type="text" value="0" id="rate-star" class="d-none">
                   <h5 class="mb-3">Feedback</h5>
-                  <textarea name="" id="" style="width: 100%; height: 200px; outline: none;"></textarea>
+                  <form action="postcommentvideo" method="GET">
+                  <textarea name= "comment" id="" style="width: 100%; height: 200px; outline: none;">${comment}</textarea>
+                  </form>
                 </div>
               </div>
             </div>

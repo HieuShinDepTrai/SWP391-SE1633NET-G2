@@ -73,6 +73,9 @@ public class CourseDetailsController extends HttpServlet {
         request.setAttribute("sectionList", sectionList);
         request.setAttribute("lessonList", lessonList);
         
+        
+        
+        
         request.getRequestDispatcher("CourseDetails.jsp").forward(request, response);
         
     } 
