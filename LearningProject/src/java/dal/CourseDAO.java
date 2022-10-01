@@ -202,7 +202,6 @@ public class CourseDAO extends DBContext {
 //            e.printStackTrace();
 //        }
 //    }
-
     public ArrayList<Course> getAllUserCourse(String username) {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
@@ -245,6 +244,20 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return feedbackList;
+    }
+
+    public int getCourseTime(int courseID) {
+        try {
+            ResultSet rs = executeQuery("select SUM(Time) as totalTime from Lesson l\n"
+                    + "inner join Section s on s.SectionID = l.SectionID\n"
+                    + "where s.CourseID = ?", courseID);
+            if (rs.next()) {
+                return rs.getInt("totalTime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
 
