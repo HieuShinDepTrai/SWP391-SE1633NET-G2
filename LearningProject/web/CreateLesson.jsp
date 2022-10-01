@@ -149,7 +149,7 @@
                             <tr>
                                 <td><%=count%></td>
                                 <td>${lesson.getLessonName()}</td>
-                                <td>Video</td>
+                                <td>${lesson.getType()}</td>
                                 <td>${lesson.getTime()}</td>
                                 <td>
                                     <button class="btn btn-primary">Delete</button>
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <!-- Modal Document-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
