@@ -44,7 +44,7 @@ public class SectionDAO extends DBContext {
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
-                    + "           ,?)", section.getSectionId(), section.getSectionName(), section.isIsDisable());
+                    + "           ,?)", section.getCourseId(), section.getSectionName(), section.isIsDisable());
         } catch (Exception e) {
             e.printStackTrace();
         }

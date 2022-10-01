@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.tomcat.util.net.SSLHostConfigCertificate;
 
 /**
  *
@@ -278,6 +279,18 @@ public class CourseDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public int getNewCourseID() {
+        int id = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')");
+            while(rs.next()) {
+                id = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return id;
     }
 }
 
