@@ -316,6 +316,20 @@ public class CourseDAO extends DBContext {
         }
         return feedbackList;
     }
+
+    public int getCourseTime(int courseID) {
+        try {
+            ResultSet rs = executeQuery("select SUM(Time) as totalTime from Lesson l\n"
+                    + "inner join Section s on s.SectionID = l.SectionID\n"
+                    + "where s.CourseID = ?", courseID);
+            if (rs.next()) {
+                return rs.getInt("totalTime");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }
 
 //SQL for getCurrentCourse

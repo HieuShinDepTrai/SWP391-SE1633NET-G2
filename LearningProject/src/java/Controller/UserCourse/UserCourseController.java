@@ -24,12 +24,7 @@ public class UserCourseController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        CourseDAO courseDao = new CourseDAO();
-        String name = "";
-        name = session.getAttribute("username").toString();
-        ArrayList<Course> courseList = courseDao.getAllUserCourse(session.getAttribute("username").toString());
-        CourseDAO courseDAO = new CourseDAO();       
+        int milis = 1445100;              
     }
 
     /**
