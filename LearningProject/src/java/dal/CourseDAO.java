@@ -128,7 +128,7 @@ public class CourseDAO extends DBContext {
 
     public void disableCourse(int courseId) {
         try {
-            executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disable' WHERE [CourseID] = ? ", courseId);
+            executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disabled' WHERE [CourseID] = ? ", courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,8 +147,7 @@ public class CourseDAO extends DBContext {
 
             ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
 
-            executeUpdate("INSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?)",
-                    courseId * -1,
+            ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')\nINSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                     course.getCourseName(),
                     course.getDateCreate(),
                     course.getAuthor().getUserId(),
@@ -156,61 +155,76 @@ public class CourseDAO extends DBContext {
                     course.getNumberEnrolled(),
                     course.getCoursePrice(),
                     course.getCourseImage(),
-                    1,
+                    "Disabled",
                     course.getDescription(),
                     course.getObjectives(),
                     course.getDifficulty());
+            
+            if (!rs.next()) return;
+            
+            int newCourseID = rs.getInt(1) + 1;
 
             for (Section section : sectionlist) {
-                executeUpdate("INSERT INTO [dbo].[Section] VALUES(?, ?, ?, ?)",
-                        section.getSectionId() * (-1),
-                        courseId * (-1), 
+                rs = executeQuery("SELECT IDENT_CURRENT('Section')\nINSERT INTO [dbo].[Section] VALUES (?, ?, ?);",
+                        newCourseID,
                         section.getSectionName(),
                         0);
-
+                
+                if (!rs.next()) return;
+                
+                int newSectionID = rs.getInt(1) + 1;
+                
                 ArrayList<Lesson> lessonlist = ld.getAllLessonOfSection(section.getSectionId());
                 for (Lesson lesson : lessonlist) {
-                    executeUpdate("INSERT INTO [dbo].[Lesson] VALUES (?, ?, ?, ?, ?)",
-                            lesson.getSectionId() * (-1),
-                            section.getSectionId() * (-1),
+                    rs = executeQuery("SELECT IDENT_CURRENT('Lesson')\nINSERT INTO [dbo].[Lesson] VALUES (?, ?, ?, ?, ?);",
+                            newSectionID,
                             lesson.getLessonName(),
                             0,
-                            lesson.getType());
+                            lesson.getType(),
+                            lesson.getTime());                
+                    
+                    if (!rs.next()) return;
+                    
+                    int newLessonID = rs.getInt(1) + 1;
+                    
                     if (lesson.getType().equals("Doc")) {
                         Docs docs = dd.getDocsOfLesson(lesson.getLessonId());
-                        executeUpdate("INSERT INTO [dbo].[Docs] VALUES (?, ?, ?)",
-                                docs.getDocsId() * (-1),
-                                docs.getLessonId() * (-1),
+                        executeUpdate("INSERT INTO [dbo].[Docs] VALUES (?, ?)",
+                                newLessonID,
                                 docs.getContent());
                     }
                     if (lesson.getType().equals("Video")) {
                         Video video = vd.getVideoOfLesson(lesson.getLessonId());
-                        executeUpdate("INSERT INTO [dbo].[Video] VALUES (?, ?, ?, ?)",
-                                video.getVideoId() * (-1),
-                                video.getLessonId() * (-1),
+                        executeUpdate("INSERT INTO [dbo].[Video] VALUES (?, ?, ?)",
+                                newLessonID,
                                 video.getVideoName(),
                                 video.getVideoLink());
                     }
                     if (lesson.getType().equals("Quiz")) {
                         Quiz quiz = qd.getQuizOfLesson(lesson.getLessonId());
-                        executeUpdate("INSERT INTO [dbo].[Quiz] VALUES (?, ?, ?, ?)",
-                                quiz.getQuizId() * (-1),
+                        rs = executeQuery("SELECT IDENT_CURRENT('Quiz')\nINSERT INTO [dbo].[Quiz] VALUES (?, ?);",
                                 quiz.getMark(),
-                                quiz.getLessonId() * (-1));
-
+                                newLessonID);
+                        
+                        if (!rs.next()) return;
+                        
+                        int newQuizId = rs.getInt(1) + 1;
+                        
                         ArrayList<Question> questionlist = qtd.getQuestionsOfQuiz(quiz.getQuizId());
                         for (Question question : questionlist) {
-                            executeUpdate("INSERT INTO [dbo].[Question] VALUES (?, ?, ?)",
-                                    question.getQuestionId() * (-1),
+                            rs = executeQuery("SELECT IDENT_CURRENT('Question')\nINSERT INTO [dbo].[Question] VALUES (?, ?);",
                                     question.getQuestionContent(),
-                                    question.getQuizId() * (-1));
-
+                                    newQuizId);
+                            
+                            if (!rs.next()) return;
+                            
+                            int newQuestionId = rs.getInt(1) + 1;
+                            
                             ArrayList<Answer> answerlist = ad.getAnswersOfQuestion(question.getQuestionId());
                             for (Answer answer : answerlist) {
-                                executeUpdate("INSERT INTO [dbo].[Answer] VALUES (?, ?, ?, ?)",
-                                        answer.getAnswerId() * (-1),
+                                executeUpdate("INSERT INTO [dbo].[Answer] VALUES (?, ?, ?)",
                                         answer.getAnswerContent(),
-                                        answer.getQuestionId() * (-1),
+                                        newQuestionId,
                                         answer.isIsCorrect());
                             }
                         }
@@ -249,16 +263,44 @@ public class CourseDAO extends DBContext {
         }
         return courseList;
     }
-    public ArrayList<Course> getAllMentorCourse(String userId){
+
+    public ArrayList<Course> getAllMentorCourse(int userId) {
         try {
             ArrayList<Course> list = new ArrayList<Course>();
-            
+            ResultSet rs = executeQuery("SELECT [CourseID],"
+                    + " [CourseName],"
+                    + " [DateCreate],"
+                    + " [Category],"
+                    + " [NumberEnrolled],"
+                    + " [CoursePrice],"
+                    + " [CourseImage],"
+                    + " [Status],"
+                    + " [Description],"
+                    + " [Objectives],"
+                    + " [Difficulty] FROM [Course] WHERE [AuthorID] = ?", userId);
+
+            while (rs.next()) {
+                list.add(new Course(rs.getInt("CourseID"),
+                        rs.getString("CourseName"),
+                        rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"),
+                        rs.getInt("NumberEnrolled"),
+                        rs.getDouble("CoursePrice"),
+                        rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        new UserDAO().getAllUserInformationByID(userId),
+                        rs.getNString("Description"),
+                        rs.getNString("Objectives"),
+                        rs.getString("Difficulty")));
+            }
+
+            return list;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     public ArrayList<Feedback> getFeedBack(int courseID) {
         UserDAO userDAO = new UserDAO();
         ArrayList<Feedback> feedbackList = new ArrayList<>();

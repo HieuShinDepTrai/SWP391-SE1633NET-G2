@@ -217,7 +217,7 @@
                     </div>
                     <div class="container-fluid">
                         <div class="row">
-                            <h3 class="fw-bold my-3">Pro Course</h3>
+                            <h3 class="fw-bold my-3">My Course I Have Created</h3>
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
@@ -227,7 +227,7 @@
                                             <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
                                         </div>
                                         <div class="card-body">
-                                            <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
+                                            <h5 class="course-title">${course.getCourseName()}</h5>
                                             <div class="course-meta-info">
                                                 <div class="course-meta-author">
                                                     <div class="author-avatar">
@@ -242,26 +242,13 @@
                                                 </div>
                                             </div>
                                             <div class="course-footer">
-                                                <c:if test="${course.getCoursePrice() == 0}">
-                                                    <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                    <form id="enroll" action="enroll" method="POST">                                                        
+                                                <form action="updatecourse" method="POST">                                                        
 
-                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            <input type="submit" value="Enroll">
-                                                        </c:if>
-
-                                                        <c:if test="${courseIDs.contains(course.getCourseID())}">
-                                                            <input type="submit" value="Go to Course">
-                                                        </c:if>
+                                                    <input type="submit" value="Update">
 
 
-                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                    </form>
-                                                </c:if>
-                                                <c:if test="${course.getCoursePrice() != 0}">
-                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                    <a href="#">Buy now</a>
-                                                </c:if>
+                                                    <input type="hidden" name="courseid" value="${course.getCourseID()}">
+                                                </form>
 
                                             </div>
                                         </div>

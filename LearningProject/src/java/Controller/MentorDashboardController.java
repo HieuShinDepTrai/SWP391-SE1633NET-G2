@@ -28,7 +28,7 @@ public class MentorDashboardController extends HttpServlet {
             HttpSession session = request.getSession();
             if (session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
-                ArrayList<Course> list = new CourseDAO().getAllUserCourse(user.getUserName());
+                ArrayList<Course> list = new CourseDAO().getAllMentorCourse(user.getUserId());
                 request.setAttribute("courses", list);
                 request.getRequestDispatcher("MentorDashboard.jsp").forward(request, response);
             }

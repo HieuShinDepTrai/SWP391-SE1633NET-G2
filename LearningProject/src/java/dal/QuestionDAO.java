@@ -19,6 +19,7 @@ public class QuestionDAO extends DBContext{
             while(rs.next()){
                 questionlist.add(new Question(rs.getInt("QuestionID"), rs.getNString("QuestionContent"), quizId));
             }
+            return questionlist;
         }
         catch(Exception e){
             e.printStackTrace();

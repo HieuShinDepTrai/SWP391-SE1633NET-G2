@@ -15,7 +15,9 @@ import java.util.ArrayList;
 public class VideoDAO extends DBContext{
     public Video getVideoOfLesson(int lessonId){
         try(ResultSet rs = executeQuery("SELECT [VideoID], [VideoName], [VideoLink] FROM [dbo].[Video] WHERE [LessonID] = ?", lessonId)){
-            return new Video(rs.getInt("VideoID"), lessonId, rs.getNString("VideoName"), rs.getString("VideoLink"));
+            if(rs.next()){
+                return new Video(rs.getInt("VideoID"), lessonId, rs.getNString("VideoName"), rs.getString("VideoLink"));
+            }
         }
         catch(Exception e){
             e.printStackTrace();

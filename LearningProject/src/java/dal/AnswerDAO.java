@@ -20,6 +20,8 @@ public class AnswerDAO extends DBContext{
             while(rs.next()){
                 answerlist.add(new Answer(rs.getInt("AnswerID"), rs.getNString("AnswerContent"), questionId, rs.getBoolean("isCorrect")));
             }
+            
+            return answerlist;
         }
         catch(Exception e){
             e.printStackTrace();

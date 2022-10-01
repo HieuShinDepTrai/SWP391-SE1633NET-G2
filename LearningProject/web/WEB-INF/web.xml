@@ -142,7 +142,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateSectionController</servlet-name>
-        <url-pattern>/updatecoursecontroller</url-pattern>
+        <url-pattern>/updatesection</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserCourseController</servlet-name>
