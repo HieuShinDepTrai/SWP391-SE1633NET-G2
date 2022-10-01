@@ -81,9 +81,16 @@ public class CourseDetailsController extends HttpServlet {
         request.setAttribute("course", course);
         request.setAttribute("sectionList", sectionList);
         request.setAttribute("lessonList", lessonList);
+<<<<<<< HEAD
+        
+        
+        
+        
+=======
         int time = cdao.getCourseTime(course.getCourseID());
         String totalTime = (time / 1000) / 60 / 60 + " hours " + (time / 1000) / 60 + " minutes " + (time / 1000) % 60 + " seconds ";
         request.setAttribute("totalTime", totalTime);
+>>>>>>> b78aa46fd9d2bc79759db4964abe129afd7e4a39
         request.getRequestDispatcher("CourseDetails.jsp").forward(request, response);
     }
 
