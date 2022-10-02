@@ -62,8 +62,6 @@ public class CreateSectionController extends HttpServlet {
             throws ServletException, IOException {
         SectionDAO sdao = new SectionDAO();
         CourseDAO cdao = new CourseDAO();
-        PrintWriter out = response.getWriter();
-        
         int courseId = 0;
         if (request.getParameter("courseId") != null) {
             courseId = Integer.parseInt(request.getParameter("courseId"));

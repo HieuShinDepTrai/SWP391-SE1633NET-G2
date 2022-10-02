@@ -4,6 +4,7 @@
     Author     : HieuShin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
 <!DOCTYPE html>
@@ -27,6 +28,7 @@
                 selector: '#mytextarea'
             });
         </script>
+        <script src="assets/js/add_lesson.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -39,33 +41,42 @@
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Create Course</a></li>
+                                <li class="breadcrumb-item"><a href="CreateSection?courseID=${courseID}">Create Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Create Lesson
                                 </li>
                             </ol>
                         </nav>
-                        <h4 class="mb-3 fw-bold mb-1">Create lesson for Section 1</h4>
+                        <h4 class="mb-3 fw-bold mb-1">Create lesson for ${section.getSectionName()}</h4>
                     </div>
                     <table class="table table-striped">
                         <thead>
                         <th>Lesson No</th>
                         <th>Lesson Name</th>
                         <th>Lesson Type</th>
-                        <th>Create Date</th>
+                        <th>Time Duration (Milliseconds)</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Lesson 1</td>
-                                <td>Video</td>
-                                <td>26/09/2022</td>
-                                <td>
-                                    <button class="btn btn-primary">Delete</button>
-                                    <button class="btn btn-primary">Edit</button>
-                                </td>
-                            </tr>
+                            <%
+                                int count = 1;
+                            %>
+                            <c:forEach items="${lessons}" var="lesson">
+                                <tr>
+                                    <td><%=count%></td>
+                                    <td>${lesson.getLessonName()}</td>
+                                    <td>${lesson.getType()}</td>
+                                    <td>${lesson.getTime()}</td>
+                                    <td>
+                                        <button class="btn btn-primary">Delete</button>
+                                        <button class="btn btn-primary">Edit</button>
+                                    </td>
+                                </tr>
+                                <% 
+                                    count++; 
+                                %>
+                            </c:forEach>
+
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -109,7 +120,7 @@
                         </div>
                     </div>
                     <!-- Modal Document-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -150,7 +161,7 @@
                     <!-- Modal Document-->
 
                     <!-- Modal Video-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST" data-type="video">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -166,6 +177,7 @@
                                             <div class="col-8">
                                                 <div class="video-preview">
                                                     <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>                                        
+                                                    <input name="video_url" type="hidden" value="" id="video-URL">
                                                     <i class="fa-brands fa-youtube icon-youtube"></i>
                                                 </div>
                                             </div>
@@ -176,15 +188,17 @@
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Video URL</label>
-                                                    <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                    <input name="url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
                                                 <input type="text" value="Video" class="d-none" name="type">
+                                                <input type="text" name="sectionID" value="${sectionID}" class="d-none">
+                                                <input type="text" class="d-none" name="duration">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
+                                        <button type="button" class="btn btn-primary" onclick="doSubmit()">Save
                                             changes</button>
                                     </div>
                                 </div>
