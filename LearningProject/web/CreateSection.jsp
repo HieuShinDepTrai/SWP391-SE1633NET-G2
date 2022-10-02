@@ -174,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" value="${courseID}" id="CourseID" class="d-none">
+
                 <!-- Modal Add Section-->
                 <form action="CreateSection?courseId=${courseID}&addSection='true'" method="post">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
@@ -203,7 +203,7 @@
                 </form>
 
                 <!-- Modal Edit Section-->
-                <form action="CreateSection?courseId=${courseID}" method="post">
+                <form action="CreateSection?courseId=${courseID}&edit='true'" method="post">
                     <div class="modal fade" id="EditSection" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -216,13 +216,14 @@
                                 <div class="modal-body">
                                     <label for="Section name" class="form-label">Section Name</label>
                                     <!-- Section name must not null -->
-                                    <input id="valueEdit" type="text" class="form-control" name="SectionName" required="true" value="" autocomplete="off"/>
+                                    <input id="valueEdit" type="text" class="form-control" name="SectionNameModal" required="true" value="" autocomplete="off"/>
+                                    <input type="hidden" id="SectionIDModal" value="" name="SectionIDModal"/>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <input type="submit" class="btn btn-primary" value="Edit Section" onclick="">
+                                    <input type="submit" class="btn btn-primary" value="Edit Section">
                                 </div>
                             </div>
                         </div>
