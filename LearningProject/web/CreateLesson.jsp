@@ -125,7 +125,7 @@
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Create Course</a></li>
+                                <li class="breadcrumb-item"><a href="CreateSection?courseID=${courseID}">Create Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Create Lesson
                                 </li>
@@ -138,7 +138,7 @@
                         <th>Lesson No</th>
                         <th>Lesson Name</th>
                         <th>Lesson Type</th>
-                        <th>Time Duration</th>
+                        <th>Time Duration (Milliseconds)</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <!-- Modal Document-->
-                    <form action="AddLesson?sectionID=${sectionID}" method="POST">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -245,7 +245,7 @@
                     <!-- Modal Document-->
 
                     <!-- Modal Video-->
-                    <form action="AddLesson?sectionID=${sectionID}" method="POST" data-type="video">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST" data-type="video">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">

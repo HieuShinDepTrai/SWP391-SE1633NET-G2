@@ -145,7 +145,7 @@
                                             <tr>
                                                 <td><%=count%></td>
                                                 <td>${section.getSectionName()}</td>
-                                                <td><a href="AddLesson?sectionID=${section.getSectionId()}" class="btn btn-primary">Add Lesson</a></td>
+                                                <td><a href="AddLesson?courseID=${courseID}&sectionID=${section.getSectionId()}" class="btn btn-primary">Add Lesson</a></td>
                                                 <td>
                                                     <button class="btn btn-primary">Delete</button>
                                                     <button class="btn btn-primary">Edit</button>

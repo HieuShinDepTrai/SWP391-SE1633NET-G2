@@ -5,11 +5,15 @@
 package Controller;
 
 import Model.Course;
+import Model.Docs;
 import Model.Lesson;
 import Model.Section;
+import Model.Video;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
+import dal.VideoDAO;
+import dal.DocsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -74,7 +78,7 @@ public class CourseWatchController extends HttpServlet {
             }
             if(request.getParameter("sectionID") != null) {
                 sectionID = Integer.parseInt(request.getParameter("sectionID"));                
-            }
+            } 
             if(request.getParameter("lessonID") != null) {
                 lessonID = Integer.parseInt(request.getParameter("lessonID"));                
             }
@@ -90,14 +94,30 @@ public class CourseWatchController extends HttpServlet {
                 ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
                 for (Lesson lesson : tmp) {
                     listLesson.add(lesson);
+//                    if (lesson.getType().compareTo("Video") == 0) {
+//                        VideoDAO vdao = new VideoDAO();
+//                        Video v = vdao.getVideoOfLesson(lesson.getLessonId());
+//                        request.setAttribute("video", v);
+//                        request.getRequestDispatcher("WatchCourse?courseID=" + courseID + 
+//                                "&sectionID=" + section.getSectionId() + 
+//                                "&lessonID=" + lesson.getLessonId()).forward(request, response);
+//                    }
+//                    if (lesson.getType().compareTo("Docs") == 0) {
+//                        DocsDAO docdao = new DocsDAO();
+//                        Docs docs = docdao.getDocsOfLesson(lesson.getLessonId());
+//                        request.setAttribute("docs", docs);
+//                        request.getRequestDispatcher("WatchCourse?lessonID=" + lesson.getLessonId()).forward(request, response);
+//                    }
                 }
             }
-         
+            
+            Lesson lesson = ldao.getLessonbyLessonID(lessonID);
 
             // Send video list to jsp
             request.setAttribute("course", c);
             request.setAttribute("listSection", listSection);
             request.setAttribute("listLesson", listLesson);
+            request.setAttribute("lesson", lesson);
 
             // Send id of lesson to jsp
             request.setAttribute("courseID", courseID);

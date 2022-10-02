@@ -48,21 +48,24 @@ public class AddLesson extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int sectionId = 0;
-        if (request.getParameter("sectionID") != null) {
+        int courseID = 0;
+        if (request.getParameter("sectionID") != null && request.getParameter("courseID") != null) {
             ArrayList<Lesson> lessons = new ArrayList<>();
             sectionId = Integer.parseInt(request.getParameter("sectionID"));
+            courseID = Integer.parseInt(request.getParameter("courseID"));
             SectionDAO sectionDAO = new SectionDAO();
             LessonDAO ldao = new LessonDAO();
             lessons = ldao.getAllLessonOfSection(sectionId);
             Section section = sectionDAO.getSectionBySectionID(sectionId);
-            
+
+            request.setAttribute("courseID", courseID);
             request.setAttribute("lessons", lessons);
             request.setAttribute("sectionID", sectionId);
             request.setAttribute("section", section);
             request.getRequestDispatcher("CreateLesson.jsp").forward(request, response);
             return;
         }
-        response.sendRedirect("AddLesson?sectionID=" + sectionId);
+        response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     }
 
     /**
@@ -77,6 +80,7 @@ public class AddLesson extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int sectionId = Integer.parseInt(request.getParameter("sectionID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
         String type = request.getParameter("type");
         LessonDAO ldao = new LessonDAO();
 
@@ -94,7 +98,7 @@ public class AddLesson extends HttpServlet {
             ldao.addLessonDoc(sectionId, lesson_tilte, time_to_read, lesson_content);
         }
 
-        response.sendRedirect("AddLesson?sectionID=" + sectionId);
+        response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     }
 
     /**
