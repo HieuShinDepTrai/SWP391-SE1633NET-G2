@@ -169,7 +169,7 @@
                         <div class="content-2">
                             <div class="course-container d-flex flex-column align-items-center">
                                 <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 320px; object-fit: cover; border-radius: 16px;">
-                                <a href="" class="btn btn-primary mt-3">Next</a>
+                                <a href="CreateCoursePreview?id=${courseID}" class="btn btn-primary mt-3">Next</a>
                             </div>
                         </div>
                     </div>
