@@ -31,6 +31,7 @@
 
     <body>
         <div id="main">
+        <%@include file="header.jsp"%>
             <header>
                 <div class="header-content">
                     <div class="logo">

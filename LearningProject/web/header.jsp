@@ -4,12 +4,9 @@
     Author     : NamDepTraiVL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">    
-    <head>
-        <link rel="stylesheet" href="assets/css/header.css">
-    </head>
+  
         <header>
             <div class="header-content">
                 <div class="logo">
@@ -73,7 +70,7 @@
                     <c:if test="${user!=null}">
                         <div class="avatar" onclick="event.stopPropagation()">
                             <c:if test="${user.getAvatar() != null}">
-                                <img src="${user.getAvatar()}" alt="">                                
+                                <img src="${user.getAvatar()}" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">                                
                             </c:if>
                             <c:if test="${user.getAvatar() == null}">
                                 <img src="assets/img/user.png">
@@ -111,5 +108,5 @@
                 </div>
             </div>
         </header>    
-</html>
+
 

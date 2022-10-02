@@ -6,7 +6,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +31,8 @@
     </head>
 
     <body>
-        <div id="main">            
+        <div id="main">
+            <%@include file="header.jsp"%>
             <!-- Begin: Create Course -->
             <section>
                 <div class="create-course px-5 py-3">
@@ -41,7 +41,7 @@
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="CreateSection?courseID=${courseID}">Create Section</a></li>
+                                <li class="breadcrumb-item"><a href="CreateSection?courseId=${courseID}">Create Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Create Lesson
                                 </li>

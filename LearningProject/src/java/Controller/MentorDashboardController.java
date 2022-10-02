@@ -32,7 +32,11 @@ public class MentorDashboardController extends HttpServlet {
                 request.setAttribute("courses", list);
                 request.getRequestDispatcher("MentorDashboard.jsp").forward(request, response);
             }
+            else{
+                response.sendRedirect("home");
+            }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

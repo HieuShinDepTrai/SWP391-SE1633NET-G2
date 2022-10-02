@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,11 +32,12 @@
     </head>
 
     <body>
-        <div id="main" >            
+        <div id="main" >
+            <%@include file="header.jsp"%>            
             <div id="content" >
                 <!-- Begin: Side Bar -->
                 <div id="side-bar">
-                    <a class="bar-button button-hover" href="home">
+                    <a class="bar-button " href="home">
                         <i class="fa-solid fa-house"></i>
                         <p class="button-title">Home</p>
                     </a>
@@ -53,7 +54,7 @@
                         </a>
                     </c:if>
                     <c:if test="${user.role == 'Mentor'}">
-                        <a class="bar-button " href="#">
+                        <a class="bar-button button-hover" href="#">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">Mentor Dashboard</p>
                         </a>
@@ -123,17 +124,17 @@
                             <c:forEach items="${requestScope.courses}" var="course">
                                 <c:if test="${course.getStatus() == 'Enabled   '}">
                                     <div class="col-xl-3 col-lg-4 col-md-6" >
-                                        <div class="card" style="min-height: 234px; height: 520px;">
+                                        <div class="card" style="min-height: 234px; height: 400px;">
                                             <div class="card-top-img">
-                                                <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
+                                                <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="course-title">${course.getCourseName()}</h5>
                                                 <div class="course-meta-info">
                                                     <div class="course-meta-author">
                                                         <div class="author-avatar">
-                                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                 alt="">
+                                                            <img src="${course.getAuthor().getAvatar()}"
+                                                                 alt="" style="width: 40px; height: 40px; border-radius: 50%;">
                                                         </div>
                                                         <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
                                                     </div>
@@ -224,14 +225,14 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-                                $('.autoplay').slick({
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1,
-                                    autoplay: true,
-                                    autoplaySpeed: 5000,
-                                    speed: 1500,
-                                    dots: true
-                                });
+            $('.autoplay').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                speed: 1500,
+                dots: true
+            });
         </script>
     </body>
 

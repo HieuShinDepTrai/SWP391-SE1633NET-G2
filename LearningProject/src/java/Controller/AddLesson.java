@@ -6,6 +6,7 @@ package Controller;
 
 import Model.Lesson;
 import Model.Section;
+import Model.User;
 import dal.LessonDAO;
 import dal.SectionDAO;
 import java.io.IOException;
@@ -47,25 +48,34 @@ public class AddLesson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int sectionId = 0;
-        int courseID = 0;
-        if (request.getParameter("sectionID") != null && request.getParameter("courseID") != null) {
-            ArrayList<Lesson> lessons = new ArrayList<>();
-            sectionId = Integer.parseInt(request.getParameter("sectionID"));
-            courseID = Integer.parseInt(request.getParameter("courseID"));
-            SectionDAO sectionDAO = new SectionDAO();
-            LessonDAO ldao = new LessonDAO();
-            lessons = ldao.getAllLessonOfSection(sectionId);
-            Section section = sectionDAO.getSectionBySectionID(sectionId);
+        if (request.getSession().getAttribute("user") != null) {
+            User user = (User) request.getSession().getAttribute("user");
+            if (user.getRole().equals("Mentor")) {
+                int sectionId = 0;
+                int courseID = 0;
+                if (request.getParameter("sectionID") != null && request.getParameter("courseID") != null) {
+                    ArrayList<Lesson> lessons = new ArrayList<>();
+                    sectionId = Integer.parseInt(request.getParameter("sectionID"));
+                    courseID = Integer.parseInt(request.getParameter("courseID"));
+                    SectionDAO sectionDAO = new SectionDAO();
+                    LessonDAO ldao = new LessonDAO();
+                    lessons = ldao.getAllLessonOfSection(sectionId);
+                    Section section = sectionDAO.getSectionBySectionID(sectionId);
 
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("lessons", lessons);
-            request.setAttribute("sectionID", sectionId);
-            request.setAttribute("section", section);
-            request.getRequestDispatcher("CreateLesson.jsp").forward(request, response);
-            return;
+                    request.setAttribute("courseID", courseID);
+                    request.setAttribute("lessons", lessons);
+                    request.setAttribute("sectionID", sectionId);
+                    request.setAttribute("section", section);
+                    request.getRequestDispatcher("CreateLesson.jsp").forward(request, response);
+                    return;
+                }
+                response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
+            } else {
+                response.sendRedirect("home");
+            }
+        } else {
+            response.sendRedirect("home");
         }
-        response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     }
 
     /**

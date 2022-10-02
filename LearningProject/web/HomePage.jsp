@@ -6,7 +6,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +31,8 @@
     </head>
 
     <body>
+    <%@include file="header.jsp"%>
+
         <div id="main" >            
             <div id="content" >
                 <!-- Begin: Side Bar -->
@@ -132,8 +133,8 @@
                                             <div class="course-meta-info">
                                                 <div class="course-meta-author">
                                                     <div class="author-avatar">
-                                                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                             alt="">
+                                                        <img src="${course.getAuthor().getAvatar()}"
+                                                                 alt="" style="width: 40px; height: 40px; border-radius: 50%;">
                                                     </div>
                                                     <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
                                                 </div>
