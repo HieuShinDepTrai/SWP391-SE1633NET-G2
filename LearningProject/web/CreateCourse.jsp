@@ -23,9 +23,9 @@
     </head>
 
     <body>
-<%@include file="header.jsp"%>
         
         <div id="main">            
+        <%@include file="header.jsp"%>
             <!-- Begin: Create Course -->
             <section>
                 <form action="CreateCourse" method="POST">
@@ -46,7 +46,7 @@
                             <div class="content-1">
                                 <div class="create-course-title-container mb-3">
                                     <div class="create-course-title mb-1 fw-bold">Course Title</div>
-                                    <input type="text" class="w-100 mb-1" name="CourseTitle"/>
+                                    <input type="text" class="w-100 mb-1" name="CourseTitle" required=""/>
                                     <div class="description mb-1">
                                         Please enter your course title
                                     </div>
@@ -55,14 +55,14 @@
                                     <div class="create-course-title mb-1 fw-bold">
                                         Course description
                                     </div>
-                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes"></textarea>
+                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes" required=""></textarea>
                                     <div class="description mb-1">
                                         Please enter your course description
                                     </div>
                                 </div>
                                 <div class="create-objectives">
                                     <div class="create-section-title fw-bold mb-3">Objectives</div>
-                                    <div class="section-list">
+                                        <div class="section-list">
                                     </div>
                                     <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         Add Objectives
@@ -81,7 +81,7 @@
                                                  height="36px" />
                                         </div>
                                         <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="" id="thumbnail" onchange="upload(this)" accept="image/*"/>
+                                            <input type="file" name="" id="thumbnail" onchange="upload(this)" accept="image/*" required=""/>
                                             <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                                     <div class="course-option-content mb-2">
                                         <div class="course-option-content-title mb-1">Category</div>
                                         <div class="course-option-content-input mb-1">
-                                            <select class="form-select w-100" aria-label="Default select example" name="category">
+                                            <select class="form-select w-100" aria-label="Default select example" name="category" required>
                                                 <option selected>Select course category</option>
                                                 <option value="Front-end">Front-end</option>
                                                 <option value="Back-end">Back-end</option>
@@ -111,7 +111,7 @@
                                     <div class="course-option-content mb-2">
                                         <div class="course-option-content-title mb-1">Price</div>
                                         <div class="course-option-content-input mb-1">
-                                            <input type="text" class="w-100" name="CoursePrice"/>
+                                            <input type="text" class="w-100" name="CoursePrice" required/>
                                         </div>
                                         <div class="course-option-content-des">
                                             Enter price of course
@@ -164,6 +164,9 @@
             <!-- Begin: Footer -->
             <!-- End: Footer -->
         </div>
+        <script>
+            $('.section-list')
+        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="assets/js/create_course.js"></script>
         <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
