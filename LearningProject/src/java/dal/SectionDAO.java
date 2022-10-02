@@ -13,10 +13,19 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class SectionDAO extends DBContext {
-
+    
     public void disableSection(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteSection(int sectionId) {
+        try {
+            execute("DELETE FROM [dbo].[Section]\n"
+                    + "      WHERE SectionID = ?", sectionId);
         } catch (Exception e) {
             e.printStackTrace();
         }

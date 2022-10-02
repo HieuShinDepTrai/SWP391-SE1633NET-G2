@@ -112,32 +112,31 @@
 
             <!-- Begin: Create Course -->
             <section>
-                <form action="CreateCourse" method="POST">
-                    <div class="create-course px-5 py-3">
-                        <div class="create-course-header mb-3">
-                            <h3 class="fw-bold">Create Section</h3>
-                            <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                                <ol class="breadcrumb" style="font-size: 13px">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        Create Section
-                                    </li>
-                                </ol>
-                            </nav>
-                            <h4 class="mb-3 fw-bold mb-1">Create Section for ${course.getCourseName()}</h4>
-                        </div>
-                        <div class="create-course-content">
-                            <div class="content-1" style="flex: 2;">
-                                <div class="create-objectives">
-                                    <div class="create-section-title fw-bold mb-3">Section</div>
-                                    <table class="table table-striped" id="table">
-                                        <thead>
-                                        <th>Section No</th>
-                                        <th>Section Name</th>
-                                        <th>Lesson</th>
-                                        <th>Action</th>
-                                        </thead>
-                                        <tbody>
+                <div class="create-course px-5 py-3">
+                    <div class="create-course-header mb-3">
+                        <h3 class="fw-bold">Create Section</h3>
+                        <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                            <ol class="breadcrumb" style="font-size: 13px">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create Section
+                                </li>
+                            </ol>
+                        </nav>
+                        <h4 class="mb-3 fw-bold mb-1">Create Section for ${course.getCourseName()}</h4>
+                    </div>
+                    <div class="create-course-content">
+                        <div class="content-1" style="flex: 2;">
+                            <div class="create-objectives">
+                                <div class="create-section-title fw-bold mb-3">Section</div>
+                                <table class="table table-striped" id="table">
+                                    <thead>
+                                    <th>Section No</th>
+                                    <th>Section Name</th>
+                                    <th>Lesson</th>
+                                    <th>Action</th>
+                                    </thead>
+                                    <tbody>
                                         <%
                                             int count = 1;
                                         %>
@@ -147,39 +146,68 @@
                                                 <td>${section.getSectionName()}</td>
                                                 <td><a href="CreateLesson?sectionID=${section.getSectionId()}" class="btn btn-primary">Add Lesson</a></td>
                                                 <td>
-                                                    <button class="btn btn-primary">Delete</button>
-                                                    <button class="btn btn-primary">Edit</button>
+                                                    <form action="CreateSection?sectionID=${section.getSectionId()}&delete='true'&courseId=${courseID}" method="POST" style="display: inline-block;">
+                                                        <input type="submit" class="btn btn-primary" value="Delete">
+                                                    </form>
+                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditSection">Edit</button>
                                                 </td>
                                             </tr>
                                             <% 
                                                 count++; 
                                             %>
                                         </c:forEach>
-                                            
-                                        </tbody>
-                                    </table>
-                                    <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Add Section
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content-2">
-                                <div class="course-container d-flex flex-column align-items-center">
-                                    <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 320px; object-fit: cover; border-radius: 16px;">
-                                    <a href="" class="btn btn-primary mt-3">Next</a>
+
+                                    </tbody>
+                                </table>
+                                <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    Add Section
                                 </div>
                             </div>
                         </div>
+                        <div class="content-2">
+                            <div class="course-container d-flex flex-column align-items-center">
+                                <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 320px; object-fit: cover; border-radius: 16px;">
+                                <a href="" class="btn btn-primary mt-3">Next</a>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
+
                 <!-- Modal Add Section-->
-                <form action="CreateSection?courseId=${courseID}" method="post">
+                <form action="CreateSection?courseId=${courseID}&addSection='true'" method="post">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">
                                         Add Section
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="Section name" class="form-label">Section Name</label>
+                                    <!-- Section name must not null -->
+                                    <input id="value" type="text" class="form-control" name="SectionName" required="true" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <input type="submit" class="btn btn-primary" value="Add Section" onclick="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Modal Edit Section-->
+                <form action="CreateSection?courseId=${courseID}" method="post">
+                    <div class="modal fade" id="EditSection" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                        Edit Section
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
