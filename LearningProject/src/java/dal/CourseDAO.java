@@ -35,8 +35,8 @@ public class CourseDAO extends DBContext {
         try {
             String sql = "SELECT \n"
                     + "[C].[CourseName],"
-                    + "[c].[DateCreate],"
-                    + "[c].[Category],"
+                    + "[C].[DateCreate],"
+                    + "[C].[Category],"
                     + "[C].[CourseImage],"
                     + "[C].[Status],"
                     + "[C].[NumberEnrolled],"
@@ -45,14 +45,13 @@ public class CourseDAO extends DBContext {
                     + "[C].[Description],"
                     + "[C].[Objectives],"
                     + "[C].[Difficulty],"
-                    + "[U].[FirstName] \n"
+                    + "[C].[AuthorID]"
                     + "FROM [Course] C INNER JOIN [User] U\n"
                     + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled'";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Course course = new Course();
-                User user = new User();
                 course.setCourseName(rs.getString("CourseName"));
                 course.setDateCreate(rs.getTimestamp("DateCreate"));
                 course.setCategory(rs.getString("Category"));
@@ -63,10 +62,9 @@ public class CourseDAO extends DBContext {
                 course.setCourseID(rs.getInt("CourseID"));
                 course.setObjectives(rs.getNString("Objectives"));
                 course.setDifficulty(rs.getString("Difficulty"));
-                user.setFirstName(rs.getString("FirstName"));
                 course.setCourseImage(rs.getString("CourseImage"));
-                course.setAuthor(user);
-
+                course.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+                
                 courses.add(course);
             }
         } catch (SQLException ex) {

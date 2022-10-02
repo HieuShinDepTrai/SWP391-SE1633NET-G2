@@ -90,7 +90,7 @@
                             <div class="content-3">
                                 <div class="course-publish mb-3">
                                     <div class="publish-button d-flex justify-content-center p-4">
-                                        <input type="submit" value="Next Step" class="btn btn-primary"/>
+                                        <input type="button" value="Next Step" class="btn btn-primary nextStep" onclick="checkObjective()"/>
                                     </div>
 <!--                                    <div class="save-draft px-3 py-3">Save draft</div>
                                     <div class="delete-course px-3 py-3">Delete course</div>-->
@@ -165,7 +165,13 @@
             <!-- End: Footer -->
         </div>
         <script>
-            $('.section-list')
+            function checkObjective() {
+                if($('.section-list').children().length === 0) {
+                    alert("Objectives is empty");
+                } else {
+                    $('.nextStep').attr('type', 'submit');
+                }                 
+            }
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="assets/js/create_course.js"></script>
