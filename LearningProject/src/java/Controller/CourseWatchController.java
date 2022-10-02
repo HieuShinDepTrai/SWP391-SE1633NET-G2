@@ -63,65 +63,53 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-       
-        CommentDAO cmtDao = new CommentDAO();
-              
-        ArrayList<Comment> commentList = cmtDao.ListAllComment();
-
-
-
-        
-        request.setAttribute("commentList", commentList);
-        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
             throws ServletException, IOException {
-        // Check if user login or not
+
+        CommentDAO cmtDao = new CommentDAO();
+
+        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+//        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
-            // Get course id 
-            int courseID = 0;
-            int sectionID = 0;
-            int lessonID = 0;
-            if(request.getParameter("courseID") != null) {
-                courseID = Integer.parseInt(request.getParameter("courseID"));                
-            }
-            if(request.getParameter("sectionID") != null) {
-                sectionID = Integer.parseInt(request.getParameter("sectionID"));                
-            }
-            if(request.getParameter("lessonID") != null) {
-                lessonID = Integer.parseInt(request.getParameter("lessonID"));                
-            }
-            CourseDAO cdao = new CourseDAO();
-            SectionDAO sdao = new SectionDAO();
-            LessonDAO ldao = new LessonDAO();
+        // Get course id 
+        int courseID = 0;
+        int sectionID = 0;
+        int lessonID = 0;
+        if (request.getParameter("courseID") != null) {
+            courseID = Integer.parseInt(request.getParameter("courseID"));
+        }
+            if (request.getParameter("sectionID") != null) {
+            sectionID = Integer.parseInt(request.getParameter("sectionID"));
+        }
+        if (request.getParameter("lessonID") != null) {
+            lessonID = Integer.parseInt(request.getParameter("lessonID"));
+        }
+        CourseDAO cdao = new CourseDAO();
+        SectionDAO sdao = new SectionDAO();
+        LessonDAO ldao = new LessonDAO();
 
-            // Get data from dao
-            Course c = cdao.getCourseInformation(courseID);
-            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
-            ArrayList<Lesson> listLesson = new ArrayList<>();
-            for (Section section : listSection) {
-                ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
-                for (Lesson lesson : tmp) {
-                    listLesson.add(lesson);
-                }
+        // Get data from dao
+        Course c = cdao.getCourseInformation(courseID);
+        ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
+        ArrayList<Lesson> listLesson = new ArrayList<>();
+        for (Section section : listSection) {
+            ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
+            for (Lesson lesson : tmp) {
+                listLesson.add(lesson);
             }
-         
+        }
+        // Send video list to jsp
+        request.setAttribute("course", c);
+        request.setAttribute("listSection", listSection);
+        request.setAttribute("listLesson", listLesson);
 
-            // Send video list to jsp
-            request.setAttribute("course", c);
-            request.setAttribute("listSection", listSection);
-            request.setAttribute("listLesson", listLesson);
+        // Send id of lesson to jsp
+        request.setAttribute("courseID", courseID);
+        request.setAttribute("sectionID", sectionID);
+        request.setAttribute("lessonID", lessonID);
+        request.setAttribute("commentList", commentList);
 
-            // Send id of lesson to jsp
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("sectionID", sectionID);
-            request.setAttribute("lessonID", lessonID);
-            
-            request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {
 //            // Send back to home pages
 //            response.sendRedirect("home");
@@ -138,7 +126,7 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
