@@ -54,23 +54,21 @@ public class CourseDetailsController extends HttpServlet {
         LessonDAO lessonDAO = new LessonDAO();
         CourseDAO cDAO = new CourseDAO();
         UserDAO u = new UserDAO();
-                
-                    
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
 
         HttpSession session = request.getSession();
         User user = new User();
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
-            
-        }
-        
-        //get user id and course id
-        int UserID = u.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
-        int CourseID = Integer.parseInt(request.getParameter("id"));
-        UserCourse UserCourse = cDAO.getUserCourseInformation(CourseID, UserID);
+            int UserID = user.getUserId();
 
+            UserCourse UserCourse = cDAO.getUserCourseInformation(id, UserID);
+            //set UserCourse that the user enroll or unenroll
+            request.setAttribute("UserCourse", UserCourse);
+        }
+
+        //get user id and course id
         Course course = cdao.getCourseInformation(id);
         // Add course objectives
         String courseObjectives = course.getObjectives();
@@ -87,9 +85,7 @@ public class CourseDetailsController extends HttpServlet {
                 lessonList.add(lesson);
             }
         }
-        
-        //set UserCourse that the user enroll or unenroll
-        request.setAttribute("UserCourse", UserCourse);
+
         request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), id));
         request.setAttribute("course", course);

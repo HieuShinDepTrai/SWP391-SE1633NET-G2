@@ -230,9 +230,8 @@
                                             <div class="card-body">
 
                                                 <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
-                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            <input name="op"  type="submit" value="Enroll">
-                                                        </c:if>
+                                                        
+                                                        
 
                                                 <div class="course-meta-info">
                                                     <div class="course-meta-author">
@@ -250,14 +249,14 @@
                                                 <div class="course-footer">
                                                     <c:if test="${course.getCoursePrice() == 0}">
                                                         <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                        <form id="enroll" action="enroll" method="POST">                                                        
+                                                        <form action="enroll" method="POST">                                                        
 
                                                             <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                                <input type="submit" value="Enroll">
+                                                                <input name="op" type="submit" value="Enroll">
                                                             </c:if>
 
                                                             <c:if test="${courseIDs.contains(course.getCourseID())}">
-                                                                <input type="submit" value="Go to Course">
+                                                                <input name="op" type="submit" value="Go to Course">
                                                             </c:if>
 
 
