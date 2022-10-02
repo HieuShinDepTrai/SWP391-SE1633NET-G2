@@ -144,7 +144,7 @@
                                             <tr>
                                                 <td><%=count%></td>
                                                 <td>${section.getSectionName()}</td>
-                                                <td><a href="CreateLesson?sectionID=${section.getSectionId()}" class="btn btn-primary">Add Lesson</a></td>
+                                                <td><a href="CreateLesson?sectionID=${section.getSectionId()}&courseID=${courseID}" class="btn btn-primary">Add Lesson</a></td>
                                                 <td>
                                                     <form action="CreateSection?sectionID=${section.getSectionId()}&delete='true'&courseId=${courseID}" method="POST" style="display: inline-block;">
                                                         <input type="submit" class="btn btn-primary" value="Delete">
