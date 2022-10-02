@@ -6,7 +6,10 @@ package dal;
 
 import Model.Section;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,8 +39,9 @@ public class SectionDAO extends DBContext {
             executeUpdate("UPDATE [dbo].[Section]\n"
                     + "   SET [SectionName] = ?\n"
                     + " WHERE [SectionID] = ?", 
-                    s.getSectionName(), s.getSectionName());
+                    s.getSectionName(), s.getSectionId());
         } catch (Exception e) {
+            System.out.println("Update Section Name: ");
             e.printStackTrace();
         }
     }
@@ -68,5 +72,19 @@ public class SectionDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Section getSectionBySectionID(int sectionID) {
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID],[SectionName]\n"
+                    + "  FROM [dbo].[Section]\n"
+                    + "  Where [SectionID] = ?", sectionID);
+            if (rs.next()) {
+                return new Section(sectionID, rs.getInt("CourseID"), rs.getNString("SectionName"), false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SectionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +23,8 @@
     </head>
 
     <body>
+<%@include file="header.jsp"%>
+        
         <div id="main">            
             <!-- Begin: Create Course -->
             <section>

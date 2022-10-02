@@ -32,14 +32,17 @@ public class EnrollController extends HttpServlet {
         //enroll in course detail
         String op = request.getParameter("op");
         int CourseID = Integer.parseInt(request.getParameter("id"));
-        int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-       if (op.equals("Enroll") ) {
-            u.insertIntoUserCourse(UserID, CourseID);         
+       if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+            int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
+            u.insertIntoUserCourse(UserID, CourseID);    
+            request.getRequestDispatcher("CourseDetails").forward(request, response);
+       }    else {
+           response.sendRedirect("login");
        }
         
         
-        request.getRequestDispatcher("CourseDetails").forward(request, response);
+        
     }
 
     @Override
@@ -55,11 +58,11 @@ public class EnrollController extends HttpServlet {
         if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-             u.insertIntoUserCourse(UserID, CourseID);
+            u.insertIntoUserCourse(UserID, CourseID);
             response.sendRedirect("home");
             
         } else {
-            response.sendRedirect("home");
+            response.sendRedirect("login");
         }
         
                                 

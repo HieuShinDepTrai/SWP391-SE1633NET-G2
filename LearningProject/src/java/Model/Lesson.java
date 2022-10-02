@@ -15,6 +15,8 @@ public class Lesson {
     private boolean isDisable;
     private String type;
     private int time;
+    private String videoLink;
+    private String Content;
     
     public Lesson() {
     }
@@ -37,6 +39,34 @@ public class Lesson {
         this.time = time;
     }
 
+    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type, int time, String videoLink, String Content) {
+        this.lessonId = lessonId;
+        this.sectionId = sectionId;
+        this.lessonName = lessonName;
+        this.isDisable = isDisable;
+        this.type = type;
+        this.time = time;
+        this.videoLink = videoLink;
+        this.Content = Content;
+    }
+
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
+    }
+
+    public String getContent() {
+        return Content;
+    }
+
+    public void setContent(String Content) {
+        this.Content = Content;
+    }
+
+    
     public int getTime() {
         return time;
     }
