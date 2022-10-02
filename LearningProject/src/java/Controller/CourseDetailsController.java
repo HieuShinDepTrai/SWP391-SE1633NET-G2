@@ -9,6 +9,7 @@ import Model.Feedback;
 import Model.Lesson;
 import Model.Section;
 import Model.User;
+import Model.UserCourse;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
@@ -51,33 +52,48 @@ public class CourseDetailsController extends HttpServlet {
         CourseDAO cdao = new CourseDAO();
         SectionDAO sectionDao = new SectionDAO();
         LessonDAO lessonDAO = new LessonDAO();
-
-        int id = Integer.parseInt(request.getParameter("id"));
+        CourseDAO cDAO = new CourseDAO();
+        UserDAO u = new UserDAO();
+                
+                    
+        
+        int courseID = Integer.parseInt(request.getParameter("id"));
 
         HttpSession session = request.getSession();
         User user = new User();
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
+            //get user id and course id
+            int UserID = u.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
+            int CourseID = Integer.parseInt(request.getParameter("id"));
+            UserCourse UserCourse = cDAO.getUserCourseInformation(CourseID, UserID);
+            //set UserCourse that the user enroll or unenroll
+            request.setAttribute("UserCourse", UserCourse);
         }
+        
 
-        Course course = cdao.getCourseInformation(id);
+        Course course = cdao.getCourseInformation(courseID);
         // Add course objectives
         String courseObjectives = course.getObjectives();
         String[] objective = courseObjectives.split("[/]+");
         request.setAttribute("objective", objective);
-        ArrayList<Feedback> feedbackList = cdao.getFeedBack(id);
-        ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
-
+        
+        // Get feedback list
+        ArrayList<Feedback> feedbackList = cdao.getFeedBack(courseID);
+        // Get section list
+        ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(courseID);
+        // Get lesson list
         ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
-
         for (Section section : sectionList) {
             ArrayList<Lesson> tmp = lessonDAO.getAllLessonOfSection(section.getSectionId());
             for (Lesson lesson : tmp) {
                 lessonList.add(lesson);
             }
         }
+        
+
         request.setAttribute("feedbackList", feedbackList);
-        request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), id));
+        request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), courseID));
         request.setAttribute("course", course);
         request.setAttribute("sectionList", sectionList);
         request.setAttribute("lessonList", lessonList);

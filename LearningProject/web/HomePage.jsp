@@ -31,108 +31,9 @@
     </head>
 
     <body>
-        <div id="main" >
-            <header>
-                <div class="header-content">
-                    <div class="logo">
-                        <a href="home"><img src="assets/img/Logo-FPT.webp" alt=""></a>
-                        <div class="header-title">
-                            Học Lập Trình FPT
-                        </div>
-                    </div>
-                    <div class="header-search">
-                        <div class="icon-search">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
-                    </div>
-                    <div class="header-profile">
-                        <div class="header-mycourse">
-                            Khóa học của tôi
-                        </div>
-                        <div class="header-notification" onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-bell"></i>
-                            <div class="notification-cotainer" onclick="event.stopPropagation()">
-                                <div class="notification-header">
-                                    <h3>Thông báo</h3>
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </div>
-                                <div class="notification-list ">
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="">
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8. Hãy luôn đam mê,
-                                                kiên trì và theo đuổi mục tiêu tới cùng bạn nhé ❤️</p>
-                                            <div class="noti-time">
-                                                một tháng trước
-                                            </div>
-                                        </div>
-                                        <div class="noti-remind">
-                                        </div>
-                                    </div>
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="">
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8. Hãy luôn đam mê,
-                                                kiên trì và theo đuổi mục tiêu tới cùng bạn nhé ❤️</p>
-                                            <div class="noti-time">
-                                                một tháng trước
-                                            </div>
-                                        </div>
-                                        <div class="noti-remind">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <c:if test="${user==null}">
-                            <button class="btn btn-info"><a href="login" class="text-white fw-bold">Login</a></button>
-                        </c:if>
-                        <c:if test="${user!=null}">
-                            <div class="avatar" onclick="event.stopPropagation()">
-                                <c:if test="${user.getAvatar() != null}">
-                                    <img src="${user.getAvatar()}" alt="">                                
-                                </c:if>
-                                <c:if test="${user.getAvatar() == null}">
-                                    <img src="assets/img/user.png">
-                                </c:if>
-                                <div class="account-menu">
-                                    <div class="menu-content">
-                                        <div class="menu-element">
-                                            <i class="fa-solid fa-user"></i>
-                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
-                                        </div>
-                                        <div class="menu-element">
-                                            <i class="fa-solid fa-list"></i>
-                                            <a href="" class="menu-title">Khóa học của tôi</a>
-                                        </div>
-                                        <div class="menu-element">
-                                            <i class="fa-solid fa-gear"></i>
-                                            <a href="" class="menu-title">Cài đặt</a>
-                                        </div>
-                                        <div class="line">
+    <%@include file="header.jsp"%>
 
-                                        </div>
-                                        <div class="menu-element">
-                                            Account Balance:
-                                            <a href="" class="menu-title">${user.getBalance()}</a>
-                                        </div>
-                                        <div class="menu-element menu-logout">
-                                            <i class="fa-solid fa-right-from-bracket"></i>
-                                            <a href="logout" class="menu-title">Đăng xuất</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-
-                    </div>
-                </div>
-            </header>
+        <div id="main" >            
             <div id="content" >
                 <!-- Begin: Side Bar -->
                 <div id="side-bar">
@@ -221,59 +122,50 @@
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
-                                <c:if test="${course.getStatus() == 'Enabled   '}">
-                                    <div class="col-xl-3 col-lg-4 col-md-6" >
-                                        <div class="card" style="min-height: 234px; height: 520px;">
-                                            <div class="card-top-img">
-                                                <img src="https://images.unsplash.com/photo-1663326223816-7d8d969eddfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80" alt="" style="width: 100%; height: 100%; object-fit: cover">
-                                            </div>
-                                            <div class="card-body">
+                                <div class="col-xl-3 col-lg-4 col-md-6" >
+                                    <div class="card" style="min-height: 234px; height: 400px;">
+                                        <div class="card-top-img">
+                                            <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
+                                        </div>
+                                        <div class="card-body">
 
-                                                <h5 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h5>
-                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            <input name="op"  type="submit" value="Enroll">
-                                                        </c:if>
-
-                                                <div class="course-meta-info">
-                                                    <div class="course-meta-author">
-                                                        <div class="author-avatar">
-                                                            <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                 alt="">
-                                                        </div>
-                                                        <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
+                                            <h6 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h6>
+                                            <div class="course-meta-info">
+                                                <div class="course-meta-author">
+                                                    <div class="author-avatar">
+                                                        <img src="${course.getAuthor().getAvatar()}"
+                                                                 alt="" style="width: 40px; height: 40px; border-radius: 50%;">
                                                     </div>
-                                                    <div class="course-meta-student">
-                                                        <i class="fa-solid fa-user"></i>
-                                                        <p>${course.getNumberEnrolled()} Students</p>
-                                                    </div>
+                                                    <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
                                                 </div>
-                                                <div class="course-footer">
-                                                    <c:if test="${course.getCoursePrice() == 0}">
-                                                        <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                        <form id="enroll" action="enroll" method="POST">                                                        
-
+                                                <div class="course-meta-student">
+                                                    <i class="fa-solid fa-user"></i>
+                                                    <p>${course.getNumberEnrolled()} Students</p>
+                                                </div>
+                                            </div>
+                                            <div class="course-footer">
+                                                <c:if test="${course.getCoursePrice() == 0}">
+                                                    <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
+                                                    <form id="enroll" action="enroll" method="POST">                                                                             
                                                             <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                                <input type="submit" value="Enroll">
+                                                                <input name="op" type="submit" value="Enroll">
                                                             </c:if>
 
                                                             <c:if test="${courseIDs.contains(course.getCourseID())}">
-                                                                <input type="submit" value="Go to Course">
+                                                                <input name="op" type="submit" value="Go to Course">
                                                             </c:if>
+                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                    </form>
+                                                </c:if>
+                                                <c:if test="${course.getCoursePrice() != 0}">
+                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                    <a href="#">Buy now</a>
+                                                </c:if>
 
-
-                                                            <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                        </form>
-                                                    </c:if>
-                                                    <c:if test="${course.getCoursePrice() != 0}">
-                                                        <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                        <a href="#">Buy now</a>
-                                                    </c:if>
-
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </c:if>
+                                </div>
                             </c:forEach>
                         </div>
                     </div>
@@ -342,14 +234,14 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-                                $('.autoplay').slick({
-                                    slidesToShow: 1,
-                                    slidesToScroll: 1,
-                                    autoplay: true,
-                                    autoplaySpeed: 5000,
-                                    speed: 1500,
-                                    dots: true
-                                });
+            $('.autoplay').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                speed: 1500,
+                dots: true
+            });
         </script>
     </body>
 

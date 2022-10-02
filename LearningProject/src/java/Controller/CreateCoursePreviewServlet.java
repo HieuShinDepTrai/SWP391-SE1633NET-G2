@@ -5,23 +5,29 @@
 package Controller;
 
 import Model.Course;
+import Model.Feedback;
+import Model.Lesson;
 import Model.Section;
 import Model.User;
+import Model.UserCourse;
 import dal.CourseDAO;
+import dal.LessonDAO;
 import dal.SectionDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
  *
  * @author Dung
  */
-public class CreateSectionController extends HttpServlet {
+public class CreateCoursePreviewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +46,10 @@ public class CreateSectionController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateSectionController</title>");
+            out.println("<title>Servlet CreateCoursePreviewServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateSectionController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateCoursePreviewServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,23 +67,40 @@ public class CreateSectionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SectionDAO sdao = new SectionDAO();
-        CourseDAO cdao = new CourseDAO();
-        if(request.getSession().getAttribute("user") != null) {
+        if (request.getSession().getAttribute("user") != null) {
             User user = (User) request.getSession().getAttribute("user");
             if(user.getRole().equals("Mentor")) {
-                int courseId = 0;
-                if (request.getParameter("courseId") != null) {
-                    courseId = Integer.parseInt(request.getParameter("courseId"));
-                    Course c = cdao.getCourseInformation(courseId);
-                    ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseId);
+                CourseDAO cdao = new CourseDAO();
+                SectionDAO sectionDao = new SectionDAO();
+                LessonDAO lessonDAO = new LessonDAO();
+                CourseDAO cDAO = new CourseDAO();
+                UserDAO u = new UserDAO();
 
-                    request.setAttribute("listSection", listSection);
-                    request.setAttribute("courseID", courseId);
-                    request.setAttribute("course", c);
+                int id = Integer.parseInt(request.getParameter("id"));
 
-                    request.getRequestDispatcher("CreateSection.jsp").forward(request, response);
+                HttpSession session = request.getSession();
+                Course course = cdao.getCourseInformation(id);
+                // Add course objectives
+                String courseObjectives = course.getObjectives();
+                String[] objective = courseObjectives.split("[/]+");
+                request.setAttribute("objective", objective);
+                ArrayList<Section> sectionList = sectionDao.getAllSectionOfCourse(id);
+
+                ArrayList<Lesson> lessonList = new ArrayList<Lesson>();
+                for (Section section : sectionList) {
+                    ArrayList<Lesson> tmp = lessonDAO.getAllLessonOfSection(section.getSectionId());
+                    for (Lesson lesson : tmp) {
+                        lessonList.add(lesson);
+                    }
                 }
+
+                request.setAttribute("course", course);
+                request.setAttribute("sectionList", sectionList);
+                request.setAttribute("lessonList", lessonList);
+                int time = cdao.getCourseTime(course.getCourseID());
+                String totalTime = (time / 1000) / 60 / 60 % 24 + " hours " + (time / 1000) / 60 % 60 + " minutes " + (time / 1000) % 60 + " seconds ";
+                request.setAttribute("totalTime", totalTime);
+                request.getRequestDispatcher("CreateCoursePreview.jsp").forward(request, response);
             } else {
                 response.sendRedirect("home");
             }
@@ -97,44 +120,7 @@ public class CreateSectionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SectionDAO sdao = new SectionDAO();
-        int courseId = 0;
-        
-        // Check if course id is not null
-        if (request.getParameter("courseId") != null) {
-            courseId = Integer.parseInt(request.getParameter("courseId"));
-            
-            // If request of add section != null, then add section to db
-            if(request.getParameter("addSection") != null) {
-                String sectionName = request.getParameter("SectionName");
-                sdao.addSection(new Section(0, courseId, sectionName, false));
-            }
-            
-            // If request of delete != null, then delete section to db
-            if (request.getParameter("delete") != null) {
-                int sectionID = 0;
-                if (request.getParameter("sectionID") != null) {
-                    sectionID = Integer.parseInt(request.getParameter("sectionID"));
-                    sdao.deleteSection(sectionID);
-                }
-            }
-            
-            // If request of edit != null, then edit
-            if(request.getParameter("edit") != null) {
-                int sectionID = 0;
-                String sectionName = "";
-                if(request.getParameter("SectionNameModal") != null && request.getParameter("SectionIDModal") != null) {
-                    sectionID = Integer.parseInt(request.getParameter("SectionIDModal"));
-                    sectionName = request.getParameter("SectionNameModal");
-                    sdao.updateSectionName(new Section(sectionID, courseId, sectionName, false));
-                }
-            }
-            
-            // Send to get method with CourseID to load data from db
-            response.sendRedirect("CreateSection?courseId=" + courseId);
-        } else {
-            response.getWriter().print("<h1>Course ID is null</h1>");
-        }
+
     }
 
     /**

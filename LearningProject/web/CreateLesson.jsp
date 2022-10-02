@@ -4,6 +4,7 @@
     Author     : HieuShin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,95 +27,12 @@
                 selector: '#mytextarea'
             });
         </script>
+        <script src="assets/js/add_lesson.js" type="text/javascript"></script>
     </head>
 
     <body>
         <div id="main">
-            <header>
-                <div class="header-content">
-                    <div class="logo">
-                        <img src="assets/img/Logo-FPT.webp" alt="" />
-                        <div class="header-title">Học Lập Trình FPT</div>
-                    </div>
-                    <div class="header-search d-none">
-                        <div class="icon-search">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video..." />
-                    </div>
-                    <div class="header-profile">
-                        <div class="header-mycourse">Khóa học của tôi</div>
-                        <div class="header-notification" onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-bell"></i>
-                            <div class="notification-cotainer" onclick="event.stopPropagation()">
-                                <div class="notification-header">
-                                    <h3>Thông báo</h3>
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </div>
-                                <div class="notification-list">
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="avatar" onclick="event.stopPropagation()">
-                            <img src="assets/img/user.png" alt="" />
-                            <div class="account-menu">
-                                <div class="menu-content">
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-user"></i>
-                                        <a href="" class="menu-title">Trang cá nhân</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <a href="" class="menu-title">Cài đặt</a>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="menu-element">
-                                        Account Balance:
-                                        <a href="" class="menu-title">200.000đ</a>
-                                    </div>
-                                    <div class="menu-element menu-logout">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        <a href="" class="menu-title">Đăng xuất</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+            <%@include file="header.jsp"%>
             <!-- Begin: Create Course -->
             <section>
                 <div class="create-course px-5 py-3">
@@ -123,33 +41,42 @@
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Create Course</a></li>
+                                <li class="breadcrumb-item"><a href="CreateSection?courseId=${courseID}">Create Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Create Lesson
                                 </li>
                             </ol>
                         </nav>
-                        <h4 class="mb-3 fw-bold mb-1">Create lesson for Section 1</h4>
+                        <h4 class="mb-3 fw-bold mb-1">Create lesson for ${section.getSectionName()}</h4>
                     </div>
                     <table class="table table-striped">
                         <thead>
                         <th>Lesson No</th>
                         <th>Lesson Name</th>
                         <th>Lesson Type</th>
-                        <th>Create Date</th>
+                        <th>Time Duration (Milliseconds)</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Lesson 1</td>
-                                <td>Video</td>
-                                <td>26/09/2022</td>
-                                <td>
-                                    <button class="btn btn-primary">Delete</button>
-                                    <button class="btn btn-primary">Edit</button>
-                                </td>
-                            </tr>
+                            <%
+                                int count = 1;
+                            %>
+                            <c:forEach items="${lessons}" var="lesson">
+                                <tr>
+                                    <td><%=count%></td>
+                                    <td>${lesson.getLessonName()}</td>
+                                    <td>${lesson.getType()}</td>
+                                    <td>${lesson.getTime()}</td>
+                                    <td>
+                                        <button class="btn btn-primary">Delete</button>
+                                        <button class="btn btn-primary">Edit</button>
+                                    </td>
+                                </tr>
+                                <% 
+                                    count++; 
+                                %>
+                            </c:forEach>
+
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -193,7 +120,7 @@
                         </div>
                     </div>
                     <!-- Modal Document-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -234,7 +161,7 @@
                     <!-- Modal Document-->
 
                     <!-- Modal Video-->
-                    <form action="AddLesson" method="POST">
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST" data-type="video">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -250,6 +177,7 @@
                                             <div class="col-8">
                                                 <div class="video-preview">
                                                     <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>                                        
+                                                    <input name="video_url" type="hidden" value="" id="video-URL">
                                                     <i class="fa-brands fa-youtube icon-youtube"></i>
                                                 </div>
                                             </div>
@@ -260,15 +188,17 @@
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Video URL</label>
-                                                    <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                    <input name="url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
                                                 <input type="text" value="Video" class="d-none" name="type">
+                                                <input type="text" name="sectionID" value="${sectionID}" class="d-none">
+                                                <input type="text" class="d-none" name="duration">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
+                                        <button type="button" class="btn btn-primary" onclick="doSubmit()">Save
                                             changes</button>
                                     </div>
                                 </div>

@@ -5,9 +5,12 @@
 package Controller;
 
 import Model.Course;
+import Model.Docs;
 import Model.Lesson;
 import Model.Section;
 import Model.Comment;
+import Model.CurrentCourse;
+import Model.User;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
@@ -18,6 +21,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -63,65 +67,70 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-       
-        CommentDAO cmtDao = new CommentDAO();
-              
-        ArrayList<Comment> commentList = cmtDao.ListAllComment();
-
-
-
-        
-        request.setAttribute("commentList", commentList);
-        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
             throws ServletException, IOException {
-        // Check if user login or not
+
+        CommentDAO cmtDao = new CommentDAO();
+
+        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+//        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
-            // Get course id 
-            int courseID = 0;
-            int sectionID = 0;
-            int lessonID = 0;
-            if(request.getParameter("courseID") != null) {
-                courseID = Integer.parseInt(request.getParameter("courseID"));                
-            }
-            if(request.getParameter("sectionID") != null) {
-                sectionID = Integer.parseInt(request.getParameter("sectionID"));                
-            }
-            if(request.getParameter("lessonID") != null) {
-                lessonID = Integer.parseInt(request.getParameter("lessonID"));                
-            }
-            CourseDAO cdao = new CourseDAO();
-            SectionDAO sdao = new SectionDAO();
-            LessonDAO ldao = new LessonDAO();
+        CourseDAO cdao = new CourseDAO();
+        SectionDAO sdao = new SectionDAO();
+        LessonDAO ldao = new LessonDAO();
 
-            // Get data from dao
-            Course c = cdao.getCourseInformation(courseID);
-            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
-            ArrayList<Lesson> listLesson = new ArrayList<>();
-            for (Section section : listSection) {
-                ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
-                for (Lesson lesson : tmp) {
-                    listLesson.add(lesson);
-                }
+        // Get course id 
+        int courseID = 0;
+        int sectionID = 0;
+        int lessonID = 0;
+        HttpSession session = request.getSession();
+        if (request.getParameter("courseID") != null) {
+            courseID = Integer.parseInt(request.getParameter("courseID"));
+        }
+        if (courseID == 0) {
+            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+        }
+        if (session.getAttribute("username") != null) {
+            User user = (User)session.getAttribute("user");                    
+            CurrentCourse currentCourse = cdao.getCurrentCourse(courseID, user.getUserId());
+            if (currentCourse != null) {
+                sectionID = currentCourse.getSectionID();
+                lessonID = currentCourse.getLessonID();
             }
-         
+        }
+        if (request.getParameter("sectionID") != null) {
+            sectionID = Integer.parseInt(request.getParameter("sectionID"));
+        }
+        if (request.getParameter("lessonID") != null) {
+            lessonID = Integer.parseInt(request.getParameter("lessonID"));
+        }
 
-            // Send video list to jsp
-            request.setAttribute("course", c);
-            request.setAttribute("listSection", listSection);
-            request.setAttribute("listLesson", listLesson);
+        // Get data from dao
+        Course c = cdao.getCourseInformation(courseID);
+        ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
+        ArrayList<Lesson> listLesson = new ArrayList<>();
+        for (Section section : listSection) {
+            ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
+            for (Lesson lesson : tmp) {
+                listLesson.add(lesson);
+            }
+        }
 
-            // Send id of lesson to jsp
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("sectionID", sectionID);
-            request.setAttribute("lessonID", lessonID);
-            
-            request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+        Lesson lesson = ldao.getLessonbyLessonID(lessonID);
+
+        // Send video list to jsp
+        request.setAttribute("lesson", lesson);
+        request.setAttribute("course", c);
+        request.setAttribute("listSection", listSection);
+        request.setAttribute("listLesson", listLesson);
+
+        // Send id of lesson to jsp
+        request.setAttribute("courseID", courseID);
+        request.setAttribute("sectionID", sectionID);
+        request.setAttribute("lessonID", lessonID);
+        request.setAttribute("commentList", commentList);
+
+        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {
 //            // Send back to home pages
 //            response.sendRedirect("home");
@@ -138,7 +147,7 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

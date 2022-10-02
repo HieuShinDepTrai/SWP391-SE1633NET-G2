@@ -9,7 +9,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,27 +31,111 @@
 
     <body>
         <div id="main">
-            <%@include file="header.jsp"%>
-            <section>
-                <!-- Begin: Side Bar -->
-                <div id="side-bar-container">
-                    <div id="side-bar">
-                        <div class="bar-button button-hover" onclick="activeHome()">
-                            <i class="fa-solid fa-house"></i>
-                            <p class="button-title">Home</p>
+        <%@include file="header.jsp"%>
+            <header>
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="assets/img/Logo-FPT.webp" alt="" />
+                        <div class="header-title">Học Lập Trình FPT</div>
+                    </div>
+                    <div class="header-search">
+                        <div class="icon-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
-                        <div class="bar-button" onclick="activeCourse()">
-                            <i class="fa-solid fa-road"></i>
-                            <p class="button-title">My Course</p>
+                        <input
+                            type="text"
+                            placeholder="Tìm kiếm khóa học, bài viết, video..."
+                            />
+                    </div>
+                    <div class="header-profile">
+                        <div class="header-mycourse">Khóa học của tôi</div>
+                        <div class="header-notification" onclick="event.stopPropagation()">
+                            <i class="fa-solid fa-bell"></i>
+                            <div
+                                class="notification-cotainer"
+                                onclick="event.stopPropagation()"
+                                >
+                                <div class="notification-header">
+                                    <h3>Thông báo</h3>
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </div>
+                                <div class="notification-list">
+                                    <div class="notification">
+                                        <div class="noti-icon">
+                                            <img src="assets/img/f8-logo.png" alt="" />
+                                        </div>
+                                        <div class="noti-content">
+                                            <p>
+                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
+                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
+                                                bạn nhé ❤️
+                                            </p>
+                                            <div class="noti-time">một tháng trước</div>
+                                        </div>
+                                        <div class="noti-remind"></div>
+                                    </div>
+                                    <div class="notification">
+                                        <div class="noti-icon">
+                                            <img src="assets/img/f8-logo.png" alt="" />
+                                        </div>
+                                        <div class="noti-content">
+                                            <p>
+                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
+                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
+                                                bạn nhé ❤️
+                                            </p>
+                                            <div class="noti-time">một tháng trước</div>
+                                        </div>
+                                        <div class="noti-remind"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bar-button">
-                            <i class="fa-solid fa-newspaper"></i>
-                            <p class="button-title">Blog</p>
-                        </div>
+                        <c:if test="${user==null}">
+                            <button class="btn btn-info"><a href="login" class="text-white fw-bold">Login</a></button>
+                        </c:if>
+                        <c:if test="${user!=null}">
+                            <div class="avatar" onclick="event.stopPropagation()">
+                                <c:if test="${user.getAvatar() != null}">
+                                    <img src="${user.getAvatar()}" alt="">                                
+                                </c:if>
+                                <c:if test="${user.getAvatar() == null}">
+                                    <img src="assets/img/user.png">
+                                </c:if>
+                                <div class="account-menu">
+                                    <div class="menu-content">
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-user"></i>
+                                            <a href="AccountProfile" class="menu-title">Trang cá nhân</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-list"></i>
+                                            <a href="" class="menu-title">Khóa học của tôi</a>
+                                        </div>
+                                        <div class="menu-element">
+                                            <i class="fa-solid fa-gear"></i>
+                                            <a href="" class="menu-title">Cài đặt</a>
+                                        </div>
+                                        <div class="line">
+
+                                        </div>
+                                        <div class="menu-element">
+                                            Account Balance:
+                                            <a href="" class="menu-title">${user.getBalance()}</a>
+                                        </div>
+                                        <div class="menu-element menu-logout">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                            <a href="logout" class="menu-title">Đăng xuất</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
-                <!-- End: Side Bar -->
+            </header>
 
+            <section>
                 <!-- Begin: Course Details -->
                 <div class="course-details-container">
                     <div class="course-details">
@@ -166,20 +249,12 @@
                                 <c:if test="${course.getCoursePrice() == 0}">
                                     <div class="course-details-price my-2">Free</div> 
                                 </c:if>
+                                    
                                 <c:if test="${course.getCoursePrice() != 0}">
                                     <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
-                                </c:if>   
-
-                                <form action="enroll" method="GET">
-                                    <c:if test="${UserCourse == null }">
-                                        <input name="id" type="hidden" value="<%= request.getParameter("id") %>"/>
-                                        <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
-                                    </c:if>
-                                    <c:if test="${UserCourse != null }">
-                                        <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${sectionID}&lessonID=${lessonID}" class="enroll-button my-1">Go To Course</a>
-                                    </c:if>
-                                </form>
-
+                                </c:if>
+                                  
+                                <a class="enroll-button my-1" href="mentordashboard">Save</a>
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>
@@ -201,125 +276,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Begin: Course Feedback -->
-                    <div class="container-fluid">
-                        <div class="row px-4">
-                            <div class="">
-                                <h4 class="fw-bold mb-3">Course Feedback</h4>
-                                <c:if test="${checkDup == true}">
-                                    <p
-                                        class="mb-3 btn btn-primary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#Feedback"
-                                        onclick="rating()"
-                                        >
-                                        Post Feedback
-                                    </p>
-                                </c:if>
-                            </div>
-                            <!-- Begin: Feedback -->
-                            <c:forEach var="fb" items="${feedbackList}">
-                                <div class="row col-8 mb-4">
-                                    <div class="col-1">
-                                        <img
-                                            src="assets/img/f8-logo.png"
-                                            alt=""
-                                            class="img-fluid rounded-circle"
-                                            />
-                                    </div>
-                                    <div class="col-11">
-                                        <div
-                                            class="feed-back-content rounded-3 shadow-sm px-4 py-3"
-                                            style="background-color: #fff"
-                                            >
-                                            <h6 class="fw-bold mb-2">${fb.getUser().getUserName()}</h6>
-                                            <div class="feed-back-star mb-2">
-                                                <c:forEach begin="1" end="${fb.getRating()}">                                                    
-                                                    <i class="fa-solid fa-star"></i>                                                    
-                                                </c:forEach>
-                                                <c:forEach begin="${fb.getRating()}" end="4">
-                                                    <i class="fa-regular fa-star"></i>                                      
-                                                </c:forEach>
-                                                (${fb.getRating()} star)
-                                            </div>
-                                            <p class="fb-content">
-                                                ${fb.getFeedback()}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                            <!-- End: Feedback -->                                                       
-                        </div>
-                    </div>
-                    <!-- End: Course Feedback -->
+                    </div>                                                   
                 </div>
                 <!-- End: Course Details -->
             </section>
 
-            <!-- Modal Feedback-->
-            <div
-                class="modal fade"
-                id="Feedback"
-                tabindex="-1"
-                aria-labelledby="Feedback"
-                aria-hidden="true"
-                >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Feedback</h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                                ></button>
-                        </div>
-                        <form action="CourseDetails" method="POST">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h5 class="mb-3">Rating</h5>
-                                        <!-- <select name="" id="" class="form-select" aria-label="Default select example"> 
-                                        <option selected>Open this select menu</option>
-                                        <option value="">1 star</option>
-                                        <option value="">2 star</option>
-                                        <option value="">3 star</option>
-                                        <option value="">4 star</option>
-                                        <option value="">5 star</option>
-                                      </select> -->
-                                        <div class="star-rating mb-3">
-                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                            <i class="fa-solid fa-star fs-3 star-rating-element"></i>
-                                        </div>
-                                        <input type="text" name="star" value="0" id="rate-star" class="d-none">
-                                        <h5 class="mb-3">Feedback</h5>
-                                        <textarea name="feedback" id="" style="width: 100%; height: 200px; outline: none;"></textarea>
-                                        <input type="hidden" name="courseid" value="${course.getCourseID()}"/>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary"
-                                    data-bs-dismiss="modal"
-                                    >
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Begin: Footer -->
             <!-- End: Footer -->
         </div>

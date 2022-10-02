@@ -6,6 +6,7 @@ package dal;
 
 import Model.Lesson;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,9 +17,9 @@ import java.util.logging.Logger;
  */
 public class LessonDAO extends DBContext {
 
-    public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL) {
+    public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL, int duration) {
         try {
-            execute("EXEC [sp_create_video] ?, ?, ?, ?", sectionId, lessonName, videoName, videoURL);
+            execute("EXEC [sp_create_video] ?, ?, ?, ?, ?", sectionId, lessonName, videoName, videoURL, duration);
         } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,12 +43,12 @@ public class LessonDAO extends DBContext {
 
     public ArrayList<Lesson> getAllLessonOfSection(int sectionId) {
         ArrayList<Lesson> lessonlist = new ArrayList<Lesson>();
-        try(ResultSet rs = executeQuery("SELECT [LessonID],"
+        try ( ResultSet rs = executeQuery("SELECT [LessonID],"
                 + " [LessonName],"
                 + " [isDisable],"
                 + " [types],"
-                + " [Time] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)){
-            while(rs.next()){
+                + " [Time] FROM [dbo].[Lesson] WHERE [SectionID] = ? AND [isDisable] = 0", sectionId)) {
+            while (rs.next()) {
                 lessonlist.add(new Lesson(rs.getInt("LessonID"),
                         sectionId,
                         rs.getNString("LessonName"),
@@ -58,6 +59,32 @@ public class LessonDAO extends DBContext {
             return lessonlist;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Lesson getLessonbyLessonID(int lessonid) {
+        try {
+            ResultSet rs = executeQuery("SELECT [SectionID]\n"
+                    + "      ,[LessonName]\n"
+                    + "      ,[isDisable]\n"
+                    + "      ,[types]\n"
+                    + "      ,[Time]\n"
+                    + "      ,[VideoLink]\n"
+                    + "      ,[Content]\n"
+                    + "  FROM [Lesson] FULL OUTER JOIN [Video]\n"
+                    + "  ON [Lesson].[LessonID] = [Video].[LessonID]\n"
+                    + "  FULL OUTER JOIN [Docs]\n"
+                    + "  ON [Lesson].[LessonID] = [Docs].[LessonID]\n"
+                    + "  WHERE [Lesson].[LessonID] = ?", lessonid);
+            if (rs.next()) {
+                return new Lesson(lessonid, rs.getInt("SectionID"),
+                        rs.getNString("LessonName"),
+                        false, rs.getString("types"), rs.getInt("Time"),
+                        rs.getString("VideoLink"), rs.getString("Content"));               
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
