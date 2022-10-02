@@ -115,7 +115,7 @@
                                             <div class="card shadow-sm overflow-hidden">                                                
                                                 <div class="row my-course g-0">
                                                     <div class="col-3">
-                                                        <img src="https://images.unsplash.com/photo-1610360655260-decd32e267aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" style="width: 100%; height: 96px; object-fit: cover;">
+                                                        <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 96px; object-fit: cover;">
                                                     </div>
                                                     <div class="col-9 px-3 m-auto">
                                                         <div class="fw-bold mb-1">

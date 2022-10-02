@@ -9,6 +9,8 @@ import Model.Docs;
 import Model.Lesson;
 import Model.Section;
 import Model.Comment;
+import Model.CurrentCourse;
+import Model.User;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
@@ -19,6 +21,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -72,12 +75,28 @@ public class CourseWatchController extends HttpServlet {
 //        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
+        CourseDAO cdao = new CourseDAO();
+        SectionDAO sdao = new SectionDAO();
+        LessonDAO ldao = new LessonDAO();
+
         // Get course id 
         int courseID = 0;
         int sectionID = 0;
         int lessonID = 0;
+        HttpSession session = request.getSession();
         if (request.getParameter("courseID") != null) {
             courseID = Integer.parseInt(request.getParameter("courseID"));
+        }
+        if (courseID == 0) {
+            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+        }
+        if (session.getAttribute("username") != null) {
+            User user = (User)session.getAttribute("user");                    
+            CurrentCourse currentCourse = cdao.getCurrentCourse(courseID, user.getUserId());
+            if (currentCourse != null) {
+                sectionID = currentCourse.getSectionID();
+                lessonID = currentCourse.getLessonID();
+            }
         }
         if (request.getParameter("sectionID") != null) {
             sectionID = Integer.parseInt(request.getParameter("sectionID"));
@@ -85,9 +104,6 @@ public class CourseWatchController extends HttpServlet {
         if (request.getParameter("lessonID") != null) {
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
         }
-        CourseDAO cdao = new CourseDAO();
-        SectionDAO sdao = new SectionDAO();
-        LessonDAO ldao = new LessonDAO();
 
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
