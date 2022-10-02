@@ -6,7 +6,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,6 +31,7 @@
     </head>
 
     <body>
+        <%@include file="header.jsp"%>
         <div id="main" >            
             <div id="content" >
                 <!-- Begin: Side Bar -->
@@ -157,7 +157,7 @@
                                                     </form>
                                                 </c:if>
                                                 <c:if test="${course.getCoursePrice() != 0}">
-                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                    <div class="course-price">${cosurse.getCoursePrice()} đ</div>
                                                     <a href="#">Buy now</a>
                                                 </c:if>
 
