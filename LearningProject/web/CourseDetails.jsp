@@ -168,7 +168,17 @@
                                 <c:if test="${course.getCoursePrice() != 0}">
                                     <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
                                 </c:if>   
-                                <a href="#" class="enroll-button my-1">Enroll</a>
+                                    
+                                    <form action="enroll" method="GET">
+                                    <c:if test="${UserCourse == null }">
+                                        <input name="id" type="hidden" value="<%= request.getParameter("id") %>"/>
+                                        <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
+                                    </c:if>
+                                    <c:if test="${UserCourse != null }">
+                                        <a href="WatchCourse" class="enroll-button my-1">Go To Course</a>
+                                    </c:if>
+                                        </form>
+                                
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>

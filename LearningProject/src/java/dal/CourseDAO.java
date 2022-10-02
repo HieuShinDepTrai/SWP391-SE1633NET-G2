@@ -13,7 +13,9 @@ import Model.Question;
 import Model.Quiz;
 import Model.Section;
 import Model.User;
+import Model.UserCourse;
 import Model.Video;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,19 +34,35 @@ public class CourseDAO extends DBContext {
         ArrayList<Course> courses = new ArrayList<>();
         try {
             String sql = "SELECT \n"
-                    + "[C].[CourseName], [C].[NumberEnrolled],[C].[CourseID],\n"
-                    + "[C].[CoursePrice], [U].[FirstName] \n"
+                    + "[C].[CourseName],"
+                    + "[c].[DateCreate],"
+                    + "[c].[Category],"
+                    + "[C].[CourseImage],"
+                    + "[C].[Status],"
+                    + "[C].[NumberEnrolled],"
+                    + "[C].[CourseID],"
+                    + "[C].[CoursePrice],"
+                    + "[C].[Description],"
+                    + "[C].[Objectives],"
+                    + "[C].[Difficulty],"
+                    + "[U].[FirstName] \n"
                     + "FROM [Course] C INNER JOIN [User] U\n"
-                    + "ON [C].[AuthorID] = [U].[UserID]";
+                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled'";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Course course = new Course();
                 User user = new User();
                 course.setCourseName(rs.getString("CourseName"));
+                course.setDateCreate(rs.getTimestamp("DateCreate"));
+                course.setCategory(rs.getString("Category"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setStatus(rs.getString("Status"));
                 course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 course.setCoursePrice(rs.getDouble("CoursePrice"));
                 course.setCourseID(rs.getInt("CourseID"));
+                course.setObjectives(rs.getNString("Objectives"));
+                course.setDifficulty(rs.getString("Difficulty"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
 
@@ -135,7 +153,8 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    public void createClone(int courseId) {
+    public int createClone(int courseId) {
+        int newCourseID = 0;
         try {
             Course course = getAllCourseInformation(courseId);
             SectionDAO sd = new SectionDAO();
@@ -160,12 +179,114 @@ public class CourseDAO extends DBContext {
                     course.getDescription(),
                     course.getObjectives(),
                     course.getDifficulty());
+            
+            if (!rs.next()) return 0;
+            
+            newCourseID = rs.getInt(1) + 1;
 
-            if (!rs.next()) {
-                return;
+            for (Section section : sectionlist) {
+                rs = executeQuery("SELECT IDENT_CURRENT('Section')\nINSERT INTO [dbo].[Section] VALUES (?, ?, ?);",
+                        newCourseID,
+                        section.getSectionName(),
+                        0);
+                
+                if (!rs.next()) return 0;
+                
+                int newSectionID = rs.getInt(1) + 1;
+                
+                ArrayList<Lesson> lessonlist = ld.getAllLessonOfSection(section.getSectionId());
+                for (Lesson lesson : lessonlist) {
+                    rs = executeQuery("SELECT IDENT_CURRENT('Lesson')\nINSERT INTO [dbo].[Lesson] VALUES (?, ?, ?, ?, ?);",
+                            newSectionID,
+                            lesson.getLessonName(),
+                            0,
+                            lesson.getType(),
+                            lesson.getTime());                
+                    
+                    if (!rs.next()) return 0;
+                    
+                    int newLessonID = rs.getInt(1) + 1;
+                    
+                    if (lesson.getType().equals("Doc")) {
+                        Docs docs = dd.getDocsOfLesson(lesson.getLessonId());
+                        executeUpdate("INSERT INTO [dbo].[Docs] VALUES (?, ?)",
+                                newLessonID,
+                                docs.getContent());
+                    }
+                    if (lesson.getType().equals("Video")) {
+                        Video video = vd.getVideoOfLesson(lesson.getLessonId());
+                        executeUpdate("INSERT INTO [dbo].[Video] VALUES (?, ?, ?)",
+                                newLessonID,
+                                video.getVideoName(),
+                                video.getVideoLink());
+                    }
+                    if (lesson.getType().equals("Quiz")) {
+                        Quiz quiz = qd.getQuizOfLesson(lesson.getLessonId());
+                        rs = executeQuery("SELECT IDENT_CURRENT('Quiz')\nINSERT INTO [dbo].[Quiz] VALUES (?, ?);",
+                                quiz.getMark(),
+                                newLessonID);
+                        
+                        if (!rs.next()) return 0;
+                        
+                        int newQuizId = rs.getInt(1) + 1;
+                        
+                        ArrayList<Question> questionlist = qtd.getQuestionsOfQuiz(quiz.getQuizId());
+                        for (Question question : questionlist) {
+                            rs = executeQuery("SELECT IDENT_CURRENT('Question')\nINSERT INTO [dbo].[Question] VALUES (?, ?);",
+                                    question.getQuestionContent(),
+                                    newQuizId);
+                            
+                            if (!rs.next()) return 0;
+                            
+                            int newQuestionId = rs.getInt(1) + 1;
+                            
+                            ArrayList<Answer> answerlist = ad.getAnswersOfQuestion(question.getQuestionId());
+                            for (Answer answer : answerlist) {
+                                executeUpdate("INSERT INTO [dbo].[Answer] VALUES (?, ?, ?)",
+                                        answer.getAnswerContent(),
+                                        newQuestionId,
+                                        answer.isIsCorrect());
+                            }
+                        }
+                    }
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newCourseID;
+    }
+    
+    public void createSaveChangesCourse(int courseId) {
+        int newCourseID = 0;
+        try {
+            Course course = getAllCourseInformation(courseId);
+            SectionDAO sd = new SectionDAO();
+            LessonDAO ld = new LessonDAO();
+            DocsDAO dd = new DocsDAO();
+            VideoDAO vd = new VideoDAO();
+            QuizDAO qd = new QuizDAO();
+            QuestionDAO qtd = new QuestionDAO();
+            AnswerDAO ad = new AnswerDAO();
 
-            int newCourseID = rs.getInt(1) + 1;
+            ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
+
+            ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')\nINSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                    course.getCourseName(),
+                    course.getDateCreate(),
+                    course.getAuthor().getUserId(),
+                    course.getCategory(),
+                    course.getNumberEnrolled(),
+                    course.getCoursePrice(),
+                    course.getCourseImage(),
+                    "Enabled",
+                    course.getDescription(),
+                    course.getObjectives(),
+                    course.getDifficulty());
+            
+            if (!rs.next()) return;
+            
+            newCourseID = rs.getInt(1) + 1;
 
             for (Section section : sectionlist) {
                 rs = executeQuery("SELECT IDENT_CURRENT('Section')\nINSERT INTO [dbo].[Section] VALUES (?, ?, ?);",
@@ -386,6 +507,48 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+     public UserCourse getUserCourseInformation(int courseId, int userId) {
+        try ( ResultSet rs = executeQuery("SELECT * FROM [User_Course] WHERE CourseID = ? AND UserID = ?", courseId, userId)) {
+
+            if (rs.next()) {
+                int userID = rs.getInt("UserID");
+                int courseID = rs.getInt("CourseID") ;
+                boolean isStudied = rs.getBoolean("isStudied");
+                int courseRating = rs.getInt("CourseRating") ;
+                String CourseFeedback = rs.getNString("CourseFeedback");
+                double Progress = rs.getDouble("Progress") ;
+                Date Paydate = rs.getDate("Paydate");
+                boolean isFavourite =  rs.getBoolean("isFavourite");
+
+                return new UserCourse(userID, courseID, isStudied, courseRating, CourseFeedback, Progress, Paydate, isFavourite);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    
+    public void insertNewObjective(String objective, int courseId){
+        try {
+            executeUpdate("UPDATE [dbo].[Course] SET [Objectives] = CONCAT([Objectives], ?) WHERE [CourseID] = ?", "/" + objective, courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateSaveChangesCourse(int courseId, String courseName, String description, String image, String category, double price){
+        try {
+            executeUpdate("UPDATE [dbo].[Course] SET [CourseName] = ?,"
+                    + " [Description] = ?,"
+                    + " [CourseImage] = ?,"
+                    + " [Category] = ?,"
+                    + " [CoursePrice] = ? WHERE [CourseID] = ?", courseName, description, image, category, price, courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
