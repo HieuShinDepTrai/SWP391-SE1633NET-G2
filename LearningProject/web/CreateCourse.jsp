@@ -164,7 +164,7 @@
                                                  height="36px" />
                                         </div>
                                         <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="" id="thumbnail" onchange="UploadThumbnail(this)"/>
+                                            <input type="file" name="" id="thumbnail" onchange="upload(this)" accept="image/*"/>
                                             <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
                                         </div>
                                     </div>
