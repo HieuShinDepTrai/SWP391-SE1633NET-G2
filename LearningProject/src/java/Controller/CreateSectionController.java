@@ -6,6 +6,7 @@ package Controller;
 
 import Model.Course;
 import Model.Section;
+import Model.User;
 import dal.CourseDAO;
 import dal.SectionDAO;
 import java.io.IOException;
@@ -62,20 +63,27 @@ public class CreateSectionController extends HttpServlet {
             throws ServletException, IOException {
         SectionDAO sdao = new SectionDAO();
         CourseDAO cdao = new CourseDAO();
-        int courseId = 0;
-        if (request.getParameter("courseId") != null) {
-            courseId = Integer.parseInt(request.getParameter("courseId"));
-            Course c = cdao.getCourseInformation(courseId);
-            ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseId);
+        if(request.getSession().getAttribute("user") != null) {
+            User user = (User) request.getSession().getAttribute("user");
+            if(user.getRole().equals("Mentor")) {
+                int courseId = 0;
+                if (request.getParameter("courseId") != null) {
+                    courseId = Integer.parseInt(request.getParameter("courseId"));
+                    Course c = cdao.getCourseInformation(courseId);
+                    ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseId);
 
-            request.setAttribute("listSection", listSection);
-            request.setAttribute("courseID", courseId);
-            request.setAttribute("course", c);
+                    request.setAttribute("listSection", listSection);
+                    request.setAttribute("courseID", courseId);
+                    request.setAttribute("course", c);
 
-            request.getRequestDispatcher("CreateSection.jsp").forward(request, response);
-            return;
+                    request.getRequestDispatcher("CreateSection.jsp").forward(request, response);
+                }
+            } else {
+                response.sendRedirect("home");
+            }
+        } else {
+            response.sendRedirect("home");
         }
-        response.sendRedirect("CreateSection.jsp");
     }
 
     /**

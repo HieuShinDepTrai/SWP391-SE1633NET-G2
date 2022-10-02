@@ -70,7 +70,7 @@
                     <c:if test="${user!=null}">
                         <div class="avatar" onclick="event.stopPropagation()">
                             <c:if test="${user.getAvatar() != null}">
-                                <img src="${user.getAvatar()}" alt="">                                
+                                <img src="${user.getAvatar()}" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">                                
                             </c:if>
                             <c:if test="${user.getAvatar() == null}">
                                 <img src="assets/img/user.png">
