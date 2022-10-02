@@ -47,7 +47,7 @@ public class CourseDAO extends DBContext {
                     + "[C].[Difficulty],"
                     + "[U].[FirstName] \n"
                     + "FROM [Course] C INNER JOIN [User] U\n"
-                    + "ON [C].[AuthorID] = [U].[UserID]";
+                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled'";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
