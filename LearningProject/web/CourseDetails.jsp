@@ -157,6 +157,8 @@
                             </div>
                             <!-- Course Agenda -->
                         </div>
+                        <c:set var="sectionID" value="${sectionList.get(0).getCourseId()}"/>
+                        <c:set var="lessonID" value="${lessonList.get(0).getLessonId()}"/>
                         <div class="course-details-right">
                             <div class="course-details-right-content">
                                 <div class="course-details-thumbnail">
@@ -175,7 +177,7 @@
                                         <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
                                     </c:if>
                                     <c:if test="${UserCourse != null }">
-                                        <a href="WatchCourse" class="enroll-button my-1">Go To Course</a>
+                                        <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${sectionID}&lessonID=${lessonID}" class="enroll-button my-1">Go To Course</a>
                                     </c:if>
                                         </form>
                                 
