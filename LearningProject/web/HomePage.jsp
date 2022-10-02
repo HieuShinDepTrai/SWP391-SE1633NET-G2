@@ -31,7 +31,8 @@
     </head>
 
     <body>
-        <%@include file="header.jsp"%>
+    <%@include file="header.jsp"%>
+
         <div id="main" >            
             <div id="content" >
                 <!-- Begin: Side Bar -->
@@ -157,7 +158,7 @@
                                                     </form>
                                                 </c:if>
                                                 <c:if test="${course.getCoursePrice() != 0}">
-                                                    <div class="course-price">${cosurse.getCoursePrice()} đ</div>
+                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
                                                     <a href="#">Buy now</a>
                                                 </c:if>
 
