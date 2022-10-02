@@ -36,8 +36,9 @@ public class SectionDAO extends DBContext {
             executeUpdate("UPDATE [dbo].[Section]\n"
                     + "   SET [SectionName] = ?\n"
                     + " WHERE [SectionID] = ?", 
-                    s.getSectionName(), s.getSectionName());
+                    s.getSectionName(), s.getSectionId());
         } catch (Exception e) {
+            System.out.println("Update Section Name: ");
             e.printStackTrace();
         }
     }

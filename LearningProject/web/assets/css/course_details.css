@@ -164,6 +164,7 @@ section {
     justify-content: space-between;
     align-items: center;
     min-width: 360px;
+    gap: 6px;
 }
 
 .course-agenda-right p {
