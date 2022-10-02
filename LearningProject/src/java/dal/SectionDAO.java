@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class SectionDAO extends DBContext {
 
-    public void disableSection(int courseId) {
+    public void disableSection(int sectionId) {
         try {
-            executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
+            executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = ? WHERE [SectionID] = ? ", 1, sectionId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,4 +49,25 @@ public class SectionDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+    public Section getAllSectionInformation(int sectionId){
+        try {
+            ResultSet rs = executeQuery("SELECT [SectionName], [CourseID], [isDisable] FROM [dbo].[Section] WHERE [SectionID] = ?", sectionId);
+            
+            if(rs.next()){
+                return new Section(sectionId, rs.getInt("CourseID"), rs.getNString("SectionName"), rs.getBoolean("isDisable"));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public void editSectionName(int sectionId, String sectionName){
+        try {
+            executeUpdate("UPDATE [dbo].[Section] SET [SectionName] = ? WHERE [SectionID] = ?", sectionName, sectionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

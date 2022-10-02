@@ -32,9 +32,9 @@ public class LessonDAO extends DBContext {
         }
     }
 
-    public void disableLesson(int sectionId) {
+    public void disableLesson(int lessonId) {
         try {
-            executeUpdate("UPDATE [dbo].[Lesson] SET [isDisable] = 0 WHERE [SectionID] = ? ", sectionId);
+            executeUpdate("UPDATE [dbo].[Lesson] SET [isDisable] = 1 WHERE [LessonID] = ? ", lessonId);
         } catch (Exception e) {
             e.printStackTrace();
         }

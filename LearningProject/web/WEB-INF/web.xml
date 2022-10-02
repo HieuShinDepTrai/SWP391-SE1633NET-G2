@@ -12,6 +12,10 @@
         <servlet-name>CreateSectionController</servlet-name>
         <servlet-class>Controller.CreateSectionController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateLessonController</servlet-name>
+        <servlet-class>Controller.UpdateLessonController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -56,7 +60,7 @@
         <servlet-name>MentorDashboardController</servlet-name>
         <servlet-class>Controller.MentorDashboardController</servlet-class>
     </servlet>
-    <servlet>    
+    <servlet>
         <servlet-name>CourseWatchController</servlet-name>
         <servlet-class>Controller.CourseWatchController</servlet-class>
     </servlet>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>CreateSectionController</servlet-name>
         <url-pattern>/CreateSection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLessonController</servlet-name>
+        <url-pattern>/updatelesson</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
