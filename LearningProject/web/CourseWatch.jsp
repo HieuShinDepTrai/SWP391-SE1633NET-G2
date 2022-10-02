@@ -31,27 +31,47 @@
             <section>
                 <div class="course-watch-left">
                     <div class="course-watch-left-content">
-                        <div class="lesson-video">
-                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/_Pdbne-_css" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="lesson-information">
-                            <div class="lesson-description">
-                                <h3 class="lesson-title">
-                                    Lesson 1 : Introduce HTML 
-                                </h3>
-                                <div class="lesson-date">
-                                    25/12/2019
+                        <c:if test="${lesson.getType() == 'Video'}">
+                            <div class="lesson-video">
+                                <iframe width="100%" height="100%" src="${lesson.getVideoLink()}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-information">
+                                <div class="lesson-description">
+                                    <h3 class="lesson-title">
+                                        ${lesson.getLessonName()}
+                                    </h3>
+                                </div>
+                                <div class="lesson-comment" style="cursor: pointer;">
+                                    Comment
                                 </div>
                             </div>
-                            <div class="lesson-comment" style="cursor: pointer;">
-                                Comment
+                            <!-- Mark As Done -->
+                            <div class="d-flex justify-content-center">
+                                <div class="btn btn-primary">Mark As Done</div>
                             </div>
-                        </div>
-                        <!-- Mark As Done -->
-                        <div class="d-flex justify-content-center">
-                            <div class="btn btn-primary">Mark As Done</div>
-                        </div>
-                        <!-- Mark As Done -->
+                            <!-- Mark As Done -->
+                        </c:if>
+                        <c:if test="${lesson.getType() == 'Docs'}">
+                            <div class="lesson-information" style="display: block;">
+                                <div class="lesson-description">
+                                    <h1 class="lesson-title fw-bold" style="font-size: 48px">
+                                        ${lesson.getLessonName()}
+                                    </h1><br>
+                                </div>
+                                ${lesson.getContent()}
+                            </div>
+                            <div class="d-flex justify-content-between p-5">
+                                <!-- Mark As Done -->
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn btn-primary">Mark As Done</div>
+                                </div>
+                                <!-- Mark As Done -->
+                                <div class="lesson-comment" style="cursor: pointer; width: fit-content">
+                                    Comment
+                                </div>
+                            </div>
+
+                        </c:if>
                     </div>
                 </div>
                 <div class="course-watch-right">

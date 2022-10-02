@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.Course;
+import Model.Docs;
 import Model.Lesson;
 import Model.Section;
 import Model.Comment;
@@ -78,7 +79,7 @@ public class CourseWatchController extends HttpServlet {
         if (request.getParameter("courseID") != null) {
             courseID = Integer.parseInt(request.getParameter("courseID"));
         }
-            if (request.getParameter("sectionID") != null) {
+        if (request.getParameter("sectionID") != null) {
             sectionID = Integer.parseInt(request.getParameter("sectionID"));
         }
         if (request.getParameter("lessonID") != null) {
@@ -98,7 +99,11 @@ public class CourseWatchController extends HttpServlet {
                 listLesson.add(lesson);
             }
         }
+
+        Lesson lesson = ldao.getLessonbyLessonID(lessonID);
+
         // Send video list to jsp
+        request.setAttribute("lesson", lesson);
         request.setAttribute("course", c);
         request.setAttribute("listSection", listSection);
         request.setAttribute("listLesson", listLesson);
