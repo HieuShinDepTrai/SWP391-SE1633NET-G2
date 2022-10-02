@@ -33,12 +33,12 @@
                     <div class="course-watch-left-content">
                             <c:if test="${lesson.getType() == 'Video'}">
                                 <div class="lesson-video">
-                                    <iframe width="100%" height="100%" src="${video.getVideoLink()}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe width="100%" height="100%" src="${lesson.getVideoLink()}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <div class="lesson-information">
                                     <div class="lesson-description">
                                         <h3 class="lesson-title">
-                                            ${video.getVideoName()}
+                                            ${lesson.getLessonName()}
                                         </h3>
                                     </div>
                                     <div class="lesson-comment" style="cursor: pointer;">

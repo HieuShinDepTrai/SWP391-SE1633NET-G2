@@ -64,6 +64,7 @@ public class CourseDAO extends DBContext {
                 course.setObjectives(rs.getNString("Objectives"));
                 course.setDifficulty(rs.getString("Difficulty"));
                 user.setFirstName(rs.getString("FirstName"));
+                course.setCourseImage("CourseImage");
                 course.setAuthor(user);
 
                 courses.add(course);

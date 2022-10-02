@@ -6,7 +6,7 @@
 async function doSubmit() {
     // get video id from video-link
     try {
-        const videoLink = document.querySelector('input[name="video_url"]').value;
+        const videoLink = document.querySelector('input[name="url"]').value;
         const videoId = videoLink.split('watch?v=')[1];
 
         const API_KEY = "AIzaSyBBcUOX-BytFmB96iWqMBIsRLzTgP0hhWQ"

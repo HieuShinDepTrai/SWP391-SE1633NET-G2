@@ -61,21 +61,21 @@
                             <%
                                 int count = 1;
                             %>
-                        <c:forEach items="${lessons}" var="lesson">
-                            <tr>
-                                <td><%=count%></td>
-                                <td>${lesson.getLessonName()}</td>
-                                <td>${lesson.getType()}</td>
-                                <td>${lesson.getTime()}</td>
-                                <td>
-                                    <button class="btn btn-primary">Delete</button>
-                                    <button class="btn btn-primary">Edit</button>
-                                </td>
-                            </tr>
-                            <% 
-                                count++; 
-                            %>
-                        </c:forEach>
+                            <c:forEach items="${lessons}" var="lesson">
+                                <tr>
+                                    <td><%=count%></td>
+                                    <td>${lesson.getLessonName()}</td>
+                                    <td>${lesson.getType()}</td>
+                                    <td>${lesson.getTime()}</td>
+                                    <td>
+                                        <button class="btn btn-primary">Delete</button>
+                                        <button class="btn btn-primary">Edit</button>
+                                    </td>
+                                </tr>
+                                <% 
+                                    count++; 
+                                %>
+                            </c:forEach>
 
                         </tbody>
                     </table>
@@ -177,6 +177,7 @@
                                             <div class="col-8">
                                                 <div class="video-preview">
                                                     <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>                                        
+                                                    <input name="video_url" type="hidden" value="" id="video-URL">
                                                     <i class="fa-brands fa-youtube icon-youtube"></i>
                                                 </div>
                                             </div>
@@ -187,7 +188,7 @@
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Video URL</label>
-                                                    <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                    <input name="url" type="text" class="form-control" id="video-url" oninput="video_preview()">
                                                 </div>
                                                 <input type="text" value="Video" class="d-none" name="type">
                                                 <input type="text" name="sectionID" value="${sectionID}" class="d-none">

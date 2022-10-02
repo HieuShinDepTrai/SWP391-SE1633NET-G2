@@ -7,6 +7,7 @@ function video_preview() {
     $('#url-preview').css('display', 'block');
     console.log($('#url-preview').attr('src'));
     $('.icon-youtube').css('display', 'none');
+    $('#video-URL').val($('#url-preview').attr('src'));
 }
 
 function youtube_parser(url){
