@@ -70,6 +70,8 @@ public class LessonDAO extends DBContext {
                     + "      ,[isDisable]\n"
                     + "      ,[types]\n"
                     + "      ,[Time]\n"
+                    + "      ,[VideoLink]\n"
+                    + "      ,[Content]\n"
                     + "  FROM [Lesson] FULL OUTER JOIN [Video]\n"
                     + "  ON [Lesson].[LessonID] = [Video].[LessonID]\n"
                     + "  FULL OUTER JOIN [Docs]\n"
@@ -77,8 +79,9 @@ public class LessonDAO extends DBContext {
                     + "  WHERE [Lesson].[LessonID] = ?", lessonid);
             if (rs.next()) {
                 return new Lesson(lessonid, rs.getInt("SectionID"),
-                        rs.getNString("LessonName"), false,
-                        rs.getString("types"), rs.getInt("Time"));
+                        rs.getNString("LessonName"),
+                        false, rs.getString("types"), rs.getInt("Time"),
+                        rs.getString("VideoLink"), rs.getString("Content"));               
             }
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
