@@ -4,12 +4,9 @@
     Author     : NamDepTraiVL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">    
-    <head>
-        <link rel="stylesheet" href="assets/css/header.css">
-    </head>
+  
         <header>
             <div class="header-content">
                 <div class="logo">
@@ -111,5 +108,5 @@
                 </div>
             </div>
         </header>    
-</html>
+
 

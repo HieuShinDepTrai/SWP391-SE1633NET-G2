@@ -9,7 +9,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,7 +31,8 @@
     </head>
 
     <body>
-        <div id="main">           
+        <div id="main">
+            <%@include file="header.jsp"%>
             <section>
                 <!-- Begin: Side Bar -->
                 <div id="side-bar-container">
@@ -168,17 +169,17 @@
                                 <c:if test="${course.getCoursePrice() != 0}">
                                     <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
                                 </c:if>   
-                                    
-                                    <form action="enroll" method="GET">
+
+                                <form action="enroll" method="GET">
                                     <c:if test="${UserCourse == null }">
                                         <input name="id" type="hidden" value="<%= request.getParameter("id") %>"/>
                                         <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
                                     </c:if>
                                     <c:if test="${UserCourse != null }">
-                                        <a href="WatchCourse" class="enroll-button my-1">Go To Course</a>
+                                        <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${sectionID}&lessonID=${lessonID}" class="enroll-button my-1">Go To Course</a>
                                     </c:if>
-                                        </form>
-                                
+                                </form>
+
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>
