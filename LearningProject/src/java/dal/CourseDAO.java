@@ -33,9 +33,9 @@ public class CourseDAO extends DBContext {
         try {
             String sql = "SELECT \n"
                     + "[C].[CourseName], [C].[NumberEnrolled],[C].[CourseID],\n"
-                    + "[C].[CoursePrice], [U].[FirstName] \n"
+                    + "[C].[CoursePrice], [C].[CourseImage], [U].[FirstName] \n"
                     + "FROM [Course] C INNER JOIN [User] U\n"
-                    + "ON [C].[AuthorID] = [U].[UserID]";
+                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled'";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -45,6 +45,7 @@ public class CourseDAO extends DBContext {
                 course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
                 course.setCoursePrice(rs.getDouble("CoursePrice"));
                 course.setCourseID(rs.getInt("CourseID"));
+                course.setCourseImage(rs.getString("CourseImage"));
                 user.setFirstName(rs.getString("FirstName"));
                 course.setAuthor(user);
                 
