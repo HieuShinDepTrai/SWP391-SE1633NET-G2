@@ -5,6 +5,8 @@
 
 package Controller;
 
+import Model.UserCourse;
+import dal.CourseDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,21 +24,48 @@ public class EnrollController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.sendRedirect("home");
+        
+        //Enroll in Course Detail
+        CourseDAO cDAO = new CourseDAO();
+         UserDAO u = new UserDAO();
+         HttpSession ses = request.getSession();
+        //enroll in course detail
+        String op = request.getParameter("op");
+        int CourseID = Integer.parseInt(request.getParameter("id"));
+        
+       if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+            int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
+            u.insertIntoUserCourse(UserID, CourseID);    
+            request.getRequestDispatcher("CourseDetails").forward(request, response);
+       }    else {
+           response.sendRedirect("login");
+       }
+        
+        
+        
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
+        //Enroll in home page
         UserDAO u = new UserDAO();
         HttpSession ses = request.getSession();
-        int CourseID = Integer.parseInt(request.getParameter("courseID"));
+        int CourseID = Integer.parseInt(request.getParameter("courseID"));        
+        String op = request.getParameter("op");
         
-        int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-               
+        if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+            int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         
-        u.insertIntoUserCourse(UserID, CourseID);
-        response.sendRedirect("home");                         
+            u.insertIntoUserCourse(UserID, CourseID);
+            response.sendRedirect("home");
+            
+        } else {
+            response.sendRedirect("login");
+        }
+        
+                                
     }
 
 

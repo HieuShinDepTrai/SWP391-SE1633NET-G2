@@ -62,7 +62,6 @@ public class CreateSectionController extends HttpServlet {
             throws ServletException, IOException {
         SectionDAO sdao = new SectionDAO();
         CourseDAO cdao = new CourseDAO();
-
         int courseId = 0;
         if (request.getParameter("courseId") != null) {
             courseId = Integer.parseInt(request.getParameter("courseId"));
@@ -91,10 +90,43 @@ public class CreateSectionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SectionDAO sdao = new SectionDAO();
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        String sectionName = request.getParameter("SectionName");
-        sdao.addSection(new Section(0, courseId, sectionName, false));
-        response.sendRedirect("CreateSection?courseId=" + courseId);
+        int courseId = 0;
+        
+        // Check if course id is not null
+        if (request.getParameter("courseId") != null) {
+            courseId = Integer.parseInt(request.getParameter("courseId"));
+            
+            // If request of add section != null, then add section to db
+            if(request.getParameter("addSection") != null) {
+                String sectionName = request.getParameter("SectionName");
+                sdao.addSection(new Section(0, courseId, sectionName, false));
+            }
+            
+            // If request of delete != null, then delete section to db
+            if (request.getParameter("delete") != null) {
+                int sectionID = 0;
+                if (request.getParameter("sectionID") != null) {
+                    sectionID = Integer.parseInt(request.getParameter("sectionID"));
+                    sdao.deleteSection(sectionID);
+                }
+            }
+            
+            // If request of edit != null, then edit
+            if(request.getParameter("edit") != null) {
+                int sectionID = 0;
+                String sectionName = "";
+                if(request.getParameter("SectionNameModal") != null && request.getParameter("SectionIDModal") != null) {
+                    sectionID = Integer.parseInt(request.getParameter("SectionIDModal"));
+                    sectionName = request.getParameter("SectionNameModal");
+                    sdao.updateSectionName(new Section(sectionID, courseId, sectionName, false));
+                }
+            }
+            
+            // Send to get method with CourseID to load data from db
+            response.sendRedirect("CreateSection?courseId=" + courseId);
+        } else {
+            response.getWriter().print("<h1>Course ID is null</h1>");
+        }
     }
 
     /**

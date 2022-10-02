@@ -76,9 +76,12 @@ public class HomeController extends HttpServlet {
                 courseIDs.add(course.getCourseID());
             }
 
-            request.setAttribute("courseIDs", courseIDs);
-
+            // if (session != null) {
             User user = (User) session.getAttribute("user");
+            String avatar = user.getAvatar();
+            request.setAttribute("avatar", avatar);
+            //}                        
+            request.setAttribute("courseIDs", courseIDs);            
             UserDAO userDAO = new UserDAO();
             user = userDAO.getAllUserInformation(user.getUserName());
             request.setAttribute("user", user);

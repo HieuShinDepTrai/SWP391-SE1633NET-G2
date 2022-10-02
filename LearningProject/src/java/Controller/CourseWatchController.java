@@ -8,12 +8,11 @@ import Model.Course;
 import Model.Docs;
 import Model.Lesson;
 import Model.Section;
-import Model.Video;
+import Model.Comment;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
-import dal.VideoDAO;
-import dal.DocsDAO;
+import dal.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -65,6 +64,21 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+       
+        CommentDAO cmtDao = new CommentDAO();
+              
+        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+
+
+
+        
+        request.setAttribute("commentList", commentList);
+        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
             throws ServletException, IOException {
         // Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
@@ -141,7 +155,7 @@ public class CourseWatchController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 

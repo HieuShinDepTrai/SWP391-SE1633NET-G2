@@ -7,6 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,92 +27,7 @@
 
     <body>
 
-        <div id="main">
-            <header>
-                <div class="header-content">
-                    <div class="logo">
-                        <img src="assets/img/Logo-FPT.webp" alt="" />
-                        <div class="header-title">Học Lập Trình FPT</div>
-                    </div>
-                    <div class="header-search d-none">
-                        <div class="icon-search">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video..." />
-                    </div>
-                    <div class="header-profile">
-                        <div class="header-mycourse">Khóa học của tôi</div>
-                        <div class="header-notification" onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-bell"></i>
-                            <div class="notification-cotainer" onclick="event.stopPropagation()">
-                                <div class="notification-header">
-                                    <h3>Thông báo</h3>
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </div>
-                                <div class="notification-list">
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="avatar" onclick="event.stopPropagation()">
-                            <img src="assets/img/user.png" alt="" />
-                            <div class="account-menu">
-                                <div class="menu-content">
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-user"></i>
-                                        <a href="" class="menu-title">Trang cá nhân</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <a href="" class="menu-title">Cài đặt</a>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="menu-element">
-                                        Account Balance:
-                                        <a href="" class="menu-title">200.000đ</a>
-                                    </div>
-                                    <div class="menu-element menu-logout">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        <a href="" class="menu-title">Đăng xuất</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+        <div id="main">            
             <section>
                 <div class="course-watch-left">
                     <div class="course-watch-left-content">
@@ -229,134 +145,88 @@
                     </div>
 
                     <!-- Begin: Course post comment -->
-                    <div class="course-post-comment-container">
-                        <div class="course-comment-postcomment d-flex justify-content-between">
-                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                            border: none;
-                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                        </div>
-                        <div class="course-postcomment-action" style="float: right;">
-                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-                            <button class="submit-comment">Comment</button>
-                        </div>
-                    </div>
+                    <form action="postvideocomment" method="GET">
+                        <div class="course-post-comment-container">
+                            <div class="course-comment-postcomment d-flex justify-content-between">
+                                <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                border: none;
+                                border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                            </div>
+                            <div class="course-postcomment-action" style="float: right;">
+                                <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
 
-                    <!-- End: Course post comment -->
+                                <input class="submit-comment" name="op" type="submit" value="Comment">
 
-                    <!-- Comment List -->
-                    <div class="course-comment-list d-flex flex-column w-100 gap-4">
-                        <!-- Begin: Comment -->
-                        <div class="comment d-flex align-items-start">
-                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                            <div class="comment-content">
-                                <div class="comment-user">
-                                    <div class="user-name">
-                                        dungssj12
-                                    </div>
-                                    <div class="user-comment-content">
-                                        HelloKitty xin chao toi la helasdkfjl aslkdfjaslk sdcxznzv,n sadfwqfadslfkasjdklfj  asldfjlkasdj
-                                    </div>
-                                </div>
-                                <div class="comment-action">
-                                    <div class="comment-action-content">Like</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-action-content">Report</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                </div>
-
-                                <!-- Reply Comment -->
-                                <div class="reply-comment d-none">
-                                    <div class="course-post-comment-container">
-                                        <div class="course-comment-postcomment d-flex justify-content-between">
-                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                            border: none;
-                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                                        </div>
-                                        <div class="course-postcomment-action" style="float: right;">
-                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-                                            <button class="submit-comment">Reply</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- Reply Comment -->
-
-
-                                <!-- Show Reply Comment -->
-                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
-                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
-                                    <div class="show-reply-comment-content">
-
-                                    </div>
-                                </div>
-                                <!-- Show Reply Comment -->
                             </div>
                         </div>
-                        <!-- End: Comment -->
+
+                        <!-- End: Course post comment -->
+
+                        <!-- Comment List -->
+                        <div class="course-comment-list d-flex flex-column w-100 gap-4">
+                            <!-- Begin: Comment -->
+                            <c:forEach items="${requestScope.commentList}" var="comment">
+                                <c:if test="${comment.getParentId() == 0}">
+                                    <div class="comment d-flex align-items-start">
+                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-user">
+                                                <div class="user-name">
+                                                    dungssj12
+                                                </div>
+                                                <div class="user-comment-content">
+                                                    ${comment.getCommentContent()}
+                                                </div>
+                                            </div>
+                                            <div class="comment-action">
+                                                <div class="comment-action-content">Like</div>
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content">Report</div>
+                                                <div class="dot">.</div>
+                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                            </div>
+
+                                            <!-- Reply Comment -->
+
+                                            <div class="reply-comment d-none">
+                                                <div class="course-post-comment-container">
+                                                    <div class="course-comment-postcomment d-flex justify-content-between">
+                                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                        <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                        border: none;
+                                                        border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                        <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                    </div>
+                                                    <div class="course-postcomment-action" style="float: right;">
+                                                        <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+
+                                                        <input type="submit" name="op" value="Reply" class="submit-comment">                                     
+                                                        <input type="hidden" name="pId" value="${comment.getCommentId()}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Reply Comment -->
 
 
-                        <!-- Begin: Comment -->
-                        <div class="comment d-flex align-items-start">
-                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                            <div class="comment-content">
-                                <div class="comment-user">
-                                    <div class="user-name">
-                                        dungssj12
-                                    </div>
-                                    <div class="user-comment-content">
-                                        HelloKitty xin chao toi la helasdkfjl aslkdfjaslk sdcxznzv,n sadfwqfadslfkasjdklfj  asldfjlkasdj
-                                    </div>
-                                </div>
-                                <div class="comment-action">
-                                    <div class="comment-action-content">Like</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-action-content">Report</div>
-                                    <div class="dot">.</div>
-                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                </div>
+                                            <!-- Show Reply Comment -->
+                                            <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
+                                                <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                                <div class="show-reply-comment-content">
 
-                                <!-- Reply Comment -->
-                                <div class="reply-comment d-none">
-                                    <div class="course-post-comment-container">
-                                        <div class="course-comment-postcomment d-flex justify-content-between">
-                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                            border: none;
-                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                            <textarea name="" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                </div>
+                                            </div>
+                                            <!-- Show Reply Comment -->
                                         </div>
-                                        <div class="course-postcomment-action" style="float: right;">
-                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-                                            <button class="submit-comment">Reply</button>
-                                        </div>
                                     </div>
-
-                                </div>
-                                <!-- Reply Comment -->
-
-
-                                <!-- Show Reply Comment -->
-                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
-                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
-                                    <div class="show-reply-comment-content">
-
-                                    </div>
-                                </div>
-                                <!-- Show Reply Comment -->
-                            </div>
+                                </c:if>
+                            </c:forEach>
+                            <!-- End: Comment -->
                         </div>
-                        <!-- End: Comment -->
-
-                    </div>
+                    </form>
                     <!-- Comment List -->
                 </div>
             </div>
