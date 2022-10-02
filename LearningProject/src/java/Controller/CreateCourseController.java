@@ -65,8 +65,16 @@ public class CreateCourseController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         // Check if mentor
-        
-        response.sendRedirect("CreateCourse.jsp");
+        if(request.getSession().getAttribute("user") != null) {
+            User user= (User) request.getSession().getAttribute("user");
+            if(user.getRole().equals("Mentor")) {
+                response.sendRedirect("CreateCourse.jsp");
+            } else {
+                response.sendRedirect("home");
+            }
+        } else {
+            response.sendRedirect("home");
+        }
     } 
 
     /** 
@@ -79,35 +87,39 @@ public class CreateCourseController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        // Check if mentor then accept
         
         CourseDAO cdao = new CourseDAO();
-        
-//        User author = (User) request.getSession().getAttribute("user");
-        User author = new User();
-        author.setUserId(4);
-        String courseTitle = request.getParameter("CourseTitle");
-        String courseDes = request.getParameter("CourseDes");
-        String[] courseObjectives = request.getParameterValues("Objectives");
-        String objective = "";
-        for(String s : courseObjectives) {
-            objective += s + "/";
+        // Check if mentor then accept
+        if(request.getSession().getAttribute("user") != null) {
+            User author = (User) request.getSession().getAttribute("user");
+            if(author.getRole().equals("Mentor")) {
+                String courseTitle = request.getParameter("CourseTitle");
+                String courseDes = request.getParameter("CourseDes");
+                String[] courseObjectives = request.getParameterValues("Objectives");
+                String objective = "";
+                for(String s : courseObjectives) {
+                    objective += s + "/";
+                }
+                String image = request.getParameter("imageBase64");
+                Date date = new Date();
+                Timestamp createdDate = new Timestamp(date.getTime());
+                String category = request.getParameter("category");
+                int coursePrice = Integer.parseInt(request.getParameter("CoursePrice"));
+                int numberEnroll = 0;
+                String status = "Pending";
+                String difficulty = request.getParameter("difficulty");
+                double courseProgress = 0;
+                int newCourseID = cdao.getNewCourseID() + 1;
+                cdao.addNewCourse(new Course(0, courseTitle, createdDate, category, 
+                        numberEnroll, coursePrice, image, status, author, courseProgress, 
+                        courseDes, objective, difficulty));
+                response.sendRedirect("CreateSection?courseId=" + newCourseID);
+            } else {
+                response.sendRedirect("home");
+            }
+        } else {
+            response.sendRedirect("home");
         }
-        String image = request.getParameter("imageBase64");
-        Date date = new Date();
-        Timestamp createdDate = new Timestamp(date.getTime());
-        String category = request.getParameter("category");
-        int coursePrice = Integer.parseInt(request.getParameter("CoursePrice"));
-        int numberEnroll = 0;
-        String status = "Pending";
-        String difficulty = request.getParameter("difficulty");
-        double courseProgress = 0;
-        int newCourseID = cdao.getNewCourseID() + 1;
-        cdao.addNewCourse(new Course(0, courseTitle, createdDate, category, 
-                numberEnroll, coursePrice, image, status, author, courseProgress, 
-                courseDes, objective, difficulty));
-//        request.getRequestDispatcher("CreateSection?courseId=" + newCourseID);
-        response.sendRedirect("CreateSection?courseId=" + newCourseID);
     }
 
     /** 
