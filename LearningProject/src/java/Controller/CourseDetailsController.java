@@ -9,6 +9,7 @@ import Model.Feedback;
 import Model.Lesson;
 import Model.Section;
 import Model.User;
+import Model.UserCourse;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
@@ -51,14 +52,24 @@ public class CourseDetailsController extends HttpServlet {
         CourseDAO cdao = new CourseDAO();
         SectionDAO sectionDao = new SectionDAO();
         LessonDAO lessonDAO = new LessonDAO();
-
+        CourseDAO cDAO = new CourseDAO();
+        UserDAO u = new UserDAO();
+                
+                    
+        
         int id = Integer.parseInt(request.getParameter("id"));
 
         HttpSession session = request.getSession();
         User user = new User();
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
+            
         }
+        
+        //get user id and course id
+        int UserID = u.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
+        int CourseID = Integer.parseInt(request.getParameter("id"));
+        UserCourse UserCourse = cDAO.getUserCourseInformation(CourseID, UserID);
 
         Course course = cdao.getCourseInformation(id);
         // Add course objectives
@@ -76,13 +87,16 @@ public class CourseDetailsController extends HttpServlet {
                 lessonList.add(lesson);
             }
         }
+        
+        //set UserCourse that the user enroll or unenroll
+        request.setAttribute("UserCourse", UserCourse);
         request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), id));
         request.setAttribute("course", course);
         request.setAttribute("sectionList", sectionList);
         request.setAttribute("lessonList", lessonList);
         int time = cdao.getCourseTime(course.getCourseID());
-        String totalTime = (time / 1000) / 60 / 60 + " hours " + ((time / 1000) / 60) % 60+ " minutes " + (time / 1000) % 60 + " seconds ";
+        String totalTime = (time / 1000) / 60 / 60 % 24 + " hours " + (time / 1000) / 60 % 60 + " minutes " + (time / 1000) % 60 + " seconds ";
         request.setAttribute("totalTime", totalTime);
         request.getRequestDispatcher("CourseDetails.jsp").forward(request, response);
     }

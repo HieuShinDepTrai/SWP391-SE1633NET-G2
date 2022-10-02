@@ -270,7 +270,17 @@
                                 <c:if test="${course.getCoursePrice() != 0}">
                                     <div class="course-details-price my-2">${course.getCoursePrice()}</div> 
                                 </c:if>   
-                                <a href="#" class="enroll-button my-1">Enroll</a>
+                                    
+                                    <form action="enroll" method="GET">
+                                    <c:if test="${UserCourse == null }">
+                                        <input name="id" type="hidden" value="<%= request.getParameter("id") %>"/>
+                                        <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
+                                    </c:if>
+                                    <c:if test="${UserCourse != null }">
+                                        <a href="WatchCourse" class="enroll-button my-1">Go To Course</a>
+                                    </c:if>
+                                        </form>
+                                
                                 <div class="course-details-description">
                                     <div class="description">
                                         <i class="fa-solid fa-signal"></i>
@@ -342,48 +352,7 @@
                                     </div>
                                 </div>
                             </c:forEach>
-                            <!-- End: Feedback -->                           
-
-                            <!-- Begin: Feedback -->
-                            <div class="row col-8 mb-4">
-                                <div class="col-1">
-                                    <img
-                                        src="assets/img/f8-logo.png"
-                                        alt=""
-                                        class="img-fluid rounded-circle"
-                                        />
-                                </div>
-                                <div class="col-11">
-                                    <div
-                                        class="feed-back-content rounded-3 shadow-sm px-4 py-3"
-                                        style="background-color: #fff"
-                                        >
-                                        <h6 class="fw-bold mb-2">dungssj12</h6>
-                                        <div class="feed-back-star mb-2">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            (5 star)
-                                        </div>
-                                        <p class="fb-content">
-                                            Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's
-                                            standard dummy text ever since the 1500s, when an unknown
-                                            printer took a galley of type and scrambled it to make a
-                                            type specimen book. It has survived not only five
-                                            centuries, but also the leap into electronic typesetting,
-                                            remaining essentially unchanged. It was popularised in the
-                                            1960s with the release of Letraset sheets containing Lorem
-                                            Ipsum passages, and more recently with desktop publishing
-                                            software like Aldus PageMaker including versions of Lorem
-                                            Ipsum.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End: Feedback -->
+                            <!-- End: Feedback -->                                                       
                         </div>
                     </div>
                     <!-- End: Course Feedback -->
