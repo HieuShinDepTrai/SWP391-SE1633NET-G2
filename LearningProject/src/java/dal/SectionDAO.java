@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class SectionDAO extends DBContext {
-    
+
     public void disableSection(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Section] SET [isDisable] = 0 WHERE [CourseID] = ? ", courseId);
@@ -21,7 +21,7 @@ public class SectionDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public void deleteSection(int sectionId) {
         try {
             execute("DELETE FROM [dbo].[Section]\n"
@@ -30,7 +30,18 @@ public class SectionDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
+    public void updateSectionName(Section s) {
+        try {
+            executeUpdate("UPDATE [dbo].[Section]\n"
+                    + "   SET [SectionName] = ?\n"
+                    + " WHERE [SectionID] = ?", 
+                    s.getSectionName(), s.getSectionName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Section> getAllSectionOfCourse(int courseid) {
         ArrayList<Section> sectionlist = new ArrayList<Section>();
         try ( ResultSet rs = executeQuery("SELECT [SectionID], [SectionName], [isDisable] FROM [dbo].[Section] WHERE [CourseID] = ? AND [isDisable] = ?", courseid, 0)) {
@@ -43,7 +54,7 @@ public class SectionDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void addSection(Section section) {
         try {
             executeUpdate("INSERT INTO [dbo].[Section]\n"

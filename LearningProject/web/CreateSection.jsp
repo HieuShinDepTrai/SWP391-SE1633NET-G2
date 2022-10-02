@@ -149,8 +149,10 @@
                                                     <form action="CreateSection?sectionID=${section.getSectionId()}&delete='true'&courseId=${courseID}" method="POST" style="display: inline-block;">
                                                         <input type="submit" class="btn btn-primary" value="Delete">
                                                     </form>
-                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditSection">Edit</button>
+                                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditSection" onclick="khovloz(this)">Edit</button>
                                                 </td>
+                                                <td class="d-none">${section.getSectionId()}</td>
+                                                <td class="d-none">${section.getSectionName()}</td>
                                             </tr>
                                             <% 
                                                 count++; 
@@ -172,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-
+                <input type="hidden" value="${courseID}" id="CourseID" class="d-none">
                 <!-- Modal Add Section-->
                 <form action="CreateSection?courseId=${courseID}&addSection='true'" method="post">
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
@@ -214,13 +216,13 @@
                                 <div class="modal-body">
                                     <label for="Section name" class="form-label">Section Name</label>
                                     <!-- Section name must not null -->
-                                    <input id="value" type="text" class="form-control" name="SectionName" required="true" />
+                                    <input id="valueEdit" type="text" class="form-control" name="SectionName" required="true" value="" autocomplete="off"/>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <input type="submit" class="btn btn-primary" value="Add Section" onclick="">
+                                    <input type="submit" class="btn btn-primary" value="Edit Section" onclick="">
                                 </div>
                             </div>
                         </div>

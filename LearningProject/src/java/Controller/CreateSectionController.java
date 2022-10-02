@@ -62,7 +62,8 @@ public class CreateSectionController extends HttpServlet {
             throws ServletException, IOException {
         SectionDAO sdao = new SectionDAO();
         CourseDAO cdao = new CourseDAO();
-
+        PrintWriter out = response.getWriter();
+        
         int courseId = 0;
         if (request.getParameter("courseId") != null) {
             courseId = Integer.parseInt(request.getParameter("courseId"));
@@ -109,6 +110,17 @@ public class CreateSectionController extends HttpServlet {
                 if (request.getParameter("sectionID") != null) {
                     sectionID = Integer.parseInt(request.getParameter("sectionID"));
                     sdao.deleteSection(sectionID);
+                }
+            }
+            
+            // If request of edit != null, then edit
+            if(request.getParameter("edit") != null) {
+                int sectionID = 0;
+                String sectionName = "";
+                if(request.getParameter("sectionID") != null && request.getParameter("SectionName") != null) {
+                    sectionID = Integer.parseInt(request.getParameter("sectionID"));
+                    sectionName = request.getParameter("SectionName");
+                    sdao.updateSectionName(new Section(sectionID, courseId, sectionName, false));
                 }
             }
             
