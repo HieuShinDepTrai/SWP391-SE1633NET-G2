@@ -61,7 +61,10 @@ public class EnrollController extends HttpServlet {
             u.insertIntoUserCourse(UserID, CourseID);
             response.sendRedirect("home");
             
-        } else {
+        } else if(op.equals("Go to Course") && ses.getAttribute("username") != null ){
+            response.sendRedirect("WatchCourse?courseID="+CourseID);
+        }
+        else  {
             response.sendRedirect("login");
         }
         

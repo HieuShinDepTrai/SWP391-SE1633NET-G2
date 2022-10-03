@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +26,7 @@
     </head>
 
     <body>
-
+        <%@include file="header.jsp"%>
         <div id="main">            
             <section>
                 <div class="course-watch-left">
@@ -108,7 +108,7 @@
                                                     </c:if>
                                                 </c:forEach>
                                                 <%
-                                                    int minute = sectionTime / 60;
+                                                    int minute = sectionTime / 60 % 60;
                                                     int second = sectionTime % 60;
                                                 %>
                                                 <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
@@ -134,7 +134,7 @@
                                                         <div class="course-lesson-child-footer">
                                                             <i class="fa-solid fa-circle-play"></i>
                                                             <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
-                                                            <fmt:parseNumber var="minute" type="number" value="${time/60}" pattern="#"/>
+                                                            <fmt:parseNumber var="minute" type="number" value="${time/60%60}" pattern="#" integerOnly="true"/>
                                                             <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
                                                             ${minute}:${second}
 
