@@ -156,16 +156,17 @@
                 </div>
             </section>
             <!-- Course Comment -->
-            <div class="course-comment-container" style="display: none;">
-                <div class="course-comment">
-                    <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
-                    <div class="course-comment-title">
-                        88 Comment
-                        <span>(If you see spam comment, please report to admin)</span>
-                    </div>
+            <form action="postvideocomment" method="GET">
+                <div class="course-comment-container" style="display: none;">
+                    <div class="course-comment">
+                        <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
+                        <div class="course-comment-title">
+                            ${numberOfComments} Comments
+                            <span>(If you see spam comment, please report to admin)</span>
+                        </div>
 
-                    <!-- Begin: Course post comment -->
-                    <form action="postvideocomment" method="GET">
+                        <!-- Begin: Course post comment -->
+
                         <div class="course-post-comment-container">
                             <div class="course-comment-postcomment d-flex justify-content-between">
                                 <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
@@ -179,6 +180,7 @@
 
                                 <input class="submit-comment" name="op" type="submit" value="Comment">
 
+
                             </div>
                         </div>
 
@@ -187,127 +189,131 @@
                         <!-- Comment List -->
                         <div class="course-comment-list d-flex flex-column w-100 gap-4">
                             <!-- Begin: Comment -->
-                            <c:forEach items="${requestScope.commentList}" var="comment">
-                                <c:if test="${comment.getParentId() == 0}">
-                                    <div class="comment d-flex align-items-start">
-                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                        <div class="comment-content">
-                                            <div class="comment-user">
-                                                <div class="user-name">
-                                                    Hung
-                                                </div>
-                                                <div class="user-comment-content">
-                                                    ${comment.getCommentContent()}
-                                                </div>
+                            <c:forEach items="${requestScope.parentComment}" var="parentComment">
+
+                                <input name="replyComment"  type="hidden"value="${parentComment.getCommentId()}">
+                                <div class="comment d-flex align-items-start">
+                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                    <div class="comment-content">
+                                        <div class="comment-user">
+                                            <div class="user-name">
+                                                Hung
                                             </div>
-                                            <div class="comment-action">
-                                                <div class="comment-action-content">Like</div>
-                                                <div class="dot">.</div>
-                                                <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                                <div class="dot">.</div>
-                                                <div class="comment-action-content">Report</div>
-                                                <div class="dot">.</div>
-                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                            <div class="user-comment-content">
+                                                ${parentComment.getCommentContent()}
                                             </div>
-
-                                            <!-- Reply Comment -->
-
-                                            <div class="reply-comment d-none">
-                                                <div class="course-post-comment-container">
-                                                    <div class="course-comment-postcomment d-flex justify-content-between">
-                                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                        <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                                        border: none;
-                                                        border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                        <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                                                    </div>
-                                                    <div class="course-postcomment-action" style="float: right;">
-                                                        <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-
-                                                        <input type="submit" name="op" value="Reply" class="submit-comment">                                     
-                                                        <input type="hidden" name="pId" value="${comment.getCommentId()}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Reply Comment -->
-
-
-                                            <!-- Show Reply Comment -->
-                                            <div class="show-reply-comment " style="margin-left: 20px; margin-top: 10px;">
-                                                <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
-                                                <div class="show-reply-comment-content">
-                                                    <!-------------------------- Begin: Comment ------------------------------------------>
-                                                    
-                                                        <c:if test="${comment.getParentId() != 0}">
-                                                            <div class="comment d-flex align-items-start">
-                                                                <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                                <div class="comment-content">
-                                                                    <div class="comment-user">
-                                                                        <div class="user-name">
-                                                                            Quang
-                                                                        </div>
-                                                                        <div class="user-comment-content">
-                                                                            ${comment.getCommentContent()}
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="comment-action">
-                                                                        <div class="comment-action-content">Like</div>
-                                                                        <div class="dot">.</div>
-                                                                        <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                                                        <div class="dot">.</div>
-                                                                        <div class="comment-action-content">Report</div>
-                                                                        <div class="dot">.</div>
-                                                                        <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                                                    </div>
-
-                                                                    <!-- Reply Comment -->
-
-                                                                    <div class="reply-comment d-none">
-                                                                        <div class="course-post-comment-container">
-                                                                            <div class="course-comment-postcomment d-flex justify-content-between">
-                                                                                <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                                                <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                                                                border: none;
-                                                                                border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                                                <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                                                                            </div>
-                                                                            <div class="course-postcomment-action" style="float: right;">
-                                                                                <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-
-                                                                                <input type="submit" name="" value="Reply" class="submit-comment">                                     
-                                                                                <input type="hidden" name="" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Reply Comment -->
-
-
-                                                                    <!-- Show Reply Comment -->
-                                                                    <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
-                                                                        <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
-                                                                        <div class="show-reply-comment-content">
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Show Reply Comment -->
-                                                                </div>
-                                                            </div>
-                                                        </c:if>
-                                                    
-                                                    <!---------------------------------------- End: Comment ---------------------------------->
-                                                </div>
-                                            </div>
-                                            <!-- Show Reply Comment -->
                                         </div>
+                                        <div class="comment-action">
+                                            <div class="comment-action-content">Like</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-action-content">Report</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                        </div>
+
+                                        <!-- Reply Comment -->
+
+                                        <div class="reply-comment d-none">
+                                            <div class="course-post-comment-container">
+                                                <div class="course-comment-postcomment d-flex justify-content-between">
+                                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                    <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                    border: none;
+                                                    border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                    <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                </div>
+                                                <div class="course-postcomment-action" style="float: right;">
+                                                    <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+
+                                                    <input type="submit" name="op" value="Reply" class="submit-comment">                                     
+                                                    <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Reply Comment -->
+
+
+                                        <!-- Show Reply Comment -->
+                                        <div class="show-reply-comment " style="margin-left: 20px; margin-top: 10px;">
+                                            <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                            <div class="show-reply-comment-content">
+                                                <!-------------------------- Begin: Comment ------------------------------------------>
+
+                                                <c:forEach items="${requestScope.commentList}" var="commentList">
+                                                    <c:if test="${commentList.getParentId() == parentComment.getCommentId()}">
+                                                        <div class="comment d-flex align-items-start">
+                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                            <div class="comment-content">
+                                                                <div class="comment-user">
+                                                                    <div class="user-name">
+                                                                        Quang
+                                                                    </div>
+                                                                    <div class="user-comment-content">
+                                                                        ${commentList.getCommentContent()}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="comment-action">
+                                                                    <div class="comment-action-content">Like</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-action-content">Report</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                                                </div>
+
+                                                                <!-- Reply Comment -->
+
+                                                                <div class="reply-comment d-none">
+                                                                    <div class="course-post-comment-container">
+                                                                        <div class="course-comment-postcomment d-flex justify-content-between">
+                                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                                            border: none;
+                                                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                                            <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                                        </div>
+                                                                        <div class="course-postcomment-action" style="float: right;">
+                                                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+
+                                                                            <input type="submit" name="" value="Reply" class="submit-comment">                                     
+                                                                            <input type="hidden" name="" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Reply Comment -->
+
+
+                                                                <!-- Show Reply Comment -->
+                                                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
+                                                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                                                    <div class="show-reply-comment-content">
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Show Reply Comment -->
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+
+                                                <!---------------------------------------- End: Comment ---------------------------------->
+                                            </div>
+                                        </div>
+                                        <!-- Show Reply Comment -->
                                     </div>
-                                </c:if>
+                                </div>
+
                             </c:forEach>
                             <!-- End: Comment -->
                         </div>
-                    </form>
-                    <!-- Comment List -->
+
+                        <!-- Comment List -->
+                    </div>
                 </div>
-            </div>
+            </form>
             <!-- Course Comment -->
 
             <!-- Begin: Footer -->

@@ -90,5 +90,72 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
+    
+    public ArrayList<Comment> ListAllReplyCommentByParentId(int parentId) {
+        ArrayList<Comment> cmt = new ArrayList<>();
+
+        try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
+                + "               ,cmt.[VideoID]\n"
+                + "               ,cmt.[UserID]\n"
+                + "               , cmt.[ParentID]"
+                + "               ,cmt.[CommentContent]\n"
+                + "               ,cmt.[CommentDate]\n"
+                + "               ,cmt.[Likes]\n"
+                + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
+                + "                ON cmt.VideoID = v.VideoID AND ParentId = ?", parentId)) {
+
+            while (rs.next()) {
+                Comment c = new Comment();
+
+                c.setCommentId(rs.getInt("CommentID"));
+                c.setVideoId(rs.getInt("VideoID"));
+                c.setParentId(rs.getInt("ParentID"));
+                c.setCommentContent(rs.getNString("CommentContent"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setLikes(rs.getInt("Likes"));
+                c.setIsReported(rs.getBoolean("isReported"));
+                
+
+                cmt.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cmt;
+    }
+    
+    public ArrayList<Comment> ListAllCommentByIsNotReplyComment() {
+        ArrayList<Comment> cmt = new ArrayList<>();
+
+        try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
+                + "               ,cmt.[VideoID]\n"
+                + "               ,cmt.[UserID]\n"
+                + "               , cmt.[ParentID]"
+                + "               ,cmt.[CommentContent]\n"
+                + "               ,cmt.[CommentDate]\n"
+                + "               ,cmt.[Likes]\n"
+                + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
+                + "                ON cmt.VideoID = v.VideoID AND ParentId = 0")) {
+
+            while (rs.next()) {
+                Comment c = new Comment();
+
+                c.setCommentId(rs.getInt("CommentID"));
+                c.setVideoId(rs.getInt("VideoID"));
+                c.setParentId(rs.getInt("ParentID"));
+                c.setCommentContent(rs.getNString("CommentContent"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setLikes(rs.getInt("Likes"));
+                c.setIsReported(rs.getBoolean("isReported"));
+
+                cmt.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cmt;
+    }
 
 }

@@ -70,10 +70,13 @@ public class PostVideoCommentController extends HttpServlet {
         HttpSession ses = request.getSession();        
               
         //get all comment to display into screen
-//      String username = (String) ses.getAttribute("username");
-//      int userId = userDAO.getAllUserInformation(username).getUserId();       
-
-        //cmtList for comment       
+         String username = (String) ses.getAttribute("username");
+        //int userId = userDAO.getAllUserInformation(username).getUserId();       
+        
+        
+        
+        
+        //cmtList for comment      
         try {
         String comment = request.getParameter("comment");
         String op = request.getParameter("op");                       
@@ -93,7 +96,7 @@ public class PostVideoCommentController extends HttpServlet {
         }
         
         request.setAttribute("commentList", commentList);
-        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
+        request.getRequestDispatcher("WatchCourse").forward(request, response);
         //response.sendRedirect("WatchCourse");
     }
 
