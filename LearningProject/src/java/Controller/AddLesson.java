@@ -92,6 +92,7 @@ public class AddLesson extends HttpServlet {
         int sectionId = Integer.parseInt(request.getParameter("sectionID"));
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String type = request.getParameter("type");
+        
         LessonDAO ldao = new LessonDAO();
 
         if (type.compareTo("Video") == 0) {
