@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import utils.SHA256;
+import utils.VerifyCaptcha;
 
 /**
  *
@@ -35,6 +36,7 @@ public class RegisterController extends HttpServlet {
             Validation valid = new Validation();
             UserDAO userDAO = new UserDAO();
             SimpleDateFormat sdm = new SimpleDateFormat("yyyy-MM-dd");
+            VerifyCaptcha verifyCaptcha = new VerifyCaptcha();
 
             String userName = request.getParameter("username");
             String firstName = request.getParameter("firstname");
@@ -43,6 +45,7 @@ public class RegisterController extends HttpServlet {
             String password = request.getParameter("password");
             String cfpassword = request.getParameter("cfpassword");
             String email = request.getParameter("email");
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 
             if (userDAO.isAccountExist(userName)) {
                 request.setAttribute("result", "Tài khoản của bạn đã tồn tại, vui lòng thử lại");
@@ -57,6 +60,9 @@ public class RegisterController extends HttpServlet {
             }
             else if(!cfpassword.equals(password)){
                 request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
+            }
+            else if(verifyCaptcha.verify(gRecaptchaResponse)==false){
+                request.setAttribute("result", "Captcha unavailable");
             }
             else {
                 User user = new User(firstName, lastName, email, "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "", false);
