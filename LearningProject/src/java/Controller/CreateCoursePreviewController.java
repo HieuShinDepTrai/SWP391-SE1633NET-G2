@@ -27,7 +27,7 @@ import java.util.ArrayList;
  *
  * @author Dung
  */
-public class CreateCoursePreviewServlet extends HttpServlet {
+public class CreateCoursePreviewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
