@@ -125,9 +125,7 @@ public class CourseWatchController extends HttpServlet {
             }
         }
 
-        
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
-
         
         
         request.setAttribute("numberOfComments", numberOfComments);

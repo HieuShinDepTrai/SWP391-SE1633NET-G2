@@ -131,6 +131,7 @@
                                                             <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
                                                             <i class="fa-solid fa-circle-check"></i>
                                                         </div>
+
                                                         <div class="course-lesson-child-footer">
                                                             <i class="fa-solid fa-circle-play"></i>
                                                             <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
@@ -156,7 +157,7 @@
                 </div>
             </section>
             <!-- Course Comment -->
-            <form action="postvideocomment" method="GET">
+            <div>
                 <div class="course-comment-container" style="display: none;">
                     <div class="course-comment">
                         <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
@@ -167,22 +168,25 @@
 
                         <!-- Begin: Course post comment -->
 
-                        <div class="course-post-comment-container">
-                            <div class="course-comment-postcomment d-flex justify-content-between">
-                                <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                border: none;
-                                border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                        <form  action="postvideocomment" method="GET">
+                            <input type="hidden" name="lessonID" value="${lessonID}">
+                            <input type="hidden" name="courseID" value="${courseID}">
+                            <input type="hidden" name="sectionID" value="${sectionID}">
+
+                            <div class="course-post-comment-container">
+                                <div class="course-comment-postcomment d-flex justify-content-between">
+                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                    <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                    border: none;
+                                    border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                    <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                </div>
+                                <div class="course-postcomment-action" style="float: right;">
+                                    <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                    <input class="submit-comment" name="op" type="submit" value="Comment">
+                                </div>
                             </div>
-                            <div class="course-postcomment-action" style="float: right;">
-                                <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
-
-                                <input class="submit-comment" name="op" type="submit" value="Comment">
-
-
-                            </div>
-                        </div>
+                        </form>
 
                         <!-- End: Course post comment -->
 
@@ -191,7 +195,6 @@
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
 
-                                <input name="replyComment"  type="hidden"value="${parentComment.getCommentId()}">
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
@@ -216,21 +219,26 @@
                                         <!-- Reply Comment -->
 
                                         <div class="reply-comment d-none">
-                                            <div class="course-post-comment-container">
-                                                <div class="course-comment-postcomment d-flex justify-content-between">
-                                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
-                                                    <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
-                                                    border: none;
-                                                    border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                    <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
-                                                </div>
-                                                <div class="course-postcomment-action" style="float: right;">
-                                                    <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                            <form  action="postvideocomment" method="GET">
+                                                <input type="hidden" name="lessonID" value="${lessonID}">
+                                                <input type="hidden" name="courseID" value="${courseID}">
+                                                <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <div class="course-post-comment-container">
+                                                    <div class="course-comment-postcomment d-flex justify-content-between">
+                                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                        <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                        border: none;
+                                                        border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                        <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                    </div>
+                                                    <div class="course-postcomment-action" style="float: right;">
+                                                        <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
 
-                                                    <input type="submit" name="op" value="Reply" class="submit-comment">                                     
-                                                    <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
+                                                        <input type="submit" name="op" value="Reply" class="submit-comment">                                     
+                                                        <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                         <!-- Reply Comment -->
 
@@ -313,7 +321,8 @@
                         <!-- Comment List -->
                     </div>
                 </div>
-            </form>
+            </div>
+
             <!-- Course Comment -->
 
             <!-- Begin: Footer -->

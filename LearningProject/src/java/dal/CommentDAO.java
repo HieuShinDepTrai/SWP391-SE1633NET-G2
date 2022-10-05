@@ -5,6 +5,7 @@
 package dal;
 
 import Model.Comment;
+import Model.Video;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -50,11 +51,30 @@ public class CommentDAO extends DBContext {
         }
     }
     
-    public void insertIntoCommentContentReply(String content, int userId, int parentId) {
+    public void insertIntoCommentContentReply(String content,int videoId, int userId, int parentId) {
         try {
-            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, 1, ?, ?, 0)", content, userId, parentId);
+            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content,videoId, userId, parentId);
         } catch (Exception e) {
         }
+    }
+    
+    public Video getVideoIdByLessonId (int LessonId) {
+                try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
+
+            if (rs.next()) {
+                int videoId = rs.getInt("VideoID");
+                int  lesId = rs.getInt("LessonID");
+                String videoName = rs.getNString("VideoName");
+                String videoLink = rs.getString("VideoLink");
+                Video video = new Video(videoId, LessonId, videoName, videoLink);
+                return video;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+        
+        
     }
 
     public ArrayList<Comment> ListAllComment() {
