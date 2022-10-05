@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://www.google.com/recaptcha/api.js"></script>
         <title>Sign up</title>
         <link rel="stylesheet" href="assets/css/Log-Reg.css">
         <!-- Font Awesome -->
@@ -82,7 +83,7 @@
                                         <input type="text" name="email" class="form-control">
                                         <label class="form-label">Email</label>
                                     </div>
-
+                                    <div class="g-recaptcha" data-sitekey="6LcpAk4iAAAAACx-z5YjHfgs5ANm_xKUWoMVXswi"></div>
                                     <button class="btn btn-block login-btn mb-4" type="submit" style="background-color: black; color: white;">Sign up</button>
                                 </form>
 
