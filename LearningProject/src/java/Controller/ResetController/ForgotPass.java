@@ -21,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.VerifyCaptcha;
 
 /**
  *
@@ -39,7 +40,7 @@ public class ForgotPass extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
         request.getRequestDispatcher("ForgotPass.jsp").forward(request, response);
     }
 
@@ -59,24 +60,32 @@ public class ForgotPass extends HttpServlet {
         String payload = "";
         AccountDBContext accDB = new AccountDBContext();
         String token = "";
+        VerifyCaptcha verifyCaptcha = new VerifyCaptcha();
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         if (accDB.findAccWithEmail(email) != null) {
-            try {
-                String password = accDB.findOldPassWithEmail(email);
-                //response.getWriter().println(password);
-                long now = new Date().getTime() + 5 * 60 * 1000;
-                payload += "user: " + email + " ex: " + String.valueOf(now);
-                String sig = HMACSHA256.hmacWithJava(payload, password);
-                String res = Base64.getEncoder().encodeToString(payload.getBytes()) + ";" + sig;
-                String encode = Base64.getEncoder().encodeToString(res.getBytes());
-                SendEmail sendemail = new SendEmail();
+            if (verifyCaptcha.verify(gRecaptchaResponse)) {
+
+                try {
+                    String password = accDB.findOldPassWithEmail(email);
+                    //response.getWriter().println(password);
+                    long now = new Date().getTime() + 5 * 60 * 1000;
+                    payload += "user: " + email + " ex: " + String.valueOf(now);
+                    String sig = HMACSHA256.hmacWithJava(payload, password);
+                    String res = Base64.getEncoder().encodeToString(payload.getBytes()) + ";" + sig;
+                    String encode = Base64.getEncoder().encodeToString(res.getBytes());
+                    SendEmail sendemail = new SendEmail();
 //                sendemail.send("elearningswp391@gmail.com", "Verify Account","Test send email", "elearningswp391@gmail.com", "jtjnnqdicshtevlw");                            
-                token = "http://localhost:8080/LearningProject/resetpass?token=" + encode;
-                sendemail.sendEmail(email, "Reset Password", token);
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("CheckYourMail.jsp").forward(request, response);
-                response.getWriter().println("Decode: " + encode);
-            } catch (Exception ex) {
-                request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+                    token = "http://localhost:8080/LearningProject/resetpass?token=" + encode;
+                    sendemail.sendEmail(email, "Reset Password", token);
+                    request.setAttribute("email", email);
+                    request.getRequestDispatcher("CheckYourMail.jsp").forward(request, response);
+                    response.getWriter().println("Decode: " + encode);
+                } catch (Exception ex) {
+                    request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+                }
+            } else {
+                request.setAttribute("status", "Captcha unavailable");
+                doGet(request, response);
             }
         } else {
             request.setAttribute("status", "Email not found");

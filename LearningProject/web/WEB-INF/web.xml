@@ -13,6 +13,10 @@
         <servlet-class>Controller.CreateSectionController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UpdateLessonController</servlet-name>
+        <servlet-class>Controller.UpdateLessonController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateCoursePreviewServlet</servlet-name>
         <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
@@ -195,6 +199,10 @@
     <servlet-mapping>
         <servlet-name>CreateSectionController</servlet-name>
         <url-pattern>/CreateSection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLessonController</servlet-name>
+        <url-pattern>/updatelesson</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCoursePreviewServlet</servlet-name>
