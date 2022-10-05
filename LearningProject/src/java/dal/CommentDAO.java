@@ -5,6 +5,7 @@
 package dal;
 
 import Model.Comment;
+import Model.Video;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -50,11 +51,30 @@ public class CommentDAO extends DBContext {
         }
     }
     
-    public void insertIntoCommentContentReply(String content, int userId, int parentId) {
+    public void insertIntoCommentContentReply(String content,int videoId, int userId, int parentId) {
         try {
-            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, 1, ?, ?, 0)", content, userId, parentId);
+            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content,videoId, userId, parentId);
         } catch (Exception e) {
         }
+    }
+    
+    public Video getVideoIdByLessonId (int LessonId) {
+                try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
+
+            if (rs.next()) {
+                int videoId = rs.getInt("VideoID");
+                int  lesId = rs.getInt("LessonID");
+                String videoName = rs.getNString("VideoName");
+                String videoLink = rs.getString("VideoLink");
+                Video video = new Video(videoId, LessonId, videoName, videoLink);
+                return video;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+        
+        
     }
 
     public ArrayList<Comment> ListAllComment() {
@@ -82,6 +102,73 @@ public class CommentDAO extends DBContext {
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
                 
+
+                cmt.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cmt;
+    }
+    
+    public ArrayList<Comment> ListAllReplyCommentByParentId(int parentId) {
+        ArrayList<Comment> cmt = new ArrayList<>();
+
+        try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
+                + "               ,cmt.[VideoID]\n"
+                + "               ,cmt.[UserID]\n"
+                + "               , cmt.[ParentID]"
+                + "               ,cmt.[CommentContent]\n"
+                + "               ,cmt.[CommentDate]\n"
+                + "               ,cmt.[Likes]\n"
+                + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
+                + "                ON cmt.VideoID = v.VideoID AND ParentId = ?", parentId)) {
+
+            while (rs.next()) {
+                Comment c = new Comment();
+
+                c.setCommentId(rs.getInt("CommentID"));
+                c.setVideoId(rs.getInt("VideoID"));
+                c.setParentId(rs.getInt("ParentID"));
+                c.setCommentContent(rs.getNString("CommentContent"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setLikes(rs.getInt("Likes"));
+                c.setIsReported(rs.getBoolean("isReported"));
+                
+
+                cmt.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cmt;
+    }
+    
+    public ArrayList<Comment> ListAllCommentByIsNotReplyComment() {
+        ArrayList<Comment> cmt = new ArrayList<>();
+
+        try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
+                + "               ,cmt.[VideoID]\n"
+                + "               ,cmt.[UserID]\n"
+                + "               , cmt.[ParentID]"
+                + "               ,cmt.[CommentContent]\n"
+                + "               ,cmt.[CommentDate]\n"
+                + "               ,cmt.[Likes]\n"
+                + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
+                + "                ON cmt.VideoID = v.VideoID AND ParentId = 0")) {
+
+            while (rs.next()) {
+                Comment c = new Comment();
+
+                c.setCommentId(rs.getInt("CommentID"));
+                c.setVideoId(rs.getInt("VideoID"));
+                c.setParentId(rs.getInt("ParentID"));
+                c.setCommentContent(rs.getNString("CommentContent"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setLikes(rs.getInt("Likes"));
+                c.setIsReported(rs.getBoolean("isReported"));
 
                 cmt.add(c);
             }

@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.Comment;
+import Model.Video;
 import dal.CommentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-
 
 /**
  *
@@ -58,48 +58,51 @@ public class PostVideoCommentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {       
-        
+            throws ServletException, IOException {
+
         UserDAO userDAO = new UserDAO();
         CommentDAO cmtDao = new CommentDAO();
-              
-        ArrayList<Comment> commentList = cmtDao.ListAllComment();
-        HttpSession ses = request.getSession();        
-              
-        //get all comment to display into screen
-//      String username = (String) ses.getAttribute("username");
-//      int userId = userDAO.getAllUserInformation(username).getUserId();       
 
-        //cmtList for comment       
+        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+        HttpSession ses = request.getSession();
+
+        //get all comment to display into screen
+        String username = (String) ses.getAttribute("username");
+        int userId = userDAO.getAllUserInformation(username).getUserId();
+
+        int getLessonId = Integer.parseInt(request.getParameter("lessonID"));
+        Video video = cmtDao.getVideoIdByLessonId(getLessonId);
+        int videoId = video.getVideoId();
+
+        //cmtList for comment      
         try {
-        String comment = request.getParameter("comment");
-        String op = request.getParameter("op");                       
-        
-        if (op.equals("Comment")) {
-            cmtDao.insertIntoCommentContentReply(comment, 1, 0);
-        } else if (op.equals("Reply")) {
-            //insert reply comment and the parent id
-            String repComment = request.getParameter("repComment");
-            int pId = Integer.parseInt(request.getParameter("pId"));
-            //insert into comment that is a reply comment
-            cmtDao.insertIntoCommentContentReply(repComment, 1, pId);            
-        }
-        
+            String comment = request.getParameter("comment");
+            String op = request.getParameter("op");
+
+            if (op.equals("Comment")) {
+                cmtDao.insertIntoCommentContentReply(comment, videoId, userId, 0);
+            } else if (op.equals("Reply")) {
+                //insert reply comment and the parent id
+                String repComment = request.getParameter("repComment");
+                int pId = Integer.parseInt(request.getParameter("pId"));
+                //insert into comment that is a reply comment
+                cmtDao.insertIntoCommentContentReply(repComment, videoId, userId, pId);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         request.setAttribute("commentList", commentList);
-        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
-        //response.sendRedirect("WatchCourse");
+        //request.getRequestDispatcher("WatchCourse").forward(request, response);
+        response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") + "&sectionID=" + request.getParameter("sectionID") + "&lessonID=" + request.getParameter("lessonID"));
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 }
