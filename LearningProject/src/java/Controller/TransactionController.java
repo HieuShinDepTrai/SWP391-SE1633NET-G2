@@ -55,7 +55,7 @@ public class TransactionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-response.getWriter().print("SDIUFHUJIKDSFHJKSDJKHF");
+        response.getWriter().print("SDIUFHUJIKDSFHJKSDJKHF");
     }
 
     /**
@@ -71,25 +71,44 @@ response.getWriter().print("SDIUFHUJIKDSFHJKSDJKHF");
             throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            User user = (User)session.getAttribute("user");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            int status=99;
+            
             //read the post content
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String securetoken = response.getHeader("secure-token");
+            String securetoken = request.getHeader("secure-token");
+            if (!securetoken.equals("Th1sIs4learningProject")) {
+                return;
+            }
             int contentLength = Integer.parseInt(request.getHeader("Content-Length"));
             InputStream inputStream = request.getInputStream();
             byte[] bytes = new byte[contentLength];
             inputStream.read(bytes);
             String text = new String(bytes, "utf-8");
             Gson gson = new Gson();
-            JsonObject jobj = gson.fromJson(text, JsonObject.class).getAsJsonArray("data").get(0).getAsJsonObject();            
+            JsonObject jobj = gson.fromJson(text, JsonObject.class).getAsJsonArray("data").get(0).getAsJsonObject();
             UserDAO userDAO = new UserDAO();
-            
+
+            //get the transaction data
             int amount = Integer.parseInt(jobj.get("amount").toString());
-            String description = jobj.get("description").toString().replaceAll("\"", "");
+            String test = jobj.get("description").toString().replaceAll("[\\\\,\\.,\"]", "");
+            String[] description = jobj.get("description").toString().replaceAll("[\\\\,\\.]", "").split("\\s+");
+            String username = "";
+            int userid = 1;
+            for (int i = 0; i < description.length; i++) {
+                if (description[i].equals("NAP") && (i+1)<=description.length) {
+                    username = description[i + 1];
+                    break;
+                }
+            }
+            if (userDAO.getAllUserInformation(username) != null) {
+                userid = userDAO.getAllUserInformation(username).getUserId();
+                status=0;
+            }
+
             String when = jobj.get("when").toString().replaceAll("\"", "");
             Date date = sdf.parse(when);
             java.sql.Date sqldate = new java.sql.Date(date.getTime());
-            userDAO.userRecharge(1, sqldate, amount, "Recharge");
+            userDAO.userRecharge(userid, sqldate, amount, status, "Recharge",test);
         } catch (ParseException ex) {
             Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -338,19 +338,19 @@ public class UserDAO extends DBContext {
         return 0;
     }
 
-    public void userRecharge(int userid, Date date, int amount, String method){
+    public void userRecharge(int userid, Date date, int amount, int status,String method, String content){
         execute("INSERT INTO [dbo].[Recharge]\n" +
 "           ([UserID]\n" +
 "           ,[RechargeDate]\n" +
 "           ,[Amount]\n" +
 "           ,[Status]\n" +
-"           ,[Method])\n" +
+"           ,[Method],[Content])\n" +
 "     VALUES\n" +
 "           (?\n" +
 "           ,?\n" +
 "           ,?\n" +
 "           ,?\n" +
-"           ,?)", userid,date, amount, 1,method);
+"           ,?,?)", userid,date, amount, status,method, content);
     }
     
 }
