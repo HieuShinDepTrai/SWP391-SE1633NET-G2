@@ -266,8 +266,15 @@ public class UserDAO extends DBContext {
 
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
-            executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite, Progress) VALUES (? ,?, 0 ,0, 0)",
+            ResultSet rs = executeQuery("SELECT [UserID], [CourseID] FROM [dbo].[User_Course] WHERE [UserID] = ? AND [CourseID] = ?", UserID, CourseID);
+            if(rs.next()){
+                executeUpdate("UPDATE [dbo].[User_Course] SET [isStudoed] = ?, [isFavourite] = ? WHERE [CourseID] = ? AND [UserID] = ?", 1, 1, CourseID, UserID);
+            }
+            else{
+                executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite, Progress) VALUES (? ,?, 1 ,1, 0)",
                     UserID, CourseID);
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

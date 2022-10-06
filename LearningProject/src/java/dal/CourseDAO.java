@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.tomcat.util.net.SSLHostConfigCertificate;
+//import org.apache.tomcat.util.net.SSLHostConfigCertificate;
 
 /**
  *
