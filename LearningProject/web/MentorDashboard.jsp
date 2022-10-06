@@ -116,7 +116,64 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid" style="background-image: unset; height: unset;">
+                        <div class="user-dashboard py-4">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="fw-bold">Overview</h5>
+                                    <div class="row gy-3">
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of course</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>1234</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of account</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>1234</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of blog</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>02</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of quiz</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>02</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" style="background-image: unset; height: unset;">
                         <div class="row">
                             <h3 class="fw-bold my-3">My Course I Have Created</h3>
                         </div>
@@ -160,6 +217,7 @@
                             </c:forEach>
                         </div>
                     </div>
+                    
 
                 </section>
                 <!-- End: Section Content -->
