@@ -9,7 +9,7 @@ async function doSubmit() {
         const videoLink = document.querySelector('input[name="url"]').value;
         const videoId = videoLink.split('watch?v=')[1];
 
-        const API_KEY = "AIzaSyBBcUOX-BytFmB96iWqMBIsRLzTgP0hhWQ"
+        const API_KEY = "AIzaSyBBcUOX-BytFmB96iWqMBIsRLzTgP0hhWQ";
 
         // use google api for get video detail
         const duration = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${API_KEY}`).then(res => res.json()).then(res => res.items[0].contentDetails.duration);
