@@ -100,6 +100,7 @@ public class TransactionController extends HttpServlet {
                     break;
                 }
             }
+            
             if (userDAO.getAllUserInformation(username) != null) {
                 userid = userDAO.getAllUserInformation(username).getUserId();
                 status=0;
