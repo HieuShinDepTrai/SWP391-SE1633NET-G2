@@ -117,7 +117,7 @@
                         <h3 class="fw-bold">Update Section</h3>
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
-                                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                                <li class="breadcrumb-item"><a href="updatecourse?button=.&courseid=${course.getCourseID()}">Home</a></li>
                                 <li class="breadcrumb-item"><a href="updatecourse?courseid=${course.getCourseID()}">Update Course</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Update Section
@@ -145,6 +145,7 @@
                                             <tr>
                                                 <td><%=count%></td>
                                         <form action="updatesection" method="POST">
+                                            <input type="hidden" value="${course.getCourseID()}" name="courseid">
                                             <td><input type="text" name="sectionname" value="${section.getSectionName()}"></td>
                                             <td><a href="updatelesson?sectionid=${section.getSectionId()}&courseid=${course.getCourseID()}" class="btn btn-primary">Edit Lesson</a></td>
                                             <td>

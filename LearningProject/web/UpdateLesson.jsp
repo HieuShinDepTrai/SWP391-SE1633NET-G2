@@ -123,7 +123,7 @@
                         <h3 class="fw-bold">Create Lesson</h3>
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
-                                <li class="breadcrumb-item"><a href="home">Home</a></li>
+                                <li class="breadcrumb-item"><a href="updatecourse?button=.&courseid=${courseid}"">Home</a></li>
                                 <li class="breadcrumb-item"><a href="updatesection?courseid=${courseid}">Update Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Update Lesson
@@ -154,18 +154,32 @@
                                         <input type="hidden" name="sectionid" value="${section.getSectionId()}">
                                         <input type="hidden" name="courseid" value="${courseid}">
                                         <input type="submit" class="btn btn-primary" name="button" value="Delete">
-                                        <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-id="${lesson.getLessonId()}">
+                                        <c:forEach items="${videolist}" var="video">
+                                            <c:if test="${video.getLessonId() == lesson.getLessonId()}">
+                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-video-url="${video.getVideoLink()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach items="${docslist}" var="docs">
+                                            <c:if test="${docs.getLessonId() == lesson.getLessonId()}">
+                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-docs-content="${docs.getContent()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                            </c:if>
+                                        </c:forEach>
                                     </td>
                                 </tr>
                             </form>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add New Lesson
-                    </button>
-                            
-                            
+                    <form action="updatelesson" method="POST">
+                        <input type="hidden" name="courseid" value="${courseid}">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Add New Lesson
+                        </button>
+                        <input type="submit" name="button" value="Save changes" class="btn btn-secondary">
+                    </form>
+
+
                     <!-- Modal Main-->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                          aria-hidden="true">
@@ -203,11 +217,13 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
-                    
+
+
+
                     <!-- Modal Document-->
-                    <form action="AddLesson" method="POST">
+                    <form action="updatelesson" method="POST">
+                        <input type="hidden" name="sectionid" value="${section.getSectionId()}">
+                        <input type="hidden" name="courseid" value="${courseid}">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
@@ -222,23 +238,22 @@
                                         <div class="row">
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Lesson Title</label>
-                                                <input type="text" class="form-control" name="lesson_tilte">
+                                                <input type="text" class="form-control" name="lessondocsname">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Time to read (milliseconds)</label>
-                                                <input type="number" class="form-control" name="time_to_read">
+                                                <input type="number" class="form-control" name="time">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
-                                                <textarea name="lesson_content" id="mytextarea" cols="30" rows="10" class="form-control"></textarea>
+                                                <textarea name="lessondocscontent" id="lessondocscontent" cols="30" rows="10" class="form-control"></textarea>
                                             </div>
                                             <input type="text" value="Docs" class="d-none" name="type">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                            changes</button>
+                                        <input type="submit" name="button" class="btn btn-primary" value="Add document">
                                     </div>
                                 </div>
                             </div>
@@ -247,16 +262,18 @@
 
                     <!-- Modal Document-->
 
-                    
-                    
-                    
+
+
+
                     <!-- Modal Video-->
-                    <form action="AddLesson" method="POST">
+                    <form action="updatelesson" method="POST" data-type="video">
+                        <input type="hidden" name="sectionid" value="${section.getSectionId()}">
+                        <input type="hidden" name="courseid" value="${courseid}">
                         <div class="modal fade" id="video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Update
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
                                             Video</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
@@ -273,20 +290,20 @@
                                             <div class="col-4">
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Lesson title</label>
-                                                    <input type="text" class="form-control" name="video_title">
+                                                    <input type="text" class="form-control" name="lessonvideoname">
                                                 </div>
                                                 <div class="col-12 mb-3">
                                                     <label for="Lesson title">Video URL</label>
-                                                    <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                    <input name="videolink" type="text" class="form-control" id="video-url" oninput="video_preview_add()">
                                                 </div>
-                                                <input type="text" value="Video" class="d-none" name="type">
+                                                <input type="text" class="d-none" name="duration">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
+                                        <input type="hidden" name="button" value="Add video">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                            changes</button>
+                                        <input type="button" class="btn btn-primary" value="Add video" onclick="doSubmit()">
                                     </div>
                                 </div>
                             </div>
@@ -295,9 +312,9 @@
 
                     <!-- Modal Video-->
 
-                    
-                    
-                    
+
+
+
                     <!-- Modal Quiz-->
                     <div class="modal fade" id="quiz" tabindex="-1" aria-labelledby="quiz" aria-hidden="true">
                         <div class="modal-dialog modal-fullscreen">
@@ -328,46 +345,47 @@
 
 
 
-                            
-                            
-                            
-                            
+
+
+
+
 
 
 
                 <!-- Modal Document-->
-                <form action="AddLesson" method="POST">
-                    <div class="modal fade" id="Document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
+                <form action="updatelesson" method="POST">
+                    <input type="hidden" name="sectionid" value="${section.getSectionId()}">
+                    <input type="hidden" name="courseid" value="${courseid}">
+                    <input type="hidden" name="LessonDocsId" value="${courseid}" id="LessonDocsId">
+                    <div class="modal fade" id="Docs" tabindex="-1" aria-labelledby="document" aria-hidden="true">
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
+                                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Update
                                         Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body py-5" style="padding-left: 240px; padding-right: 240px;">
-                                    <h4 class="fw-bolder">Create Document</h4>
+                                    <h4 class="fw-bolder">Update Document</h4>
                                     <div class="row">
                                         <div class="col-12 mb-3">
                                             <label for="LessonTitle" class="form-label fw-bold">Lesson Title</label>
-                                            <input type="text" class="form-control" name="lesson_tilte">
+                                            <input type="text" class="form-control" name="LessonDocsName" id="LessonDocsName">
                                         </div>
                                         <div class="col-12 mb-3">
                                             <label for="LessonTitle" class="form-label fw-bold">Time to read (milliseconds)</label>
-                                            <input type="number" class="form-control" name="time_to_read">
+                                            <input type="number" class="form-control" name="Time" id="Time">
                                         </div>
                                         <div class="col-12 mb-3">
                                             <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
-                                            <textarea name="lesson_content" id="mytextarea" cols="30" rows="10" class="form-control"></textarea>
+                                            <textarea name="DocsContent" id="DocsContent" cols="30" rows="10" class="form-control"></textarea>
                                         </div>
-                                        <input type="text" value="Docs" class="d-none" name="type">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save
-                                        changes</button>
+                                    <input type="submit" name="button" class="btn btn-primary" value="Update document">
                                 </div>
                             </div>
                         </div>
@@ -377,7 +395,10 @@
                 <!-- Modal Document-->
 
                 <!-- Modal Video-->
-                <form action="updatelesson" method="POST">
+                <form action="updatelesson" method="POST" data-type="Video">
+                    <input type="hidden" name="sectionid" value="${section.getSectionId()}">
+                    <input type="hidden" name="courseid" value="${courseid}">
+                    <input type="hidden" name="LessonVideoId" value="${courseid}" id="LessonVideoId">
                     <div class="modal fade" id="Video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
@@ -392,27 +413,27 @@
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="video-preview">
-                                                <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>                                        
+                                                <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="Url-preview" style="display: none;"></iframe>                                        
                                                 <i class="fa-brands fa-youtube icon-youtube"></i>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="col-12 mb-3">
                                                 <label for="Lesson title">Lesson title</label>
-                                                <input type="text" class="form-control" name="video_title">
+                                                <input type="text" class="form-control" name="LessonVideoName" id="LessonVideoName">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="Lesson title">Video URL</label>
-                                                <input name="video_url" type="text" class="form-control" id="video-url" oninput="video_preview()">
+                                                <input name="VideoLink" type="text" class="form-control" id="VideoLink" oninput="video_preview_update()">
                                             </div>
-                                            <input type="text" value="Video" class="d-none" name="type">
+                                            <input type="text" class="d-none" name="time_duration">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <input type="hidden" name="button" value="Update video">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save
-                                        changes</button>
+                                    <input type="button" class="btn btn-primary" value="Update video" onclick="doSubmit2()">
                                 </div>
                             </div>
                         </div>
@@ -460,6 +481,115 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 crossorigin="anonymous"></script>
 <script src="assets/js/home_page.js"></script>
+
+<script>
+                                        function Forward(target) {
+                                            if (target.getAttribute("data-lesson-type") == "Video") {
+                                                document.getElementById("LessonVideoName").value = target.getAttribute("data-lesson-name");
+                                                document.getElementById("VideoLink").value = target.getAttribute("data-video-url");
+                                                document.getElementById("LessonVideoId").value = target.getAttribute("data-lesson-id");
+                                            } else if (target.getAttribute("data-lesson-type") == "Docs") {
+                                                document.getElementById("LessonDocsName").value = target.getAttribute("data-lesson-name");
+                                                document.getElementById("Time").value = target.getAttribute("data-lesson-time");
+                                                document.getElementById("DocsContent").value = target.getAttribute("data-docs-content");
+                                                document.getElementById("LessonDocsId").value = target.getAttribute("data-lesson-id");
+                                            } else {
+
+                                            }
+                                        }
+
+                                        function video_preview_add() {
+                                            // let src = current.value;
+                                            console.log($('#video-url').val());
+                                            let video_url = $('#video-url').val();
+                                            let video_id = youtube_parser(video_url);
+                                            $('#url-preview').attr('src', 'https://www.youtube.com/embed/' + video_id);
+                                            $('#url-preview').css('display', 'block');
+                                            console.log($('#url-preview').attr('src'));
+                                            $('.icon-youtube').css('display', 'none');
+                                            $('#video-URL').val($('#url-preview').attr('src'));
+                                        }
+
+                                        function video_preview_update() {
+                                            // let src = current.value;
+                                            console.log($('#VideoLink').val());
+                                            let video_url = $('#VideoLink').val();
+                                            let video_id = youtube_parser(video_url);
+                                            $('#Url-preview').attr('src', 'https://www.youtube.com/embed/' + video_id);
+                                            $('#Url-preview').css('display', 'block');
+                                            console.log($('#Url-preview').attr('src'));
+                                            $('.icon-youtube').css('display', 'none');
+                                            $('#VideoLink').val($('#Url-preview').attr('src'));
+                                        }
+
+                                        function youtube_parser(url) {
+                                            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+                                            var match = url.match(regExp);
+                                            return (match && match[7].length == 11) ? match[7] : false;
+                                        }
+
+                                        function doSubmit() {
+                                            // get video id from video-link
+
+                                            const videoLink = document.querySelector('input[name="videolink"]').value;
+                                            const videoId = videoLink.split('watch?v=')[1];
+
+                                            const API_KEY = "AIzaSyBBcUOX-BytFmB96iWqMBIsRLzTgP0hhWQ"
+
+                                            // use google api for get video detail
+                                            fetch(`https://www.googleapis.com/youtube/v3/videos?id=${"${videoId}"}&part=contentDetails&key=${"${API_KEY}"}`)
+                                                    .then(res => res.json())
+                                                    .then(res => res.items[0].contentDetails.duration).then(duration => {
+                                                console.log(duration);
+                                                const parseDuration = (d) => {
+                                                    const match = d.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+                                                    const hours = (parseInt(match[1]) || 0);
+                                                    const minutes = (parseInt(match[2]) || 0);
+                                                    const seconds = (parseInt(match[3]) || 0);
+                                                    return hours * 3600 + minutes * 60 + seconds;
+                                                };
+
+                                                // parse duration to seconds
+                                                const durationInSeconds = parseDuration(duration);
+
+                                                // set video-length value
+                                                document.querySelector('input[name="duration"]').value = durationInSeconds * 1000;
+                                                document.querySelector('form[data-type="video"]').submit();
+                                            }).catch(error => alert('Invalid video link'));
+
+                                        }
+
+                                        function doSubmit2() {
+                                            // get video id from video-link
+
+                                            const videoLink = document.querySelector('input[name="VideoLink"]').value;
+                                            const videoId = videoLink.split('watch?v=')[1];
+
+                                            const API_KEY = "AIzaSyBBcUOX-BytFmB96iWqMBIsRLzTgP0hhWQ"
+
+                                            // use google api for get video detail
+                                            fetch(`https://www.googleapis.com/youtube/v3/videos?id=${"${videoId}"}&part=contentDetails&key=${"${API_KEY}"}`)
+                                                    .then(res => res.json())
+                                                    .then(res => res.items[0].contentDetails.duration).then(duration => {
+                                                console.log(duration);
+                                                const parseDuration = (d) => {
+                                                    const match = d.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+                                                    const hours = (parseInt(match[1]) || 0);
+                                                    const minutes = (parseInt(match[2]) || 0);
+                                                    const seconds = (parseInt(match[3]) || 0);
+                                                    return hours * 3600 + minutes * 60 + seconds;
+                                                };
+
+                                                // parse duration to seconds
+                                                const durationInSeconds = parseDuration(duration);
+
+                                                // set video-length value
+                                                document.querySelector('input[name="time_duration"]').value = durationInSeconds * 1000;
+                                                document.querySelector('form[data-type="Video"]').submit();
+                                            }).catch(error => alert('Invalid video link'));
+
+                                        }
+</script>
 </body>
 
 </html>
