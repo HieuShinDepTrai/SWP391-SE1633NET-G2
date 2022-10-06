@@ -35,7 +35,7 @@ public class EnrollController extends HttpServlet {
         
        if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-            u.insertIntoUserCourse(UserID, CourseID);    
+            u.insertIntoUserCourse(UserID, CourseID);
             request.getRequestDispatcher("CourseDetails").forward(request, response);
        }    else {
            response.sendRedirect("login");

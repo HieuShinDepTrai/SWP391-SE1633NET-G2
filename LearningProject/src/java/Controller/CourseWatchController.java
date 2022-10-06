@@ -70,11 +70,20 @@ public class CourseWatchController extends HttpServlet {
             throws ServletException, IOException {
 
         CommentDAO cmtDao = new CommentDAO();
-
+//        int parentId = Integer.parseInt(request.getParameter("parentID"));
+        
+//        ArrayList<Comment> replyComment = cmtDao.ListAllReplyCommentByParentId(parentId);
+        ArrayList<Comment> parentComment = cmtDao.ListAllCommentByIsNotReplyComment();
         ArrayList<Comment> commentList = cmtDao.ListAllComment();
 //        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
+
+        int count = 0;
+        for (Comment c : commentList) {
+            count ++;
+        }
+        int numberOfComments = count;
         CourseDAO cdao = new CourseDAO();
         SectionDAO sdao = new SectionDAO();
         LessonDAO ldao = new LessonDAO();
@@ -117,7 +126,12 @@ public class CourseWatchController extends HttpServlet {
         }
 
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
+        
+        
+        request.setAttribute("numberOfComments", numberOfComments);
 
+//        request.setAttribute("replyComment", replyComment);
+        request.setAttribute("parentComment", parentComment);
         // Send video list to jsp
         request.setAttribute("lesson", lesson);
         request.setAttribute("course", c);
