@@ -33,9 +33,9 @@ public class LessonDAO extends DBContext {
         }
     }
 
-    public void disableLesson(int sectionId) {
+    public void disableLesson(int lessonId) {
         try {
-            executeUpdate("UPDATE [dbo].[Lesson] SET [isDisable] = 0 WHERE [SectionID] = ? ", sectionId);
+            executeUpdate("UPDATE [dbo].[Lesson] SET [isDisable] = 1 WHERE [LessonID] = ? ", lessonId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,5 +87,23 @@ public class LessonDAO extends DBContext {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public void updateLessonVideo(String lessonName, String videoLink, int lessonId, int time){
+        try {
+            executeUpdate("UPDATE [dbo].[Lesson] SET [LessonName] = ?, [Time] = ? WHERE [LessonID] = ?", lessonName, time, lessonId);
+            executeUpdate("UPDATE [dbo].[Video] SET [VideoLink] = ? WHERE [LessonID] = ?", videoLink, lessonId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateLessonDocs(String lessonName, int time, String docsContent, int lessonId){
+        try {
+            executeUpdate("UPDATE [dbo].[Lesson] SET [LessonName] = ?, [Time] = ? WHERE [LessonID] = ?", lessonName, time, lessonId);
+            executeUpdate("UPDATE [dbo].[Docs] SET [Content] = ? WHERE [LessonID] = ?", docsContent, lessonId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

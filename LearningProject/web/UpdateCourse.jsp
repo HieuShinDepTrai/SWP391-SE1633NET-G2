@@ -35,7 +35,7 @@
                             <h3 class="fw-bold">Create Course</h3>
                             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                                 <ol class="breadcrumb" style="font-size: 13px">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="updatecourse?button=.&courseid=${course.getCourseID()}">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         Update Course
                                     </li>
@@ -94,12 +94,12 @@
                             </div>
                             <div class="content-3">
                                 <div class="course-publish mb-3">
-                                        <div class="publish-button d-flex justify-content-center p-4">
-                                            <input type="submit" value="Edit section" class="btn btn-dark"/>
-                                        </div>
+                                    <div class="publish-button d-flex justify-content-center p-4">
+                                        <a href="updatesection?courseid=${course.getCourseID()}"><input type="button" value="Edit section" class="btn btn-dark"/></a>
+                                    </div>
                                     <input name="button" type="hidden" value=""/>
                                     <div class="save-draft px-3 py-3"><input type="button" value="Save changes" class="btn btn-dark" onclick="Submit(this)"/></div>
-                                            <div class="save-draft px-3 py-3"><input type="button" value="Delete course" class="btn btn-dark" onclick="Submit(this)"/></div>
+                                    <div class="save-draft px-3 py-3"><input type="button" value="Delete course" class="btn btn-dark" onclick="Submit(this)"/></div>
                                 </div>
                                 <div class="course-option p-3">
                                     <div class="course-option-content mb-2">
@@ -127,8 +127,8 @@
                             </div>
                         </div>
                     </div>
-                
-                <!-- Modal Add Section-->
+
+                    <!-- Modal Add Section-->
 
                     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
@@ -168,51 +168,51 @@
         crossorigin="anonymous"></script>
         <script src="assets/js/home_page.js"></script>
         <script>
-            function Submit(target){
-                document.querySelector('input[name="button"]').value = target.value;
-                document.querySelector('#main > section > form').submit();
-            }
-            
-                            function UploadThumbnail(target) {
-                                var reader = new FileReader();
-                                var avatar = document.getElementById("imageBase64");
-
-                                reader.onloadend = function () {
-                                    const img = new Image();
-                                    img.src = reader.result;
-
-                                    img.onload = function () {
-                                        const MAX_WIDTH = 128;
-                                        const MAX_HEIGHT = 128;
-
-                                        let width = img.width;
-                                        let height = img.height;
-
-                                        if (width > height) {
-                                            if (width > MAX_WIDTH) {
-                                                height *= MAX_WIDTH / width;
-                                                width = MAX_WIDTH;
-                                            }
-                                        } else {
-                                            if (height > MAX_HEIGHT) {
-                                                width *= MAX_HEIGHT / height;
-                                                height = MAX_HEIGHT;
-                                            }
+                                        function Submit(target) {
+                                            document.querySelector('input[name="button"]').value = target.value;
+                                            document.querySelector('#main > section > form').submit();
                                         }
 
-                                        const canvas = document.createElement('canvas');
-                                        canvas.width = width;
-                                        canvas.height = height;
-                                        const ctx = canvas.getContext("2d");
-                                        ctx.drawImage(this, 0, 0, width, height);
-                                        const b64 = canvas.toDataURL("image/jpeg");
+                                        function UploadThumbnail(target) {
+                                            var reader = new FileReader();
+                                            var avatar = document.getElementById("imageBase64");
 
-                                        avatar.innerText = b64;
-                                    };
-                                };
+                                            reader.onloadend = function () {
+                                                const img = new Image();
+                                                img.src = reader.result;
 
-                                reader.readAsDataURL(target.files[0]);
-                            }
+                                                img.onload = function () {
+                                                    const MAX_WIDTH = 128;
+                                                    const MAX_HEIGHT = 128;
+
+                                                    let width = img.width;
+                                                    let height = img.height;
+
+                                                    if (width > height) {
+                                                        if (width > MAX_WIDTH) {
+                                                            height *= MAX_WIDTH / width;
+                                                            width = MAX_WIDTH;
+                                                        }
+                                                    } else {
+                                                        if (height > MAX_HEIGHT) {
+                                                            width *= MAX_HEIGHT / height;
+                                                            height = MAX_HEIGHT;
+                                                        }
+                                                    }
+
+                                                    const canvas = document.createElement('canvas');
+                                                    canvas.width = width;
+                                                    canvas.height = height;
+                                                    const ctx = canvas.getContext("2d");
+                                                    ctx.drawImage(this, 0, 0, width, height);
+                                                    const b64 = canvas.toDataURL("image/jpeg");
+
+                                                    avatar.innerText = b64;
+                                                };
+                                            };
+
+                                            reader.readAsDataURL(target.files[0]);
+                                        }
         </script>
     </body>
 
