@@ -24,6 +24,14 @@
         <servlet-name>CreateQuizController</servlet-name>
         <servlet-class>Controller.CreateQuizController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashboardController</servlet-name>
+        <servlet-class>Controller.AdminDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WithdrawController</servlet-name>
+        <servlet-class>Controller.WithdrawController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -213,8 +221,17 @@
         <url-pattern>/CreateCoursePreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>CreateQuizController</servlet-name>
         <url-pattern>/CreateQuiz</url-pattern>
+=======
+        <servlet-name>AdminDashboardController</servlet-name>
+        <url-pattern>/admindashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WithdrawController</servlet-name>
+        <url-pattern>/withdraw</url-pattern>
+>>>>>>> 5e5080d7d3c09ab8d8aa49dfb93b7855b7cb2e76
     </servlet-mapping>
     <session-config>
         <session-timeout>
