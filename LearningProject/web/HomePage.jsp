@@ -48,7 +48,7 @@
                         </a>
                     </c:if>
                     <c:if test="${user.role == 'Admin'}">
-                        <a class="bar-button " href="#">
+                        <a class="bar-button " href="admindashboard">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">Admin Dashboard</p>
                         </a>

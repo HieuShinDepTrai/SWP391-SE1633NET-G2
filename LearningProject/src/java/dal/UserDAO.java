@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -267,14 +269,13 @@ public class UserDAO extends DBContext {
     public void insertIntoUserCourse(int UserID, int CourseID) {
         try {
             ResultSet rs = executeQuery("SELECT [UserID], [CourseID] FROM [dbo].[User_Course] WHERE [UserID] = ? AND [CourseID] = ?", UserID, CourseID);
-            if(rs.next()){
+            if (rs.next()) {
                 executeUpdate("UPDATE [dbo].[User_Course] SET [isStudoed] = ?, [isFavourite] = ? WHERE [CourseID] = ? AND [UserID] = ?", 1, 1, CourseID, UserID);
-            }
-            else{
+            } else {
                 executeUpdate("INSERT INTO [User_Course](UserID, CourseID, isStudied, isFavourite, Progress) VALUES (? ,?, 1 ,1, 0)",
-                    UserID, CourseID);
+                        UserID, CourseID);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -343,21 +344,19 @@ public class UserDAO extends DBContext {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }   
+
+    public int getTotalUser() {
+        try {
+            ResultSet rs = executeQuery("select count(UserID) as Size from [User]\n"
+                    + "where Role='User'");
+            if (rs.next()) {
+                return rs.getInt("Size");
+            }
+            return 0;
+        } catch (SQLException ex) {
+            return 0;
+        }
     }
 
-    public void userRecharge(int userid, Date date, int amount, int status,String method, String content){
-        execute("INSERT INTO [dbo].[Recharge]\n" +
-"           ([UserID]\n" +
-"           ,[RechargeDate]\n" +
-"           ,[Amount]\n" +
-"           ,[Status]\n" +
-"           ,[Method],[Content])\n" +
-"     VALUES\n" +
-"           (?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?,?)", userid,date, amount, status,method, content);
-    }
-    
 }

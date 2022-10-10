@@ -32,8 +32,8 @@ import java.util.logging.Logger;
  *
  * @author Dung
  */
-@WebServlet(urlPatterns = {"/transaction"}, name = "TransactionController")
-public class TransactionController extends HttpServlet {
+@WebServlet(urlPatterns = {"/test"}, name = "TestController")
+public class TestController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +56,10 @@ public class TransactionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.getWriter().print("SDIUFHUJIKDSFHJKSDJKHF");
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        request.setAttribute("userid", user.getUserId());
+        request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
     }
 
     /**
@@ -73,8 +76,8 @@ public class TransactionController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            int status = 99;
-
+            int status=99;
+            
             //read the post content
             String securetoken = request.getHeader("secure-token");
             if (!securetoken.equals("Th1sIs4learningProject")) {
@@ -91,31 +94,29 @@ public class TransactionController extends HttpServlet {
             PaymentDAO paymentDAO = new PaymentDAO();
 
             //get the transaction data
-            User user = (User) session.getAttribute("user");
             int amount = Integer.parseInt(jobj.get("amount").toString());
             String content = jobj.get("description").toString().replaceAll("[\\\\,\\.,\"]", "");
             String[] description = jobj.get("description").toString().replaceAll("[\\\\,\\.]", "").split("\\s+");
             String username = "";
-            int userid = user.getUserId();
+            int userid = 1;
             for (int i = 0; i < description.length; i++) {
-                if (description[i].equals("NAP") && (i + 1) <= description.length && Integer.parseInt(description[i + 1]) % 1 == 0) {
-                    userid = Integer.parseInt(description[i + 1]);
+                if (description[i].equals("NAP") && (i+1)<=description.length) {
+                    username = description[i + 1];
                     break;
                 }
             }
-
-            if (userDAO.getAllUserInformationByID(userid) == null) {
-                userid = 1;
-            } else {
-                status = 0;
+            
+            if (userDAO.getAllUserInformation(username) != null) {
+                userid = userDAO.getAllUserInformation(username).getUserId();
+                status=0;
             }
 
             String when = jobj.get("when").toString().replaceAll("\"", "");
             Date date = sdf.parse(when);
             java.sql.Date sqldate = new java.sql.Date(date.getTime());
-            paymentDAO.userRecharge(userid, sqldate, amount, status, "Recharge", content);
+            paymentDAO.userRecharge(userid, sqldate, amount, status, "Recharge",content);
         } catch (ParseException ex) {
-            Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
