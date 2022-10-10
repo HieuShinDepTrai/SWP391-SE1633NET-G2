@@ -20,6 +20,10 @@
         <servlet-name>CreateCoursePreviewServlet</servlet-name>
         <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateQuizController</servlet-name>
+        <servlet-class>Controller.CreateQuizController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>CreateCoursePreviewServlet</servlet-name>
         <url-pattern>/CreateCoursePreview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateQuizController</servlet-name>
+        <url-pattern>/CreateQuiz</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

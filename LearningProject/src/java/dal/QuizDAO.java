@@ -12,16 +12,24 @@ import java.sql.ResultSet;
  * @author vuman
  */
 public class QuizDAO extends DBContext {
-
+    
     public Quiz getQuizOfLesson(int lessonId) {
         try ( ResultSet rs = executeQuery("SELECT [QuizID], [Mark] FROM [dbo].[Quiz] WHERE [LessonID] = ?", lessonId)) {
-            if(rs.next())
-            {
+            if (rs.next()) {
                 return new Quiz(rs.getInt("QuizID"), rs.getDouble("Mark"), lessonId);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public void addQuiz(int lessonID) {
+        try {
+            execute("insert into Quiz\n"
+                    + "values(0, ?)", lessonID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
