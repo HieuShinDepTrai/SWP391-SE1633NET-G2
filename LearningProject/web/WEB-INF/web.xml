@@ -221,17 +221,16 @@
         <url-pattern>/CreateCoursePreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>CreateQuizController</servlet-name>
         <url-pattern>/CreateQuiz</url-pattern>
-=======
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AdminDashboardController</servlet-name>
         <url-pattern>/admindashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WithdrawController</servlet-name>
         <url-pattern>/withdraw</url-pattern>
->>>>>>> 5e5080d7d3c09ab8d8aa49dfb93b7855b7cb2e76
     </servlet-mapping>
     <session-config>
         <session-timeout>
