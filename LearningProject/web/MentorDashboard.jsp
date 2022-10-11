@@ -128,7 +128,7 @@
                                                     <h6>All number of course</h6>
                                                 </div>
                                                 <div class="overview-content d-flex justify-content-between">
-                                                    <p>1234</p>
+                                                    <p>${numofcourses}</p>
                                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                                 </div>
                                             </div>
@@ -139,7 +139,7 @@
                                                     <h6>All number of account</h6>
                                                 </div>
                                                 <div class="overview-content d-flex justify-content-between">
-                                                    <p>1234</p>
+                                                    <p>${numofstudents}</p>
                                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                                 </div>
                                             </div>
@@ -150,7 +150,7 @@
                                                     <h6>All number of blog</h6>
                                                 </div>
                                                 <div class="overview-content d-flex justify-content-between">
-                                                    <p>02</p>
+                                                    <p>${numofblogs}</p>
                                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                                 </div>
                                             </div>
@@ -161,7 +161,7 @@
                                                     <h6>All number of quiz</h6>
                                                 </div>
                                                 <div class="overview-content d-flex justify-content-between">
-                                                    <p>02</p>
+                                                    <p>${numofquizs}</p>
                                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                                 </div>
                                             </div>
