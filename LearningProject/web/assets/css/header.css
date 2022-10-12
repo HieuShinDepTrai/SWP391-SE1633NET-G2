@@ -9,6 +9,10 @@ header {
     top: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
 
 .header-content {
     display: flex;
