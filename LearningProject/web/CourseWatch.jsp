@@ -200,7 +200,7 @@
                                     <div class="comment-content">
                                         <div class="comment-user">
                                             <div class="user-name">
-                                                Hung
+                                                ${parentComment.getUser().getUserName()}
                                             </div>
                                             <div class="user-comment-content">
                                                 ${parentComment.getCommentContent()}

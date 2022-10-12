@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class CommentDAO extends DBContext {
 
     public Comment getComment(String commentId, String userId) {
+        UserDAO userDAO = new UserDAO();
         try ( ResultSet rs = executeQuery("SELECT [CommentID], "
                 + "[VideoID], "
                 + "[UserID], "
@@ -36,7 +37,7 @@ public class CommentDAO extends DBContext {
                 int likes = rs.getInt("Likes");
                 boolean isReport = rs.getBoolean("isReported");
 
-                return new Comment(cmtId, videoId, uId, pId, cmtContent, cmtDate, likes, isReport);
+                return new Comment(cmtId, videoId, userDAO.getAllUserInformationByID(uId), pId, cmtContent, cmtDate, likes, isReport);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,20 +51,20 @@ public class CommentDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-    
-    public void insertIntoCommentContentReply(String content,int videoId, int userId, int parentId) {
+
+    public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId) {
         try {
-            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content,videoId, userId, parentId);
+            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content, videoId, userId, parentId);
         } catch (Exception e) {
         }
     }
-    
-    public Video getVideoIdByLessonId (int LessonId) {
-                try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
+
+    public Video getVideoIdByLessonId(int LessonId) {
+        try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
 
             if (rs.next()) {
                 int videoId = rs.getInt("VideoID");
-                int  lesId = rs.getInt("LessonID");
+                int lesId = rs.getInt("LessonID");
                 String videoName = rs.getNString("VideoName");
                 String videoLink = rs.getString("VideoLink");
                 Video video = new Video(videoId, LessonId, videoName, videoLink);
@@ -73,13 +74,12 @@ public class CommentDAO extends DBContext {
             e.printStackTrace();
         }
         return null;
-        
-        
+
     }
 
     public ArrayList<Comment> ListAllComment() {
         ArrayList<Comment> cmt = new ArrayList<>();
-
+        UserDAO userDAO = new UserDAO();
         try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
                 + "               ,cmt.[VideoID]\n"
                 + "               ,cmt.[UserID]\n"
@@ -92,7 +92,7 @@ public class CommentDAO extends DBContext {
 
             while (rs.next()) {
                 Comment c = new Comment();
-
+                c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setParentId(rs.getInt("ParentID"));
@@ -101,7 +101,6 @@ public class CommentDAO extends DBContext {
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
-                
 
                 cmt.add(c);
             }
@@ -110,10 +109,10 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
-    
+
     public ArrayList<Comment> ListAllReplyCommentByParentId(int parentId) {
         ArrayList<Comment> cmt = new ArrayList<>();
-
+        UserDAO userDAO = new UserDAO();
         try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
                 + "               ,cmt.[VideoID]\n"
                 + "               ,cmt.[UserID]\n"
@@ -126,7 +125,7 @@ public class CommentDAO extends DBContext {
 
             while (rs.next()) {
                 Comment c = new Comment();
-
+                c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setParentId(rs.getInt("ParentID"));
@@ -135,7 +134,6 @@ public class CommentDAO extends DBContext {
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
-                
 
                 cmt.add(c);
             }
@@ -144,10 +142,10 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
-    
+
     public ArrayList<Comment> ListAllCommentByIsNotReplyComment() {
         ArrayList<Comment> cmt = new ArrayList<>();
-
+        UserDAO userDAO = new UserDAO();
         try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
                 + "               ,cmt.[VideoID]\n"
                 + "               ,cmt.[UserID]\n"
@@ -160,7 +158,7 @@ public class CommentDAO extends DBContext {
 
             while (rs.next()) {
                 Comment c = new Comment();
-
+                c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setParentId(rs.getInt("ParentID"));
