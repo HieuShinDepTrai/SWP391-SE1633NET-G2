@@ -185,8 +185,17 @@
                                                     </form>
                                                 </c:if>
                                                 <c:if test="${course.getCoursePrice() != 0}">
-                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                    <a href="#">Buy now</a>
+                                                    <form id="enroll" action="enroll" method="POST">
+                                                        <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                            <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                            <input name="op" type="submit" value="Buy now">
+                                                        </c:if>
+                                                        <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                            <input name="op" type="submit" value="Go to Course">                                                            
+                                                        </c:if>
+                                                        <input type="hidden" name="coursePrice" value="${course.getCoursePrice()}">    
+                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                    </form>
                                                 </c:if>
 
                                             </div>

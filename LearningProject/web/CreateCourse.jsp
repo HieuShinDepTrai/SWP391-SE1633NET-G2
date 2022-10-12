@@ -1,10 +1,13 @@
 <%-- 
-    Document   : CreateCourse
-    Created on : Oct 1, 2022, 10:34:28 AM
+    Document   : CourseWatch
+    Created on : Sep 30, 2022, 8:26:22 PM
     Author     : Dung
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,170 +19,334 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
-        <link rel="stylesheet" href="assets/css/create_course.css" />
+        <link rel="stylesheet" href="assets/css/course_watch.css">
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
         </style>
     </head>
 
     <body>
-        
-        <div id="main">            
         <%@include file="header.jsp"%>
-            <!-- Begin: Create Course -->
+        <div id="main">            
             <section>
-                <form action="CreateCourse" method="POST">
-                    <div class="create-course px-5 py-3">
-                        <div class="create-course-header mb-3">
-                            <h3 class="fw-bold">Create Course</h3>
-                            <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                                <ol class="breadcrumb" style="font-size: 13px">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        Create Course
-                                    </li>
-                                </ol>
-                            </nav>
-                            <h4 class="mb-3 fw-bold mb-1">Basic Infromation</h4>
-                        </div>
-                        <div class="create-course-content">
-                            <div class="content-1">
-                                <div class="create-course-title-container mb-3">
-                                    <div class="create-course-title mb-1 fw-bold">Course Title</div>
-                                    <input type="text" class="w-100 mb-1" name="CourseTitle" required=""/>
-                                    <div class="description mb-1">
-                                        Please enter your course title
-                                    </div>
+                <div class="course-watch-left">
+                    <div class="course-watch-left-content">
+                        <c:if test="${lesson.getType() == 'Video'}">
+                            <div class="lesson-video">
+                                <iframe width="100%" height="100%" src="${lesson.getVideoLink()}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-information">
+                                <div class="lesson-description">
+                                    <h3 class="lesson-title">
+                                        ${lesson.getLessonName()}
+                                    </h3>
                                 </div>
-                                <div class="create-course-title-container mb-3">
-                                    <div class="create-course-title mb-1 fw-bold">
-                                        Course description
-                                    </div>
-                                    <textarea id="" class="w-100" style="height: 100px" name="CourseDes" required=""></textarea>
-                                    <div class="description mb-1">
-                                        Please enter your course description
-                                    </div>
-                                </div>
-                                <div class="create-objectives">
-                                    <div class="create-section-title fw-bold mb-3">Objectives</div>
-                                        <div class="section-list">
-                                    </div>
-                                    <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Add Objectives
-                                    </div>
+                                <div class="lesson-comment" style="cursor: pointer;">
+                                    Comment
                                 </div>
                             </div>
-                            <div class="content-2">
-                                <div class="course-thumbnail-header fw-bold">
-                                    Course Thumbnail
+                            <!-- Mark As Done -->
+                            <div class="d-flex justify-content-center">
+                                <div class="btn btn-primary">Mark As Done</div>
+                            </div>
+                            <!-- Mark As Done -->
+                        </c:if>
+                        <c:if test="${lesson.getType() == 'Docs'}">
+                            <div class="lesson-information" style="display: block;">
+                                <div class="lesson-description">
+                                    <h1 class="lesson-title fw-bold" style="font-size: 48px">
+                                        ${lesson.getLessonName()}
+                                    </h1><br>
                                 </div>
-                                <div class="course-thumbnail">
-                                    <div class="course-thumbnail-content">
-                                        <div class="course-thumbnail-img d-flex">
-                                            <img src="" alt="" style="display: none" class="image-thumbnail" />
-                                            <img src="assets/img/icon-image.png" alt="" class="icon" width="36px"
-                                                 height="36px" />
-                                        </div>
-                                        <div class="course-thumbnail-footer p-3">
-                                            <input type="file" name="" id="thumbnail" onchange="upload(this)" accept="image/*" required=""/>
-                                            <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
-                                        </div>
-                                    </div>
+                                ${lesson.getContent()}
+                            </div>
+                            <div class="d-flex justify-content-between p-5">
+                                <!-- Mark As Done -->
+                                <div class="d-flex justify-content-center">
+                                    <div class="btn btn-primary">Mark As Done</div>
+                                </div>
+                                <!-- Mark As Done -->
+                                <div class="lesson-comment" style="cursor: pointer; width: fit-content">
+                                    Comment
                                 </div>
                             </div>
-                            <div class="content-3">
-                                <div class="course-publish mb-3">
-                                    <div class="publish-button d-flex justify-content-center p-4">
-                                        <input type="button" value="Next Step" class="btn btn-primary nextStep" onclick="checkObjective()"/>
-                                    </div>
-<!--                                    <div class="save-draft px-3 py-3">Save draft</div>
-                                    <div class="delete-course px-3 py-3">Delete course</div>-->
-                                </div>
-                                <div class="course-option p-3">
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Category</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <select class="form-select w-100" aria-label="Default select example" name="category" required>
-                                                <option selected>Select course category</option>
-                                                <option value="Front-end">Front-end</option>
-                                                <option value="Back-end">Back-end</option>
-                                                <option value="Database">Database</option>
-                                            </select>
-                                        </div>
-                                        <div class="course-option-content-des">Select a Category</div>
-                                    </div>
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Price</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <input type="text" class="w-100" name="CoursePrice" required/>
-                                        </div>
-                                        <div class="course-option-content-des">
-                                            Enter price of course
-                                        </div>
-                                    </div>
-                                    <div class="course-option-content mb-2">
-                                        <div class="course-option-content-title mb-1">Category</div>
-                                        <div class="course-option-content-input mb-1">
-                                            <select class="form-select w-100" aria-label="Default select example" name="difficulty">
-                                                <option selected>Select course difficult0</option>
-                                                <option value="easy">Easy</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="hard">Hard</option>
-                                            </select>
-                                        </div>
-                                        <div class="course-option-content-des">Select difficulty</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        </c:if>
                     </div>
-                </form>
-                <!-- Modal Add Section-->
-                    <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">
-                                        Add Objectives
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <label for="Section name" class="form-label">Objective Name</label>
-                                    <!-- Section name must not null -->
-                                    <input id="value" type="text" class="form-control" name="SectionName" required="true" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                        Close
-                                    </button>
-                                    <input type="button" class="btn btn-primary" value="Add Objectives" onclick="createObjective()">
-                                </div>
-                            </div>
+                </div>
+                <div class="course-watch-right">
+                    <div class="course-watch-right-content">
+                        <h4 class="course-content-title px-4 py-3">Course Content</h4>
+                        <div class="course-lesson-list">
+                            <c:forEach items="${listSection}" var="section">
+
+                                <!-- Course section -->
+                                <div class="course-lesson-container">
+                                    <div class="course-lesson d-flex justify-content-between px-4 align-items-center">
+                                        <div class="course-lesson-left">
+                                            <div class="course-lesson-left-title">
+                                                ${section.getSectionName()}
+                                            </div>
+                                            <div class="course-lesson-left-description">
+
+                                                <!-- Begin: Lesson Progress -->
+                                                <div class="course-lesson-progress d-inline">12/12</div>
+                                                <div class="d-inline">|</div>
+                                                <!-- End: Lesson Progress -->
+
+                                                <!-- Begin: Section Time -->
+                                                <%
+                                                    int sectionTime = 0;
+                                                %>
+                                                <c:forEach items="${listLesson}" var="lesson">
+                                                    <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                        <c:set var="lessonTime" value="${lesson.getTime()}"></c:set>
+                                                        <%
+                                                            int lessonTime = Integer.parseInt(pageContext.getAttribute("lessonTime").toString());
+                                                            sectionTime +=  lessonTime;
+                                                        %>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <%
+                                                    int minute = sectionTime / 60 % 60;
+                                                    int second = sectionTime % 60;
+                                                %>
+                                                <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
+                                                <!-- End: Section Time -->
+                                            </div>
+                                        </div>
+                                        <div class="course-lesson-right">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Course lesson child container -->
+                                    <div class="course-lesson-child-container" style="display: none;">        
+                                        <c:forEach items="${listLesson}" var="lesson">
+                                            <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+
+                                                
+                                                   
+                                              
+                                                        <!-- course lesson child -->
+                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
+                                                    <div class="course-lesson-child  px-4 py-2">
+                                                        <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
+                                                            <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            
+                                                        </div>
+
+                                                        <div class="course-lesson-child-footer">
+                                                            <i class="fa-solid fa-circle-play"></i>
+                                                            <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                            <fmt:parseNumber var="minute" type="number" value="${time/60%60}" pattern="#" integerOnly="true"/>
+                                                            <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
+                                                            ${minute}:${second}
+
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <!-- course lesson child -->
+                                                   
+                                                    
+                                                    
+                                                    
+                                                    
+                                                
+
+                                            </c:if>
+                                        </c:forEach>
+                                        <!-- Course lesson child container -->
+                                    </div>
+                                </div>    
+                                <!-- Course section -->
+                            </c:forEach>
+
                         </div>
-                    </div>
+                    </div>    
+                </div>
             </section>
-            <!-- End: Create Course -->
+            <!-- Course Comment -->
+            <div>
+                <div class="course-comment-container" style="display: none;">
+                    <div class="course-comment">
+                        <i class="fa-solid fa-xmark course-comment-close" id="course-comment-close"></i>
+                        <div class="course-comment-title">
+                            ${numberOfComments} Comments
+                            <span>(If you see spam comment, please report to admin)</span>
+                        </div>
+
+                        <!-- Begin: Course post comment -->
+
+                        <form  action="postvideocomment" method="GET">
+                            <input type="hidden" name="lessonID" value="${lessonID}">
+                            <input type="hidden" name="courseID" value="${courseID}">
+                            <input type="hidden" name="sectionID" value="${sectionID}">
+
+                            <div class="course-post-comment-container">
+                                <div class="course-comment-postcomment d-flex justify-content-between">
+                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                    <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                    border: none;
+                                    border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                    <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                </div>
+                                <div class="course-postcomment-action" style="float: right;">
+                                    <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                    <input class="submit-comment" name="op" type="submit" value="Comment">
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- End: Course post comment -->
+
+                        <!-- Comment List -->
+                        <div class="course-comment-list d-flex flex-column w-100 gap-4">
+                            <!-- Begin: Comment -->
+                            <c:forEach items="${requestScope.parentComment}" var="parentComment">
+                                
+                                <div class="comment d-flex align-items-start">
+                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                    <div class="comment-content">
+                                        <div class="comment-user">
+                                            <div class="user-name">
+                                                ${parentComment.getCommentUser()}
+                                            </div>
+                                            <div class="user-comment-content">
+                                                ${parentComment.getCommentContent()}
+                                            </div>
+                                        </div>
+                                        <div class="comment-action">
+                                            <div class="comment-action-content">Like</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-action-content">Report</div>
+                                            <div class="dot">.</div>
+                                            <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                        </div>
+
+                                        <!-- Reply Comment -->
+
+                                        <div class="reply-comment d-none">
+                                            <form  action="postvideocomment" method="GET">
+                                                <input type="hidden" name="lessonID" value="${lessonID}">
+                                                <input type="hidden" name="courseID" value="${courseID}">
+                                                <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden"  name="videoID" value="${videoID}">
+                                                <div class="course-post-comment-container">
+                                                    <div class="course-comment-postcomment d-flex justify-content-between">
+                                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                        <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                        border: none;
+                                                        border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                        <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                    </div>
+                                                    <div class="course-postcomment-action" style="float: right;">
+                                                        <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+
+                                                        <input type="submit" name="op" value="Reply" class="submit-comment">                                     
+                                                        <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- Reply Comment -->
+
+
+                                        <!-- Show Reply Comment -->
+                                        <div class="show-reply-comment " style="margin-left: 20px; margin-top: 10px;">
+                                            <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                            <div class="show-reply-comment-content">
+                                                <!-------------------------- Begin: Comment ------------------------------------------>
+
+                                                <c:forEach items="${requestScope.commentOfLesson}" var="commentOfLesson">
+                                                    <c:if test="${commentOfLesson.getParentId() == parentComment.getCommentId()}">
+                                                        <div class="comment d-flex align-items-start">
+                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                            <div class="comment-content">
+                                                                <div class="comment-user">
+                                                                    <div class="user-name">
+                                                                        Quang
+                                                                    </div>
+                                                                    <div class="user-comment-content">
+                                                                        ${commentOfLesson.getCommentContent()}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="comment-action">
+                                                                    <div class="comment-action-content">Like</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-action-content">Report</div>
+                                                                    <div class="dot">.</div>
+                                                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                                                </div>
+
+                                                                <!-- Reply Comment -->
+
+                                                                <div class="reply-comment d-none">
+                                                                    <div class="course-post-comment-container">
+                                                                        <div class="course-comment-postcomment d-flex justify-content-between">
+                                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                                            <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
+                                                                            border: none;
+                                                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
+                                                                            <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                                        </div>
+                                                                        <div class="course-postcomment-action" style="float: right;">
+                                                                            <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+
+                                                                            <input type="submit" name="" value="Reply" class="submit-comment">                                     
+                                                                            <input type="hidden" name="" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Reply Comment -->
+
+
+                                                                <!-- Show Reply Comment -->
+                                                                <div class="show-reply-comment d-none" style="margin-left: 20px; margin-top: 10px;">
+                                                                    <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                                                    <div class="show-reply-comment-content">
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Show Reply Comment -->
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+
+                                                <!---------------------------------------- End: Comment ---------------------------------->
+                                            </div>
+                                        </div>
+                                        <!-- Show Reply Comment -->
+                                    </div>
+                                </div>
+                                 
+                            </c:forEach>
+                            <!-- End: Comment -->
+                        </div>
+
+                        <!-- Comment List -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Comment -->
 
             <!-- Begin: Footer -->
             <!-- End: Footer -->
         </div>
-        <script>
-            function checkObjective() {
-                if($('.section-list').children().length === 0) {
-                    alert("Objectives is empty");
-                } else {
-                    $('.nextStep').attr('type', 'submit');
-                }                 
-            }
-        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="assets/js/create_course.js"></script>
+        <script src="assets/js/course_watch.js"></script>
         <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
+        <script src="assets/js/home_page.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-        <script src="assets/js/home_page.js"></script>
+        <script src="https://player.vimeo.com/api/player.js"></script>
     </body>
 
 </html>
