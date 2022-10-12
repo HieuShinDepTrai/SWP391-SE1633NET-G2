@@ -23,9 +23,15 @@
                 <div class="col-lg-12">
                     <div class="card card-body shadow-sm" style="border-radius: 12px;">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <h6 class="fw-bold">Account List</h6>
                                 <p style="color: rgba(0, 0, 0, 0.6)">This is list of all account</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex justify-content-end" style="position: relative;">
+                                   <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
+                                   <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
+                                </div>
                             </div>
                             <div class="col-12">
                                 <table class="table table-borderless">
