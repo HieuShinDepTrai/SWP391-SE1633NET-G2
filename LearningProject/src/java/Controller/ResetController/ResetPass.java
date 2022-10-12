@@ -54,9 +54,9 @@ public class ResetPass extends HttpServlet {
             String newpassword = request.getParameter("password");
             if (val.checkPasswordFormat(newpassword)) {
                 String password = HMACSHA256.textToSHA256(newpassword);
-                String email = getUserFromToken(request.getParameter("token"));
+                String username = getUserFromToken(request.getParameter("token"));
                 AccountDBContext accDB = new AccountDBContext();
-                accDB.update(email, password);
+                accDB.update(username, password);
                 request.getRequestDispatcher("PasswordResetSuccess.jsp").forward(request, response);
             }else{
                 String status = "Password format wrong, please re-input password";
@@ -83,11 +83,11 @@ public class ResetPass extends HttpServlet {
             //Split the payload and decode Base64 to get the expire time, username
             String payload = new String(decoder.decode(decodeArr[0]));
             String[] sarray = payload.split("\\s");
-            String email = sarray[1];
+            String username = sarray[1];
             AccountDBContext accDb = new AccountDBContext();
             
             
-            String key = accDb.findOldPassWithEmail(email);
+            String key = accDb.findOldPassWithUsername(username);
             String checksig = HMACSHA256.hmacWithJava(payload, key);
             long exp = Long.parseLong(sarray[3]);
             long now = new Date().getTime();

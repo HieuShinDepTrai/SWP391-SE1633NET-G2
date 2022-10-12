@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.Payment;
 import Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -56,7 +57,23 @@ public class TransactionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.getWriter().print("SDIUFHUJIKDSFHJKSDJKHF");
+        HttpSession session = request.getSession();
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        User user = (User) session.getAttribute("user");
+        PaymentDAO paymentDAO = new PaymentDAO();
+        if (user.getRole().equals("Admin")) {
+            paymentList = paymentDAO.getPendingWithdraw();
+            request.setAttribute("paymentList", paymentList);
+            request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
+        }
+        paymentList = paymentDAO.getPaymentListFromUser(user.getUserId());
+        request.setAttribute("paymentList", paymentList);
+        request.setAttribute("userid", user.getUserId());
+        request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
     }
 
     /**
@@ -90,13 +107,11 @@ public class TransactionController extends HttpServlet {
             UserDAO userDAO = new UserDAO();
             PaymentDAO paymentDAO = new PaymentDAO();
 
-            //get the transaction data
-            User user = (User) session.getAttribute("user");
+            //get the transaction data            
             int amount = Integer.parseInt(jobj.get("amount").toString());
             String content = jobj.get("description").toString().replaceAll("[\\\\,\\.,\"]", "");
-            String[] description = jobj.get("description").toString().replaceAll("[\\\\,\\.]", "").split("\\s+");
-            String username = "";
-            int userid = user.getUserId();
+            String[] description = jobj.get("description").toString().replaceAll("[\\\\,\\.]", "").split("\\s+");            
+            int userid = 1;
             for (int i = 0; i < description.length; i++) {
                 if (description[i].equals("NAP") && (i + 1) <= description.length && Integer.parseInt(description[i + 1]) % 1 == 0) {
                     userid = Integer.parseInt(description[i + 1]);

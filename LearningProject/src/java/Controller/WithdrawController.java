@@ -75,7 +75,7 @@ public class WithdrawController extends HttpServlet {
         }
         Date date = new Date();
         java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        paymentDAO.userRecharge(user.getUserId(), sqldate, amount, 2, "withdraw","Withdraw from account "+user.getUserName());
+        paymentDAO.userRecharge(user.getUserId(), sqldate, (-amount), 2, "Withdraw","Withdraw from account "+user.getUserName());
         response.sendRedirect("home");
     }
 
