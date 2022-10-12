@@ -32,7 +32,7 @@
                                    <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
                                    <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
                                 </div>
-                           </div>
+                            </div>
                             <div class="col-12">
                                 <table class="table table-borderless">
                                     <thead>
