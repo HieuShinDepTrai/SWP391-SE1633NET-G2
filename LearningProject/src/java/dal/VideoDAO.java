@@ -30,4 +30,19 @@ public class VideoDAO extends DBContext{
         }
         return null;
     }
+    
+    
+    public ArrayList<Video> getAllVideo() {
+        ArrayList<Video> vList =new ArrayList<>();
+        try (ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video]")){
+            
+            while (rs.next()) {
+                Video v = new Video(rs.getInt("VideoID"), rs.getInt("LessonID"),rs.getNString("VideoName"),rs.getString("VideoLink"));
+                vList.add(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vList;
+    }
 }

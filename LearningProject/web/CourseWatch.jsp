@@ -124,12 +124,16 @@
                                         <c:forEach items="${listLesson}" var="lesson">
                                             <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
-                                                <!-- course lesson child -->
-                                                <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
+                                                
+                                                   
+                                              
+                                                        <!-- course lesson child -->
+                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                     <div class="course-lesson-child  px-4 py-2">
                                                         <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
                                                             <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
                                                             <i class="fa-solid fa-circle-check"></i>
+                                                            
                                                         </div>
 
                                                         <div class="course-lesson-child-footer">
@@ -143,6 +147,12 @@
                                                     </div>
                                                 </a>
                                                 <!-- course lesson child -->
+                                                   
+                                                    
+                                                    
+                                                    
+                                                    
+                                                
 
                                             </c:if>
                                         </c:forEach>
@@ -194,13 +204,13 @@
                         <div class="course-comment-list d-flex flex-column w-100 gap-4">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
-
+                                
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
                                         <div class="comment-user">
                                             <div class="user-name">
-                                                ${parentComment.getUser().getUserName()}
+                                                ${parentComment.getCommentUser()}
                                             </div>
                                             <div class="user-comment-content">
                                                 ${parentComment.getCommentContent()}
@@ -223,6 +233,7 @@
                                                 <input type="hidden" name="lessonID" value="${lessonID}">
                                                 <input type="hidden" name="courseID" value="${courseID}">
                                                 <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden"  name="videoID" value="${videoID}">
                                                 <div class="course-post-comment-container">
                                                     <div class="course-comment-postcomment d-flex justify-content-between">
                                                         <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
@@ -249,8 +260,8 @@
                                             <div class="show-reply-comment-content">
                                                 <!-------------------------- Begin: Comment ------------------------------------------>
 
-                                                <c:forEach items="${requestScope.commentList}" var="commentList">
-                                                    <c:if test="${commentList.getParentId() == parentComment.getCommentId()}">
+                                                <c:forEach items="${requestScope.commentOfLesson}" var="commentOfLesson">
+                                                    <c:if test="${commentOfLesson.getParentId() == parentComment.getCommentId()}">
                                                         <div class="comment d-flex align-items-start">
                                                             <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                                             <div class="comment-content">
@@ -259,7 +270,7 @@
                                                                         Quang
                                                                     </div>
                                                                     <div class="user-comment-content">
-                                                                        ${commentList.getCommentContent()}
+                                                                        ${commentOfLesson.getCommentContent()}
                                                                     </div>
                                                                 </div>
                                                                 <div class="comment-action">
@@ -313,7 +324,7 @@
                                         <!-- Show Reply Comment -->
                                     </div>
                                 </div>
-
+                                 
                             </c:forEach>
                             <!-- End: Comment -->
                         </div>

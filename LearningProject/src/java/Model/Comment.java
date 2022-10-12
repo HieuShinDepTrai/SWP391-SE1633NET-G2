@@ -11,24 +11,26 @@ import java.sql.Date;
  * @author vuman
  */
 public class Comment {
-
     private int commentId;
     private int videoId;
-    private User User;
+    private int UserId;
     private int ParentId;
+    private String commentUser;
     private String commentContent;
     private Date commentDate;
     private int likes;
     private boolean isReported;
+    
 
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId, User User, int ParentId, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId, int UserId, int ParentId, String commentUser, String commentContent, Date commentDate, int likes, boolean isReported) {
         this.commentId = commentId;
         this.videoId = videoId;
-        this.User = User;
+        this.UserId = UserId;
         this.ParentId = ParentId;
+        this.commentUser = commentUser;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
         this.likes = likes;
@@ -51,12 +53,12 @@ public class Comment {
         this.videoId = videoId;
     }
 
-    public User getUser() {
-        return User;
+    public int getUserId() {
+        return UserId;
     }
 
-    public void setUser(User User) {
-        this.User = User;
+    public void setUserId(int UserId) {
+        this.UserId = UserId;
     }
 
     public int getParentId() {
@@ -65,6 +67,14 @@ public class Comment {
 
     public void setParentId(int ParentId) {
         this.ParentId = ParentId;
+    }
+
+    public String getCommentUser() {
+        return commentUser;
+    }
+
+    public void setCommentUser(String commentUser) {
+        this.commentUser = commentUser;
     }
 
     public String getCommentContent() {
@@ -99,4 +109,8 @@ public class Comment {
         this.isReported = isReported;
     }
 
+
+    
+    
+    
 }
