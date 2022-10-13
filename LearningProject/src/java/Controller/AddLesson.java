@@ -8,6 +8,7 @@ import Model.Lesson;
 import Model.Section;
 import Model.User;
 import dal.LessonDAO;
+import dal.QuizDAO;
 import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,7 +62,7 @@ public class AddLesson extends HttpServlet {
                     LessonDAO ldao = new LessonDAO();
                     lessons = ldao.getAllLessonOfSection(sectionId);
                     Section section = sectionDAO.getSectionBySectionID(sectionId);
-
+                    
                     request.setAttribute("courseID", courseID);
                     request.setAttribute("lessons", lessons);
                     request.setAttribute("sectionID", sectionId);
@@ -93,7 +94,7 @@ public class AddLesson extends HttpServlet {
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String type = request.getParameter("type");
         LessonDAO ldao = new LessonDAO();
-
+        
         if (type.compareTo("Video") == 0) {
             String videotitle = request.getParameter("video_title");
             String videolink = request.getParameter("video_url");
@@ -106,6 +107,15 @@ public class AddLesson extends HttpServlet {
             int time_to_read = Integer.parseInt(request.getParameter("time_to_read"));
             String lesson_content = request.getParameter("lesson_content");
             ldao.addLessonDoc(sectionId, lesson_tilte, time_to_read, lesson_content);
+        }
+        
+        if (type.compareTo("Quiz") == 0) {
+            String lesson_title = request.getParameter("lessonTitle");
+            int lesson_time = Integer.parseInt(request.getParameter("lessonTime"));
+            ldao.addLessonQuiz(new Lesson(0, sectionId, lesson_title, false, "Quiz", false, lesson_time));
+            int lessonID =  ldao.getNewestLessonID(sectionId);
+            QuizDAO quizDAO = new QuizDAO();
+            quizDAO.addQuiz(lessonID);
         }
 
         response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);

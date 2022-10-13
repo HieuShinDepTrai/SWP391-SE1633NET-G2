@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +30,7 @@
     </head>
 
     <body>        
+        <%@include file="header.jsp"%>
         <!-- Begin: Account Profile Section -->
         <section>
             <!-- Begin: Modal -->
@@ -74,8 +74,8 @@
                             <a href="#" class="menu-title">Personal Information</a>
                         </div>
                         <div class="menu" onclick="course_link(this)">
-                            <i class="fa-solid fa-lock menu-course"></i>
-                            <a href="#" class="menu-title">My Course</a>
+                            <i class="fa-solid fa-money-bill"></i>
+                            <a href="#" class="menu-title">Transaction History</a>
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-lock menu-security"></i>
@@ -164,162 +164,6 @@
                                     <div class="btn btn-primary mt-3" onclick="disableOff(this)">Edit Profile</div>
                                     <button type="submit" class="btn btn-primary mt-3 d-none" id="save">Save</button>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End: Profile Information -->
-                </div>
-
-                <div class="account-profile-content link-course">
-                    <!-- Begin: Course -->
-                    <div class="content-container">
-                        <div class="content-header">
-                            My Course
-                        </div>
-                        <div class="account-content">
-                            <div class="account-avatar-container">
-                                <!-- Begin: Account Course -->
-                                <div class="account-information-section mt-4">
-                                    <h4>Course Progress</h4>
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card" style="border-radius: 6px; overflow: hidden; height: 360px;">
-                                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top"
-                                                     style="width: 100%; object-fit: cover; max-height: 200px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="font-weight: 600;">HTML CSS</h5>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                     alt="">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">Lynda</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>51 Students</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progress mt-3">
-                                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card" style="border-radius: 6px; overflow: hidden; height: 360px;">
-                                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top"
-                                                     style="width: 100%; object-fit: cover; max-height: 200px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="font-weight: 600;">HTML CSS</h5>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                     alt="">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">Lynda</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>51 Students</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progress mt-3">
-                                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card" style="border-radius: 6px; overflow: hidden; height: 360px;">
-                                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top"
-                                                     style="width: 100%; object-fit: cover; max-height: 200px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="font-weight: 600;">HTML CSS</h5>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                     alt="">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">Lynda</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>51 Students</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progress mt-3">
-                                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card" style="border-radius: 6px; overflow: hidden; height: 360px;">
-                                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top"
-                                                     style="width: 100%; object-fit: cover; max-height: 200px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="font-weight: 600;">HTML CSS</h5>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                     alt="">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">Lynda</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>51 Students</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progress mt-3">
-                                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <div class="card" style="border-radius: 6px; overflow: hidden; height: 360px;">
-                                                <img src="assets/img/htmlcss.avif" alt="" class="card-img-top"
-                                                     style="max-height: 200px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" style="font-weight: 600;">HTML CSS</h5>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                     alt="">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">Lynda</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>51 Students</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="progress mt-3">
-                                                        <div class="progress-bar" role="progressbar" style="width: 25%;"
-                                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End: Account Course -->
                             </div>
                         </div>
                     </div>

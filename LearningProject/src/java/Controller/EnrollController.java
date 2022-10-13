@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
+import Model.Course;
+import Model.User;
 import Model.UserCourse;
 import dal.CourseDAO;
+import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,62 +17,77 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
+import org.apache.tomcat.util.net.SSLSupport;
 
 /**
  *
  * @author ASUS
  */
 public class EnrollController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
+            throws ServletException, IOException {
+
         //Enroll in Course Detail
         CourseDAO cDAO = new CourseDAO();
-         UserDAO u = new UserDAO();
-         HttpSession ses = request.getSession();
+        UserDAO u = new UserDAO();
+        HttpSession ses = request.getSession();
         //enroll in course detail
         String op = request.getParameter("op");
         int CourseID = Integer.parseInt(request.getParameter("id"));
-        
-       if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+        if (op.equals("Enroll") && ses.getAttribute("username") != null) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
             u.insertIntoUserCourse(UserID, CourseID);
             request.getRequestDispatcher("CourseDetails").forward(request, response);
-       }    else {
-           response.sendRedirect("login");
-       }
-        
-        
-        
+        } else {
+            response.sendRedirect("login");
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
+            throws ServletException, IOException {
+
         //Enroll in home page
         UserDAO u = new UserDAO();
-        HttpSession ses = request.getSession();
-        int CourseID = Integer.parseInt(request.getParameter("courseID"));        
+        CourseDAO cDAO = new CourseDAO();
+        HttpSession ses = request.getSession();        
+        int CourseID = Integer.parseInt(request.getParameter("courseID"));
         String op = request.getParameter("op");
         
-        if (op.equals("Enroll") && ses.getAttribute("username") != null ) {
+        PaymentDAO paymentDAO = new PaymentDAO();
+        Course course = cDAO.getAllCourseInformation(CourseID);
+        if (op.equals("Enroll") && ses.getAttribute("username") != null) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-        
+
             u.insertIntoUserCourse(UserID, CourseID);
             response.sendRedirect("home");
-            
-        } else if(op.equals("Go to Course") && ses.getAttribute("username") != null ){
-            response.sendRedirect("WatchCourse?courseID="+CourseID);
-        }
-        else  {
+
+        } else if (op.equals("Go to Course") && ses.getAttribute("username") != null) {
+            response.sendRedirect("WatchCourse?courseID=" + CourseID);
+        } else if ((op.equals("Buy now") && ses.getAttribute("username") != null)) {
+            User user = (User) ses.getAttribute("user");
+            int coursePrice = (int)Double.parseDouble(request.getParameter("coursePrice"));
+            if (user.getBalance() < coursePrice) {
+                PrintWriter out = response.getWriter();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Tài khoản không đủ tiền để mua khóa học');");
+                out.println("location='home';");
+                out.println("</script>");
+                return;
+            }
+            Date date = new Date();
+            java.sql.Date sqldate = new java.sql.Date(date.getTime());
+            paymentDAO.userRecharge(user.getUserId(), sqldate, (-coursePrice), 1, "Buy", "Buy course " + course.getCourseName());
+            u.insertIntoUserCourse(user.getUserId(), CourseID);
+            response.sendRedirect("home");
+        } else {
             response.sendRedirect("login");
         }
-        
-                                
+
     }
-
-
 
 }

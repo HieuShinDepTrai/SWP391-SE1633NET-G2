@@ -22,9 +22,9 @@
                     <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
                 </div>
                 <div class="header-profile">
-                    <div class="header-mycourse">
-                        Khóa học của tôi
-                    </div>
+                    <a href="Payment.jsp" class="header-mycourse" style="text-decoration: none;color: #707070;">
+                        Nạp tiền vào tài khoản
+                    </a>
                     <div class="header-notification" onclick="event.stopPropagation()">
                         <i class="fa-solid fa-bell"></i>
                         <div class="notification-cotainer" onclick="event.stopPropagation()">
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="menu-element">
                                         <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
+                                        <a href="userdashboard" class="menu-title">Khóa học của tôi</a>
                                     </div>
                                     <div class="menu-element">
                                         <i class="fa-solid fa-gear"></i>
