@@ -36,8 +36,8 @@ public class QuestionDAO extends DBContext {
                     + "where q.QuestionID = ?", questionID);
             ArrayList<Answer> answers = new ArrayList<>();
             boolean status = false;
-            while(rs.next()) {
-                if(status == false) {
+            while (rs.next()) {
+                if (status == false) {
                     q.setQuestionId(rs.getInt("QuestionID"));
                     q.setQuestionContent(rs.getString("QuestionContent"));
                     status = true;
@@ -51,4 +51,20 @@ public class QuestionDAO extends DBContext {
         }
         return q;
     }
+
+    public int addQuestion(Question question) {
+        try {
+            ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Question')\n"
+                    + "insert into Question\n"
+                    + "values(?, ?) ", question.getQuestionContent(), question.getQuizId());
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("addQuestion: ");
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 }

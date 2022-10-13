@@ -7,6 +7,7 @@ function addAnswer() {
             <div class="mb-3">
                 <div class="card card-body w-50 bg-success text-white d-inline-block">
                     ${answerContent}
+                    <input type="hidden" name="answer" value="${answerContent}-true">
                 </div>
                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal" onclick="editAnswer($(this).prev())">Edit</div>
                 <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove</div>
@@ -17,6 +18,7 @@ function addAnswer() {
             <div class="mb-3">
                 <div class="card card-body w-50 bg-danger text-white d-inline-block">
                     ${answerContent}
+                    <input type="hidden" name="answer" value="${answerContent}-false">
                 </div>
                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal" onclick="editAnswer($(this).prev())">Edit</div>
                 <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove</div>

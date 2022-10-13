@@ -121,47 +121,45 @@
             </div>
 
             <!-- Modal Add Question -->
-            <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModal"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addQuestionModal">Add Question</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
-                            <div class="mb-3">
-                                <label for="Question" class="form-label fw-bold">Question Content</label>
-                                <input type="text" class="form-control">
+            <form action="QuizQuestion?type='add'&quizID=${quizID}&lessonID=${lessonID}" method="post">                
+                <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModal"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addQuestionModal">Add Question</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div id="AnswerList">
-
-                                <label for="Answer" class="form-label fw-bold">Answer</label>
-
-                                <!-- <div class="card card-body w-50 mb-3 bg-danger text-white">
-                                Answer1
-                            </div> -->
+                            <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
                                 <div class="mb-3">
-                                    <div class="card card-body w-50 bg-success text-white d-inline-block">
-                                        Answer1
-                                    </div>
-                                    <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal"
-                                         onclick="editAnswer($(this).prev())">Edit</div>
-                                    <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove
-                                    </div>
+                                    <label for="Question" class="form-label fw-bold">Question Content</label>
+                                    <textarea class="form-control" name="questionContent"></textarea>
                                 </div>
+                                <div id="AnswerList">
+                                    <label for="Answer" class="form-label fw-bold">Answer</label>
+                                    <div class="mb-3">
+                                        <div class="card card-body w-50 bg-success text-white d-inline-block">
+                                            Answer1
+                                            <input type="hidden" name="answer" value="Answer1-true">
+                                        </div>
+                                        <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal"
+                                             onclick="editAnswer($(this).prev())">Edit</div>
+                                        <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
+                                    Answer</div>
                             </div>
-                            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
-                                Answer</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-primary" value="Save changes">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <!-- Modal Add Question -->
 
             <!-- Modal Add Answer -->

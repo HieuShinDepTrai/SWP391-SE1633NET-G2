@@ -83,7 +83,7 @@ public class QuizQuestionController extends HttpServlet {
                     }
                     
                 }
-                
+                request.setAttribute("lessonID", lessonID);
                 request.setAttribute("quizID", quizID);
                 request.setAttribute("questionList", questionList);
                 request.setAttribute("answerList", answerList);
@@ -105,12 +105,44 @@ public class QuizQuestionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String mode = request.getParameter("mode");
-        switch (mode) {
-            case "ViewQuestion":
-                viewQuestion(request, out);
-                break;
+//        PrintWriter out = response.getWriter();
+//        String mode = request.getParameter("mode");
+//        switch (mode) {
+//            case "ViewQuestion":
+//                viewQuestion(request, out);
+//                break;
+//        }
+
+        User u = (User) request.getSession().getAttribute("user");
+        
+        LessonDAO ldao = new LessonDAO();
+        QuestionDAO qdao = new QuestionDAO();
+        AnswerDAO ansdao = new AnswerDAO();
+        // Check Mentor role
+        if(u.getRole().equals("Mentor")) {
+            // Check if type equal add action
+            
+            if(request.getParameter("type") != null) {
+                
+                // Get question content
+                String questionContent = request.getParameter("questionContent");
+                int quizID = Integer.parseInt(request.getParameter("quizID"));
+                // Add question to DB and get question ID
+                int questionID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+                
+                String[] answers = request.getParameterValues("answer");
+                for (String answer : answers) {
+                    String[] answerSplit = answer.split("[-]");
+                    String answerContent = answerSplit[0];
+                    String isAnswerString = answerSplit[1];
+                    ansdao.addAnswer(new Answer(0, answerContent, questionID, isAnswerString.equals("true")));
+                }
+                
+                int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+                response.sendRedirect("QuizQuestion?lessonID="+lessonID);
+            }
+        } else {
+            response.sendRedirect("home");
         }
     }
 
@@ -123,11 +155,11 @@ public class QuizQuestionController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void viewQuestion(HttpServletRequest request, PrintWriter out) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        QuestionDAO qdao = new QuestionDAO();
-        Question q = qdao.getQuestionAndAnswer(id);
-        
-    }
+//    private void viewQuestion(HttpServletRequest request, PrintWriter out) {
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        QuestionDAO qdao = new QuestionDAO();
+//        Question q = qdao.getQuestionAndAnswer(id);
+//        
+//    }
 
 }
