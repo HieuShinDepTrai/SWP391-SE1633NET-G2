@@ -1,8 +1,8 @@
 function addAnswer() {
     let answerContent = $("#addAnswer").val();
     let isAnswer = $("#isAnswer").prop('checked');
-    if(answerContent !== "") {
-        if(isAnswer) {
+    if (answerContent !== "") {
+        if (isAnswer) {
             $("#AnswerList").append(`
             <div class="mb-3">
                 <div class="card card-body w-50 bg-success text-white d-inline-block">
@@ -41,13 +41,13 @@ function editAnswer(current) {
     // console.log(answerContent);
     let isAnswer = false;
 
-    if($(current).hasClass("bg-success")) {
+    if ($(current).hasClass("bg-success")) {
         isAnswer = true;
     }
-    
+
     $("#editAnswer").val(answerContent);
-    
-    if(isAnswer) {
+
+    if (isAnswer) {
         $("#editIsAnswer").prop("checked", true);
     } else {
         $("#editIsAnswer").prop("checked", false);
@@ -58,21 +58,37 @@ function editAnswer(current) {
 function saveEditAnswer() {
     let editAnswerContent = document.getElementById("editAnswer");
     let isAnswer = document.getElementById("editIsAnswer");
-    
+
     $(editAnswerObj).html(editAnswerContent.value);
 
     //Nếu như tích answer và obj là btn-danger → đổi màu
-    if(isAnswer.checked && $(editAnswerObj).hasClass("bg-danger")) {
+    if (isAnswer.checked && $(editAnswerObj).hasClass("bg-danger")) {
         $(editAnswerObj).removeClass("bg-danger");
         $(editAnswerObj).addClass("bg-success");
     }
 
     //Nếu như bỏ tích answer mà obj là btn-success → đổi 
-    if(!isAnswer.checked && $(editAnswerObj).hasClass("bg-success")) {
+    if (!isAnswer.checked && $(editAnswerObj).hasClass("bg-success")) {
         $(editAnswerObj).removeClass("bg-success");
         $(editAnswerObj).addClass("bg-danger");
     }
-    
+
     editAnswerObj = null;
     $('#editAnswerModal').modal('toggle');
 }
+
+
+//function sendParameter(param) {
+//    let index = param.getAttribute("index");
+////    $.ajax({
+////        url: "/LearningProject/QuizQuestion",
+////        type: "post",
+////        data: {
+////
+////        },
+////        success: function (response) {
+////
+////        }
+////    });
+//    $("#editQuestionModal").modal("show");
+//}

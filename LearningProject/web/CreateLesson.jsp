@@ -69,8 +69,7 @@
                                     <td>${lesson.getTime()}</td>
                                     <td>
                                         <c:if test="${lesson.getType() == 'Quiz'}">
-                                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#quizQuestion">Question</button>
+                                            <a class="btn btn-primary"href="QuizQuestion?lessonID=${lesson.getLessonId()}">Question</a>
                                         </c:if>
                                         <button class="btn btn-primary">Delete</button>
                                         <button class="btn btn-primary">Edit</button>
