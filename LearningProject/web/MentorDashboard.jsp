@@ -37,24 +37,52 @@
             <div id="content" >
                 <!-- Begin: Side Bar -->
                 <div id="side-bar">
-                    <a class="bar-button " href="home">
+                    <c:if test="${user.role == 'Mentor'}">
+                        <a style="
+                           display: block;
+                           width: 36px;
+                           display: flex;
+                           justify-content: center;
+                           align-items: center;
+                           height: 36px;
+                           padding: 19px;
+                           border-radius: 50%;
+                           background-color: var(--bs-orange);
+                           margin: 0 auto 10px auto;
+                           " href="CreateCourse" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                            <i class="fa-solid fa-plus" style="
+                               font-size: 24px;
+                               /* padding: 10px; */
+                               color: white;
+                               "></i>
+                        </a>
+                    </c:if>
+                    <a class="bar-button" href="home">
                         <i class="fa-solid fa-house"></i>
                         <p class="button-title">Home</p>
                     </a>
                     <c:if test="${user.role == 'User'}">
-                        <a class="bar-button " href="#">
+                        <a class="bar-button " href="userdashboard">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">User Dashboard</p>
                         </a>
                     </c:if>
                     <c:if test="${user.role == 'Admin'}">
+                        <a class="bar-button " href="userdashboard">
+                            <i class="fa-solid fa-road"></i>
+                            <p class="button-title text-center">User Dashboard</p>
+                        </a>
                         <a class="bar-button " href="#">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">Admin Dashboard</p>
                         </a>
                     </c:if>
                     <c:if test="${user.role == 'Mentor'}">
-                        <a class="bar-button button-hover" href="#">
+                        <a class="bar-button " href="userdashboard">
+                            <i class="fa-solid fa-road"></i>
+                            <p class="button-title text-center">User Dashboard</p>
+                        </a>
+                        <a class="bar-button button-hover" href="mentordashboard">
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title text-center">Mentor Dashboard</p>
                         </a>
@@ -116,7 +144,64 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid">
+                    <div class="container-fluid" style="background-image: unset; height: unset;">
+                        <div class="user-dashboard py-4">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="fw-bold">Overview</h5>
+                                    <div class="row gy-3">
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of course</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>1234</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of account</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>1234</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of blog</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>02</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="overview p-4 bg-white">
+                                                <div class="overview-header mb-2">
+                                                    <h6>All number of quiz</h6>
+                                                </div>
+                                                <div class="overview-content d-flex justify-content-between">
+                                                    <p>02</p>
+                                                    <i class="fa-solid fa-laptop overview-content-img"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid" style="background-image: unset; height: unset;">
                         <div class="row">
                             <h3 class="fw-bold my-3">My Course I Have Created</h3>
                         </div>
@@ -160,6 +245,7 @@
                             </c:forEach>
                         </div>
                     </div>
+
 
                 </section>
                 <!-- End: Section Content -->

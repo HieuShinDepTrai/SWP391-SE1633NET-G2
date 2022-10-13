@@ -11,10 +11,12 @@ import Model.Section;
 import Model.Comment;
 import Model.CurrentCourse;
 import Model.User;
+import Model.Video;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
 import dal.CommentDAO;
+import dal.VideoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,20 +72,19 @@ public class CourseWatchController extends HttpServlet {
             throws ServletException, IOException {
 
         CommentDAO cmtDao = new CommentDAO();
+       
 //        int parentId = Integer.parseInt(request.getParameter("parentID"));
         
 //        ArrayList<Comment> replyComment = cmtDao.ListAllReplyCommentByParentId(parentId);
-        ArrayList<Comment> parentComment = cmtDao.ListAllCommentByIsNotReplyComment();
-        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+       
+        
+        
+       // ArrayList<Video> videoList = vidDAO.getAllVideo();
 //        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
 
-        int count = 0;
-        for (Comment c : commentList) {
-            count ++;
-        }
-        int numberOfComments = count;
+        
         CourseDAO cdao = new CourseDAO();
         SectionDAO sdao = new SectionDAO();
         LessonDAO ldao = new LessonDAO();
@@ -92,6 +93,8 @@ public class CourseWatchController extends HttpServlet {
         int courseID = 0;
         int sectionID = 0;
         int lessonID = 0;
+        
+        
         HttpSession session = request.getSession();
         if (request.getParameter("courseID") != null) {
             courseID = Integer.parseInt(request.getParameter("courseID"));
@@ -116,6 +119,18 @@ public class CourseWatchController extends HttpServlet {
 
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
+        ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
+        
+        ArrayList<Comment> commentOfLesson = cmtDao.ListAllCommentByLessonID(lessonID);
+        
+        
+        int count = 0;
+        //list the number of comments by lessonID
+       for (Comment com : commentOfLesson) {
+            count ++;
+        }
+        int numberOfComments = count;
+        
         ArrayList<Section> listSection = sdao.getAllSectionOfCourse(courseID);
         ArrayList<Lesson> listLesson = new ArrayList<>();
         for (Section section : listSection) {
@@ -128,10 +143,13 @@ public class CourseWatchController extends HttpServlet {
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
         
         
+        //number comments
         request.setAttribute("numberOfComments", numberOfComments);
-
-//        request.setAttribute("replyComment", replyComment);
-        request.setAttribute("parentComment", parentComment);
+        //all comment of leeson
+        request.setAttribute("commentOfLesson", commentOfLesson);
+        
+        //all comment with parentID = 0
+        request.setAttribute("parentComment", parentCommentOfLesson);
         // Send video list to jsp
         request.setAttribute("lesson", lesson);
         request.setAttribute("course", c);
@@ -142,7 +160,7 @@ public class CourseWatchController extends HttpServlet {
         request.setAttribute("courseID", courseID);
         request.setAttribute("sectionID", sectionID);
         request.setAttribute("lessonID", lessonID);
-        request.setAttribute("commentList", commentList);
+        
 
         request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {

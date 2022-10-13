@@ -22,18 +22,60 @@
                 <!-- Begin: Side Bar -->
                 <div id="side-bar-container">
                     <div id="side-bar">
-                        <div class="bar-button" onclick="activeHome()">
+                        <c:if test="${user.role == 'Mentor'}">
+                            <a style="
+                               display: block;
+                               width: 36px;
+                               display: flex;
+                               justify-content: center;
+                               align-items: center;
+                               height: 36px;
+                               padding: 19px;
+                               border-radius: 50%;
+                               background-color: var(--bs-orange);
+                               margin: 0 auto 10px auto;
+                               " href="CreateCourse" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                                <i class="fa-solid fa-plus" style="
+                                   font-size: 24px;
+                                   /* padding: 10px; */
+                                   color: white;
+                                   "></i>
+                            </a>
+                        </c:if>
+                        <a class="bar-button" href="home">
                             <i class="fa-solid fa-house"></i>
                             <p class="button-title">Home</p>
-                        </div>
-                        <div class="bar-button button-hover" onclick="activeCourse()">
-                            <i class="fa-solid fa-road"></i>
-                            <p class="button-title text-center">User Dashboard</p>
-                        </div>
-                        <div class="bar-button">
+                        </a>
+                        <c:if test="${user.role == 'User'}">
+                            <a class="bar-button  button-hover" href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                        </c:if>
+                        <c:if test="${user.role == 'Admin'}">
+                            <a class="bar-button  button-hover" href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                            <a class="bar-button " href="#">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">Admin Dashboard</p>
+                            </a>
+                        </c:if>
+                        <c:if test="${user.role == 'Mentor'}">
+                            <a class="bar-button  button-hover" href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                            <a class="bar-button " href="mentordashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">Mentor Dashboard</p>
+                            </a>
+                        </c:if>
+                        <a class="bar-button">
                             <i class="fa-solid fa-newspaper"></i>
                             <p class="button-title">Blog</p>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <!-- End: Side Bar -->
@@ -104,7 +146,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-4">

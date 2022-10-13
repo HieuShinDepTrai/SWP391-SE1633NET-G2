@@ -41,6 +41,8 @@ public class UpdateSectionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SectionDAO sd = new SectionDAO();
         CourseDAO cd = new CourseDAO();
+        
+        int courseId = Integer.parseInt(request.getParameter("courseid"));
 
         if (request.getParameter("button") != null) {
             if (request.getParameter("button").equals("Edit")) {
@@ -49,25 +51,24 @@ public class UpdateSectionController extends HttpServlet {
 
                 sd.editSectionName(sectionId, sectionName);
                 
-                doGet(request, response);
+                response.sendRedirect("updatesection?courseid=" + courseId);
             }
             if (request.getParameter("button").equals("Delete")) {
                 int sectionId = Integer.parseInt(request.getParameter("sectionid"));
                 sd.disableSection(sectionId);
                 
-                doGet(request, response);
+                response.sendRedirect("updatesection?courseid=" + courseId);
             }
             if (request.getParameter("button").equals("Add section")) {
-                int courseId = Integer.parseInt(request.getParameter("courseid"));
                 String sectionName = request.getParameter("SectionName");
                 Section section = new Section(0, courseId, sectionName, false);
                 sd.addSection(section);
                 
-                doGet(request, response);
+                response.sendRedirect("updatesection?courseid=" + courseId);
             }
             if (request.getParameter("button").equals("Save changes")) {
-                int courseId = Integer.parseInt(request.getParameter("courseid"));
-                cd.createSaveChangesCourse(courseId);
+                
+                cd.enableCourse(courseId);
 
                 response.sendRedirect("home");
             }

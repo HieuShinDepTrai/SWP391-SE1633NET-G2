@@ -18,11 +18,11 @@ import java.util.logging.Logger;
  */
 public class AccountDBContext extends DBContext {
        
-    public String findAccWithEmail(String email) {
+    public String findAccWithUsername(String username) {
         try {
-            ResultSet rs = executeQuery("SELECT * FROM [User] where Email = ?", email);
+            ResultSet rs = executeQuery("SELECT * FROM [User] where Username = ?", username);
             if (rs.next()) {
-                return rs.getString("Email");
+                return rs.getString("Username");
             }
 //            String sql = "select * from Account";                                    
 //            ResultSet rs = executeQuery(sql);
@@ -34,9 +34,9 @@ public class AccountDBContext extends DBContext {
         return null;
     }
 
-    public String findOldPassWithEmail(String email) {
+    public String findOldPassWithUsername(String username) {
         try {
-            ResultSet rs = executeQuery("SELECT * FROM [User] where Email = ?", email);
+            ResultSet rs = executeQuery("SELECT * FROM [User] where Username = ?", username);
             if (rs.next()) {
                 return rs.getString("Password");
             }
@@ -50,9 +50,9 @@ public class AccountDBContext extends DBContext {
         return "Not found";
     }
 
-    public void update(String email, String password) {
+    public void update(String username, String password) {
         executeUpdate("update [User] \n"
                 + "set Password = ?\n"
-                + "where Email = ? ", password, email);
+                + "where Username = ? ", password, username);
     }
 }

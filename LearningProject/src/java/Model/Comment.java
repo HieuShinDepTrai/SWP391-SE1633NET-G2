@@ -15,6 +15,7 @@ public class Comment {
     private int videoId;
     private int UserId;
     private int ParentId;
+    private String commentUser;
     private String commentContent;
     private Date commentDate;
     private int likes;
@@ -24,18 +25,18 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId,int UserId,int ParentId, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId, int UserId, int ParentId, String commentUser, String commentContent, Date commentDate, int likes, boolean isReported) {
         this.commentId = commentId;
         this.videoId = videoId;
         this.UserId = UserId;
         this.ParentId = ParentId;
+        this.commentUser = commentUser;
         this.commentContent = commentContent;
         this.commentDate = commentDate;
         this.likes = likes;
         this.isReported = isReported;
     }
 
-    
     public int getCommentId() {
         return commentId;
     }
@@ -67,8 +68,14 @@ public class Comment {
     public void setParentId(int ParentId) {
         this.ParentId = ParentId;
     }
-    
-    
+
+    public String getCommentUser() {
+        return commentUser;
+    }
+
+    public void setCommentUser(String commentUser) {
+        this.commentUser = commentUser;
+    }
 
     public String getCommentContent() {
         return commentContent;
@@ -101,6 +108,9 @@ public class Comment {
     public void setIsReported(boolean isReported) {
         this.isReported = isReported;
     }
+
+
+    
     
     
 }

@@ -75,6 +75,17 @@ public class User {
         this.isDisable = isDisable;
     }
 
+    public User(String firstName, String lastName, String email, String phone, float balance, String avatar, String role, boolean isDisable) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.balance = balance;
+        this.avatar = avatar;
+        this.role = role;
+        this.isDisable = isDisable;
+    }
+    
     public int getUserId() {
         return userId;
     }

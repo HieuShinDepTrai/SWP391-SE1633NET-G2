@@ -35,7 +35,7 @@
                             <h3 class="fw-bold">Create Course</h3>
                             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                                 <ol class="breadcrumb" style="font-size: 13px">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="updatecourse?button=.&courseid=${course.getCourseID()}">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         Update Course
                                     </li>
