@@ -22,7 +22,7 @@ public class User {
     private String address;
     private Date dob;
     private String postCode;
-    private float balance;
+    private int balance;
     private String avatar;
     private String userName;
     private String password;
@@ -34,7 +34,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role, String bankNum, String bankName, boolean isDisable) {
+    public User(String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, int balance, String avatar, String userName, String password, String role, String bankNum, String bankName, boolean isDisable) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -54,7 +54,7 @@ public class User {
         this.isDisable = isDisable;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, float balance, String avatar, String userName, String password, String role, String bankNum, String bankName, boolean isDisable) {
+    public User(int userId, String firstName, String lastName, String email, String phone, String country, String city, String address, Date dob, String postCode, int balance, String avatar, String userName, String password, String role, String bankNum, String bankName, boolean isDisable) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -155,11 +155,11 @@ public class User {
         this.postCode = postCode;
     }
 
-    public float getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 

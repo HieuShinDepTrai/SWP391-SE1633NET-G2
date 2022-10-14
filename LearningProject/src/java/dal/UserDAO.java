@@ -106,7 +106,7 @@ public class UserDAO extends DBContext {
                 String bankNum = "";
                 String bankName = "";
                 Date dob = rs.getDate("DoB");
-                float balance = rs.getFloat("Balance");
+                int balance = rs.getInt("Balance");
                 String password = rs.getString("Password");
                 String role = rs.getNString("Role");
                 boolean isDisable = rs.getBoolean("isDisable");
@@ -173,7 +173,7 @@ public class UserDAO extends DBContext {
                 String bankNum = "";
                 String bankName = "";
                 Date dob = rs.getDate("DoB");
-                float balance = rs.getFloat("Balance");
+                int balance = rs.getInt("Balance");
                 String password = rs.getString("Password");
                 String role = rs.getNString("Role");
                 boolean isDisable = rs.getBoolean("isDisable");

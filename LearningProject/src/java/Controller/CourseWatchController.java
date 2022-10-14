@@ -14,10 +14,11 @@ import Model.Report;
 import Model.User;
 import Model.UserComment;
 import Model.Video;
-import dal.CourseDAO;
-import dal.LessonDAO;
+
 import dal.SectionDAO;
 import dal.CommentDAO;
+import dal.CourseDAO;
+import dal.LessonDAO;
 import dal.UserDAO;
 import dal.VideoDAO;
 import java.io.IOException;

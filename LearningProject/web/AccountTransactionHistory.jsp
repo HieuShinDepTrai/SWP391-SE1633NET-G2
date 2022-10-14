@@ -4,7 +4,9 @@
     Author     : Dung
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +43,7 @@
                     <div class="menu-list">
                         <div class="menu">
                             <i class="fa-solid fa-user"></i>
-                            <a href="#" class="menu-title">Personal Information</a>
+                            <a href="AccountProfile" class="menu-title">Personal Information</a>
                         </div>
                         <div class="menu  menu-active">
                             <i class="fa-solid fa-money-bill"></i>
@@ -61,25 +63,47 @@
                 <div class="account-profile-content link-profile active">
                     <!-- Begin: Profile Information -->
                     <div class="content-container">
-                        <div class="content-header">
+                        <div class="content-header d-flex justify-content-between">
                             Personal Information
+                            <div class="">
+                                <form action="withdraw" method="POST">    
+                                    <p>Input number to withdraw</p>
+                                    <input type="number" name="amount" class="form-control d-inline-block" style="width: 200px">
+                                    <button class="btn btn-secondary" type="submit">Submit</button>
+                                    <c:if test="${user.getBalance() < amount}">
+                                        <div></div>
+                                    </c:if>
+                                </form>
+                            </div>
                         </div>
                         <div class="w-100 bg-white">
                             <table class="table table-bordered">
                                 <thead>
-                                    <th>#</th>
-                                    <th>Transaction Date</th>
-                                    <th>Ammount</th>
-                                    <th>Transaction Type</th>
-                                    <th>Status</th>
+                                <th>#</th>
+                                <th>Transaction Date</th>
+                                <th>Ammount</th>
+                                <th>Transaction Type</th>
+                                <th>Status</th>
                                 </thead>
-                                <tbody>
-                                    <td>1</td>
-                                    <td>25/12/2002</td>
-                                    <td>100.000đ</td>
-                                    <td>Banking</td>
-                                    <td><div class="btn btn-danger">Successful</div></td>
-                                </tbody>
+                                <c:set var="i" value="1" scope="page"/>                                
+                                <c:forEach items="${paymentList}" var="payment">
+                                    <tbody>
+                                    <td>${i}</td>
+                                    <td><fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value = "${payment.rechargeDate}" /></td>
+                                    <td><fmt:formatNumber value="${payment.amount}" type="number" maxFractionDigits ="3"/>đ</td>
+                                    <td>${payment.method}</td>
+                                    <c:if test="${payment.status eq 0}">
+                                        <td><div class="btn btn-success">Successful</div></td>
+                                    </c:if>
+                                    <c:if test="${payment.status eq 1 ||payment.status eq 99}">
+                                        <td><div class="btn btn-danger">Error</div></td>
+                                    </c:if>
+                                    <c:if test="${payment.status eq 2}">
+                                        <td><div class="btn btn-warning">Pending</div></td>
+                                    </c:if>
+                                    </tbody>
+                                    <c:set var="i" value="${i+1}" scope="page"/>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
