@@ -10,6 +10,7 @@ import Model.Lesson;
 import Model.Section;
 import Model.Comment;
 import Model.CurrentCourse;
+import Model.Report;
 import Model.User;
 import Model.UserComment;
 import Model.Video;
@@ -151,10 +152,20 @@ public class CourseWatchController extends HttpServlet {
                 listLesson.add(lesson);
             }
         }
+        
+        ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(userId);
+        
+        ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
+        
+        for (Report report : listReport) {
+            userCommentIdOfReport.add(report.getCommentID());
+        }
+        
 
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
         
-        
+        //set arraylist ReportID by UserID
+        request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked
         request.setAttribute("userCmtId", userCmtId);
         
