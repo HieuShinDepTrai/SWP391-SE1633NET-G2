@@ -72,7 +72,7 @@ public class QuestionDAO extends DBContext {
             int deleteStatus = executeUpdate("delete Answer\n"
                     + "where QuestionID = ?\n"
                     + "delete Question\n"
-                    + "where QuestionID = ?", quesitonID);
+                    + "where QuestionID = ?", quesitonID, quesitonID);
             if(deleteStatus > 0) {
                 System.out.println("deleteQuestion: Delete Success");
             } else {

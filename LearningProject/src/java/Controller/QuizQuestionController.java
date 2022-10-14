@@ -92,7 +92,6 @@ public class QuizQuestionController extends HttpServlet {
                 request.getRequestDispatcher("QuizQuestion.jsp").forward(request, response);
             }
 
-            
         } else {
             response.sendRedirect("home");
         }
@@ -145,14 +144,12 @@ public class QuizQuestionController extends HttpServlet {
                 int lessonID = Integer.parseInt(request.getParameter("lessonID"));
                 response.sendRedirect("QuizQuestion?lessonID=" + lessonID);
             }
-            
+
             if (request.getParameter("delete") != null) {
                 int lessonID = Integer.parseInt(request.getParameter("lessonID"));
                 int quesitonID = Integer.parseInt(request.getParameter("questionID"));
                 qdao.deleteQuestion(quesitonID);
-                                response.sendRedirect("QuizQuestion?lessonID=" + lessonID);
-
-                        
+                response.sendRedirect("QuizQuestion?lessonID=" + lessonID);
             }
         } else {
             response.sendRedirect("home");

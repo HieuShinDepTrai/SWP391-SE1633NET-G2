@@ -5,9 +5,9 @@ function addAnswer() {
         if (isAnswer) {
             $("#AnswerList").append(`
             <div class="mb-3">
+                <input type="hidden" name="answer" value="${answerContent}-true">
                 <div class="card card-body w-50 bg-success text-white d-inline-block">
                     ${answerContent}
-                    <input type="hidden" name="answer" value="${answerContent}-true">
                 </div>
                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal" onclick="editAnswer($(this).prev())">Edit</div>
                 <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove</div>
@@ -16,9 +16,9 @@ function addAnswer() {
         } else {
             $("#AnswerList").append(`
             <div class="mb-3">
+                <input type="hidden" name="answer" value="${answerContent}-false">
                 <div class="card card-body w-50 bg-danger text-white d-inline-block">
                     ${answerContent}
-                    <input type="hidden" name="answer" value="${answerContent}-false">
                 </div>
                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal" onclick="editAnswer($(this).prev())">Edit</div>
                 <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove</div>
@@ -63,18 +63,27 @@ function saveEditAnswer() {
 
     $(editAnswerObj).html(editAnswerContent.value);
 
+    let valueHidden = $(editAnswerObj).prev();
+    if(isAnswer.checked) {
+        $(valueHidden).val(editAnswerContent.value + "-true");
+        console.log($(valueHidden).val());
+    } else {
+        $(valueHidden).val(editAnswerContent.value + "-false");
+                console.log($(valueHidden).val());
+    }
+    
     //Nếu như tích answer và obj là btn-danger → đổi màu
     if (isAnswer.checked && $(editAnswerObj).hasClass("bg-danger")) {
         $(editAnswerObj).removeClass("bg-danger");
         $(editAnswerObj).addClass("bg-success");
-    }
-
+    } 
+    
     //Nếu như bỏ tích answer mà obj là btn-success → đổi 
     if (!isAnswer.checked && $(editAnswerObj).hasClass("bg-success")) {
         $(editAnswerObj).removeClass("bg-success");
         $(editAnswerObj).addClass("bg-danger");
-    }
-
+    } 
+    
     editAnswerObj = null;
     $('#editAnswerModal').modal('toggle');
 }

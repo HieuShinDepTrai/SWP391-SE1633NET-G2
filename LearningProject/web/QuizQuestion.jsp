@@ -89,8 +89,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <form action="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}" method="post">
-                                            <input type="submit" href="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}'" class="btn btn-outline-danger" value="Delete">
+                                        <form action="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID=${question.getQuestionId()}" method="post" class="d-inline">
+                                            <input type="submit" href="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}'" class="btn btn-outline-danger d-inline-block" value="Delete">
                                             
                                         </form>
                                         <div class="btn btn-outline-primary" 
@@ -140,7 +140,7 @@
                                 </div>
                                 <div id="AnswerList">
                                     <label for="Answer" class="form-label fw-bold">Answer</label>
-                                    <div class="mb-3">
+<!--                                    <div class="mb-3">
                                         <div class="card card-body w-50 bg-success text-white d-inline-block">
                                             Answer1
                                             <input type="hidden" name="answer" value="Answer1-true">
@@ -149,7 +149,7 @@
                                              onclick="editAnswer($(this).prev())">Edit</div>
                                         <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                 </div>
                                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
