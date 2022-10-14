@@ -5,7 +5,7 @@
 
 package Controller;
 
-import Model.UserComment;
+import Model.Report;
 import dal.CommentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author ASUS
  */
-public class LikeCommentController extends HttpServlet {
+public class ReportController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +38,10 @@ public class LikeCommentController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LikeCommentController</title>");  
+            out.println("<title>Servlet ReportController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LikeCommentController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ReportController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,34 +58,32 @@ public class LikeCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CommentDAO cmtDAO = new CommentDAO();
+        
         UserDAO uDAO = new UserDAO();
+        CommentDAO cmtDAO = new CommentDAO();
         
         HttpSession ses = request.getSession();
-        String username = (String)ses.getAttribute("username");
-        int userId = uDAO.getAllUserInformation(username).getUserId();
+        
+        int UserId = uDAO.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
         int cmtId = Integer.parseInt(request.getParameter("CommentID"));
-        
-        ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-        
-        ArrayList<Integer> userCmtId = new ArrayList<>();
-        
-        for (UserComment userComment : listUserComment) {
-            userCmtId.add(userComment.getCommentId());
-        }
         
         String op = request.getParameter("op");
         
-        if (op.equals("Like")) {
-            cmtDAO.insertIntoUserComment(cmtId, userId, 1);
-        } else if (op.equals("Liked")) {
-            cmtDAO.deleteIntoUserComment(cmtId, userId);
+        ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(UserId);
+        
+        ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
+        
+        for (Report report : listReport) {
+            userCommentIdOfReport.add(report.getCommentID());
+        }
+       
+        if (op.equals("Report")) {
+            cmtDAO.insertIntoReport(UserId, cmtId);
+        } else if (op.equals("Reported")) {
+            cmtDAO.deleteIntoReport(UserId, cmtId);
         }
         
-        
-        request.setAttribute("userCmtId", userCmtId);
-        
-        
+        request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
                 + "&sectionID=" + request.getParameter("sectionID") 
                 + "&lessonID=" + request.getParameter("lessonID"));
