@@ -89,7 +89,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn btn-outline-danger">Delete</div>
+                                        <form action="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}" method="post">
+                                            <input type="submit" href="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}'" class="btn btn-outline-danger" value="Delete">
+                                            
+                                        </form>
                                         <div class="btn btn-outline-primary" 
                                              data-bs-target="#editQuestionModal" index="${question.getQuestionId()}" onclick="sendParameter(this)">Edit</div>
                                     </td>

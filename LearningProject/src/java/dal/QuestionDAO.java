@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class QuestionDAO extends DBContext {
-
+    
     public ArrayList<Question> getQuestionsOfQuiz(int quizId) {
         ArrayList<Question> questionlist = new ArrayList<Question>();
         try ( ResultSet rs = executeQuery("SELECT [QuestionID], [QuestionContent] FROM [dbo].[Question] WHERE [QuizID] = ?", quizId)) {
@@ -27,7 +27,7 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
-
+    
     public Question getQuestionAndAnswer(int questionID) {
         Question q = new Question();
         try {
@@ -51,7 +51,7 @@ public class QuestionDAO extends DBContext {
         }
         return q;
     }
-
+    
     public int addQuestion(Question question) {
         try {
             ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Question')\n"
@@ -66,5 +66,22 @@ public class QuestionDAO extends DBContext {
         }
         return -1;
     }
-
+    
+    public void deleteQuestion(int quesitonID) {
+        try {
+            int deleteStatus = executeUpdate("delete Answer\n"
+                    + "where QuestionID = ?\n"
+                    + "delete Question\n"
+                    + "where QuestionID = ?", quesitonID);
+            if(deleteStatus > 0) {
+                System.out.println("deleteQuestion: Delete Success");
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            System.out.println("deleteQuestion: ");
+            e.printStackTrace();
+        }
+    }
+    
 }
