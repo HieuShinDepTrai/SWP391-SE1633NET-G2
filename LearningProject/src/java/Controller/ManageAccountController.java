@@ -85,7 +85,13 @@ public class ManageAccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        UserDAO udao = new UserDAO();
+        int userid = 0;
+        if (request.getParameter("userid") != null) {
+            userid = Integer.parseInt(request.getParameter("userid"));
+            udao.DisableAccount(userid);
+            response.sendRedirect("manageaccount");
+        }
     }
 
     /**
