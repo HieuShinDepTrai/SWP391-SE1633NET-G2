@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.Answer;
+import Model.Lesson;
 import Model.Question;
 import Model.User;
 import dal.AnswerDAO;
@@ -84,6 +85,10 @@ public class QuizQuestionController extends HttpServlet {
                     }
 
                 }
+                
+                Lesson ls = ldao.getLessonbyLessonID(lessonID);
+
+                request.setAttribute("lesson", ls);
                 request.setAttribute("lessonID", lessonID);
                 request.setAttribute("quizID", quizID);
                 request.setAttribute("questionList", questionList);

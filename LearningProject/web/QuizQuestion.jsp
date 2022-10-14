@@ -108,12 +108,12 @@
                             <div class="p-3">
                                 <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Quiz
                                     Title</label>
-                                <input type="text" class="form-control" id="lessonTime" disabled>
+                                <input type="text" class="form-control" id="lessonTime" value="${lesson.getLessonName()}" disabled>
                             </div>
                             <div class="p-3">
                                 <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Lesson
                                     Time</label>
-                                <input type="text" class="form-control" id="lessonTime" disabled>
+                                <input type="text" class="form-control" id="lessonTime" value="${lesson.getTime()}" disabled>
                             </div>
 
                         </div>
