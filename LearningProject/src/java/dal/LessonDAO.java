@@ -16,6 +16,9 @@ import java.util.logging.Logger;
  * @author vuman
  */
 public class LessonDAO extends DBContext {
+
+    public LessonDAO() {
+    }
     
     public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL, int duration) {
         try {
