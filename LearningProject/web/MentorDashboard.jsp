@@ -208,6 +208,14 @@
 
                                                         <input type="hidden" name="courseid" value="${course.getCourseID()}">
                                                     </form>
+                                                    
+                                                    <form action="updatecourse" method="POST">                                                        
+
+                                                        <input type="submit" name="button" value="Delete">
+
+
+                                                        <input type="hidden" name="courseid" value="${course.getCourseID()}">
+                                                    </form>
 
                                                 </div>
                                             </div>

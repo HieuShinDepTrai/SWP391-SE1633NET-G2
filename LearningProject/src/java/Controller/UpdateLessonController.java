@@ -84,7 +84,7 @@ public class UpdateLessonController extends HttpServlet {
                 int courseId = Integer.parseInt(request.getParameter("courseid"));
                 int lessonId = Integer.parseInt(request.getParameter("LessonVideoId"));
                 String lessonName = request.getParameter("LessonVideoName");
-                String videoLink = request.getParameter("VideoLink");
+                String videoLink = request.getParameter("videolink");
                 int time = Integer.parseInt(request.getParameter("time_duration"));
 
                 ld.updateLessonVideo(lessonName, videoLink, lessonId, time);
@@ -107,7 +107,7 @@ public class UpdateLessonController extends HttpServlet {
                 int sectionId = Integer.parseInt(request.getParameter("sectionid"));
                 int courseId = Integer.parseInt(request.getParameter("courseid"));
                 String lessonName = request.getParameter("lessonvideoname");
-                String videoURL = request.getParameter("videolink");
+                String videoURL = request.getParameter("video_url");
                 int duration = Integer.parseInt(request.getParameter("duration"));
 
                 ld.addLessonVideo(sectionId, lessonName, lessonName, videoURL, duration);

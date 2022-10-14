@@ -15,17 +15,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Elearning</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
         <link rel="stylesheet" href="assets/css/create_course.css" />
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
-            </style>
+        </style>
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: '#mytextarea'
+                selector: 'textarea'
             });
+
+
         </script>
         <script src="assets/js/add_lesson.js" type="text/javascript"></script>
     </head>
@@ -69,7 +71,17 @@
                                     <td>${lesson.getTime()}</td>
                                     <td>
                                         <button class="btn btn-primary">Delete</button>
-                                        <button class="btn btn-primary">Edit</button>
+                                        <c:forEach items="${videolist}" var="video">
+                                            <c:if test="${video.getLessonId() == lesson.getLessonId()}">
+                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-video-url="${video.getVideoLink()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach items="${docslist}" var="docs">
+                                            <c:if test="${docs.getLessonId() == lesson.getLessonId()}">
+                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-docs-content="${docs.getContent()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                            </c:if>
+                                        </c:forEach>
                                     </td>
                                 </tr>
                                 <% 
@@ -252,6 +264,102 @@
                         </div>
                     </div>
                     <!-- Modal Quizz-->
+
+
+
+
+
+
+                    <!-- Modal Document-->
+                    <form action="AddLesson" method="POST">
+                        <input type="hidden" name="sectionID" value="${sectionID}">
+                        <input type="hidden" name="courseID" value="${courseID}">
+                        <input type="hidden" name="LessonDocsId" value="${courseID}" id="LessonDocsId">
+                        <div class="modal fade" id="Docs" tabindex="-1" aria-labelledby="document" aria-hidden="true">
+                            <div class="modal-dialog modal-fullscreen">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Update
+                                            Document</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body py-5" style="padding-left: 240px; padding-right: 240px;">
+                                        <h4 class="fw-bolder">Update Document</h4>
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <label for="LessonTitle" class="form-label fw-bold">Lesson Title</label>
+                                                <input type="text" class="form-control" name="LessonDocsName" id="LessonDocsName">
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="LessonTitle" class="form-label fw-bold">Time to read (milliseconds)</label>
+                                                <input type="number" class="form-control" name="Time" id="Time">
+                                            </div>
+                                            <div class="col-12 mb-3">
+                                                <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
+                                                <textarea name="DocsContent" id="DocsContent" cols="30" rows="10" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" name="button" class="btn btn-primary" value="Update document">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Modal Document-->
+
+                    <!-- Modal Video-->
+                    <form action="AddLesson" method="POST" data-type="Video">
+                        <input type="hidden" name="sectionID" value="${sectionID}">
+                        <input type="hidden" name="courseID" value="${courseID}">
+                        <input type="hidden" name="LessonVideoId" value="${courseID}" id="LessonVideoId">
+                        <div class="modal fade" id="Video" tabindex="-1" aria-labelledby="video" aria-hidden="true">
+                            <div class="modal-dialog modal-fullscreen">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Update
+                                            Video</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body py-5" style="padding-left: 240px; padding-right: 240px;">
+                                        <h4 class="fw-bolder">Edit Video</h4>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="video-preview">
+                                                    <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="Url-preview" style="display: none;"></iframe>
+                                                    <input name="videolink" type="hidden" value="" id="videolink">
+                                                    <i class="fa-brands fa-youtube icon-youtube"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="col-12 mb-3">
+                                                    <label for="Lesson title">Lesson title</label>
+                                                    <input type="text" class="form-control" name="LessonVideoName" id="LessonVideoName">
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <label for="Lesson title">Video URL</label>
+                                                    <input name="VideoLink" type="text" class="form-control" id="VideoLink" oninput="video_preview_update()">
+                                                </div>
+                                                <input type="text" class="d-none" name="time_duration">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="button" value="Update video">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="button" class="btn btn-primary" value="Update video" onclick="doSubmit2()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Modal Video-->
                 </div>
             </section>
             <!-- End: Create Course -->

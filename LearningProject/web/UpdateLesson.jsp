@@ -24,8 +24,10 @@
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: '#mytextarea'
+                selector: 'textarea'
             });
+
+
         </script>
     </head>
 
@@ -283,7 +285,8 @@
                                         <div class="row">
                                             <div class="col-8">
                                                 <div class="video-preview">
-                                                    <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>                                        
+                                                    <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="url-preview" style="display: none;"></iframe>   
+                                                    <input name="video_url" type="hidden" value="" id="video-URL">
                                                     <i class="fa-brands fa-youtube icon-youtube"></i>
                                                 </div>
                                             </div>
@@ -413,7 +416,8 @@
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="video-preview">
-                                                <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="Url-preview" style="display: none;"></iframe>                                        
+                                                <iframe width="100%" height="420" src="https://www.youtube.com/embed/wHviCc5NZFQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" id="Url-preview" style="display: none;"></iframe> 
+                                                <input name="videolink" type="hidden" value="" id="videolink">
                                                 <i class="fa-brands fa-youtube icon-youtube"></i>
                                             </div>
                                         </div>
@@ -489,9 +493,11 @@ crossorigin="anonymous"></script>
                                                 document.getElementById("VideoLink").value = target.getAttribute("data-video-url");
                                                 document.getElementById("LessonVideoId").value = target.getAttribute("data-lesson-id");
                                             } else if (target.getAttribute("data-lesson-type") == "Docs") {
+                                                tinyMCE.activeEditor.setContent('');
                                                 document.getElementById("LessonDocsName").value = target.getAttribute("data-lesson-name");
                                                 document.getElementById("Time").value = target.getAttribute("data-lesson-time");
                                                 document.getElementById("DocsContent").value = target.getAttribute("data-docs-content");
+                                                tinymce.activeEditor.selection.setContent(target.getAttribute("data-docs-content"));
                                                 document.getElementById("LessonDocsId").value = target.getAttribute("data-lesson-id");
                                             } else {
 
@@ -519,7 +525,7 @@ crossorigin="anonymous"></script>
                                             $('#Url-preview').css('display', 'block');
                                             console.log($('#Url-preview').attr('src'));
                                             $('.icon-youtube').css('display', 'none');
-                                            $('#VideoLink').val($('#Url-preview').attr('src'));
+                                            $('#videolink').val($('#Url-preview').attr('src'));
                                         }
 
                                         function youtube_parser(url) {
