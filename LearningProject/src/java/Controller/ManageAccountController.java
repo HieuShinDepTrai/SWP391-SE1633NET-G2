@@ -87,9 +87,16 @@ public class ManageAccountController extends HttpServlet {
             throws ServletException, IOException {
         UserDAO udao = new UserDAO();
         int userid = 0;
+        String isdisable = "";
         if (request.getParameter("userid") != null) {
             userid = Integer.parseInt(request.getParameter("userid"));
-            udao.DisableAccount(userid);
+            isdisable = request.getParameter("isdisable");
+            if(isdisable.compareToIgnoreCase("true") == 0) {
+                udao.EnableAccount(userid);
+            }
+            else {
+                udao.DisableAccount(userid);
+            }
             response.sendRedirect("manageaccount");
         }
     }

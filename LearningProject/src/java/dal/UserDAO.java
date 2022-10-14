@@ -374,7 +374,7 @@ public class UserDAO extends DBContext {
                     + "	[Balance],\n"
                     + "	[isDisable]\n"
                     + "FROM [dbo].[User] \n"
-                    + "WHERE [Role] = 'Mentor' OR [Role] = 'User' AND [isDisable] = 0");
+                    + "WHERE [Role] = 'Mentor' OR [Role] = 'User'");
             while (rs.next()) {
                 String avatar = rs.getString("Avatar");
                 if (avatar == null) {
@@ -401,6 +401,16 @@ public class UserDAO extends DBContext {
         try {
             executeUpdate("UPDATE [User]\n"
                 + "SET [isDisable] = 1\n"
+                + "WHERE [UserID] = ?", userid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void EnableAccount(int userid) {
+        try {
+            executeUpdate("UPDATE [User]\n"
+                + "SET [isDisable] = 0\n"
                 + "WHERE [UserID] = ?", userid);
         } catch (Exception e) {
             e.printStackTrace();
