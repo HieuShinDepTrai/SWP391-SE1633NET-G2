@@ -124,12 +124,16 @@
                                         <c:forEach items="${listLesson}" var="lesson">
                                             <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
+
+
+
                                                 <!-- course lesson child -->
                                                 <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                     <div class="course-lesson-child  px-4 py-2">
                                                         <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
                                                             <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
                                                             <i class="fa-solid fa-circle-check"></i>
+
                                                         </div>
 
                                                         <div class="course-lesson-child-footer">
@@ -143,6 +147,12 @@
                                                     </div>
                                                 </a>
                                                 <!-- course lesson child -->
+
+
+
+
+
+
 
                                             </c:if>
                                         </c:forEach>
@@ -200,14 +210,27 @@
                                     <div class="comment-content">
                                         <div class="comment-user">
                                             <div class="user-name">
-                                                Hung
+                                                ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
                                             </div>
                                             <div class="user-comment-content">
                                                 ${parentComment.getCommentContent()}
                                             </div>
                                         </div>
                                         <div class="comment-action">
-                                            <div class="comment-action-content">Like</div>
+
+                                            <form action="LikeComment" method="GET">
+                                                <input type="hidden" name="lessonID" value="${lessonID}">
+                                                <input type="hidden" name="courseID" value="${courseID}">
+                                                <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
+                                                <c:if test="${!userCmtId.contains(parentComment.getCommentId())}">
+                                                    <input type="submit" name="op" class="comment-action-content" value="Like">
+                                                </c:if>
+                                                <c:if test="${userCmtId.contains(parentComment.getCommentId())}">
+                                                    <input type="submit" name="op" class="comment-action-content" value="Liked">
+                                                </c:if>
+                                            </form>
+
                                             <div class="dot">.</div>
                                             <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
                                             <div class="dot">.</div>
@@ -223,6 +246,7 @@
                                                 <input type="hidden" name="lessonID" value="${lessonID}">
                                                 <input type="hidden" name="courseID" value="${courseID}">
                                                 <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden"  name="videoID" value="${videoID}">
                                                 <div class="course-post-comment-container">
                                                     <div class="course-comment-postcomment d-flex justify-content-between">
                                                         <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
@@ -249,17 +273,17 @@
                                             <div class="show-reply-comment-content">
                                                 <!-------------------------- Begin: Comment ------------------------------------------>
 
-                                                <c:forEach items="${requestScope.commentList}" var="commentList">
-                                                    <c:if test="${commentList.getParentId() == parentComment.getCommentId()}">
+                                                <c:forEach items="${requestScope.commentOfLesson}" var="commentOfLesson">
+                                                    <c:if test="${commentOfLesson.getParentId() == parentComment.getCommentId()}">
                                                         <div class="comment d-flex align-items-start">
                                                             <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                                             <div class="comment-content">
                                                                 <div class="comment-user">
                                                                     <div class="user-name">
-                                                                        Quang
+                                                                        ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
                                                                     </div>
                                                                     <div class="user-comment-content">
-                                                                        ${commentList.getCommentContent()}
+                                                                        ${commentOfLesson.getCommentContent()}
                                                                     </div>
                                                                 </div>
                                                                 <div class="comment-action">

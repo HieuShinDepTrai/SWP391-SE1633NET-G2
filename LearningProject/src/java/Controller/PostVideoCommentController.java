@@ -65,14 +65,17 @@ public class PostVideoCommentController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
         CommentDAO cmtDao = new CommentDAO();
 
-        ArrayList<Comment> commentList = cmtDao.ListAllComment();
+      //  ArrayList<Comment> commentList = cmtDao.ListAllComment();
         HttpSession ses = request.getSession();
 
         //get all comment to display into screen
         String username = (String) ses.getAttribute("username");
         int userId = userDAO.getAllUserInformation(username).getUserId();
+       
 
         int getLessonId = Integer.parseInt(request.getParameter("lessonID"));
+        ArrayList<Comment> parentComment = cmtDao.ListAllParentCommentByLessonID(getLessonId);
+        
         Video video = cmtDao.getVideoIdByLessonId(getLessonId);
         int videoId = video.getVideoId();
 
@@ -95,9 +98,12 @@ public class PostVideoCommentController extends HttpServlet {
             e.printStackTrace();
         }
 
-        request.setAttribute("commentList", commentList);
+        request.setAttribute("parentComment", parentComment);
+     //   request.setAttribute("commentList", commentList);
         //request.getRequestDispatcher("WatchCourse").forward(request, response);
-        response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") + "&sectionID=" + request.getParameter("sectionID") + "&lessonID=" + request.getParameter("lessonID"));
+        response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
+                + "&sectionID=" + request.getParameter("sectionID") 
+                + "&lessonID=" + request.getParameter("lessonID"));
     }
 
     @Override

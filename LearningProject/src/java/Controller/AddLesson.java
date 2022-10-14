@@ -134,6 +134,14 @@ public class AddLesson extends HttpServlet {
                 String lesson_content = request.getParameter("lesson_content");
                 ldao.addLessonDoc(sectionId, lesson_tilte, time_to_read, lesson_content);
             }
+            if (type.compareTo("Quiz") == 0) {
+            String lesson_title = request.getParameter("lessonTitle");
+            int lesson_time = Integer.parseInt(request.getParameter("lessonTime"));
+            ldao.addLessonQuiz(new Lesson(0, sectionId, lesson_title, false, "Quiz", false, lesson_time));
+            int lessonID =  ldao.getNewestLessonID(sectionId);
+            QuizDAO quizDAO = new QuizDAO();
+            quizDAO.addQuiz(lessonID);
+        }
         }
 
         if (request.getParameter("button") != null) {
@@ -156,6 +164,8 @@ public class AddLesson extends HttpServlet {
             }
 
         }
+        
+        
 
         response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     }

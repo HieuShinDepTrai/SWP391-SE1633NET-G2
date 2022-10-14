@@ -42,7 +42,7 @@ public class UserDAO extends DBContext {
         execute("INSERT INTO [dbo].[User]\n"
                 + "           ([FirstName]\n"
                 + "           ,[LastName]\n"
-                + "           ,[Email]           \n"
+                + "           ,[Email]\n"
                 + "           ,[DoB]\n"
                 + "           ,[Balance]\n"
                 + "           ,[Avatar]\n"

@@ -4,8 +4,10 @@
  */
 package Controller.ResetController;
 
+import Model.User;
 import dal.DBContext;
 import dal.AccountDBContext;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,29 +57,31 @@ public class ForgotPass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
+        String username = request.getParameter("username");
         String status = "";
         String payload = "";
         AccountDBContext accDB = new AccountDBContext();
         String token = "";
         VerifyCaptcha verifyCaptcha = new VerifyCaptcha();
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        if (accDB.findAccWithEmail(email) != null) {
+        if (accDB.findAccWithUsername(username) != null) {
             if (verifyCaptcha.verify(gRecaptchaResponse)) {
 
                 try {
-                    String password = accDB.findOldPassWithEmail(email);
+                    UserDAO userDAO = new UserDAO();
+                    String password = accDB.findOldPassWithUsername(username);
+                    User user = userDAO.getAllUserInformation(username);                    
                     //response.getWriter().println(password);
                     long now = new Date().getTime() + 5 * 60 * 1000;
-                    payload += "user: " + email + " ex: " + String.valueOf(now);
+                    payload += "user: " + username + " ex: " + String.valueOf(now);
                     String sig = HMACSHA256.hmacWithJava(payload, password);
                     String res = Base64.getEncoder().encodeToString(payload.getBytes()) + ";" + sig;
                     String encode = Base64.getEncoder().encodeToString(res.getBytes());
                     SendEmail sendemail = new SendEmail();
 //                sendemail.send("elearningswp391@gmail.com", "Verify Account","Test send email", "elearningswp391@gmail.com", "jtjnnqdicshtevlw");                            
                     token = "http://localhost:8080/LearningProject/resetpass?token=" + encode;
-                    sendemail.sendEmail(email, "Reset Password", token);
-                    request.setAttribute("email", email);
+                    sendemail.sendEmail(user.getEmail(), "Reset Password", token);
+                    request.setAttribute("username", username);
                     request.getRequestDispatcher("CheckYourMail.jsp").forward(request, response);
                     response.getWriter().println("Decode: " + encode);
                 } catch (Exception ex) {

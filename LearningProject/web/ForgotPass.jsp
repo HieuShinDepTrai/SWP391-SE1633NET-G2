@@ -25,8 +25,8 @@
                 <h3 class="text-center mb-3">Forgot password?</h3>
                 <p style="font-size: 14px;" class="text-center my-3">No worries, we'll send you reset password</p>
                 <form action="forgotpass" method="POST">          
-                    <label for="Email" class="form-label" style="font-size: 14px; font-weight: 500; color: rgba(0, 0, 0, 0.7)">Email</label>
-                    <input type="Email" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your email" name="email">
+                    <label for="Email" class="form-label" style="font-size: 14px; font-weight: 500; color: rgba(0, 0, 0, 0.7)">Username</label>
+                    <input type="text" class="form-control form-control-sm w-100 mb-3" placeholder="Enter your username" name="username">
                     <div class="g-recaptcha" data-sitekey="6LcpAk4iAAAAACx-z5YjHfgs5ANm_xKUWoMVXswi"></div>
                     <span style="color: red">${status}</span>
                     <input type="submit" class="btn btn-info w-100 mb-4" style="font-size: 14px; color: white; font-weight: 500; background-color: #7f55da; border: #7f55da;" value="Reset Password">                   

@@ -21,12 +21,20 @@
         <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateQuizController</servlet-name>
+        <servlet-class>Controller.CreateQuizController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AdminDashboardController</servlet-name>
         <servlet-class>Controller.AdminDashboardController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WithdrawController</servlet-name>
         <servlet-class>Controller.WithdrawController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LikeCommentController</servlet-name>
+        <servlet-class>Controller.LikeCommentController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
@@ -217,12 +225,20 @@
         <url-pattern>/CreateCoursePreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CreateQuizController</servlet-name>
+        <url-pattern>/CreateQuiz</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AdminDashboardController</servlet-name>
         <url-pattern>/admindashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WithdrawController</servlet-name>
         <url-pattern>/withdraw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikeCommentController</servlet-name>
+        <url-pattern>/LikeComment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
