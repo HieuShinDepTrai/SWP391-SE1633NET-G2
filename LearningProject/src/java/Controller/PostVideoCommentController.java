@@ -71,7 +71,7 @@ public class PostVideoCommentController extends HttpServlet {
         //get all comment to display into screen
         String username = (String) ses.getAttribute("username");
         int userId = userDAO.getAllUserInformation(username).getUserId();
-        String fullName = userDAO.getAllUserInformation(username).getLastName() + " " + userDAO.getAllUserInformation(username).getFirstName();
+       
 
         int getLessonId = Integer.parseInt(request.getParameter("lessonID"));
         ArrayList<Comment> parentComment = cmtDao.ListAllParentCommentByLessonID(getLessonId);
@@ -85,13 +85,13 @@ public class PostVideoCommentController extends HttpServlet {
             String op = request.getParameter("op");
 
             if (op.equals("Comment")) {
-                cmtDao.insertIntoCommentContentReply(comment, videoId, userId, 0, fullName);
+                cmtDao.insertIntoCommentContentReply(comment, videoId, userId, 0);
             } else if (op.equals("Reply")) {
                 //insert reply comment and the parent id
                 String repComment = request.getParameter("repComment");
                 int pId = Integer.parseInt(request.getParameter("pId"));
                 //insert into comment that is a reply comment
-                cmtDao.insertIntoCommentContentReply(repComment, videoId, userId, pId, fullName);
+                cmtDao.insertIntoCommentContentReply(repComment, videoId, userId, pId);
             }
 
         } catch (Exception e) {
