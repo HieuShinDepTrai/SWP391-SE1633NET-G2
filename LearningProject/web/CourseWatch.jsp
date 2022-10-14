@@ -334,7 +334,12 @@
                                                                         <input type="hidden" name="sectionID" value="${sectionID}">
                                                                         <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
 
-                                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                                        <c:if test="${!userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
+                                                                            <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                                        </c:if>
+                                                                        <c:if test="${userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
+                                                                            <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
+                                                                        </c:if>
                                                                     </form>
 
                                                                     <div class="dot">.</div>
