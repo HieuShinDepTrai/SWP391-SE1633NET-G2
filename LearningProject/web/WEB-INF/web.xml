@@ -40,6 +40,9 @@
         <servlet-name>ManageAccountController</servlet-name>
         <servlet-class>Controller.ManageAccountController</servlet-class>
     </servlet>
+        <servlet-name>LikeCommentController</servlet-name>
+        <servlet-class>Controller.LikeCommentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -247,6 +250,10 @@
     <servlet-mapping>
         <servlet-name>ManageAccountController</servlet-name>
         <url-pattern>/manageaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikeCommentController</servlet-name>
+        <url-pattern>/LikeComment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

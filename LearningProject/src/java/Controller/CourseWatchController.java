@@ -11,11 +11,13 @@ import Model.Section;
 import Model.Comment;
 import Model.CurrentCourse;
 import Model.User;
+import Model.UserComment;
 import Model.Video;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.SectionDAO;
 import dal.CommentDAO;
+import dal.UserDAO;
 import dal.VideoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,8 +85,8 @@ public class CourseWatchController extends HttpServlet {
 //        Check if user login or not
 //        if (request.getSession().getAttribute("user") != null) {
 
-
-        
+        UserDAO uDao = new UserDAO();
+        CommentDAO cmtDAO = new CommentDAO();
         CourseDAO cdao = new CourseDAO();
         SectionDAO sdao = new SectionDAO();
         LessonDAO ldao = new LessonDAO();
@@ -117,6 +119,16 @@ public class CourseWatchController extends HttpServlet {
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
         }
 
+        int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
+        
+        ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
+        
+        ArrayList<Integer> userCmtId = new ArrayList<>();
+        
+        for (UserComment userComment : listUserComment) {
+            userCmtId.add(userComment.getCommentId());
+        }
+        
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
@@ -143,6 +155,10 @@ public class CourseWatchController extends HttpServlet {
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
         
         
+        //to get All comment of user that liked
+        request.setAttribute("userCmtId", userCmtId);
+        
+        request.setAttribute("listUserComment", listUserComment);
         //number comments
         request.setAttribute("numberOfComments", numberOfComments);
         //all comment of leeson
