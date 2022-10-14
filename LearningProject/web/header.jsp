@@ -4,6 +4,7 @@
     Author     : NamDepTraiVL
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
   
@@ -22,7 +23,7 @@
                     <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
                 </div>
                 <div class="header-profile">
-                    <a href="Payment.jsp" class="header-mycourse" style="text-decoration: none;color: #707070;">
+                    <a href="recharge" class="header-mycourse" style="text-decoration: none;color: #707070;">
                         Nạp tiền vào tài khoản
                     </a>
                     <div class="header-notification" onclick="event.stopPropagation()">
@@ -94,7 +95,7 @@
                                     </div>
                                     <div class="menu-element">
                                         Account Balance:
-                                        <a href="" class="menu-title">${user.getBalance()}</a>
+                                        <a href="" class="menu-title"><fmt:formatNumber value="${user.getBalance()}" type="number" maxFractionDigits ="3"/>đ </a>
                                     </div>
                                     <div class="menu-element menu-logout">
                                         <i class="fa-solid fa-right-from-bracket"></i>

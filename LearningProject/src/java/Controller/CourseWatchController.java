@@ -12,10 +12,11 @@ import Model.Comment;
 import Model.CurrentCourse;
 import Model.User;
 import Model.Video;
-import dal.CourseDAO;
-import dal.LessonDAO;
+
 import dal.SectionDAO;
 import dal.CommentDAO;
+import dal.CourseDAO;
+import dal.LessonDAO;
 import dal.VideoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

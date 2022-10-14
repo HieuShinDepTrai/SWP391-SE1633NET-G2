@@ -28,6 +28,7 @@
             <div class="row">
                 <div class="col-6 p-5 d-flex flex-column align-items-center">
                     <div class="mb-3" style="border: 1px solid #1a1a1a; width: 50%; height: 60%;">   
+                        <img src="https://img.vietqr.io/image/970422-69962345678910-VoAEB5A.jpg?accountName=NGO%20HAI%20NAM&addInfo=NAP%20${userid}" alt="alt"/>
                         
                     </div>
                     <div class="mb-3">
