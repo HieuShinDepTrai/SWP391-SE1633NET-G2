@@ -64,9 +64,9 @@ public class CommentDAO extends DBContext {
     }
 
      
-    public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId) {
+    public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId, String date) {
         try {
-            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content, videoId, userId, parentId);
+            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, CommentDate, isReported) VALUES (?, ?, ?, ?, ?, 0)", content, videoId, userId, parentId, date);
         } catch (Exception e) {
         }
     }

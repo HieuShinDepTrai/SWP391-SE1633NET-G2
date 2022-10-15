@@ -276,7 +276,7 @@
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
-                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${parentComment.getCommentDate()}</div>
                                             </div>
                                         </form> 
 

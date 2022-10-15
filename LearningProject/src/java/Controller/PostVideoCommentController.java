@@ -15,7 +15,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -61,7 +63,14 @@ public class PostVideoCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+//        Date date = new Date();
+//        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+        Date d = new Date(); 
+        
+        String dateTime = sdf.format(d);
+        
         UserDAO userDAO = new UserDAO();
         CommentDAO cmtDao = new CommentDAO();
 
@@ -85,13 +94,13 @@ public class PostVideoCommentController extends HttpServlet {
             String op = request.getParameter("op");
 
             if (op.equals("Comment")) {
-                cmtDao.insertIntoCommentContentReply(comment, videoId, userId, 0);
+                cmtDao.insertIntoCommentContentReply(comment, videoId, userId, 0, dateTime);
             } else if (op.equals("Reply")) {
                 //insert reply comment and the parent id
                 String repComment = request.getParameter("repComment");
                 int pId = Integer.parseInt(request.getParameter("pId"));
                 //insert into comment that is a reply comment
-                cmtDao.insertIntoCommentContentReply(repComment, videoId, userId, pId);
+                cmtDao.insertIntoCommentContentReply(repComment, videoId, userId, pId, dateTime);
             }
 
         } catch (Exception e) {
