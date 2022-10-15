@@ -65,18 +65,26 @@
                     <div class="content-container">
                         <div class="content-header d-flex justify-content-between">
                             Personal Information
-                            <c:if test="${user.getRole() ne 'User'}">                                
-                            <div class="">
-                                <form action="withdraw" method="POST">    
-                                    <p>Input number to withdraw</p>
-                                    <input type="number" name="amount" class="form-control d-inline-block" style="width: 200px">
-                                    <button class="btn btn-secondary" type="submit">Submit</button>
-                                    <c:if test="${user.getBalance() < amount}">
-                                        <div></div>
-                                    </c:if>
-                                </form>
-                            </div>
+
+
+                            <c:if test="${user.getRole() ne 'User'}">
+                                <c:choose>
+                                    <c:when test = "${not empty user.getBankNum() && not empty user.getBankName()}">
+                                        <div class="">
+                                            <form action="withdraw" method="POST">    
+                                                <p>Input number to withdraw</p>
+                                                <input type="number" name="amount" class="form-control d-inline-block" style="width: 200px">
+                                                <button class="btn btn-secondary" type="submit">Submit</button>                                            
+                                            </form>
+                                        </div>
+                                    </c:when>                                
+                                    <c:otherwise>
+                                        <p name="amount" class="d-inline-block">Please input your Bank Number and Bank Name to withdraw</p>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </c:if>
+
                         </div>
                         <div class="w-100 bg-white">
                             <table class="table table-bordered">
