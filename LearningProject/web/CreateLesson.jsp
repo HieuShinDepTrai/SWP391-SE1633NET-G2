@@ -71,8 +71,6 @@
                                         <c:if test="${lesson.getType() == 'Quiz'}">
                                             <a class="btn btn-primary"href="QuizQuestion?lessonID=${lesson.getLessonId()}">Question</a>
                                         </c:if>
-                                        <button class="btn btn-primary">Delete</button>
-                                        <button class="btn btn-primary">Edit</button>
                                         <form action="deletelesson?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lesson.getLessonId()}" method="GET">
                                             <input type="hidden" value="${courseID}" name="courseID">
                                             <input type="hidden" value="${sectionID}" name="sectionID">
