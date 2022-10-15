@@ -44,6 +44,10 @@
         <servlet-name>LikeCommentController</servlet-name>
         <servlet-class>Controller.LikeCommentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportController</servlet-name>
+        <servlet-class>Controller.ReportController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -255,6 +259,10 @@
     <servlet-mapping>
         <servlet-name>LikeCommentController</servlet-name>
         <url-pattern>/LikeComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportController</servlet-name>
+        <url-pattern>/Report</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

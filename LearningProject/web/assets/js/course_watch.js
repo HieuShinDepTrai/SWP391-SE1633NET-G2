@@ -46,3 +46,14 @@ $("#course-comment-close").click(function(){
 $('.lesson-comment').click(function(){
     $('.course-comment-container').show();
 })
+
+
+function disableOn(input) {
+    var put = document.querySelector('.content-comment');
+    
+    put.disabled = false;
+    
+    
+    input.classList.add('d-none');
+    document.querySelector('#Save').classList.remove('d-none')
+}
