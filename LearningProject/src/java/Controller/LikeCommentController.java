@@ -5,6 +5,7 @@
 
 package Controller;
 
+import Model.Report;
 import Model.UserComment;
 import dal.CommentDAO;
 import dal.UserDAO;
@@ -64,28 +65,53 @@ public class LikeCommentController extends HttpServlet {
         HttpSession ses = request.getSession();
         String username = (String)ses.getAttribute("username");
         int userId = uDAO.getAllUserInformation(username).getUserId();
-        int cmtId = Integer.parseInt(request.getParameter("CommentID"));
         
+        int CommentID = Integer.parseInt(request.getParameter("CommentID"));
+        
+        String op = request.getParameter("op");
+        String commentContent = request.getParameter("commentContent");
+        
+        //get all cmtId that User Liked
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-        
         ArrayList<Integer> userCmtId = new ArrayList<>();
+        //get all cmtId that User Reported
+        ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(userId);
+        ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
         
+        //Get all cmtID by userID        
         for (UserComment userComment : listUserComment) {
             userCmtId.add(userComment.getCommentId());
         }
         
-        String op = request.getParameter("op");
-        
-        if (op.equals("Like")) {
-            cmtDAO.insertIntoUserComment(cmtId, userId, 1);
-        } else if (op.equals("Liked")) {
-            cmtDAO.deleteIntoUserComment(cmtId, userId);
+        //update
+        if (op.equals("Save")) {
+               cmtDAO.updateCommentContentByCommentId(commentContent, CommentID);
         }
         
+        //like and dislike
+        if (op.equals("Like")) {
+            cmtDAO.insertIntoUserComment(CommentID, userId, 1);
+        } else if (op.equals("Liked")) {
+            cmtDAO.deleteIntoUserComment(CommentID, userId);
+        }
         
+        //list all cmtId by UserID in report
+        for (Report report : listReport) {
+            userCommentIdOfReport.add(report.getCommentID());
+        }
+       
+        //insert and delete into report
+        if (op.equals("Report")) {
+            cmtDAO.insertIntoReport(userId, CommentID);
+        } else if (op.equals("Reported")) {
+            cmtDAO.deleteIntoReport(userId, CommentID);
+        }
+        
+        //get all cmtID in Report of User
+        request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
+        
+        //get all cmtID in UserComment of User
         request.setAttribute("userCmtId", userCmtId);
-        
-        
         response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
                 + "&sectionID=" + request.getParameter("sectionID") 
                 + "&lessonID=" + request.getParameter("lessonID"));
