@@ -69,19 +69,34 @@
                                     <td>${lesson.getLessonName()}</td>
                                     <td>${lesson.getType()}</td>
                                     <td>${lesson.getTime()}</td>
-                                    <td>
-                                        <button class="btn btn-primary">Delete</button>
-                                        <c:forEach items="${videolist}" var="video">
-                                            <c:if test="${video.getLessonId() == lesson.getLessonId()}">
-                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-video-url="${video.getVideoLink()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
-                                            </c:if>
-                                        </c:forEach>
+                                    <td>                                        
 
-                                        <c:forEach items="${docslist}" var="docs">
-                                            <c:if test="${docs.getLessonId() == lesson.getLessonId()}">
-                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-docs-content="${docs.getContent()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                        <form action="deletelesson?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lesson.getLessonId()}" method="GET">
+                                            <input type="hidden" value="${courseID}" name="courseID">
+                                            <input type="hidden" value="${sectionID}" name="sectionID">
+                                            <input type="hidden" value="${lesson.getLessonId()}" name="lessonID">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <c:if test="${lesson.getType() == 'Quiz'}">
+                                                <a class="btn btn-primary"href="QuizQuestion?lessonID=${lesson.getLessonId()}">Question</a>
                                             </c:if>
-                                        </c:forEach>
+                                            <c:forEach items="${videolist}" var="video">
+                                                <c:if test="${video.getLessonId() == lesson.getLessonId()}">
+                                                    <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-video-url="${video.getVideoLink()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach items="${docslist}" var="docs">
+                                                <c:if test="${docs.getLessonId() == lesson.getLessonId()}">
+                                                    <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-docs-content="${docs.getContent()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach items="${quizlist}" var="quiz">
+                                                <c:if test="${quiz.getLessonId() == lesson.getLessonId()}">
+                                                    <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                                </c:if>
+                                            </c:forEach>
+                                        </form>
                                     </td>
                                 </tr>
                                 <% 
@@ -131,6 +146,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Modal Document-->
                     <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
@@ -219,206 +235,67 @@
                     </form>
 
                     <!-- Modal Video-->
-                    
+
                     <!-- Modal Quiz-->
                     <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="quiz" tabindex="-1" aria-labelledby="quiz" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
-                                    <div class="modal-content bg-light">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
-                                                Quiz</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
-                                            <div class="row">
-                                                <div class="col-8 d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h4 class="fw-bolder mb-2">Create Quiz</h4>
-                                                        <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Create
-                                                            your quiz
-                                                            below</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <img src="assets/img/undraw_questions_re_1fy7.svg" alt="alt" class="img-fluid"/>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="card w-100 shadow-sm" style="border-radius: 16px;">
-                                                        <div class="card-body px-0">
-                                                            <div class="p-3">
-                                                                <label for="lessonTitle" class="form-label"
-                                                                       style="font-weight: 600; font-size: 15px;">Quiz Title</label>
-                                                                <input type="text" class="form-control" id="lessonTitle" name="lessonTitle">
-                                                                <input type="hidden" value="Quiz" name="type">
-                                                            </div>
-                                                            <div class="p-3">
-                                                                <label for="lessonTime" class="form-label"
-                                                                       style="font-weight: 600; font-size: 15px;">Lesson Time</label>
-                                                                <input type="text" class="form-control" id="lessonTime" name="lessonTime">
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <input type="submit" value="Save changes" class="btn btn-primary">
-                                        </div>
+                                <div class="modal-content bg-light">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
+                                            Quiz</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
+                                        <div class="row">
+                                            <div class="col-8 d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h4 class="fw-bolder mb-2">Create Quiz</h4>
+                                                    <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Create
+                                                        your quiz
+                                                        below</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="assets/img/undraw_questions_re_1fy7.svg" alt="alt" class="img-fluid"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="card w-100 shadow-sm" style="border-radius: 16px;">
+                                                    <div class="card-body px-0">
+                                                        <div class="p-3">
+                                                            <label for="lessonTitle" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Quiz Title</label>
+                                                            <input type="text" class="form-control" id="lessonTitle" name="lessonTitle">
+                                                            <input type="hidden" value="Quiz" name="type">
+                                                        </div>
+                                                        <div class="p-3">
+                                                            <label for="lessonTime" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Lesson Time</label>
+                                                            <input type="text" class="form-control" id="lessonTime" name="lessonTime">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" value="Save changes" class="btn btn-primary">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
                     <!-- Modal Quiz-->
 
-                    <!-- Modal Add Question -->
-                    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModal"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-fullscreen">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addQuestionModal">Add Question</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
-                                    <div class="mb-3">
-                                        <label for="Question" class="form-label fw-bold">Question Content</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div id="AnswerList">
-
-                                        <label for="Answer" class="form-label fw-bold">Answer</label>
-
-                                        <!-- <div class="card card-body w-50 mb-3 bg-danger text-white">
-                                            Answer1
-                                        </div> -->
-                                        <div class="mb-3">
-                                            <div class="card card-body w-50 bg-success text-white d-inline-block">
-                                                Answer1
-                                            </div>
-                                            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal" onclick="editAnswer($(this).prev())">Edit</div>
-                                            <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove</div>
-                                        </div>
-
-                                    </div>
-                                    <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
-                                        Answer</div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Quizz-->
-
-                    <!-- Modal Add Question -->
-
-
-                    <!-- Modal Add Answer -->
-                    <div class="modal fade" id="addAnswerModal" tabindex="-1" aria-labelledby="addAnswerModal"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addQuestionModal">Add Answer</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Answer Content</label>
-                                        <textarea name="" id="addAnswer" style="height: 180px;" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="isAnswer">
-                                        <label for="isAnswer" class="form-check-label">Is Answer ?</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="addAnswer()">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Add Answer -->
-
-                    <!-- Modal Edit Question -->
-                    <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModal"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-fullscreen">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Edit Question</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
-                                    <div class="mb-3">
-                                        <label for="Question" class="form-label fw-bold">Question Content</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div id="EditAnswerList">
-                                        <label for="Answer" class="form-label fw-bold">Answer</label>
-                                        <!-- <div class="card card-body w-50 mb-3 bg-danger text-white">
-                                            Answer1
-                                        </div> -->
-                                        <div class="card card-body w-50 mb-3 bg-success text-white">
-                                            Answer1
-                                        </div>
-                                    </div>
-                                    <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
-                                        Answer</div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Edit Question -->
-
-                    <!-- Modal Edit Answer -->
-                    <div class="modal fade" id="editAnswerModal" tabindex="-1" aria-labelledby="editAnswerModal"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="">Edit Answer</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Answer Content</label>
-                                        <textarea name="" id="editAnswer" style="height: 180px;" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="editIsAnswer">
-                                        <label for="isAnswer" class="form-check-label">Is Answer ?</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="saveEditAnswer()">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Edit Answer -->
-
+                    
 
 
 
@@ -512,7 +389,67 @@
                     </form>
 
                     <!-- Modal Video-->
-                    
+
+                    <!-- Modal Quiz-->
+                    <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
+                        <input type="hidden" name="sectionID" value="${sectionID}">
+                        <input type="hidden" name="courseID" value="${courseID}">
+                        <input type="hidden" name="LessonQuizId" value="${courseID}" id="LessonQuizId">
+                        <div class="modal fade" id="Quiz" tabindex="-1" aria-labelledby="quiz" aria-hidden="true">
+                            <div class="modal-dialog modal-fullscreen">
+                                <div class="modal-content bg-light">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Edit
+                                            Quiz</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
+                                        <div class="row">
+                                            <div class="col-8 d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h4 class="fw-bolder mb-2">Update Quiz</h4>
+                                                    <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Update
+                                                        your quiz
+                                                        below</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="assets/img/undraw_questions_re_1fy7.svg" alt="alt" class="img-fluid"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="card w-100 shadow-sm" style="border-radius: 16px;">
+                                                    <div class="card-body px-0">
+                                                        <div class="p-3">
+                                                            <label for="lessonTitle" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Quiz Title</label>
+                                                            <input type="text" class="form-control" id="LessonQuizTitle" name="LessonQuizTitle">
+                                                        </div>
+                                                        <div class="p-3">
+                                                            <label for="lessonTime" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Lesson Time</label>
+                                                            <input type="text" class="form-control" id="LessonQuizTime" name="LessonQuizTime">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" name="button" value="Update quiz" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Modal Quiz-->
                 </div>
             </section>
             <!-- End: Create Course -->

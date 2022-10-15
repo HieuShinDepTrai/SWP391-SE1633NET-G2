@@ -16,7 +16,6 @@ import dal.QuizDAO;
 import dal.SectionDAO;
 import dal.VideoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -64,7 +63,7 @@ public class AddLesson extends HttpServlet {
                     ArrayList<Video> videolist = new ArrayList<Video>();
                     ArrayList<Docs> docslist = new ArrayList<Docs>();
                     ArrayList<Quiz> quizlist = new ArrayList<Quiz>();
-
+                    
                     sectionId = Integer.parseInt(request.getParameter("sectionID"));
                     courseID = Integer.parseInt(request.getParameter("courseID"));
                     SectionDAO sectionDAO = new SectionDAO();
@@ -74,7 +73,7 @@ public class AddLesson extends HttpServlet {
                     QuizDAO qd = new QuizDAO();
                     lessons = ldao.getAllLessonOfSection(sectionId);
                     Section section = sectionDAO.getSectionBySectionID(sectionId);
-
+                    
                     for (Lesson lesson : lessons) {
                         if (lesson.getType().equals("Video")) {
                             videolist.add(vd.getVideoOfLesson(lesson.getLessonId()));
@@ -83,9 +82,10 @@ public class AddLesson extends HttpServlet {
                         } else {
                             quizlist.add(qd.getQuizOfLesson(lesson.getLessonId()));
                         }
-
+                        
                     }
-
+                    
+                    request.setAttribute("quizlist", quizlist);
                     request.setAttribute("videolist", videolist);
                     request.setAttribute("docslist", docslist);
                     request.setAttribute("courseID", courseID);
@@ -118,8 +118,9 @@ public class AddLesson extends HttpServlet {
         int sectionId = Integer.parseInt(request.getParameter("sectionID"));
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String type = request.getParameter("type");
+        
         LessonDAO ldao = new LessonDAO();
-
+        
         if (type != null) {
             if (type.compareTo("Video") == 0) {
                 String videotitle = request.getParameter("video_title");
@@ -127,7 +128,7 @@ public class AddLesson extends HttpServlet {
                 int duration = Integer.parseInt(request.getParameter("duration"));
                 ldao.addLessonVideo(sectionId, videotitle, videotitle, videolink, duration);
             }
-
+            
             if (type.compareTo("Docs") == 0) {
                 String lesson_tilte = request.getParameter("lesson_tilte");
                 int time_to_read = Integer.parseInt(request.getParameter("time_to_read"));
@@ -135,22 +136,22 @@ public class AddLesson extends HttpServlet {
                 ldao.addLessonDoc(sectionId, lesson_tilte, time_to_read, lesson_content);
             }
             if (type.compareTo("Quiz") == 0) {
-            String lesson_title = request.getParameter("lessonTitle");
-            int lesson_time = Integer.parseInt(request.getParameter("lessonTime"));
-            ldao.addLessonQuiz(new Lesson(0, sectionId, lesson_title, false, "Quiz", false, lesson_time));
-            int lessonID =  ldao.getNewestLessonID(sectionId);
-            QuizDAO quizDAO = new QuizDAO();
-            quizDAO.addQuiz(lessonID);
+                String lesson_title = request.getParameter("lessonTitle");
+                int lesson_time = Integer.parseInt(request.getParameter("lessonTime"));
+                ldao.addLessonQuiz(new Lesson(0, sectionId, lesson_title, false, "Quiz", false, lesson_time));
+                int lessonID = ldao.getNewestLessonID(sectionId);
+                QuizDAO quizDAO = new QuizDAO();
+                quizDAO.addQuiz(lessonID);
+            }
         }
-        }
-
+        
         if (request.getParameter("button") != null) {
             if (request.getParameter("button").equals("Update document")) {
                 int lessonId = Integer.parseInt(request.getParameter("LessonDocsId"));
                 String lessonName = request.getParameter("LessonDocsName");
                 int time = Integer.parseInt(request.getParameter("Time"));
                 String docsContent = request.getParameter("DocsContent");
-
+                
                 ldao.updateLessonDocs(lessonName, time, docsContent, lessonId);
             }
             if (request.getParameter("button").equals("Update video")) {
@@ -158,15 +159,21 @@ public class AddLesson extends HttpServlet {
                 String lessonName = request.getParameter("LessonVideoName");
                 String videoLink = request.getParameter("videolink");
                 int time = Integer.parseInt(request.getParameter("time_duration"));
-
+                
                 ldao.updateLessonVideo(lessonName, videoLink, lessonId, time);
-
+                
             }
-
+            if (request.getParameter("button").equals("Update quiz")) {
+                int lessonId = Integer.parseInt(request.getParameter("LessonQuizId"));
+                String lessonName = request.getParameter("LessonQuizTitle");
+                int time = Integer.parseInt(request.getParameter("LessonQuizTime"));
+                
+                ldao.updateLessonQuiz(lessonName, time, lessonId);
+                
+            }
+            
         }
         
-        
-
         response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     }
 

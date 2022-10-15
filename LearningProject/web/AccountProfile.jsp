@@ -75,7 +75,7 @@
                         </div>
                         <div class="menu" onclick="course_link(this)">
                             <i class="fa-solid fa-money-bill"></i>
-                            <a href="#" class="menu-title">Transaction History</a>
+                            <a href="transaction" class="menu-title">Transaction History</a>
                         </div>
                         <div class="menu">
                             <i class="fa-solid fa-lock menu-security"></i>

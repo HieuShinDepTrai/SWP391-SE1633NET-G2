@@ -51,6 +51,7 @@ function disableOff(button) {
     document.querySelector('#save').classList.remove('d-none');
 }
 
+
 function UploadAvatar(target) {
     var reader = new FileReader();
     var avatar = document.getElementById("AvatarProfile");

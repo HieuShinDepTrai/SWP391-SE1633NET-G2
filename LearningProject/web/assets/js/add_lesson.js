@@ -45,10 +45,11 @@ function Forward(target) {
         document.getElementById("Time").value = target.getAttribute("data-lesson-time");
         document.getElementById("DocsContent").value = target.getAttribute("data-docs-content");
         tinymce.activeEditor.selection.setContent(target.getAttribute("data-docs-content"));
-
         document.getElementById("LessonDocsId").value = target.getAttribute("data-lesson-id");
     } else {
-
+        document.getElementById("LessonQuizTitle").value = target.getAttribute("data-lesson-name");
+        document.getElementById("LessonQuizTime").value = target.getAttribute("data-lesson-time");
+        document.getElementById("LessonQuizId").value = target.getAttribute("data-lesson-id");
     }
 }
 

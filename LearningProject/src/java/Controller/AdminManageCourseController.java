@@ -2,54 +2,55 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
-import Model.UserComment;
-import dal.CommentDAO;
-import dal.UserDAO;
+import Model.Course;
+import Model.User;
+import dal.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
  *
- * @author ASUS
+ * @author Dung
  */
-public class LikeCommentController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class AdminManageCourseController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LikeCommentController</title>");  
+            out.println("<title>Servlet AdminManageCourseController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LikeCommentController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AdminManageCourseController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,42 +58,22 @@ public class LikeCommentController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        CommentDAO cmtDAO = new CommentDAO();
-        UserDAO uDAO = new UserDAO();
-        
-        HttpSession ses = request.getSession();
-        String username = (String)ses.getAttribute("username");
-        int userId = uDAO.getAllUserInformation(username).getUserId();
-        int cmtId = Integer.parseInt(request.getParameter("CommentID"));
-        
-        ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-        
-        ArrayList<Integer> userCmtId = new ArrayList<>();
-        
-        for (UserComment userComment : listUserComment) {
-            userCmtId.add(userComment.getCommentId());
-        }
-        
-        String op = request.getParameter("op");
-        
-        if (op.equals("Like")) {
-            cmtDAO.insertIntoUserComment(cmtId, userId, 1);
-        } else if (op.equals("Liked")) {
-            cmtDAO.deleteIntoUserComment(cmtId, userId);
-        }
-        
-        
-        request.setAttribute("userCmtId", userCmtId);
-        
-        
-        response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
-                + "&sectionID=" + request.getParameter("sectionID") 
-                + "&lessonID=" + request.getParameter("lessonID"));
-    } 
+            throws ServletException, IOException {
+        User u = (User) request.getSession().getAttribute("user");
+        if (u.getRole().equals("Admin")) {
+            CourseDAO cdao = new CourseDAO();
 
-    /** 
+            ArrayList<Course> coursePendingList = cdao.getPendingCourse();
+            request.setAttribute("coursePendingList", coursePendingList);
+            request.getRequestDispatcher("AdminManageCourse.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("home");
+        }
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -100,12 +81,27 @@ public class LikeCommentController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        User u = (User) request.getSession().getAttribute("user");
+        if (u.getRole().equals("Admin")) {
+            CourseDAO cdao = new CourseDAO();
+            if (request.getParameter("Accept") != null) {
+                int courseID = Integer.parseInt(request.getParameter("courseID"));
+                cdao.updateCourseStatus(courseID, "Enabled");
+            }
+            if (request.getParameter("Denied") != null) {
+                int courseID = Integer.parseInt(request.getParameter("courseID"));
+                cdao.updateCourseStatus(courseID, "Denied");
+            }
+            response.sendRedirect("AdminManageCourse");
+        } else {
+            response.sendRedirect("home");
+        }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
