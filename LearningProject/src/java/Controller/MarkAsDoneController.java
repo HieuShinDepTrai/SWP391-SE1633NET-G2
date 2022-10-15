@@ -5,23 +5,23 @@
 package Controller;
 
 import Model.User;
-import dal.PaymentDAO;
+import dal.LessonDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
  * @author NamDepTraiVL
  */
-public class WithdrawController extends HttpServlet {
+@WebServlet(name = "MarkAsDoneController", urlPatterns = {"/markasdone"})
+public class MarkAsDoneController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +32,11 @@ public class WithdrawController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,7 +49,7 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
@@ -58,33 +63,15 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         UserDAO userDAO = new UserDAO();
-        PaymentDAO paymentDAO = new PaymentDAO();
-        String string = request.getParameter("amount");
-        int amount = Integer.parseInt(request.getParameter("amount"));
-
-        User user = (User) session.getAttribute("user");
-        if (user.getBalance() < amount) {
-            out.println("<script type=\"text/javascript\">");
-                out.println("alert('Số tiền yêu cầu rút nhiều hơn trong tài khoản, vui lòng nhập lại');");
-                out.println("location='transaction';");
-                out.println("</script>");
-            return;
-        }
-        if (user.getRole().equals("User")) {
-            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
-            return;
-        }
-        Date date = new Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        paymentDAO.userRecharge(user.getUserId(), sqldate, (-amount), 2, "Withdraw", "Withdraw from account " + user.getUserName());
-        User newuser = userDAO.getAllUserInformationByID(user.getUserId());
-        session.setAttribute("user", newuser);
-        response.sendRedirect("home");
+        LessonDAO lessonDAO = new LessonDAO();
+        User user = (User)session.getAttribute("user");
+        int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        int sectionID = Integer.parseInt(request.getParameter("sectionID"));
+        lessonDAO.UpdateMarkAs(lessonID, user.getUserId(), "Done");
+        response.sendRedirect("WatchCourse?courseID="+courseID+"&sectionID="+sectionID+"&lessonID="+lessonID);
     }
 
     /**

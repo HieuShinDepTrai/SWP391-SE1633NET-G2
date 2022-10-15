@@ -7,22 +7,14 @@ package Controller.GoogleLoginController;
 import Model.GoogleUser;
 import Model.User;
 import dal.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utils.GoogleUtils;
-import utils.HMACSHA256;
 import utils.SHA256;
 
 /**

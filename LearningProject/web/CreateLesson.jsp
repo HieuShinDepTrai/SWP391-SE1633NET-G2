@@ -68,8 +68,16 @@
                                     <td>${lesson.getType()}</td>
                                     <td>${lesson.getTime()}</td>
                                     <td>
-                                        <button class="btn btn-primary">Delete</button>
-                                        <button class="btn btn-primary">Edit</button>
+                                        <c:if test="${lesson.getType() == 'Quiz'}">
+                                            <a class="btn btn-primary"href="QuizQuestion?lessonID=${lesson.getLessonId()}">Question</a>
+                                        </c:if>
+                                        <form action="deletelesson?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lesson.getLessonId()}" method="GET">
+                                            <input type="hidden" value="${courseID}" name="courseID">
+                                            <input type="hidden" value="${sectionID}" name="sectionID">
+                                            <input type="hidden" value="${lesson.getLessonId()}" name="lessonID">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button class="btn btn-primary">Edit</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <% 
@@ -119,6 +127,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Modal Document-->
                     <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="document" tabindex="-1" aria-labelledby="document" aria-hidden="true">
@@ -207,65 +216,169 @@
                     </form>
 
                     <!-- Modal Video-->
-                    
+
                     <!-- Modal Quiz-->
                     <form action="AddLesson?courseID=${courseID}&sectionID=${sectionID}" method="POST">
                         <div class="modal fade" id="quiz" tabindex="-1" aria-labelledby="quiz" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen">
-                                    <div class="modal-content bg-light">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
-                                                Quiz</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
-                                            <div class="row">
-                                                <div class="col-8 d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h4 class="fw-bolder mb-2">Create Quiz</h4>
-                                                        <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Create
-                                                            your quiz
-                                                            below</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <img src="assets/img/undraw_questions_re_1fy7.svg" alt="alt" class="img-fluid"/>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="card w-100 shadow-sm" style="border-radius: 16px;">
-                                                        <div class="card-body px-0">
-                                                            <div class="p-3">
-                                                                <label for="lessonTitle" class="form-label"
-                                                                       style="font-weight: 600; font-size: 15px;">Quiz Title</label>
-                                                                <input type="text" class="form-control" id="lessonTitle" name="lessonTitle">
-                                                                <input type="hidden" value="Quiz" name="type">
-                                                            </div>
-                                                            <div class="p-3">
-                                                                <label for="lessonTime" class="form-label"
-                                                                       style="font-weight: 600; font-size: 15px;">Lesson Time</label>
-                                                                <input type="text" class="form-control" id="lessonTime" name="lessonTime">
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <input type="submit" value="Save changes" class="btn btn-primary">
-                                        </div>
+                                <div class="modal-content bg-light">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title fw-bold" id="exampleModalLabel">Add
+                                            Quiz</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                     </div>
+                                    <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
+                                        <div class="row">
+                                            <div class="col-8 d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h4 class="fw-bolder mb-2">Create Quiz</h4>
+                                                    <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Create
+                                                        your quiz
+                                                        below</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <img src="assets/img/undraw_questions_re_1fy7.svg" alt="alt" class="img-fluid"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="card w-100 shadow-sm" style="border-radius: 16px;">
+                                                    <div class="card-body px-0">
+                                                        <div class="p-3">
+                                                            <label for="lessonTitle" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Quiz Title</label>
+                                                            <input type="text" class="form-control" id="lessonTitle" name="lessonTitle">
+                                                            <input type="hidden" value="Quiz" name="type">
+                                                        </div>
+                                                        <div class="p-3">
+                                                            <label for="lessonTime" class="form-label"
+                                                                   style="font-weight: 600; font-size: 15px;">Lesson Time</label>
+                                                            <input type="text" class="form-control" id="lessonTime" name="lessonTime">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <input type="submit" value="Save changes" class="btn btn-primary">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
                     <!-- Modal Quiz-->
+
+                    <!-- Modal Add Lesson For Quiz-->
+                    <div class="modal fade" id="quizQuestion" tabindex="-1" aria-labelledby="quizQuestion" aria-hidden="true">
+                        <div class="modal-dialog modal-fullscreen">
+                            <div class="modal-content bg-light">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Quiz Question</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body py-5" style="padding-left: 120px; padding-right: 120px;">
+                                    <div class="row">
+                                        <div class="col-8 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h4 class="fw-bolder mb-2">Create Quiz</h4>
+                                                <p class="mb-2" style="color: rgba(0, 0, 0, 0.5); font-size: 15px;">Create
+                                                    your quiz
+                                                    below</p>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target=".multi-collapse"
+                                                        aria-expanded="false">Show/Hide</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <th>Number</th>
+                                                <th>Question</th>
+                                                <th>Action</th>
+                                                </thead>
+                                                <tbody>
+                                                    <!--Begin Question -->
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>
+                                                            <div class="card mb-2" style="border-radius: 8px;">
+                                                                <div class="card-body" data-bs-toggle="collapse"
+                                                                     href="#test3" role="button" aria-expanded="false"
+                                                                     aria-controls="test3">
+                                                                    <div class="question-name fw-bold">Differentiate between
+                                                                        calloc() and malloc() ?</div>
+                                                                    <div class="collapse multi-collapse mt-3" id="test3">
+                                                                        <div class="card card-body mb-2">
+                                                                            Answer 1
+                                                                        </div>
+                                                                        <div class="card card-body mb-2">
+                                                                            Answer 1
+                                                                        </div>
+                                                                        <div class="card card-body mb-2 bg-success">
+                                                                            Answer 1
+                                                                        </div>
+                                                                        <div class="card card-body mb-2">
+                                                                            Answer 1
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn btn-outline-danger">Delete</div>
+                                                            <div class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                                 data-bs-target="#editQuestionModal">Edit</div>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- End Question -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="card w-100 shadow-sm" style="border-radius: 16px;">
+                                                <div class="card-body px-0">
+                                                    <div class="p-3">
+                                                        <label for="lessonTime" class="form-label"
+                                                               style="font-weight: 600; font-size: 15px;">Quiz Title</label>
+                                                        <input type="text" class="form-control" id="lessonTime">
+                                                    </div>
+                                                    <div class="p-3">
+                                                        <label for="lessonTime" class="form-label"
+                                                               style="font-weight: 600; font-size: 15px;">Lesson Time</label>
+                                                        <input type="text" class="form-control" id="lessonTime">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="btn btn-danger mt-3" data-bs-toggle="modal"
+                                                 data-bs-target="#addQuestionModal">Add Question</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save
+                                        changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Add Lesson For Quiz-->
 
                     <!-- Modal Add Question -->
                     <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModal"
