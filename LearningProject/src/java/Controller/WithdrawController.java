@@ -44,7 +44,7 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**
@@ -84,7 +84,7 @@ public class WithdrawController extends HttpServlet {
         paymentDAO.userRecharge(user.getUserId(), sqldate, (-amount), 2, "Withdraw", "Withdraw from account " + user.getUserName());
         User newuser = userDAO.getAllUserInformationByID(user.getUserId());
         session.setAttribute("user", newuser);
-        response.sendRedirect("home");
+        response.sendRedirect("transaction");
     }
 
     /**

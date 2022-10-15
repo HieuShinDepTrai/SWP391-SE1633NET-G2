@@ -66,12 +66,18 @@ public class MarkAsDoneController extends HttpServlet {
         HttpSession session = request.getSession();
         UserDAO userDAO = new UserDAO();
         LessonDAO lessonDAO = new LessonDAO();
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         int lessonID = Integer.parseInt(request.getParameter("lessonID"));
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         int sectionID = Integer.parseInt(request.getParameter("sectionID"));
         lessonDAO.UpdateMarkAs(lessonID, user.getUserId(), "Done");
-        response.sendRedirect("WatchCourse?courseID="+courseID+"&sectionID="+sectionID+"&lessonID="+lessonID);
+        if (lessonDAO.getNextLessonInSection(sectionID, lessonID) != null) {            
+            lessonID = lessonDAO.getNextLessonInSection(sectionID, lessonID);
+        }else if(lessonDAO.getNextSectionOfCourse(sectionID, courseID) != null){
+            sectionID = lessonDAO.getNextSectionOfCourse(sectionID, courseID);
+            lessonID = lessonDAO.getNextLessonInSection(sectionID, 0);
+        }
+        response.sendRedirect("WatchCourse?courseID=" + courseID + "&sectionID=" + sectionID + "&lessonID=" + lessonID);
     }
 
     /**
