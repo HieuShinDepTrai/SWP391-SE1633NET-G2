@@ -5,6 +5,7 @@
 package dal;
 
 import Model.Comment;
+import Model.Report;
 import Model.User;
 import Model.UserComment;
 import Model.Video;
@@ -77,9 +78,23 @@ public class CommentDAO extends DBContext {
         }
     }
     
+    public void insertIntoReport(int UserId, int CommentId) {
+        try {
+            executeUpdate("INSERT INTO [Report](UserID, CommentID) VALUES (? , ?) ", UserId, CommentId);
+        } catch (Exception e) {
+        }
+    } 
+    
     public void deleteIntoUserComment(int commentId, int userId) {
         try {
             executeUpdate("DELETE FROM [User_Comment] WHERE [CommentID] = ? AND [UserID] = ?", commentId, userId);
+        } catch (Exception e) {
+        }
+    }
+    
+    public void deleteIntoReport(int UserId, int CommentId) {
+        try {
+            executeUpdate("DELETE FROM [Report] WHERE [UserID] = ? AND [CommentID] = ?", UserId, CommentId);
         } catch (Exception e) {
         }
     }
@@ -219,6 +234,25 @@ public class CommentDAO extends DBContext {
             e.printStackTrace();
         }
         return cmt;
+    }
+    
+    public  ArrayList<Report> getAllReportByUserId(int UserId) {
+        ArrayList<Report> listReport = new ArrayList<>();
+        try (ResultSet rs = executeQuery("SELECT [ReportID],[UserID],[CommentID],[ReportContent] FROM [Report] WHERE UserID = ?", UserId)){
+            
+            while (rs.next()) {
+                Report rp = new Report();
+                rp.setReportID(rs.getInt("ReportID"));
+                rp.setUserID(rs.getInt("UserID"));
+                rp.setCommentID(rs.getInt("CommentID"));
+                rp.setReportContent(rs.getNString("ReportContent"));
+                
+                listReport.add(rp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listReport;
     }
 
 }

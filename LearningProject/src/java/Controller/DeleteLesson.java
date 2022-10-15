@@ -5,23 +5,19 @@
 
 package Controller;
 
-import Model.UserComment;
-import dal.CommentDAO;
-import dal.UserDAO;
+import dal.LessonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 /**
  *
- * @author ASUS
+ * @author Hieu Shin
  */
-public class LikeCommentController extends HttpServlet {
+public class DeleteLesson extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +34,10 @@ public class LikeCommentController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LikeCommentController</title>");  
+            out.println("<title>Servlet DeleteLesson</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LikeCommentController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeleteLesson at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,37 +54,15 @@ public class LikeCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CommentDAO cmtDAO = new CommentDAO();
-        UserDAO uDAO = new UserDAO();
+        int sectionId = Integer.parseInt(request.getParameter("sectionID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        int lessonID = Integer.parseInt(request.getParameter("lessonID"));
         
-        HttpSession ses = request.getSession();
-        String username = (String)ses.getAttribute("username");
-        int userId = uDAO.getAllUserInformation(username).getUserId();
-        int cmtId = Integer.parseInt(request.getParameter("CommentID"));
+        LessonDAO ldao = new LessonDAO();
         
-        ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
+        ldao.disableLesson(lessonID);
         
-        ArrayList<Integer> userCmtId = new ArrayList<>();
-        
-        for (UserComment userComment : listUserComment) {
-            userCmtId.add(userComment.getCommentId());
-        }
-        
-        String op = request.getParameter("op");
-        
-        if (op.equals("Like")) {
-            cmtDAO.insertIntoUserComment(cmtId, userId, 1);
-        } else if (op.equals("Liked")) {
-            cmtDAO.deleteIntoUserComment(cmtId, userId);
-        }
-        
-        
-        request.setAttribute("userCmtId", userCmtId);
-        
-        
-        response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
-                + "&sectionID=" + request.getParameter("sectionID") 
-                + "&lessonID=" + request.getParameter("lessonID"));
+        response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
     } 
 
     /** 
@@ -101,7 +75,6 @@ public class LikeCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /** 

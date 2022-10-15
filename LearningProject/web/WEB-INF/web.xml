@@ -21,6 +21,10 @@
         <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteLesson</servlet-name>
+        <servlet-class>Controller.DeleteLesson</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateQuizController</servlet-name>
         <servlet-class>Controller.CreateQuizController</servlet-class>
     </servlet>
@@ -33,8 +37,16 @@
         <servlet-class>Controller.WithdrawController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManageAccountController</servlet-name>
+        <servlet-class>Controller.ManageAccountController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LikeCommentController</servlet-name>
         <servlet-class>Controller.LikeCommentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportController</servlet-name>
+        <servlet-class>Controller.ReportController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
@@ -225,6 +237,10 @@
         <url-pattern>/CreateCoursePreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>DeleteLesson</servlet-name>
+        <url-pattern>/deletelesson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CreateQuizController</servlet-name>
         <url-pattern>/CreateQuiz</url-pattern>
     </servlet-mapping>
@@ -237,8 +253,16 @@
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ManageAccountController</servlet-name>
+        <url-pattern>/manageaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LikeCommentController</servlet-name>
         <url-pattern>/LikeComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportController</servlet-name>
+        <url-pattern>/Report</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
