@@ -2,40 +2,50 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
-import Model.User;
-import dal.PaymentDAO;
-import dal.UserDAO;
+import dal.LessonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
- * @author NamDepTraiVL
+ * @author Hieu Shin
  */
-public class WithdrawController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class DeleteLesson extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteLesson</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteLesson at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    } 
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -43,13 +53,20 @@ public class WithdrawController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
+        int sectionId = Integer.parseInt(request.getParameter("sectionID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+        
+        LessonDAO ldao = new LessonDAO();
+        
+        ldao.disableLesson(lessonID);
+        
+        response.sendRedirect("AddLesson?courseID=" + courseID + "&sectionID=" + sectionId);
+    } 
 
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,32 +74,11 @@ public class WithdrawController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        UserDAO userDAO = new UserDAO();
-        PaymentDAO paymentDAO = new PaymentDAO();
-        String string = request.getParameter("amount");
-        int amount = Integer.parseInt(request.getParameter("amount"));
-
-        User user = (User) session.getAttribute("user");
-        if (user.getBalance() < amount) {
-            
-            return;
-        }
-        if (user.getRole().equals("User")) {
-            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
-            return;
-        }
-        Date date = new Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        paymentDAO.userRecharge(user.getUserId(), sqldate, (-amount), 2, "Withdraw", "Withdraw from account " + user.getUserName());
-        response.sendRedirect("home");
+    throws ServletException, IOException {
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

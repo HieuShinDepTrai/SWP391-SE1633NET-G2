@@ -11,7 +11,6 @@ import dal.LessonDAO;
 import dal.QuizDAO;
 import dal.SectionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -93,6 +92,7 @@ public class AddLesson extends HttpServlet {
         int sectionId = Integer.parseInt(request.getParameter("sectionID"));
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         String type = request.getParameter("type");
+        
         LessonDAO ldao = new LessonDAO();
         
         if (type.compareTo("Video") == 0) {

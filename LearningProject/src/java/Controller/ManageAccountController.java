@@ -5,7 +5,6 @@
 package Controller;
 
 import Model.User;
-import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +12,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
- * @author NamDepTraiVL
+ * @author Hieu Shin
  */
-public class WithdrawController extends HttpServlet {
+public class ManageAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +29,23 @@ public class WithdrawController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManageAccountController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManageAccountController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,7 +58,20 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") != null) {
+            User user = (User) request.getSession().getAttribute("user");
+            if (user.getRole().equals("Admin")) {
+                UserDAO udao = new UserDAO();
 
+                ArrayList<User> users = udao.getAllUser();
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("AdminManageAccount.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("home");
+            }
+        } else {
+            response.sendRedirect("home");
+        }
     }
 
     /**
@@ -58,26 +85,20 @@ public class WithdrawController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        UserDAO userDAO = new UserDAO();
-        PaymentDAO paymentDAO = new PaymentDAO();
-        String string = request.getParameter("amount");
-        int amount = Integer.parseInt(request.getParameter("amount"));
-
-        User user = (User) session.getAttribute("user");
-        if (user.getBalance() < amount) {
-            
-            return;
+        UserDAO udao = new UserDAO();
+        int userid = 0;
+        String isdisable = "";
+        if (request.getParameter("userid") != null) {
+            userid = Integer.parseInt(request.getParameter("userid"));
+            isdisable = request.getParameter("isdisable");
+            if(isdisable.compareToIgnoreCase("true") == 0) {
+                udao.EnableAccount(userid);
+            }
+            else {
+                udao.DisableAccount(userid);
+            }
+            response.sendRedirect("manageaccount");
         }
-        if (user.getRole().equals("User")) {
-            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
-            return;
-        }
-        Date date = new Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
-        paymentDAO.userRecharge(user.getUserId(), sqldate, (-amount), 2, "Withdraw", "Withdraw from account " + user.getUserName());
-        response.sendRedirect("home");
     }
 
     /**

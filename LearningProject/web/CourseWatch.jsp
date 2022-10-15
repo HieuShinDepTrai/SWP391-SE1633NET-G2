@@ -124,16 +124,16 @@
                                         <c:forEach items="${listLesson}" var="lesson">
                                             <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
-                                                
-                                                   
-                                              
-                                                        <!-- course lesson child -->
-                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
+
+
+
+                                                <!-- course lesson child -->
+                                                <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                     <div class="course-lesson-child  px-4 py-2">
                                                         <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
                                                             <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
                                                             <i class="fa-solid fa-circle-check"></i>
-                                                            
+
                                                         </div>
 
                                                         <div class="course-lesson-child-footer">
@@ -147,12 +147,12 @@
                                                     </div>
                                                 </a>
                                                 <!-- course lesson child -->
-                                                   
-                                                    
-                                                    
-                                                    
-                                                    
-                                                
+
+
+
+
+
+
 
                                             </c:if>
                                         </c:forEach>
@@ -192,7 +192,7 @@
                                     <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                 </div>
                                 <div class="course-postcomment-action" style="float: right;">
-                                    <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>
                                     <input class="submit-comment" name="op" type="submit" value="Comment">
                                 </div>
                             </div>
@@ -204,24 +204,58 @@
                         <div class="course-comment-list d-flex flex-column w-100 gap-4">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
-                                
+
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
                                         <div class="comment-user">
                                             <div class="user-name">
-                                                ${parentComment.getCommentUser()}
+                                                ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
                                             </div>
-                                            <div class="user-comment-content">
-                                                ${parentComment.getCommentContent()}
-                                            </div>
+
+                                            <input style="border:none" class="content-comment" type="text" value="${parentComment.getCommentContent()}" disabled>
+
                                         </div>
                                         <div class="comment-action">
-                                            <div class="comment-action-content">Like</div>
+
+                                            <form action="LikeComment" method="GET">
+                                                <input type="hidden" name="lessonID" value="${lessonID}">
+                                                <input type="hidden" name="courseID" value="${courseID}">
+                                                <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
+                                                <c:if test="${!userCmtId.contains(parentComment.getCommentId())}">
+
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+
+                                                </c:if>
+                                                <c:if test="${userCmtId.contains(parentComment.getCommentId())}">
+
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+
+                                                </c:if>
+                                            </form>
+
+                                            <div class="dot">.</div>
+
+                                            <div class="comment-action-content comment-action-content-reply" onclick="disableOn(this)">Edit</div>
+                                            <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save" type="submit" name=""  value="Save">
+
                                             <div class="dot">.</div>
                                             <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
                                             <div class="dot">.</div>
-                                            <div class="comment-action-content">Report</div>
+                                            <form action="Report" method="GET">
+                                                <input type="hidden" name="lessonID" value="${lessonID}">
+                                                <input type="hidden" name="courseID" value="${courseID}">
+                                                <input type="hidden" name="sectionID" value="${sectionID}">
+                                                <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
+
+                                                <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                </c:if>
+                                                <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
+                                                </c:if>
+                                            </form>
                                             <div class="dot">.</div>
                                             <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
                                         </div>
@@ -256,7 +290,7 @@
 
                                         <!-- Show Reply Comment -->
                                         <div class="show-reply-comment " style="margin-left: 20px; margin-top: 10px;">
-                                            <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>
+                                            <!--                                            <h6>Show reply comment<i class="fa-solid fa-chevron-down"></i></h6>-->
                                             <div class="show-reply-comment-content">
                                                 <!-------------------------- Begin: Comment ------------------------------------------>
 
@@ -267,18 +301,42 @@
                                                             <div class="comment-content">
                                                                 <div class="comment-user">
                                                                     <div class="user-name">
-                                                                        Quang
+                                                                        ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
                                                                     </div>
                                                                     <div class="user-comment-content">
                                                                         ${commentOfLesson.getCommentContent()}
                                                                     </div>
                                                                 </div>
                                                                 <div class="comment-action">
-                                                                    <div class="comment-action-content">Like</div>
+                                                                    <form action="LikeComment" method="GET">
+                                                                        <input type="hidden" name="lessonID" value="${lessonID}">
+                                                                        <input type="hidden" name="courseID" value="${courseID}">
+                                                                        <input type="hidden" name="sectionID" value="${sectionID}">
+                                                                        <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
+                                                                        <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
+
+                                                                            <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op"  value="Like">
+
+                                                                        </c:if>
+                                                                        <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
+
+                                                                            <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op" class="comment-action-content" value="Liked">
+
+                                                                        </c:if>
+                                                                    </form>
                                                                     <div class="dot">.</div>
-                                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
+                                                                    <!--                                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>-->
+                                                                    <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op" class="comment-action-content" value="Edit">
                                                                     <div class="dot">.</div>
-                                                                    <div class="comment-action-content">Report</div>
+                                                                    <form action="Report" method="GET">
+                                                                        <input type="hidden" name="lessonID" value="${lessonID}">
+                                                                        <input type="hidden" name="courseID" value="${courseID}">
+                                                                        <input type="hidden" name="sectionID" value="${sectionID}">
+                                                                        <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
+
+                                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                                    </form>
+
                                                                     <div class="dot">.</div>
                                                                     <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
                                                                 </div>
@@ -298,7 +356,7 @@
                                                                             <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
 
                                                                             <input type="submit" name="" value="Reply" class="submit-comment">                                     
-                                                                            <input type="hidden" name="" value="">
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -324,7 +382,7 @@
                                         <!-- Show Reply Comment -->
                                     </div>
                                 </div>
-                                 
+
                             </c:forEach>
                             <!-- End: Comment -->
                         </div>

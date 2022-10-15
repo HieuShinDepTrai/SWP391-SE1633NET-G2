@@ -17,6 +17,9 @@ import java.util.logging.Logger;
  * @author vuman
  */
 public class LessonDAO extends DBContext {
+
+    public LessonDAO() {
+    }
     
     public void addLessonVideo(int sectionId, String lessonName, String videoName, String videoURL, int duration) {
         try {
@@ -99,7 +102,7 @@ public class LessonDAO extends DBContext {
                     + "  ON [Lesson].[LessonID] = [Video].[LessonID]\n"
                     + "  FULL OUTER JOIN [Docs]\n"
                     + "  ON [Lesson].[LessonID] = [Docs].[LessonID]\n"
-                    + "  WHERE [Lesson].[LessonID] = ?", lessonid);
+                    + "  WHERE [Lesson].[LessonID] = ? AND [isDisable] = 0", lessonid);
             if (rs.next()) {
                 return new Lesson(lessonid, rs.getInt("SectionID"),
                         rs.getNString("LessonName"),

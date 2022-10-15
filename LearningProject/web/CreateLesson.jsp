@@ -73,6 +73,13 @@
                                         </c:if>
                                         <button class="btn btn-primary">Delete</button>
                                         <button class="btn btn-primary">Edit</button>
+                                        <form action="deletelesson?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lesson.getLessonId()}" method="GET">
+                                            <input type="hidden" value="${courseID}" name="courseID">
+                                            <input type="hidden" value="${sectionID}" name="sectionID">
+                                            <input type="hidden" value="${lesson.getLessonId()}" name="lessonID">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button class="btn btn-primary">Edit</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <% 

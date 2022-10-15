@@ -65,15 +65,14 @@ public class TransactionController extends HttpServlet {
         }
         User user = (User) session.getAttribute("user");
         PaymentDAO paymentDAO = new PaymentDAO();
-        if (user.getRole().equals("Admin")) {
-            paymentList = paymentDAO.getPendingWithdraw();
-            request.setAttribute("paymentList", paymentList);
-            request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
-        }
+//        if (user.getRole().equals("Admin")) {
+//            paymentList = paymentDAO.getPendingWithdraw();
+//            request.setAttribute("paymentList", paymentList);
+//            request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
+//        }
         paymentList = paymentDAO.getPaymentListFromUser(user.getUserId());
-        request.setAttribute("paymentList", paymentList);
-        request.setAttribute("userid", user.getUserId());
-        request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
+        request.setAttribute("paymentList", paymentList);        
+        request.getRequestDispatcher("AccountTransactionHistory.jsp").forward(request, response);
     }
 
     /**
