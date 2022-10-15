@@ -71,7 +71,7 @@
                                                 <td>
                                                     <div>
                                                         <c:if test="${course.getCoursePrice() == 0}">
-                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Free</div>
+                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCategory()}</div>
 
                                                         </c:if>
                                                         <c:if test="${course.getCoursePrice() != 0}">
