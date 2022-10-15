@@ -96,7 +96,7 @@
                                             <h6>All number of waiting withdraw</h6>
                                         </div>
                                         <div class="overview-content d-flex justify-content-between">
-                                            <p>02</p>
+                                            <p>${totalWithdrawPending}</p>
                                             <i class="fa-solid fa-laptop overview-content-img"></i>
                                         </div>
                                     </div>
@@ -127,9 +127,9 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Transaction Management</a>
+                                                    <a href="withdrawmanagement">Transaction Management</a>
                                                 </div>
-                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                <div class="mb-2" style="font-size: 14px;">Show all pending withdraw
                                                 </div>
 
                                             </div>

@@ -111,6 +111,12 @@ public class UserDAO extends DBContext {
                 if (rs.getString("Email") != null) {
                     email = rs.getString("Email");
                 }
+                if (rs.getString("BankNumber") != null) {
+                    bankNum = rs.getString("BankNumber");
+                }
+                if (rs.getString("BankName") != null) {
+                    bankName = rs.getString("BankName");
+                }
                 if (rs.getString("PhoneNumber") != null) {
                     phoneNum = rs.getString("PhoneNumber");
                 }
@@ -183,6 +189,12 @@ public class UserDAO extends DBContext {
                 }
                 if (rs.getNString("Country") != null) {
                     country = rs.getNString("Country");
+                }
+                if (rs.getString("BankNumber") != null) {
+                    bankNum = rs.getString("BankNumber");
+                }
+                if (rs.getString("BankName") != null) {
+                    bankName = rs.getString("BankName");
                 }
                 if (rs.getNString("City") != null) {
                     city = rs.getNString("City");
@@ -397,18 +409,18 @@ public class UserDAO extends DBContext {
     public void DisableAccount(int userid) {
         try {
             executeUpdate("UPDATE [User]\n"
-                + "SET [isDisable] = 1\n"
-                + "WHERE [UserID] = ?", userid);
+                    + "SET [isDisable] = 1\n"
+                    + "WHERE [UserID] = ?", userid);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void EnableAccount(int userid) {
         try {
             executeUpdate("UPDATE [User]\n"
-                + "SET [isDisable] = 0\n"
-                + "WHERE [UserID] = ?", userid);
+                    + "SET [isDisable] = 0\n"
+                    + "WHERE [UserID] = ?", userid);
         } catch (Exception e) {
             e.printStackTrace();
         }

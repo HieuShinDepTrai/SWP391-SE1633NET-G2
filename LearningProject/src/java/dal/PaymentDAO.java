@@ -79,4 +79,11 @@ public class PaymentDAO extends DBContext {
                 + "           ,?\n"
                 + "           ,?,?)", userid, new Timestamp(date.getTime()), amount, status, method, content);
     }
+
+    public void updatePaymentStatus(int paymentID, int status) {
+        executeUpdate("UPDATE [dbo].[Recharge]\n"
+                + "   SET [Status] = ?\n"
+                + " WHERE RechargeID = ?", status, paymentID);
+    }
+
 }

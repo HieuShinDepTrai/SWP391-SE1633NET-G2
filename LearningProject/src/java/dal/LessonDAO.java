@@ -220,4 +220,51 @@ public class LessonDAO extends DBContext {
             return null;
         }
     }
+
+    public Integer getNextLessonInSection(int sectionID, int lessonID) {
+        try {
+            ResultSet rs = executeQuery("select top 1 l.LessonID from Lesson l\n"
+                    + "inner join Section s on l.SectionID = s.SectionID\n"
+                    + "where s.SectionID = ? and l.LessonID > ?", sectionID, lessonID);
+            if (rs.next()) {
+                return rs.getInt("lessonID");
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return null;
+    }
+
+    public Integer getNextSectionOfCourse(int sectionID, int courseID) {
+        try {
+            ResultSet rs = executeQuery("select top 1 s.SectionID from Lesson l\n"
+                    + "inner join Section s on l.SectionID = s.SectionID\n"
+                    + "where s.CourseID = ? and s.SectionID > ?", courseID, sectionID);
+            if (rs.next()) {
+                return rs.getInt("SectionID");
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return null;
+    }
+
+    public Lesson getFirstLessonOfCourse(int courseID) {
+        try {
+            ResultSet rs = executeQuery("select top 1 LessonID, s.SectionID from Lesson l\n"
+                    + "inner join Section s on s.SectionID = l.SectionID\n"
+                    + "where s.CourseID = ?\n"
+                    + "order by s.SectionID asc, LessonID asc", courseID);
+            if (rs.next()) {
+                Lesson lesson = new Lesson();
+                lesson.setLessonId(rs.getInt("LessonID"));
+                lesson.setSectionId(rs.getInt("SectionID"));
+                return lesson;
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return null;
+    }
+
 }
