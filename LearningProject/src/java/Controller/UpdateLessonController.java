@@ -4,14 +4,22 @@
  */
 package Controller;
 
+import Model.Answer;
 import Model.Docs;
 import Model.Lesson;
+import Model.Question;
 import Model.Quiz;
 import Model.Section;
 import Model.Video;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import dal.AnswerDAO;
 import dal.CourseDAO;
 import dal.DocsDAO;
 import dal.LessonDAO;
+import dal.QuestionDAO;
 import dal.QuizDAO;
 import dal.SectionDAO;
 import dal.VideoDAO;
@@ -35,9 +43,40 @@ public class UpdateLessonController extends HttpServlet {
         VideoDAO vd = new VideoDAO();
         DocsDAO dd = new DocsDAO();
         QuizDAO qd = new QuizDAO();
+        QuestionDAO qdao = new QuestionDAO();
+        AnswerDAO ansdao = new AnswerDAO();
 
         int courseId = Integer.parseInt(request.getParameter("courseid"));
         int sectionId = Integer.parseInt(request.getParameter("sectionid"));
+
+        if (request.getParameter("button") != null) {
+            if (request.getParameter("lessonID") != null) {
+                int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+                int quizID = ld.getQuizID(lessonID);
+                ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+                ArrayList<Answer> answerList = new ArrayList<>();
+                for (Question question : questionList) {
+                    ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+                    for (Answer answer : temp) {
+                        answerList.add(answer);
+                    }
+
+                }
+
+                Lesson ls = ld.getLessonbyLessonID(lessonID);
+
+                request.setAttribute("sectionid", sectionId);
+                request.setAttribute("courseid", courseId);
+                request.setAttribute("lesson", ls);
+                request.setAttribute("lessonID", lessonID);
+                request.setAttribute("quizID", quizID);
+                request.setAttribute("questionList", questionList);
+                request.setAttribute("answerList", answerList);
+                request.getRequestDispatcher("UpdateQuizQuestion.jsp").forward(request, response);
+                return;
+            }
+        }
+
         Section section = sd.getAllSectionInformation(sectionId);
 
         ArrayList<Lesson> lessonlist = ld.getAllLessonOfSection(sectionId);
@@ -56,6 +95,7 @@ public class UpdateLessonController extends HttpServlet {
 
         }
 
+        request.setAttribute("quizlist", quizlist);
         request.setAttribute("videolist", videolist);
         request.setAttribute("docslist", docslist);
         request.setAttribute("courseid", courseId);
@@ -69,6 +109,8 @@ public class UpdateLessonController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LessonDAO ld = new LessonDAO();
         CourseDAO cd = new CourseDAO();
+        QuestionDAO qdao = new QuestionDAO();
+        AnswerDAO ansdao = new AnswerDAO();
 
         if (request.getParameter("button") != null) {
             if (request.getParameter("button").equals("Delete")) {
@@ -84,7 +126,7 @@ public class UpdateLessonController extends HttpServlet {
                 int courseId = Integer.parseInt(request.getParameter("courseid"));
                 int lessonId = Integer.parseInt(request.getParameter("LessonVideoId"));
                 String lessonName = request.getParameter("LessonVideoName");
-                String videoLink = request.getParameter("VideoLink");
+                String videoLink = request.getParameter("videolink");
                 int time = Integer.parseInt(request.getParameter("time_duration"));
 
                 ld.updateLessonVideo(lessonName, videoLink, lessonId, time);
@@ -103,11 +145,101 @@ public class UpdateLessonController extends HttpServlet {
 
                 response.sendRedirect("updatelesson?courseid=" + courseId + "&sectionid=" + sectionId);
             }
+            if (request.getParameter("button").equals("Update quiz")) {
+                int sectionId = Integer.parseInt(request.getParameter("sectionid"));
+                int courseId = Integer.parseInt(request.getParameter("courseid"));
+                int lessonId = Integer.parseInt(request.getParameter("LessonQuizId"));
+                String lessonName = request.getParameter("LessonQuizTitle");
+                int time = Integer.parseInt(request.getParameter("LessonQuizTime"));
+
+                ld.updateLessonQuiz(lessonName, time, lessonId);
+
+                response.sendRedirect("updatelesson?courseid=" + courseId + "&sectionid=" + sectionId);
+            }
+            if (request.getParameter("button").equals("Updatequestion")) {
+                int sectionId = Integer.parseInt(request.getParameter("sectionid"));
+                int courseId = Integer.parseInt(request.getParameter("courseid"));
+                int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+                int quizID = Integer.parseInt(request.getParameter("quizID"));
+                ArrayList<Integer> listQuestionID = qdao.getListQuestionID(quizID);
+                String JsonData = request.getParameter("jsonQuestions");
+                JsonArray json = new JsonParser().parse(JsonData).getAsJsonArray();
+                for (JsonElement jsonElement : json) {
+                    JsonObject question = jsonElement.getAsJsonObject();
+                    String questionID = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionID").getAsString();
+                    String questionContent = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionContent").getAsString();
+
+                    // If question id from frontend send is null then add to DB
+                    if (questionID.equals("null")) {
+                        ArrayList<Question> queslist = qdao.getQuestionsOfQuiz(quizID);
+                        int qID = 0;
+                        if (queslist.isEmpty()) {
+                            qID = qdao.addQuestion(new Question(0, questionContent, quizID));
+                        } else {
+                            qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+                        }
+
+                        for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
+                            JsonObject answer = jsonElement1.getAsJsonObject();
+                            String answerID = answer.get("answerID").getAsString();
+                            String answerValue = answer.get("val").getAsString();
+                            boolean isAnswer = answer.get("isCorrect").getAsBoolean();
+
+                            ansdao.addAnswer(new Answer(0, answerValue, qID, isAnswer));
+                        }
+                    } else {
+                        int qID = Integer.parseInt(questionID);
+                        for (Integer i : listQuestionID) {
+                            if (qID == i) {
+                                listQuestionID.remove(i);
+                                break;
+                            }
+                        }
+                        // Update Q ID
+                        qdao.updateQuestionByQuestionID(qID, questionContent);
+                        ArrayList<Integer> listAnswerID = ansdao.getAnswerListID(qID);
+
+                        for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
+                            JsonObject answer = jsonElement1.getAsJsonObject();
+//                    response.getWriter().println(answer.get("answerID").getAsString() + "   " + answer.get("val").getAsString() + " " + answer.get("isCorrect").getAsBoolean());
+
+                            String answerID = answer.get("answerID").getAsString();
+                            String answerValue = answer.get("val").getAsString();
+                            boolean isAnswer = answer.get("isCorrect").getAsBoolean();
+
+                            if (answerID.equals("null")) {
+                                ansdao.addAnswer(new Answer(0, answerValue, qID, isAnswer));
+                            } else {
+                                int ansID = Integer.parseInt(answerID);
+                                for (Integer i : listAnswerID) {
+                                    if (ansID == i) {
+                                        listAnswerID.remove(i);
+                                        break;
+                                    }
+                                }
+                                ansdao.updateAnswerByAnswerID(ansID, answerValue, isAnswer);
+
+                            }
+                        }
+
+                        // When list answer id have id inside, then remove it in DB
+                        for (Integer i : listAnswerID) {
+                            ansdao.deleteAnswer(i.intValue());
+                        }
+                    }
+                }
+
+                for (Integer i : listQuestionID) {
+                    qdao.deleteQuestion(i.intValue());
+                }
+                
+                response.sendRedirect("updatelesson?lessonID=" + lessonID + "&button=quiz&courseid=" + courseId + "&sectionid=" + sectionId);
+            }
             if (request.getParameter("button").equals("Add video")) {
                 int sectionId = Integer.parseInt(request.getParameter("sectionid"));
                 int courseId = Integer.parseInt(request.getParameter("courseid"));
                 String lessonName = request.getParameter("lessonvideoname");
-                String videoURL = request.getParameter("videolink");
+                String videoURL = request.getParameter("video_url");
                 int duration = Integer.parseInt(request.getParameter("duration"));
 
                 ld.addLessonVideo(sectionId, lessonName, lessonName, videoURL, duration);
@@ -121,9 +253,21 @@ public class UpdateLessonController extends HttpServlet {
                 int time = Integer.parseInt(request.getParameter("time"));
                 String docsContent = request.getParameter("lessondocscontent");
 
-                response.sendRedirect("updatelesson?courseid=" + courseId + "&sectionid=" + sectionId);
-
                 ld.addLessonDoc(sectionId, lessonName, time, docsContent);
+
+                response.sendRedirect("updatelesson?courseid=" + courseId + "&sectionid=" + sectionId);
+            }
+            if (request.getParameter("button").equals("Add quiz")) {
+                int sectionId = Integer.parseInt(request.getParameter("sectionid"));
+                int courseId = Integer.parseInt(request.getParameter("courseid"));
+                String lesson_title = request.getParameter("lessonTitle");
+                int lesson_time = Integer.parseInt(request.getParameter("lessonTime"));
+                ld.addLessonQuiz(new Lesson(0, sectionId, lesson_title, false, "Quiz", false, lesson_time));
+                int lessonID = ld.getNewestLessonID(sectionId);
+                QuizDAO quizDAO = new QuizDAO();
+                quizDAO.addQuiz(lessonID);
+
+                response.sendRedirect("updatelesson?courseid=" + courseId + "&sectionid=" + sectionId);
             }
             if (request.getParameter("button").equals("Save changes")) {
                 int courseId = Integer.parseInt(request.getParameter("courseid"));
@@ -133,5 +277,4 @@ public class UpdateLessonController extends HttpServlet {
             }
         }
     }
-
 }

@@ -165,6 +165,14 @@ public class LessonDAO extends DBContext {
         }
     }
     
+    public void updateLessonQuiz(String lessonName, int time, int lessonId) {
+        try {
+            executeUpdate("UPDATE [dbo].[Lesson] SET [LessonName] = ?, [Time] = ? WHERE [LessonID] = ?", lessonName, time, lessonId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public int getQuizID(int lessonID) {
         try {
             ResultSet rs = executeQuery("select Quiz.QuizID from dbo.Lesson, dbo.Quiz\n"
