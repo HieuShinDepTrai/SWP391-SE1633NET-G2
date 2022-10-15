@@ -19,7 +19,7 @@ public class Course {
     private Timestamp DateCreate;
     private String Category;
     private int NumberEnrolled;
-    private double CoursePrice;
+    private int CoursePrice;
     private String CourseImage;
     private String Status;
     private User Author;
@@ -31,7 +31,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, String Status, User Author, String description, String objectives, String difficulty) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, int CoursePrice, String CourseImage, String Status, User Author, String description, String objectives, String difficulty) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -46,7 +46,7 @@ public class Course {
         this.difficulty = difficulty;
     }
 
-    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, double CoursePrice, String CourseImage, String Status, User Author, double CourseProgress, String description, String objectives, String difficulty) {
+    public Course(int CourseID, String CourseName, Timestamp DateCreate, String Category, int NumberEnrolled, int CoursePrice, String CourseImage, String Status, User Author, double CourseProgress, String description, String objectives, String difficulty) {
         this.CourseID = CourseID;
         this.CourseName = CourseName;
         this.DateCreate = DateCreate;
@@ -130,7 +130,7 @@ public class Course {
         return CoursePrice;
     }
 
-    public void setCoursePrice(double CoursePrice) {
+    public void setCoursePrice(int CoursePrice) {
         this.CoursePrice = CoursePrice;
     }
 

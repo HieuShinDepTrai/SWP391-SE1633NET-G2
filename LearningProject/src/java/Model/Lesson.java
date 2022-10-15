@@ -17,10 +17,22 @@ public class Lesson {
     private int time;
     private String videoLink;
     private String Content;
+    private String Status;
     
     public Lesson() {
     }
     
+    public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type,  int time, String Status) {
+        this.lessonId = lessonId;
+        this.sectionId = sectionId;
+        this.lessonName = lessonName;
+        this.isDisable = isDisable;
+        this.type = type;
+        this.time = time;
+        this.Status = Status;
+    }
+
+
     public Lesson(int lessonId, int sectionId, String lessonName, boolean isDisable, String type,  int time) {
         this.lessonId = lessonId;
         this.sectionId = sectionId;
@@ -114,5 +126,14 @@ public class Lesson {
     public void setType(String type) {
         this.type = type;
     }
+    
+        public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+    
     
 }
