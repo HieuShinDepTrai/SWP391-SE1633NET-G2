@@ -5,20 +5,12 @@
         <servlet-class>Controller.UserDashboardController.UserDashboardController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateCourseController</servlet-name>
-        <servlet-class>Controller.CreateCourseController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateSectionController</servlet-name>
         <servlet-class>Controller.CreateSectionController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateLessonController</servlet-name>
         <servlet-class>Controller.UpdateLessonController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreateCoursePreviewServlet</servlet-name>
-        <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteLesson</servlet-name>
@@ -37,6 +29,10 @@
         <servlet-class>Controller.WithdrawController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>QuizQuestionController</servlet-name>
+        <servlet-class>Controller.QuizQuestionController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ManageAccountController</servlet-name>
         <servlet-class>Controller.ManageAccountController</servlet-class>
     </servlet>
@@ -47,6 +43,18 @@
     <servlet>
         <servlet-name>ReportController</servlet-name>
         <servlet-class>Controller.ReportController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateCoursePreviewController</servlet-name>
+        <servlet-class>Controller.CreateCoursePreviewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateCourseController</servlet-name>
+        <servlet-class>Controller.CreateCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminManageCourseController</servlet-name>
+        <servlet-class>Controller.AdminManageCourseController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
@@ -233,10 +241,6 @@
         <url-pattern>/updatelesson</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CreateCoursePreviewServlet</servlet-name>
-        <url-pattern>/CreateCoursePreview</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeleteLesson</servlet-name>
         <url-pattern>/deletelesson</url-pattern>
     </servlet-mapping>
@@ -253,6 +257,10 @@
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>QuizQuestionController</servlet-name>
+        <url-pattern>/QuizQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManageAccountController</servlet-name>
         <url-pattern>/manageaccount</url-pattern>
     </servlet-mapping>
@@ -261,8 +269,12 @@
         <url-pattern>/LikeComment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ReportController</servlet-name>
-        <url-pattern>/Report</url-pattern>
+        <servlet-name>CreateCoursePreviewController</servlet-name>
+        <url-pattern>/CreateCoursePreview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageCourseController</servlet-name>
+        <url-pattern>/AdminManageCourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

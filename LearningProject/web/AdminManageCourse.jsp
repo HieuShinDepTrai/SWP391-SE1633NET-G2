@@ -29,8 +29,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="d-flex justify-content-end" style="position: relative;">
-                                   <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
-                                   <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
+                                    <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
+                                    <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -44,43 +44,91 @@
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td style="max-width: 180px">
-                                                <div class="d-flex">
-                                                    <img src="assets/img/Asset 1.png" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 10px;">
-                                                    <div class="ms-2">
-                                                        <div class="fw-bold">Course Title Front end Aadslkfjals HtML CXSS Pro</div>
+                                        <c:forEach items="${coursePendingList}" var="course"> 
+                                            <tr>
+                                                <td style="max-width: 180px">
+                                                    <div class="d-flex">
+                                                        <img src="assets/img/Asset 1.png" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 10px;">
+                                                        <div class="ms-2">
+                                                            <div class="fw-bold">${course.getCourseName()}o</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/img/f8-logo.png" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
-                                                    <div class="d-inline-block" style="font-size: 14px; font-weight: 500;">Author name</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div style="font-weight: 600">25/09/2022</div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Front-end</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">100.000đ</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <a class="bg-success" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Accept</a>
-                                                    <a class="bg-danger" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Denied</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <img src="${course.getAuthor().getAvatar()}" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
+                                                        <div class="d-inline-block" style="font-size: 14px; font-weight: 500;">${course.getAuthor().getUserName()}</div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="font-weight: 600">${course.getDateCreate()}</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getDateCreate()}</div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <c:if test="${course.getCoursePrice() == 0}">
+                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Free</div>
 
-                                        
+                                                        </c:if>
+                                                        <c:if test="${course.getCoursePrice() != 0}">
+                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCoursePrice()}đ</div>
+
+                                                        </c:if>    
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <form action="AdminManageCourse?courseID=${course.getCourseID()}&Accept='true'" method="POST" class="d-inline">
+                                                            <input type="submit" value="Accept" class="bg-success" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
+                                                        </form>
+                                                        <form action="AdminManageCourse?courseID=${course.getCourseID()}&Denied='true'" method="POST" class="d-inline">
+                                                            <input type="submit" value="Denied" class="bg-danger" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
+                                                        </form>  
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        <!--                                        <tr>
+                                                                                    <td style="max-width: 180px">
+                                                                                        <div class="d-flex">
+                                                                                            <img src="assets/img/Asset 1.png" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 10px;">
+                                                                                            <div class="ms-2">
+                                                                                                <div class="fw-bold">Course Title Front end Aadslkfjals HtML CXSS Pro</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <img src="assets/img/f8-logo.png" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
+                                                                                            <div class="d-inline-block" style="font-size: 14px; font-weight: 500;">Author name</div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div style="font-weight: 600">25/09/2022</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Front-end</div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">100.000đ</div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <a class="bg-success" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Accept</a>
+                                                                                            <a class="bg-danger" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Denied</a>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>-->
+
+
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center">
@@ -92,7 +140,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="assets/js/home_page.js"></script>
         <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

@@ -65,7 +65,7 @@ public class CourseDAO extends DBContext {
                 course.setDifficulty(rs.getString("Difficulty"));
                 course.setCourseImage(rs.getString("CourseImage"));
                 course.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
-                
+
                 courses.add(course);
             }
         } catch (SQLException ex) {
@@ -467,10 +467,58 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-    
-    public void enableCourse(int courseId){
+
+    public void enableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = ? WHERE [CourseID] = ?", "Enabled", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Course> getPendingCourse() {
+        ArrayList<Course> coursePendingList = new ArrayList<>();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID]\n"
+                    + "      ,[CourseName]\n"
+                    + "      ,[DateCreate]\n"
+                    + "      ,[AuthorID]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[NumberEnrolled]\n"
+                    + "      ,[CoursePrice]\n"
+                    + "      ,[CourseImage]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[Objectives]\n"
+                    + "      ,[Difficulty]\n"
+                    + "  FROM [dbo].[Course]\n"
+                    + "  where [Status] ='pending'");
+            while (rs.next()) {
+                coursePendingList.add(new Course(rs.getInt("CourseID"),
+                        rs.getNString("CourseName"), rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"), rs.getInt("NumberEnrolled"),
+                        rs.getInt("CoursePrice"), rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        udao.getAllUserInformationByID(rs.getInt("AuthorID")),
+                        0, rs.getNString("Description"), rs.getNString("Objectives"), rs.getString("Difficulty")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coursePendingList;
+    }
+
+    public void updateCourseStatus(int courseID, String Status) {
+        try {
+            int updateStatus = executeUpdate("update Course\n"
+                    + "set [Status] = ?\n"
+                    + "where [CourseID] = ?", Status, courseID);
+            if (updateStatus > 0) {
+                System.out.println("Update success");
+            } else {
+                throw new Exception();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

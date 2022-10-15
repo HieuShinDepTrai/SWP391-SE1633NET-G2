@@ -5,6 +5,7 @@
 package dal;
 
 import Model.Lesson;
+import Model.Question;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -163,6 +164,23 @@ public class LessonDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+    public int getQuizID(int lessonID) {
+        try {
+            ResultSet rs = executeQuery("select Quiz.QuizID from dbo.Lesson, dbo.Quiz\n"
+                    + "where Lesson.LessonID = Quiz.LessonID "
+                    + "and Lesson.[types] = 'Quiz' "
+                    + "and Lesson.LessonID = ?", lessonID);
+            while (rs.next()) {
+                return rs.getInt("QuizID");
+            }
+        } catch (Exception ex) {
+            System.out.println("getQuizID: " + ex.getMessage());
+        }
+        return 0;
+    }
+    
+
 
     public void MarkAs(int lessonID, int userID, String status) {
         execute("INSERT INTO [dbo].[User_Lesson]\n"
