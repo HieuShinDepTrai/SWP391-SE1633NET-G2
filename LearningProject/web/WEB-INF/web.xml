@@ -21,6 +21,10 @@
         <servlet-class>Controller.CreateCoursePreviewServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteLesson</servlet-name>
+        <servlet-class>Controller.DeleteLesson</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateQuizController</servlet-name>
         <servlet-class>Controller.CreateQuizController</servlet-class>
     </servlet>
@@ -31,6 +35,10 @@
     <servlet>
         <servlet-name>WithdrawController</servlet-name>
         <servlet-class>Controller.WithdrawController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageAccountController</servlet-name>
+        <servlet-class>Controller.ManageAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LikeCommentController</servlet-name>
@@ -229,6 +237,10 @@
         <url-pattern>/CreateCoursePreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>DeleteLesson</servlet-name>
+        <url-pattern>/deletelesson</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CreateQuizController</servlet-name>
         <url-pattern>/CreateQuiz</url-pattern>
     </servlet-mapping>
@@ -239,6 +251,10 @@
     <servlet-mapping>
         <servlet-name>WithdrawController</servlet-name>
         <url-pattern>/withdraw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageAccountController</servlet-name>
+        <url-pattern>/manageaccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LikeCommentController</servlet-name>
