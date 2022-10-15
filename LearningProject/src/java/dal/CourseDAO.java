@@ -498,7 +498,7 @@ public class CourseDAO extends DBContext {
                 coursePendingList.add(new Course(rs.getInt("CourseID"),
                         rs.getNString("CourseName"), rs.getTimestamp("DateCreate"),
                         rs.getString("Category"), rs.getInt("NumberEnrolled"),
-                        rs.getDouble("CoursePrice"), rs.getString("CourseImage"),
+                        rs.getInt("CoursePrice"), rs.getString("CourseImage"),
                         rs.getString("Status"),
                         udao.getAllUserInformationByID(rs.getInt("AuthorID")),
                         0, rs.getNString("Description"), rs.getNString("Objectives"), rs.getString("Difficulty")));
