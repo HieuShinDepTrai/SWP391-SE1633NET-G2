@@ -75,7 +75,7 @@ public class User {
         this.isDisable = isDisable;
     }
 
-    public User(int userId, String firstName, String lastName, String email, String phone, float balance, String avatar, String role, boolean isDisable) {
+    public User(int userId, String firstName, String lastName, String email, String phone, int balance, String avatar, String role, boolean isDisable) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

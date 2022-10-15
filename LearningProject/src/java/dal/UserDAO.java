@@ -6,11 +6,8 @@ package dal;
 
 import Model.User;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -385,7 +382,7 @@ public class UserDAO extends DBContext {
                         rs.getNString("LastName"),
                         rs.getString("Email"),
                         rs.getString("PhoneNumber"),
-                        rs.getFloat("Balance"),
+                        rs.getInt("Balance"),
                         avatar,
                         rs.getString("Role"),
                         rs.getBoolean("isDisable")));
