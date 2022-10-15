@@ -48,6 +48,10 @@
         <servlet-name>ReportController</servlet-name>
         <servlet-class>Controller.ReportController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageCommentController</servlet-name>
+        <servlet-class>Controller.ManageCommentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>ReportController</servlet-name>
         <url-pattern>/Report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCommentController</servlet-name>
+        <url-pattern>/managecomment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
