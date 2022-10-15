@@ -13,19 +13,66 @@ import java.util.ArrayList;
  *
  * @author vuman
  */
-public class AnswerDAO extends DBContext{
-    public ArrayList<Answer> getAnswersOfQuestion(int questionId){
+public class AnswerDAO extends DBContext {
+
+    public ArrayList<Answer> getAnswersOfQuestion(int questionId) {
         ArrayList<Answer> answerlist = new ArrayList<Answer>();
-        try(ResultSet rs = executeQuery("SELECT [AnswerID], [AnswerContent], [isCorrect] FROM [dbo].[Answer] WHERE [QuestionID] = ?", questionId)){
-            while(rs.next()){
+        try ( ResultSet rs = executeQuery("SELECT [AnswerID], [AnswerContent], [isCorrect] FROM [dbo].[Answer] WHERE [QuestionID] = ?", questionId)) {
+            while (rs.next()) {
                 answerlist.add(new Answer(rs.getInt("AnswerID"), rs.getNString("AnswerContent"), questionId, rs.getBoolean("isCorrect")));
             }
-            
+
             return answerlist;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    public void addAnswer(Answer answer) {
+        try {
+            execute("insert into Answer\n"
+                    + "values(?, ?, ?)", answer.getAnswerContent(), answer.getQuestionId(), answer.isIsCorrect());
+        } catch (Exception e) {
+            System.out.println("addAnswer: ");
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Integer> getAnswerListID(int questionID) {
+        ArrayList<Integer> answerListID = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("select AnswerID from Answer\n"
+                    + "where QuestionID = ?", questionID);
+            while (rs.next()) {
+                answerListID.add(rs.getInt("AnswerID"));
+            }
+        } catch (Exception e) {
+            System.out.println("getAnswerListID: ");
+            e.printStackTrace();
+        }
+        return answerListID;
+    }
+
+    public void updateAnswerByAnswerID(int ansID, String answerValue, boolean answer) {
+        try {
+            int updateStatus = executeUpdate("update Answer\n"
+                    + "set AnswerContent = ?, isCorrect = ?\n"
+                    + "where AnswerID = ?", answerValue, answer, ansID);
+        } catch (Exception e) {
+            System.out.println("updateAnswerByAnswerID: ");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAnswer(int i) {
+        try {
+            int updateStatus = executeUpdate("delete Answer\n"
+                    + "where AnswerID = ?", i);
+        } catch (Exception e) {
+            System.out.println("deleteAnswer: ");
+            e.printStackTrace();
+        }
+    }
+
 }

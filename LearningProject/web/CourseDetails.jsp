@@ -176,7 +176,7 @@
                                         <input name="op"  type="submit" class="enroll-button my-1" value="Enroll">
                                     </c:if>
                                     <c:if test="${UserCourse != null }">
-                                        <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${sectionID}&lessonID=${lessonID}" class="enroll-button my-1">Go To Course</a>
+                                        <a href="WatchCourse?courseID=${course.getCourseID()}" class="enroll-button my-1">Go To Course</a>
                                     </c:if>
                                 </form>
 
