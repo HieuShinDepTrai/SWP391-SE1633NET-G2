@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class QuestionDAO extends DBContext {
-    
+
     public ArrayList<Question> getQuestionsOfQuiz(int quizId) {
         ArrayList<Question> questionlist = new ArrayList<Question>();
         try ( ResultSet rs = executeQuery("SELECT [QuestionID], [QuestionContent] FROM [dbo].[Question] WHERE [QuizID] = ?", quizId)) {
@@ -27,7 +27,7 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
-    
+
     public Question getQuestionAndAnswer(int questionID) {
         Question q = new Question();
         try {
@@ -51,7 +51,7 @@ public class QuestionDAO extends DBContext {
         }
         return q;
     }
-    
+
     public int addQuestion(Question question) {
         try {
             ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Question')\n"
@@ -66,14 +66,14 @@ public class QuestionDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public void deleteQuestion(int quesitonID) {
         try {
             int deleteStatus = executeUpdate("delete Answer\n"
                     + "where QuestionID = ?\n"
                     + "delete Question\n"
                     + "where QuestionID = ?", quesitonID, quesitonID);
-            if(deleteStatus > 0) {
+            if (deleteStatus > 0) {
                 System.out.println("deleteQuestion: Delete Success");
             } else {
                 throw new Exception();
@@ -83,5 +83,29 @@ public class QuestionDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
+    public ArrayList<Integer> getListQuestionID(int quizID) {
+        ArrayList<Integer> listQuestionID = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("select QuestionID from Question\n"
+                    + "where QuizID = ?", quizID);
+            while (rs.next()) {
+                listQuestionID.add(rs.getInt("QuestionID"));
+            }
+        } catch (Exception e) {
+            System.out.println("getListQuestionID: ");
+            e.printStackTrace();
+        }
+        return listQuestionID;
+    }
+
+    public void updateQuestionByQuestionID(int qID, String QuestionContent) {
+        try {
+            int updateStatus = executeUpdate("update Question\n"
+                    + "set QuestionContent = ?\n"
+                    + "where QuestionID = ?", qID, QuestionContent);
+        } catch (Exception e) {
+        }
+    }
+
 }

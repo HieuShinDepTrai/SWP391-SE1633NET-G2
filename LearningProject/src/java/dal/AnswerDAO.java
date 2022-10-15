@@ -38,4 +38,41 @@ public class AnswerDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Integer> getAnswerListID(int questionID) {
+        ArrayList<Integer> answerListID = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("select AnswerID from Answer\n"
+                    + "where QuestionID = ?", questionID);
+            while (rs.next()) {
+                answerListID.add(rs.getInt("AnswerID"));
+            }
+        } catch (Exception e) {
+            System.out.println("getAnswerListID: ");
+            e.printStackTrace();
+        }
+        return answerListID;
+    }
+
+    public void updateAnswerByAnswerID(int ansID, String answerValue, boolean answer) {
+        try {
+            int updateStatus = executeUpdate("update Answer\n"
+                    + "set AnswerContent = ?, isCorrect = ?\n"
+                    + "where AnswerID = ?", answerValue, answer, ansID);
+        } catch (Exception e) {
+            System.out.println("updateAnswerByAnswerID: ");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAnswer(int i) {
+        try {
+            int updateStatus = executeUpdate("delete Answer\n"
+                    + "where AnswerID = ?", i);
+        } catch (Exception e) {
+            System.out.println("deleteAnswer: ");
+            e.printStackTrace();
+        }
+    }
+
 }

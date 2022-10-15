@@ -21,8 +21,8 @@
         </style>
     </head>
 
-    <body style="font-family: 'Montserrat', sans-serif;">
-        <div class="py-5" style="padding-left: 120px; padding-right: 120px;">
+    <body style="font-family: 'Montserrat', sans-serif;" onload="updateRowCount()">
+        <div class="py-5" style="padding-left: 30px; padding-right: 30px;">
             <div class="row">
                 <div class="col-8 d-flex justify-content-between align-items-center">
                     <div>
@@ -45,56 +45,61 @@
                             below</p>
                     </div>
                     <div>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                                data-bs-target=".multi-collapse" aria-expanded="false">Show/Hide</button>
+<!--                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target=".multi-collapse" aria-expanded="false">Show/Hide</button>-->
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-8">
+                <div class="col-9">
                     <table class="table table-bordered">
                         <thead>
                         <th>Number</th>
                         <th>Question</th>
                         <th>Action</th>
                         </thead>
-                        <tbody>
-                            <c:forEach items="${questionList}" var="question" varStatus="index"> 
+                        <tbody id="questionTable">
+                            <c:forEach items="${questionList}" var="question">
+                                
                                 <!--Begin Question -->
                                 <tr>
-                                    <td>${index.count}</td>
-                                    <td>
+                                    <td class="index"></td>
+                                    <td style="width: 80%;">
                                         <div class="card mb-2" style="border-radius: 8px;">
-                                            <div class="card-body" data-bs-toggle="collapse" href="#test${index.count}" role="button"
-                                                 aria-expanded="false" aria-controls="test${index.count}">
-                                                <div class="question-name fw-bold">${question.getQuestionContent()}</div>
-                                                <div class="collapse multi-collapse mt-3" id="test${index.count}">
-                                                    <c:forEach items="${answerList}" var="ans">
-                                                        <c:if test = "${ans.getQuestionId() == question.getQuestionId()}">
-                                                            <c:if test="${ans.isIsCorrect() == true}">
-                                                                <div class="card card-body mb-2 bg-success text-white">
-                                                                    ${ans.getAnswerContent()}
-                                                                </div> 
-                                                            </c:if>
-                                                            <c:if test="${ans.isIsCorrect() == false}">
-                                                                <div class="card card-body mb-2">
-                                                                    ${ans.getAnswerContent()}
-                                                                </div> 
-                                                            </c:if>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </div>
+                                            <div class="card-body" >
+                                                <input name="questionID" type="hidden" value="${question.getQuestionId()}">
+                                                <textarea name="questionContent" class="fw-bold form-control" style="overflow-y: hidden;" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>${question.getQuestionContent()}</textarea>
+                                                <c:forEach items="${answerList}" var="answer">
+                                                    <c:if test="${answer.getQuestionId() == question.getQuestionId()}">
+                                                        <div class="mt-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <input name="answerID" type="hidden" value="${answer.getAnswerId()}">
+
+                                                                <div class="form-check">
+                                                                    <c:if test="${answer.isIsCorrect() == true}">
+                                                                        <input class="form-check-input" type="checkbox" checked>
+                                                                    </c:if>
+                                                                    <c:if test="${answer.isIsCorrect() == false}">
+                                                                        <input class="form-check-input" type="checkbox">
+                                                                    </c:if>
+                                                                    
+                                                                </div>
+
+                                                                <input type="text" class="card card-body mb-2" name="answer" value="${answer.getAnswerContent()}">
+
+                                                                <button type="button" class="btn-close ms-3" aria-label="Close" onclick="$(this).parent().parent().remove()"></button>
+                                                            </div>
+
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <div class="btn btn-primary mt-2" onclick="addAnswerPrev(this)">Add answer</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <form action="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID=${question.getQuestionId()}" method="post" class="d-inline">
-                                            <input type="submit" href="QuizQuestion?delete='delete'&lessonID=${lessonID}&questionID='${question.getQuestionId()}'" class="btn btn-outline-danger d-inline-block" value="Delete">
-                                            
-                                        </form>
-                                        <div class="btn btn-outline-primary" 
-                                             data-bs-target="#editQuestionModal" index="${question.getQuestionId()}" onclick="sendParameter(this)">Edit</div>
+                                        <div class="btn btn-outline-danger mb-2" onclick="deleteQuestion(this)">Delete</div>
                                     </td>
                                 </tr>
                                 <!-- End Question -->
@@ -102,159 +107,34 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-4">
-                    <div class="card w-100 shadow-sm" style="border-radius: 16px;">
-                        <div class="card-body px-0">
-                            <div class="p-3">
-                                <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Quiz
-                                    Title</label>
-                                <input type="text" class="form-control" id="lessonTime" value="${lesson.getLessonName()}" disabled>
-                            </div>
-                            <div class="p-3">
-                                <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Lesson
-                                    Time</label>
-                                <input type="text" class="form-control" id="lessonTime" value="${lesson.getTime()}" disabled>
-                            </div>
+                <div class="col-3">
+                    <div style="position: sticky; top: 0">
+                        <div class="card w-100 shadow-sm" style="border-radius: 16px;">
+                            <div class="card-body px-0">
+                                <div class="p-3">
+                                    <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Quiz Title</label>
+                                    <input type="text" class="form-control" id="lessonTime" value="${lesson.getLessonName()}" disabled>
+                                </div>
+                                <div class="p-3">
+                                    <label for="lessonTime" class="form-label" style="font-weight: 600; font-size: 15px;">Lesson Time</label>
+                                    <input type="text" class="form-control" id="lessonTime" value="${lesson.getTime()}" disabled>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#addQuestionModal">Add Question
+                        <div class="btn btn-danger mt-3" onclick="addQuestion()">Add Question
+                        </div>
+                        <div class="btn btn-success mt-3" onclick="submit()">Save Changes
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Modal Add Question -->
-            <form action="QuizQuestion?type='add'&quizID=${quizID}&lessonID=${lessonID}" method="post">                
-                <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModal"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-fullscreen">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addQuestionModal">Add Question</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
-                                <div class="mb-3">
-                                    <label for="Question" class="form-label fw-bold">Question Content</label>
-                                    <textarea class="form-control" name="questionContent"></textarea>
-                                </div>
-                                <div id="AnswerList">
-                                    <label for="Answer" class="form-label fw-bold">Answer</label>
-<!--                                    <div class="mb-3">
-                                        <div class="card card-body w-50 bg-success text-white d-inline-block">
-                                            Answer1
-                                            <input type="hidden" name="answer" value="Answer1-true">
-                                        </div>
-                                        <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAnswerModal"
-                                             onclick="editAnswer($(this).prev())">Edit</div>
-                                        <div class="btn btn-danger d-inline-block" onclick="remove(this.parentNode)">Remove
-                                        </div>
-                                    </div>-->
-
-                                </div>
-                                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
-                                    Answer</div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" value="Save changes">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <form id="submitForm" action="QuizQuestion?lessonID=${lessonID}&quizID=${quizID}" method="post">
+                <input type="hidden" id="valueSubmit" name="jsonQuestions">
             </form>
-            <!-- Modal Add Question -->
 
-            <!-- Modal Add Answer -->
-            <div class="modal fade" id="addAnswerModal" tabindex="-1" aria-labelledby="addAnswerModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addQuestionModal">Add Answer</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Answer Content</label>
-                                <textarea name="" id="addAnswer" style="height: 180px;" class="form-control"></textarea>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="isAnswer">
-                                <label for="isAnswer" class="form-check-label">Is Answer ?</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="addAnswer()">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Add Answer -->
 
-            <!-- Modal Edit Question -->
-            <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModal"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Edit Question</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body py-3 bg-light" style="padding-left: 240px; padding-right: 240px;">
-                            <div class="mb-3">
-                                <label for="Question" class="form-label fw-bold">Question Content</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div id="EditAnswerList">
-                                <label for="Answer" class="form-label fw-bold">Answer</label>
-                                <!-- <div class="card card-body w-50 mb-3 bg-danger text-white">
-                                Answer1
-                            </div> -->
-                                <div class="card card-body w-50 mb-3 bg-success text-white">
-                                    Answer1
-                                </div>
-                            </div>
-                            <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAnswerModal">Add
-                                Answer</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Edit Question -->
-
-            <!-- Modal Edit Answer -->
-            <div class="modal fade" id="editAnswerModal" tabindex="-1" aria-labelledby="editAnswerModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="">Edit Answer</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Answer Content</label>
-                                <textarea name="" id="editAnswer" style="height: 180px;" class="form-control"></textarea>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="editIsAnswer">
-                                <label for="isAnswer" class="form-check-label">Is Answer ?</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="saveEditAnswer()">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Edit Answer -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            
             <script src="assets/js/create_lesson_quiz.js"></script>
             <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
