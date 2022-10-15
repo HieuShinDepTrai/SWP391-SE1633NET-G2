@@ -84,7 +84,20 @@ public class ManageCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        CommentDAO cdao = new CommentDAO();
+        int commentid = 0;
+        String isdisable = "";
+        if (request.getParameter("commentid") != null) {
+            commentid = Integer.parseInt(request.getParameter("commentid"));
+            isdisable = request.getParameter("isdisable");
+            if(isdisable.compareToIgnoreCase("true") == 0) {
+                cdao.EnableComment(commentid);
+            }
+            else {
+                cdao.DisableComment(commentid);
+            }
+            response.sendRedirect("managecomment");
+        }
     }
 
     /** 

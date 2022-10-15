@@ -67,8 +67,20 @@
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <a class="bg-danger"
-                                                           style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Disable</a>
+                                                        <form action="managecomment" method="POST">
+                                                            <c:if test="${comments.isIsDisable() == false}">
+                                                                <input type="hidden" value="${comments.getCommentId()}" name="commentid">
+                                                                <input type="hidden" value="${comments.isIsDisable()}" name="isdisable">
+                                                                <button type="submit" class="bg-danger"
+                                                                        style="border:none; border-radius: 32px; padding: 4px 8px; color: white; min-width: 100px; font-weight: 500;">Disable</button>
+                                                            </c:if>
+                                                            <c:if test="${comments.isIsDisable() == true}">
+                                                                <input type="hidden" value="${comments.getCommentId()}" name="commentid">
+                                                                <input type="hidden" value="${comments.isIsDisable()}" name="isdisable">
+                                                                <button type="submit" class="bg-success"
+                                                                        style="border:none; border-radius: 32px; padding: 4px 8px; color: white; min-width: 100px; font-weight: 500;">Enable</button>
+                                                            </c:if>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

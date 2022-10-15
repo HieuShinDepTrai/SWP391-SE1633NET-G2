@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * @author ASUS
  */
 public class CommentDAO extends DBContext {
-    
+
     public Comment getComment(String commentId, String userId) {
         UserDAO userDAO = new UserDAO();
         try ( ResultSet rs = executeQuery("SELECT [CommentID], "
@@ -32,7 +32,7 @@ public class CommentDAO extends DBContext {
                 + "[CommentDate], "
                 + "[Likes], "
                 + "[isReported] FROM [Comment] WHERE CommentID = ? AND UserID = ?", commentId, userId)) {
-            
+
             if (rs.next()) {
                 int cmtId = rs.getInt("CommentID");
                 int videoId = rs.getInt("VideoID");
@@ -42,7 +42,7 @@ public class CommentDAO extends DBContext {
                 Date cmtDate = rs.getDate("CommentDate");
                 int likes = rs.getInt("Likes");
                 boolean isReport = rs.getBoolean("isReported");
-                
+
                 return new Comment(cmtId, videoId, user, pId, commentId, cmtContent, cmtDate, likes, isReport);
             }
         } catch (Exception e) {
@@ -50,14 +50,14 @@ public class CommentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public UserComment getUserComment(int cmtId, int userId) {
         try ( ResultSet rs = executeQuery("SELECT [CommentID],[UserID],[isLiked] FROM User_Comment where CommentID = ? AND UserID = ?", cmtId, userId)) {
             if (rs.next()) {
                 int commentId = rs.getInt("CommentID");
                 int uId = rs.getInt("UserID");
                 boolean isLked = rs.getBoolean("isLiked");
-                
+
                 return new UserComment(commentId, uId, isLked);
             }
         } catch (Exception e) {
@@ -65,45 +65,45 @@ public class CommentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId) {
         try {
             executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content, videoId, userId, parentId);
         } catch (Exception e) {
         }
     }
-    
+
     public void insertIntoUserComment(int commentId, int userId, int isLiked) {
         try {
             executeUpdate("INSERT INTO [User_Comment](CommentID, UserID, isLiked) VALUES (? , ?, ?)", commentId, userId, isLiked);
         } catch (Exception e) {
         }
     }
-    
+
     public void insertIntoReport(int UserId, int CommentId) {
         try {
             executeUpdate("INSERT INTO [Report](UserID, CommentID) VALUES (? , ?) ", UserId, CommentId);
         } catch (Exception e) {
         }
-    }    
-    
+    }
+
     public void deleteIntoUserComment(int commentId, int userId) {
         try {
             executeUpdate("DELETE FROM [User_Comment] WHERE [CommentID] = ? AND [UserID] = ?", commentId, userId);
         } catch (Exception e) {
         }
     }
-    
+
     public void deleteIntoReport(int UserId, int CommentId) {
         try {
             executeUpdate("DELETE FROM [Report] WHERE [UserID] = ? AND [CommentID] = ?", UserId, CommentId);
         } catch (Exception e) {
         }
     }
-    
+
     public Video getVideoIdByLessonId(int LessonId) {
         try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
-            
+
             if (rs.next()) {
                 int videoId = rs.getInt("VideoID");
                 int lesId = rs.getInt("LessonID");
@@ -117,17 +117,17 @@ public class CommentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public ArrayList<UserComment> getAllUserCommentByUserId(int UserId) {
         ArrayList<UserComment> ucmt = new ArrayList<>();
         try ( ResultSet rs = executeQuery("SELECT [CommentID],[UserID],[isLiked] FROM [User_Comment] WHERE UserID = ?", UserId)) {
-            
+
             while (rs.next()) {
                 UserComment uc = new UserComment();
                 uc.setCommentId(rs.getInt("CommentID"));
                 uc.setUserID(rs.getInt("UserID"));
                 uc.setIsLiked(rs.getBoolean("isLiked"));
-                
+
                 ucmt.add(uc);
             }
         } catch (Exception e) {
@@ -135,11 +135,11 @@ public class CommentDAO extends DBContext {
         }
         return ucmt;
     }
-    
+
     public ArrayList<Comment> ListAllParentCommentByLessonID(int lessonID) {
         ArrayList<Comment> cmt = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
-        
+
         try ( ResultSet rs = executeQuery("SELECT cmt.[CommentID]\n"
                 + "               ,cmt.[VideoID]\n"
                 + "               ,cmt.[UserID]\n"
@@ -149,10 +149,10 @@ public class CommentDAO extends DBContext {
                 + "               ,cmt.[Likes]\n"
                 + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
                 + "                ON cmt.VideoID = v.VideoID WHERE LessonID = ? AND ParentID = 0", lessonID)) {
-            
+
             while (rs.next()) {
                 Comment c = new Comment();
-                
+
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setParentId(rs.getInt("ParentID"));
@@ -161,7 +161,7 @@ public class CommentDAO extends DBContext {
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
-                
+
                 cmt.add(c);
             }
         } catch (Exception e) {
@@ -169,7 +169,7 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
-    
+
     public ArrayList<Comment> ListAllCommentByLessonID(int lessonID) {
         ArrayList<Comment> cmt = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
@@ -182,10 +182,10 @@ public class CommentDAO extends DBContext {
                 + "               ,cmt.[Likes]\n"
                 + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
                 + "                ON cmt.VideoID = v.VideoID WHERE LessonID = ?", lessonID)) {
-            
+
             while (rs.next()) {
                 Comment c = new Comment();
-                
+
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
@@ -195,7 +195,7 @@ public class CommentDAO extends DBContext {
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
-                
+
                 cmt.add(c);
             }
         } catch (Exception e) {
@@ -203,7 +203,7 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
-    
+
     public ArrayList<Comment> ListAllReplyCommentByOfLessonByParentId(int parentId, int lessonId) {
         ArrayList<Comment> cmt = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
@@ -216,10 +216,10 @@ public class CommentDAO extends DBContext {
                 + "               ,cmt.[Likes]\n"
                 + "               ,cmt.[isReported] FROM [Comment] cmt INNER JOIN [Video] v \n"
                 + "                ON cmt.VideoID = v.VideoID WHERE ParentId = ? AND LessonID = ?", parentId, lessonId)) {
-            
+
             while (rs.next()) {
                 Comment c = new Comment();
-                
+
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setVideoId(rs.getInt("VideoID"));
                 c.setParentId(rs.getInt("ParentID"));
@@ -229,7 +229,7 @@ public class CommentDAO extends DBContext {
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
-                
+
                 cmt.add(c);
             }
         } catch (Exception e) {
@@ -237,18 +237,18 @@ public class CommentDAO extends DBContext {
         }
         return cmt;
     }
-    
+
     public ArrayList<Report> getAllReportByUserId(int UserId) {
         ArrayList<Report> listReport = new ArrayList<>();
         try ( ResultSet rs = executeQuery("SELECT [ReportID],[UserID],[CommentID],[ReportContent] FROM [Report] WHERE UserID = ?", UserId)) {
-            
+
             while (rs.next()) {
                 Report rp = new Report();
                 rp.setReportID(rs.getInt("ReportID"));
                 rp.setUserID(rs.getInt("UserID"));
                 rp.setCommentID(rs.getInt("CommentID"));
                 rp.setReportContent(rs.getNString("ReportContent"));
-                
+
                 listReport.add(rp);
             }
         } catch (Exception e) {
@@ -256,11 +256,12 @@ public class CommentDAO extends DBContext {
         }
         return listReport;
     }
-    
+
     public ArrayList<Comment> ListAllCommentsReported() {
         try {
             ArrayList<Comment> comments = new ArrayList<>();
             ResultSet rs = executeQuery("SELECT \n"
+                    + "	[Comment].[CommentID],\n"
                     + "	[User].[Avatar],\n"
                     + "	[User].[FirstName],\n"
                     + "	[User].[LastName],\n"
@@ -273,16 +274,17 @@ public class CommentDAO extends DBContext {
             while (rs.next()) {
                 Comment c = new Comment();
                 User u = new User();
-                
+
                 u.setAvatar(rs.getString("Avatar"));
                 u.setFirstName(rs.getNString("FirstName"));
                 u.setLastName(rs.getNString("LastName"));
-                
+
+                c.setCommentId(rs.getInt("CommentID"));
                 c.setCommentContent(rs.getNString("CommentContent"));
                 c.setCommentDate(rs.getDate("CommentDate"));
                 c.setIsDisable(rs.getBoolean("isDisable"));
                 c.setUser(u);
-                
+
                 comments.add(c);
             }
             return comments;
@@ -290,5 +292,25 @@ public class CommentDAO extends DBContext {
             Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public void DisableComment(int commentid) {
+        try {
+            executeUpdate("UPDATE [Comment]\n"
+                    + "SET [isDisable] = 1\n"
+                    + "WHERE [CommentID] = ?", commentid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void EnableComment(int commentid) {
+        try {
+            executeUpdate("UPDATE [Comment]\n"
+                    + "SET [isDisable] = 0\n"
+                    + "WHERE [CommentID] = ?", commentid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
