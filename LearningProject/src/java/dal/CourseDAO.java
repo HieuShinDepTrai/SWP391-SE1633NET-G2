@@ -59,7 +59,7 @@ public class CourseDAO extends DBContext {
                 course.setCourseImage(rs.getString("CourseImage"));
                 course.setStatus(rs.getString("Status"));
                 course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
-                course.setCoursePrice(rs.getDouble("CoursePrice"));
+                course.setCoursePrice(rs.getInt("CoursePrice"));
                 course.setCourseID(rs.getInt("CourseID"));
                 course.setObjectives(rs.getNString("Objectives"));
                 course.setDifficulty(rs.getString("Difficulty"));
@@ -93,7 +93,7 @@ public class CourseDAO extends DBContext {
                         rs.getTimestamp("DateCreate"),
                         rs.getNString("Category"),
                         rs.getInt("NumberEnrolled"),
-                        rs.getDouble("CoursePrice"),
+                        rs.getInt("CoursePrice"),
                         rs.getString("CourseImage"),
                         rs.getString("Status"),
                         new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")),
@@ -131,7 +131,7 @@ public class CourseDAO extends DBContext {
                 c.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
                 c.setCategory(rs.getString("Category"));
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
-                c.setCoursePrice(rs.getDouble("CoursePrice"));
+                c.setCoursePrice(rs.getInt("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
                 c.setStatus(rs.getString("Status"));
                 c.setDescription(rs.getString("Description"));
@@ -284,7 +284,7 @@ public class CourseDAO extends DBContext {
                 c.setAuthor(userDao.getAllUserInformationByID(rs.getInt("AuthorID")));
                 c.setCategory(rs.getString("Category"));
                 c.setNumberEnrolled(rs.getInt("NumberEnrolled"));
-                c.setCoursePrice(rs.getDouble("CoursePrice"));
+                c.setCoursePrice(rs.getInt("CoursePrice"));
                 c.setCourseImage(rs.getString("CourseImage"));
                 c.setCourseProgress(rs.getDouble("Progress"));
                 courseList.add(c);
@@ -316,7 +316,7 @@ public class CourseDAO extends DBContext {
                         rs.getTimestamp("DateCreate"),
                         rs.getString("Category"),
                         rs.getInt("NumberEnrolled"),
-                        rs.getDouble("CoursePrice"),
+                        rs.getInt("CoursePrice"),
                         rs.getString("CourseImage"),
                         rs.getString("Status"),
                         new UserDAO().getAllUserInformationByID(userId),
@@ -450,7 +450,7 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    public CurrentCourse getCurrentCourse(int courseID, int userID) {
+       public CurrentCourse getCurrentCourse(int courseID, int userID) {
         try {
             ResultSet rs = executeQuery("select top 1 CourseID, l.LessonID, s.SectionID\n"
                     + "from User_Lesson ul\n"

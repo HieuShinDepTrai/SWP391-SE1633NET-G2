@@ -65,6 +65,7 @@
                     <div class="content-container">
                         <div class="content-header d-flex justify-content-between">
                             Personal Information
+                            <c:if test="${user.getRole() ne 'User'}">                                
                             <div class="">
                                 <form action="withdraw" method="POST">    
                                     <p>Input number to withdraw</p>
@@ -75,6 +76,7 @@
                                     </c:if>
                                 </form>
                             </div>
+                            </c:if>
                         </div>
                         <div class="w-100 bg-white">
                             <table class="table table-bordered">
