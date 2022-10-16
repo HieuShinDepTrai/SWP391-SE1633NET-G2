@@ -54,11 +54,11 @@ public class WithdrawManagementController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         PaymentDAO paymentDAO = new PaymentDAO();
-//        User user = (User) session.getAttribute("user");
-//        if (!user.getRole().equals("Admin")) {
-//            response.sendRedirect("ErrorPage.jsp");
-//            return;
-//        }
+        User user = (User) session.getAttribute("user");
+        if (!user.getRole().equals("Admin")) {
+            response.sendRedirect("ErrorPage.jsp");
+            return;
+        }
         ArrayList<Payment> withdrawList = paymentDAO.getPendingWithdraw();
         request.setAttribute("withdrawList", withdrawList);
         request.getRequestDispatcher("AdminManageWithdraw.jsp").forward(request, response);
