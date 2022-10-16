@@ -49,22 +49,17 @@ public class RegisterController extends HttpServlet {
 
             if (userDAO.isAccountExist(userName)) {
                 request.setAttribute("result", "Tài khoản của bạn đã tồn tại, vui lòng thử lại");
-            }else if(userName.length() < 3){
-                request.setAttribute("result", "Tên đăng nhập phải có nhiều hơn 3 kí tự");
-            }
-            else if(!valid.checkBirthDay(date)){
-                request.setAttribute("result", "Bạn phải trên 16 tuổi mới có thể đăng ký tài khoản");
-            }
-            else if(!valid.checkPasswordFormat(password)){
-                request.setAttribute("result", "Mật khẩu của bạn phải có độ dài từ 8 - 25 ký tự, bao gồm ít nhất 1 chữ cái viết hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt");
-            }
-            else if(!cfpassword.equals(password)){
-                request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
-            }
-            else if(verifyCaptcha.verify(gRecaptchaResponse)==false){
+            } else if (verifyCaptcha.verify(gRecaptchaResponse) == false) {
                 request.setAttribute("result", "Captcha unavailable");
-            }
-            else {
+            } else if (userName.length() < 3) {
+                request.setAttribute("result", "Tên đăng nhập phải có nhiều hơn 3 kí tự");
+            } else if (!valid.checkBirthDay(date)) {
+                request.setAttribute("result", "Bạn phải trên 16 tuổi mới có thể đăng ký tài khoản");
+            } else if (!valid.checkPasswordFormat(password)) {
+                request.setAttribute("result", "Mật khẩu của bạn phải có độ dài từ 8 - 25 ký tự, bao gồm ít nhất 1 chữ cái viết hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt");
+            } else if (!cfpassword.equals(password)) {
+                request.setAttribute("result", "Mật khẩu của bạn không trùng khớp, vui lòng thử lại");
+            } else {
                 User user = new User(firstName, lastName, email, "", "", "", "", date, "", 0, "", userName, SHA256.SHA256(password), "User", "", "", false);
                 userDAO.addUser(user);
                 response.sendRedirect("login");
