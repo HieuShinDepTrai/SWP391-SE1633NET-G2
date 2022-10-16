@@ -96,7 +96,7 @@
                                             <h6>All number of waiting withdraw</h6>
                                         </div>
                                         <div class="overview-content d-flex justify-content-between">
-                                            <p>02</p>
+                                            <p>${totalWithdrawPending}</p>
                                             <i class="fa-solid fa-laptop overview-content-img"></i>
                                         </div>
                                     </div>
@@ -127,9 +127,9 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Transaction Management</a>
+                                                    <a href="withdrawmanagement">Transaction Management</a>
                                                 </div>
-                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                <div class="mb-2" style="font-size: 14px;">Show all pending withdraw
                                                 </div>
 
                                             </div>
@@ -147,6 +147,42 @@
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
                                                     <a href="#">Account Management</a>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card shadow-sm overflow-hidden">
+                                        <div class="row my-course g-0">
+                                            <div class="col-3">
+                                                <img src="https://img.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg?w=1060&t=st=1664958980~exp=1664959580~hmac=88310d1b905804a0cd9333cbce64a79caae79f10802976640842f9cc7129c044"
+                                                    alt="" style="width: 100%; height: 96px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-9 px-3 m-auto">
+                                                <div class="fw-bold mb-1">
+                                                    <a href="#">Comment Report Management</a>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card shadow-sm overflow-hidden">
+                                        <div class="row my-course g-0">
+                                            <div class="col-3">
+                                                <img src="https://img.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg?w=1060&t=st=1664958980~exp=1664959580~hmac=88310d1b905804a0cd9333cbce64a79caae79f10802976640842f9cc7129c044"
+                                                    alt="" style="width: 100%; height: 96px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-9 px-3 m-auto">
+                                                <div class="fw-bold mb-1">
+                                                    <a href="#">Course Management</a>
                                                 </div>
                                                 <div class="mb-2" style="font-size: 14px;">Admin Function Description
                                                 </div>

@@ -106,6 +106,10 @@ public class CourseWatchController extends HttpServlet {
             if (currentCourse != null) {
                 sectionID = currentCourse.getSectionID();
                 lessonID = currentCourse.getLessonID();
+            } else if (ldao.getFirstLessonOfCourse(courseID) != null) {
+                Lesson lesson = ldao.getFirstLessonOfCourse(courseID);
+                sectionID = lesson.getSectionId();
+                lessonID = lesson.getLessonId();
             }
         } else {
             response.sendRedirect("login");
@@ -152,21 +156,20 @@ public class CourseWatchController extends HttpServlet {
                 listLesson.add(lesson);
             }
         }
-        
+
         ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(userId);
-        
+
         ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
-        
+
         for (Report report : listReport) {
             userCommentIdOfReport.add(report.getCommentID());
         }
-        
 
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
         if (lessonID != 0) {
             lesson.setStatus(ldao.getLessonStatusOfUser(lessonID, userId));
         }
-        
+
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked
