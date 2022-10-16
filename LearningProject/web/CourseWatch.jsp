@@ -212,7 +212,7 @@
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
 
                                                                 <c:choose>
-                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                    <c:when test="${lesson.getStatus() eq 'Done'}">
                                                                         <i class="fa-solid fa-circle-check"></i>
                                                                     </c:when>                                                                
                                                                     <c:otherwise>
@@ -240,7 +240,7 @@
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
 
                                                                 <c:choose>
-                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                    <c:when test="${lesson.getStatus() eq 'Done'}">
                                                                         <i class="fa-solid fa-circle-check"></i>
                                                                     </c:when>                                                                
                                                                     <c:otherwise>
