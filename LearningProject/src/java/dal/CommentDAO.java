@@ -31,7 +31,8 @@ public class CommentDAO extends DBContext {
                 + "[CommentContent],"
                 + "[CommentDate], "
                 + "[Likes], "
-                + "[isReported] FROM [Comment] WHERE CommentID = ? AND UserID = ?", commentId, userId)) {
+                + "[isReported], "
+                + "[isDisable] FROM [Comment] WHERE CommentID = ? AND UserID = ?", commentId, userId)) {
 
             if (rs.next()) {
                 int cmtId = rs.getInt("CommentID");
@@ -42,8 +43,9 @@ public class CommentDAO extends DBContext {
                 Date cmtDate = rs.getDate("CommentDate");
                 int likes = rs.getInt("Likes");
                 boolean isReport = rs.getBoolean("isReported");
+                boolean isDisable = rs.getBoolean("isDisable");
 
-                return new Comment(cmtId, videoId, user, pId, commentId, cmtContent, cmtDate, likes, isReport);
+                return new Comment(cmtId, videoId, user, pId, cmtContent, cmtDate, likes, isReport, isDisable);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,9 +68,10 @@ public class CommentDAO extends DBContext {
         return null;
     }
 
-    public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId) {
+     
+    public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId, String date) {
         try {
-            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, isReported) VALUES (?, ?, ?, ?, 0)", content, videoId, userId, parentId);
+            executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, CommentDate, isReported, isDisable, Likes) VALUES (?, ?, ?, ?, ?, 0, 0, 0)", content, videoId, userId, parentId, date);
         } catch (Exception e) {
         }
     }
@@ -97,6 +100,20 @@ public class CommentDAO extends DBContext {
     public void deleteIntoReport(int UserId, int CommentId) {
         try {
             executeUpdate("DELETE FROM [Report] WHERE [UserID] = ? AND [CommentID] = ?", UserId, CommentId);
+        } catch (Exception e) {
+        }
+    }
+     
+    public  void updateLikesOfCommentIncreaseByCommentId(int cmtId) {
+        try {
+            executeUpdate("UPDATE [Comment] SET [Likes] +=  1 WHERE [CommentID] = ?", cmtId);
+        } catch (Exception e) {
+        }
+    }
+    
+    public  void updateLikesOfCommentDecreaseByCommentId(int cmtId) {
+        try {
+            executeUpdate("UPDATE [Comment] SET [Likes] -=  1 WHERE [CommentID] = ?", cmtId);
         } catch (Exception e) {
         }
     }

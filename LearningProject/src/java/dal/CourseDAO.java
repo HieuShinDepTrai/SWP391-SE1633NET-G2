@@ -30,6 +30,10 @@ import java.util.logging.Logger;
  * @author Hieu Shin
  */
 public class CourseDAO extends DBContext {
+
+    public CourseDAO() {
+    }
+
     
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
