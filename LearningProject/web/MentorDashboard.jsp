@@ -203,6 +203,7 @@
                     </div>
 
                     <div class="col-lg-12">
+                        <h5 class="fw-bold">All course I have created</h5>
                         <div class="card card-body shadow-sm" style="border-radius: 12px;">
                             <div class="row">
                                 <div class="col-12">
@@ -212,7 +213,7 @@
                                         <th>Date Created</th>
                                         <th>Course Category</th>
                                         <th>Course Price</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${requestScope.courses}" var="course"> 
@@ -274,7 +275,7 @@
 
                     <div class="container-fluid" style="background-image: unset; height: unset;">
                         <div class="row">
-                            <h3 class="fw-bold my-3">My Course I Have Created</h3>
+                            <h3 class="fw-bold my-3">All course still working</h3>
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">

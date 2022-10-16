@@ -27,6 +27,17 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
+    
+    public boolean isThereAnyQuestions() {
+        try ( ResultSet rs = executeQuery("SELECT [QuestionID], [QuestionContent] FROM [dbo].[Question]")) {
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public Question getQuestionAndAnswer(int questionID) {
         Question q = new Question();

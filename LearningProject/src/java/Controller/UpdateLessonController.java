@@ -171,9 +171,9 @@ public class UpdateLessonController extends HttpServlet {
 
                     // If question id from frontend send is null then add to DB
                     if (questionID.equals("null")) {
-                        ArrayList<Question> queslist = qdao.getQuestionsOfQuiz(quizID);
+                        boolean exist = qdao.isThereAnyQuestions();
                         int qID = 0;
-                        if (queslist.isEmpty()) {
+                        if (exist == false) {
                             qID = qdao.addQuestion(new Question(0, questionContent, quizID));
                         } else {
                             qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
