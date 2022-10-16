@@ -49,11 +49,41 @@ $('.lesson-comment').click(function(){
 
 
 function disableOn(input) {
-    var put = document.querySelector('.content-comment');
-    
-    put.disabled = false;
-    
+    document.querySelector("#cmt" + input.getAttribute("data-cmt-id")).disabled = false;
+//    var put = document.querySelector('.content-comment');
+//    
+//    put.disabled = false;
+//    
+//    
+
+
     
     input.classList.add('d-none');
-    document.querySelector('#Save').classList.remove('d-none')
+    document.querySelector('#Like' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+    document.querySelector('#Report' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+    document.querySelector('#dotReport' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+    document.querySelector('#Reply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+    document.querySelector('#dotReply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+    
+    document.querySelector('#Cancel' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
+    document.querySelector('#Save' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
+}
+
+function disableOff(input) {
+    document.querySelector("#cmt" + input.getAttribute("data-cmt-cancel-id")).disabled = true;
+
+    
+    input.classList.add('d-none');
+    
+    document.querySelector('#Like' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    document.querySelector('#Edit' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    document.querySelector('#Report' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    document.querySelector('#dotReport' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    document.querySelector('#Reply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    document.querySelector('#dotReply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+    
+    document.querySelector('#Cancel' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
+    document.querySelector('#Save' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
+    
+    
 }

@@ -71,6 +71,7 @@ public class TransactionController extends HttpServlet {
 //            request.getRequestDispatcher("testTransaction.jsp").forward(request, response);
 //        }
         paymentList = paymentDAO.getPaymentListFromUser(user.getUserId());
+        request.setAttribute("user", user);
         request.setAttribute("paymentList", paymentList);        
         request.getRequestDispatcher("AccountTransactionHistory.jsp").forward(request, response);
     }

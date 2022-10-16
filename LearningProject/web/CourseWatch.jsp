@@ -245,57 +245,50 @@
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
-                                        <div class="comment-user">
-                                            <div class="user-name">
-                                                ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
+                                        <form action="LikeComment" method="GET">
+                                            <div class="comment-user">
+                                                <div class="user-name">
+                                                    ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
+                                                </div>
+                                                <input name="commentContent" style="border:none" id="cmt${parentComment.getCommentId()}" type="text" value="${parentComment.getCommentContent()}" disabled>
                                             </div>
+                                            <div class="comment-action">
+                                                <div id="Like${parentComment.getCommentId()}">
+                                                    <input type="hidden" name="lessonID" value="${lessonID}">
+                                                    <input type="hidden" name="courseID" value="${courseID}">
+                                                    <input type="hidden" name="sectionID" value="${sectionID}">
+                                                    <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
+                                                    <c:if test="${!userCmtId.contains(parentComment.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+                                                    </c:if>
+                                                    <c:if test="${userCmtId.contains(parentComment.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+                                                    </c:if>
+                                                </div>
+                                                <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${parentComment.getCommentId()}" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content comment-action-content-reply" id="Edit${parentComment.getCommentId()}" data-cmt-id="${parentComment.getCommentId()}" onclick="disableOn(this)">Edit</div>
+                                                <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${parentComment.getCommentId()}" type="submit" name="op"  value="Save">
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
+                                                <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
+                                                <div id="Report${parentComment.getCommentId()}">
+                                                    <!--<form action="Report" method="GET">-->
 
-                                            <input style="border:none" class="content-comment" type="text" value="${parentComment.getCommentContent()}" disabled>
+                                                    <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                    </c:if>
+                                                    <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
+                                                    </c:if>
+                                                    <!--</form>-->
+                                                </div>
+                                                <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
+                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                            </div>
+                                        </form> 
 
-                                        </div>
-                                        <div class="comment-action">
 
-                                            <form action="LikeComment" method="GET">
-                                                <input type="hidden" name="lessonID" value="${lessonID}">
-                                                <input type="hidden" name="courseID" value="${courseID}">
-                                                <input type="hidden" name="sectionID" value="${sectionID}">
-                                                <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
-                                                <c:if test="${!userCmtId.contains(parentComment.getCommentId())}">
-
-                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
-
-                                                </c:if>
-                                                <c:if test="${userCmtId.contains(parentComment.getCommentId())}">
-
-                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
-
-                                                </c:if>
-                                            </form>
-
-                                            <div class="dot">.</div>
-
-                                            <div class="comment-action-content comment-action-content-reply" onclick="disableOn(this)">Edit</div>
-                                            <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save" type="submit" name=""  value="Save">
-
-                                            <div class="dot">.</div>
-                                            <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>
-                                            <div class="dot">.</div>
-                                            <form action="Report" method="GET">
-                                                <input type="hidden" name="lessonID" value="${lessonID}">
-                                                <input type="hidden" name="courseID" value="${courseID}">
-                                                <input type="hidden" name="sectionID" value="${sectionID}">
-                                                <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
-
-                                                <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
-                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
-                                                </c:if>
-                                                <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
-                                                    <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
-                                                </c:if>
-                                            </form>
-                                            <div class="dot">.</div>
-                                            <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                        </div>
 
                                         <!-- Reply Comment -->
 
@@ -336,47 +329,49 @@
                                                         <div class="comment d-flex align-items-start">
                                                             <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                                             <div class="comment-content">
-                                                                <div class="comment-user">
-                                                                    <div class="user-name">
-                                                                        ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
-                                                                    </div>
-                                                                    <div class="user-comment-content">
-                                                                        ${commentOfLesson.getCommentContent()}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="comment-action">
-                                                                    <form action="LikeComment" method="GET">
-                                                                        <input type="hidden" name="lessonID" value="${lessonID}">
-                                                                        <input type="hidden" name="courseID" value="${courseID}">
-                                                                        <input type="hidden" name="sectionID" value="${sectionID}">
-                                                                        <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
-                                                                        <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
 
-                                                                            <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op"  value="Like">
+                                                                <form action="LikeComment" method="GET">
+                                            <div class="comment-user">
+                                                <div class="user-name">
+                                                    ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
+                                                </div>
+                                                <input name="commentContent" style="border:none" id="cmt${commentOfLesson.getCommentId()}" type="text" value="${commentOfLesson.getCommentContent()}" disabled>
+                                            </div>
+                                            <div class="comment-action">
+                                                <div id="Like${commentOfLesson.getCommentId()}">
+                                                    <input type="hidden" name="lessonID" value="${lessonID}">
+                                                    <input type="hidden" name="courseID" value="${courseID}">
+                                                    <input type="hidden" name="sectionID" value="${sectionID}">
+                                                    <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
+                                                    <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+                                                    </c:if>
+                                                    <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+                                                    </c:if>
+                                                </div>
+                                                <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${commentOfLesson.getCommentId()}" data-cmt-cancel-id="${commentOfLesson.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content comment-action-content-reply" id="Edit${commentOfLesson.getCommentId()}" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="disableOn(this)">Edit</div>
+                                                <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${commentOfLesson.getCommentId()}" type="submit" name="op"  value="Save">
+                                                <div class="dot">.</div>
+                                                <div class="comment-action-content comment-action-content-reply" id="Reply${commentOfLesson.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
+                                                <div class="dot" id="dotReply${commentOfLesson.getCommentId()}">.</div>
+                                                <div id="Report${commentOfLesson.getCommentId()}">
+                                                    <!--<form action="Report" method="GET">-->
 
-                                                                        </c:if>
-                                                                        <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
-
-                                                                            <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op" class="comment-action-content" value="Liked">
-
-                                                                        </c:if>
-                                                                    </form>
-                                                                    <div class="dot">.</div>
-                                                                    <!--                                                                    <div class="comment-action-content comment-action-content-reply" onclick="show_reply_post_comment(this)">Reply</div>-->
-                                                                    <input style="border: none;background-color: white; color: #FD803A; " type="submit" name="op" class="comment-action-content" value="Edit">
-                                                                    <div class="dot">.</div>
-                                                                    <form action="Report" method="GET">
-                                                                        <input type="hidden" name="lessonID" value="${lessonID}">
-                                                                        <input type="hidden" name="courseID" value="${courseID}">
-                                                                        <input type="hidden" name="sectionID" value="${sectionID}">
-                                                                        <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
-
-                                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
-                                                                    </form>
-
-                                                                    <div class="dot">.</div>
-                                                                    <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
-                                                                </div>
+                                                    <c:if test="${!userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                    </c:if>
+                                                    <c:if test="${userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
+                                                    </c:if>
+                                                    <!--</form>-->
+                                                </div>
+                                                <div class="dot" id="dotReport${commentOfLesson.getCommentId()}">.</div>
+                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                            </div>
+                                        </form>
 
                                                                 <!-- Reply Comment -->
 

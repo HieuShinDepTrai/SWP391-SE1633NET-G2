@@ -98,6 +98,13 @@ public class CommentDAO extends DBContext {
         } catch (Exception e) {
         }
     }
+    
+    public void updateCommentContentByCommentId(String cmtContent, int cmtId) {
+        try {
+            executeUpdate("UPDATE [Comment] SET [CommentContent] = ? WHERE [CommentID] = ? ", cmtContent, cmtId);
+        } catch (Exception e) {
+        }
+    }
 
     public Video getVideoIdByLessonId(int LessonId) {
         try ( ResultSet rs = executeQuery("SELECT [VideoID], [LessonID], [VideoName], [VideoLink] FROM [Video] WHERE LessonID = ?", LessonId)) {
