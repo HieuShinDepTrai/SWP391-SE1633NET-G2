@@ -47,8 +47,8 @@
                             </div>
                             <!-- Mark As Done -->                                
                             <div class="d-flex justify-content-center">
-                                <c:if test="${lesson.getStatus() ne 'Done      '}">
-                                    <form action="markasdone" method="POST">
+                                <c:if test="${lesson.getStatus() ne 'Done'}">
+                                    <form action="WatchCourse" method="POST">
                                         <button class="btn btn-primary">Mark As Done</button>
                                         <input type="hidden" name="lessonID" value="${lessonID}">
                                         <input type="hidden" name="sectionID" value="${sectionID}">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="d-flex justify-content-between p-5">
                                 <div class="d-flex justify-content-center">
-                                    <c:if test="${lesson.getStatus() ne 'Done      '}">                                            
+                                    <c:if test="${lesson.getStatus() ne 'Done'}">                                            
                                         <form action="markasdone" method="POST">
                                             <button class="btn btn-primary">Mark As Done</button>
                                             <input type="hidden" name="lessonID" value="${lessonID}">
@@ -106,7 +106,7 @@
                                                     <c:forEach items="${listLesson}" var="lesson">
                                                         <c:if test="${lesson.getSectionId() == section.getSectionId()}">                                                        
                                                             <c:set var="totalLesson" value="${totalLesson+1}"></c:set>
-                                                            <c:if test="${lesson.getStatus() eq 'Done      '}">
+                                                            <c:if test="${lesson.getStatus() eq 'Done'}">
                                                                 <c:set var="userTotalLesson" value="${userTotalLesson+1}"></c:set>
                                                             </c:if>
                                                         </c:if>
@@ -156,7 +156,7 @@
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
 
                                                                 <c:choose>
-                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                    <c:when test="${lesson.getStatus() eq 'Done'}">
                                                                         <i class="fa-solid fa-circle-check"></i>
                                                                     </c:when>                                                                
                                                                     <c:otherwise>

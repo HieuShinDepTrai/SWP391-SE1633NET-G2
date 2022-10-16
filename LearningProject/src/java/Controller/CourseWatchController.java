@@ -127,7 +127,7 @@ public class CourseWatchController extends HttpServlet {
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
 
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-
+        
         ArrayList<Integer> userCmtId = new ArrayList<>();
 
         for (UserComment userComment : listUserComment) {
@@ -212,7 +212,20 @@ public class CourseWatchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        LessonDAO lessonDAO = new LessonDAO();
+        User user = (User) session.getAttribute("user");
+        int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        int sectionID = Integer.parseInt(request.getParameter("sectionID"));
+        lessonDAO.UpdateMarkAs(lessonID, user.getUserId(), "Done");
+        if (lessonDAO.getNextLessonInSection(sectionID, lessonID) != null) {            
+            lessonID = lessonDAO.getNextLessonInSection(sectionID, lessonID);
+        }else if(lessonDAO.getNextSectionOfCourse(sectionID, courseID) != null){
+            sectionID = lessonDAO.getNextSectionOfCourse(sectionID, courseID);
+            lessonID = lessonDAO.getNextLessonInSection(sectionID, 0);
+        }
+        response.sendRedirect("WatchCourse?courseID=" + courseID + "&sectionID=" + sectionID + "&lessonID=" + lessonID);
     }
 
     /**
