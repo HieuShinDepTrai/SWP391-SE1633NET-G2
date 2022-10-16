@@ -75,8 +75,8 @@ public class QuizQuestionController extends HttpServlet {
         LessonDAO ldao = new LessonDAO();
         QuestionDAO qdao = new QuestionDAO();
         AnswerDAO ansdao = new AnswerDAO();
-//        // Check Mentor role
-//        if (u.getRole().equals("Mentor")) {
+        // Check Mentor role
+        if (u.getRole().equals("Mentor")) {
             if (request.getParameter("lessonID") != null) {
                 int lessonID = Integer.parseInt(request.getParameter("lessonID"));
                 int quizID = ldao.getQuizID(lessonID);
@@ -100,9 +100,9 @@ public class QuizQuestionController extends HttpServlet {
                 request.getRequestDispatcher("QuizQuestion.jsp").forward(request, response);
             }
 
-//        } else {
-//            response.sendRedirect("home");
-//        }
+        } else {
+            response.sendRedirect("home");
+        }
     }
 
     /**
@@ -123,16 +123,16 @@ public class QuizQuestionController extends HttpServlet {
         AnswerDAO ansdao = new AnswerDAO();
 
         // Check Mentor role
-//        if (u.getRole().equals("Mentor")) {
-        int lessonID = Integer.parseInt(request.getParameter("lessonID"));
-        int quizID = Integer.parseInt(request.getParameter("quizID"));
-        ArrayList<Integer> listQuestionID = qdao.getListQuestionID(quizID);
-        String JsonData = request.getParameter("jsonQuestions");
-        JsonArray json = new JsonParser().parse(JsonData).getAsJsonArray();
-        for (JsonElement jsonElement : json) {
-            JsonObject question = jsonElement.getAsJsonObject();
-            String questionID = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionID").getAsString();
-            String questionContent = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionContent").getAsString();
+        if (u.getRole().equals("Mentor")) {
+            int lessonID = Integer.parseInt(request.getParameter("lessonID"));
+            int quizID = Integer.parseInt(request.getParameter("quizID"));
+            ArrayList<Integer> listQuestionID = qdao.getListQuestionID(quizID);
+            String JsonData = request.getParameter("jsonQuestions");
+            JsonArray json = new JsonParser().parse(JsonData).getAsJsonArray();
+            for (JsonElement jsonElement : json) {
+                JsonObject question = jsonElement.getAsJsonObject();
+                String questionID = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionID").getAsString();
+                String questionContent = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionContent").getAsString();
 
             // If question id from frontend send is null then add to DB
             if (questionID.equals("null")) {
@@ -160,64 +160,66 @@ public class QuizQuestionController extends HttpServlet {
                         listQuestionID.remove(i);
                         break;
                     }
-                }
-                // Update Q ID
-                qdao.updateQuestionByQuestionID(qID, questionContent);
-                ArrayList<Integer> listAnswerID = ansdao.getAnswerListID(qID);
 
-                for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
-                    JsonObject answer = jsonElement1.getAsJsonObject();
-//                    response.getWriter().println(answer.get("answerID").getAsString() + "   " + answer.get("val").getAsString() + " " + answer.get("isCorrect").getAsBoolean());
+                    for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
+                        JsonObject answer = jsonElement1.getAsJsonObject();
+                        String answerID = answer.get("answerID").getAsString();
+                        String answerValue = answer.get("val").getAsString();
+                        boolean isAnswer = answer.get("isCorrect").getAsBoolean();
 
-                    String answerID = answer.get("answerID").getAsString();
-                    String answerValue = answer.get("val").getAsString();
-                    boolean isAnswer = answer.get("isCorrect").getAsBoolean();
-
-                    if (answerID.equals("null")) {
                         ansdao.addAnswer(new Answer(0, answerValue, qID, isAnswer));
-                    } else {
-                        int ansID = Integer.parseInt(answerID);
-                        for (Integer i : listAnswerID) {
-                            if (ansID == i) {
-                                listAnswerID.remove(i);
-                                break;
-                            }
-                        }
-                        ansdao.updateAnswerByAnswerID(ansID, answerValue, isAnswer);
-
                     }
-                }
+                } else {
+                    int qID = Integer.parseInt(questionID);
+                    for (Integer i : listQuestionID) {
+                        if (qID == i) {
+                            listQuestionID.remove(i);
+                            break;
+                        }
+                    }
+                    // Update Q ID
+                    qdao.updateQuestionByQuestionID(qID, questionContent);
+                    ArrayList<Integer> listAnswerID = ansdao.getAnswerListID(qID);
 
-                // When list answer id have id inside, then remove it in DB
-                for (Integer i : listAnswerID) {
-                    ansdao.deleteAnswer(i.intValue());
+                    for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
+                        JsonObject answer = jsonElement1.getAsJsonObject();
+    //                    response.getWriter().println(answer.get("answerID").getAsString() + "   " + answer.get("val").getAsString() + " " + answer.get("isCorrect").getAsBoolean());
+
+                        String answerID = answer.get("answerID").getAsString();
+                        String answerValue = answer.get("val").getAsString();
+                        boolean isAnswer = answer.get("isCorrect").getAsBoolean();
+
+                        if (answerID.equals("null")) {
+                            ansdao.addAnswer(new Answer(0, answerValue, qID, isAnswer));
+                        } else {
+                            int ansID = Integer.parseInt(answerID);
+                            for (Integer i : listAnswerID) {
+                                if (ansID == i) {
+                                    listAnswerID.remove(i);
+                                    break;
+                                }
+                            }
+                            ansdao.updateAnswerByAnswerID(ansID, answerValue, isAnswer);
+
+                        }
+                    }
+
+                    // When list answer id have id inside, then remove it in DB
+                    for (Integer i : listAnswerID) {
+                        ansdao.deleteAnswer(i.intValue());
+                    }
                 }
             }
 
+            for (Integer i : listQuestionID) {
+                qdao.deleteQuestion(i.intValue());
+            }
 
-//            for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
-//                JsonObject answer = jsonElement1.getAsJsonObject();
-//                response.getWriter().println(answer.get("answerID").getAsString() + "   " + answer.get("val").getAsString() + " " + answer.get("isCorrect").getAsBoolean());
-//
-//                String answerID = answer.get("answerID").getAsString();
-//                String answerValue = answer.get("val").getAsString();
-//                boolean isAnswer = answer.get("isCorrect").getAsBoolean();
-//
-//                if (questionID.equals("null") && answerID.equals("null")) {
-//
-//                }
-//            }
-        }
-
-        for (Integer i : listQuestionID) {
-            qdao.deleteQuestion(i.intValue());
-        }
+            response.sendRedirect("QuizQuestion?lessonID="+lessonID);
         
-        response.sendRedirect("QuizQuestion?lessonID="+lessonID);
-        
-//       } else {
-//           response.sendRedirect("home");
-//        }
+        } else {
+            response.sendRedirect("home");
+        }
         
     }
 

@@ -173,7 +173,7 @@
                                             <div class="course-footer">
                                                 <c:if test="${course.getCoursePrice() == 0}">
                                                     <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                    <form id="enroll" action="enroll" method="POST">                                                                             
+                                                    <form id="enroll" action="enroll" method="POST" class="d-flex justify-content-between">                                                                             
                                                         <c:if test="${!courseIDs.contains(course.getCourseID())}">
                                                             <input name="op" type="submit" value="Enroll">
                                                         </c:if>
@@ -185,10 +185,11 @@
                                                     </form>
                                                 </c:if>
                                                 <c:if test="${course.getCoursePrice() != 0}">
+                                                    <div class="course-price">${course.getCoursePrice()} đ</div>
                                                     <form id="enroll" action="enroll" method="POST">
                                                         <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                            <input name="op" type="submit" value="Buy now">
+                                                            
+                                                            <input name="op" type="submit" value="Buy now" class="d-inline">
                                                         </c:if>
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
                                                             <input name="op" type="submit" value="Go to Course">                                                            
