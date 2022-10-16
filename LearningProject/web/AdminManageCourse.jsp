@@ -24,8 +24,8 @@
                     <div class="card card-body shadow-sm" style="border-radius: 12px;">
                         <div class="row">
                             <div class="col-6">
-                                <h6 class="fw-bold">Account List</h6>
-                                <p style="color: rgba(0, 0, 0, 0.6)">This is list of all account</p>
+                                <h6 class="fw-bold">Course Request List</h6>
+                                <p style="color: rgba(0, 0, 0, 0.6)">Have ${coursePendingList.size()} requests</p>
                             </div>
                             <div class="col-6">
                                 <div class="d-flex justify-content-end" style="position: relative;">
@@ -65,17 +65,17 @@
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getDateCreate()}</div>
+                                                        <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCategory()}</div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div>
                                                         <c:if test="${course.getCoursePrice() == 0}">
-                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCategory()}</div>
+                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCoursePrice()}</div>
 
                                                         </c:if>
                                                         <c:if test="${course.getCoursePrice() != 0}">
-                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCoursePrice()}đ</div>
+                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;"><fmt:formatNumber value="${course.getCoursePrice()}" type="number" maxFractionDigits ="3"/>đ</div>
 
                                                         </c:if>    
                                                     </div>
