@@ -450,7 +450,7 @@ public class CourseDAO extends DBContext {
         }
     }
 
-       public CurrentCourse getCurrentCourse(int courseID, int userID) {
+    public CurrentCourse getCurrentCourse(int courseID, int userID) {
         try {
             ResultSet rs = executeQuery("select top 1 CourseID, l.LessonID, s.SectionID\n"
                     + "from User_Lesson ul\n"
@@ -474,6 +474,68 @@ public class CourseDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getMentorNumberOfCourse(int authorId) {
+        int count = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Course] WHERE [AuthorID] =  ?", authorId);
+
+            if (rs.next()) {
+                count = rs.getInt("Total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int getMentorNumberOfStudent(int authorId) {
+        int count = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Course] C, [dbo].[User_Course] UC WHERE [AuthorID] =  ? AND C.[CourseID] = UC.[CourseID] AND UC.[isStudied] = ?", authorId, 1);
+
+            if (rs.next()) {
+                count = rs.getInt("Total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int getMentorNumberOfBlog(int authorId) {
+        int count = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Blog] WHERE [UserID] =  ?", authorId);
+
+            if (rs.next()) {
+                count = rs.getInt("Total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int getMentorNumberOfQuiz(int authorId) {
+        int count = 0;
+        try {
+            ResultSet rs = executeQuery("SELECT COUNT(1) AS Total"
+                    + " FROM [dbo].[Course] C, [dbo].[Section] S, [dbo].[Lesson] L, [dbo].[Quiz] Q"
+                    + " WHERE C.[AuthorID] =  ? AND C.[CourseID] = S.[CourseID] AND S.[SectionID] = L.[SectionID] AND L.[SectionID] = Q.[LessonID]", authorId);
+
+            if (rs.next()) {
+                count = rs.getInt("Total");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public ArrayList<Course> getPendingCourse() {

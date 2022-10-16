@@ -120,6 +120,10 @@ public class UpdateCourseController extends HttpServlet {
 
                     response.sendRedirect("home");
                 }
+                if(request.getParameter("button").equals("Delete")){
+                    cd.disableCourse(courseId);
+                    response.sendRedirect("mentordashboard");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
