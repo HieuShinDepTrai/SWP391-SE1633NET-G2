@@ -45,6 +45,10 @@
         <servlet-class>Controller.ReportController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ManageCommentController</servlet-name>
+        <servlet-class>Controller.ManageCommentController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateCoursePreviewController</servlet-name>
         <servlet-class>Controller.CreateCoursePreviewController</servlet-class>
     </servlet>
@@ -267,6 +271,14 @@
     <servlet-mapping>
         <servlet-name>LikeCommentController</servlet-name>
         <url-pattern>/LikeComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportController</servlet-name>
+        <url-pattern>/Report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCommentController</servlet-name>
+        <url-pattern>/managecomment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCoursePreviewController</servlet-name>

@@ -84,6 +84,61 @@
                             </div>
 
                         </c:if>
+
+                        <c:if test="${lesson.getType() == 'Quiz'}">
+                            <div class="lesson-content">
+                                <div class="bg-primary p-5" style="height: 240px;">
+                                    <div class="container p-2">
+                                        <h3 class="text-white fw-bold">Question ${count} of ${number}</h3>
+                                        <div class="question-content text-white" style="line-height: 28px;">
+                                            ${question.getQuestionContent()}
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="bg-light p-4">
+                                    <div class="container d-flex justify-content-betweena align-items-center">
+                                        <div class="container fw-bold">
+                                            Choose the correct answer below:
+                                        </div>
+                                        <div class="container d-flex justify-content-end">
+                                            <form action="WatchCourse?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lessonID}&questionID=${questionID}" method="GET">
+                                                <input type="hidden" value="${courseID}" name="courseID">
+                                                <input type="hidden" value="${sectionID}" name="sectionID">
+                                                <input type="hidden" value="${lessonID}" name="lessonID">
+                                                <input type="hidden" value="${questionID}" name="questionID">
+                                                <input type="hidden" value="${count}" name="count">
+                                                <c:if test="${count ne number}">
+                                                    <button type="submit" class="btn btn-danger">Next Question</button>
+                                                </c:if>
+                                                <c:if test="${count eq number}">
+                                                    <button type="submit" class="btn btn-danger" disabled="">Next Question</button>
+                                                </c:if>
+                                            </form>
+
+                                            <!-- If is last question: Show submit quiz -->
+                                            <!-- <div class="btn btn-danger">Submit Quiz</div> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <div class="answer-title fw-bold mb-3">Your Answer:</div>
+                                    <div class="answer-list">
+                                        <!-- Answer -->
+                                        <c:forEach items="${answer}" var="answers">
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width: 20px; height: 20px;"> 
+                                                <label class="form-check-label fs-5" for="flexCheckDefault">
+                                                    ${answers.getAnswerContent()}
+                                                </label>
+                                            </div>
+                                        </c:forEach>
+
+                                        <!-- Answer -->
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
                 <div class="course-watch-right">
@@ -103,53 +158,81 @@
                                                 <c:set var="totalLesson" value="${0}"></c:set>
                                                 <c:set var="userTotalLesson" value="${0}"></c:set>
                                                     <!-- Begin: Lesson Progress -->   
-                                                    <c:forEach items="${listLesson}" var="lesson">
-                                                        <c:if test="${lesson.getSectionId() == section.getSectionId()}">                                                        
-                                                            <c:set var="totalLesson" value="${totalLesson+1}"></c:set>
-                                                            <c:if test="${lesson.getStatus() eq 'Done      '}">
-                                                                <c:set var="userTotalLesson" value="${userTotalLesson+1}"></c:set>
-                                                            </c:if>
+                                                <c:forEach items="${listLesson}" var="lesson">
+                                                    <c:if test="${lesson.getSectionId() == section.getSectionId()}">                                                        
+                                                        <c:set var="totalLesson" value="${totalLesson+1}"></c:set>
+                                                        <c:if test="${lesson.getStatus() eq 'Done      '}">
+                                                            <c:set var="userTotalLesson" value="${userTotalLesson+1}"></c:set>
                                                         </c:if>
-                                                    </c:forEach>
-                                                    <div class="course-lesson-progress d-inline">${userTotalLesson}/${totalLesson}</div>
-                                                    <div class="d-inline">|</div>
-                                                    <!-- End: Lesson Progress -->
+                                                    </c:if>
+                                                </c:forEach>
+                                                <div class="course-lesson-progress d-inline">${userTotalLesson}/${totalLesson}</div>
+                                                <div class="d-inline">|</div>
+                                                <!-- End: Lesson Progress -->
 
-                                                    <!-- Begin: Section Time -->
-                                                    <%
-                                                        int sectionTime = 0;
-                                                    %>
-                                                    <c:forEach items="${listLesson}" var="lesson">
-                                                        <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                                <!-- Begin: Section Time -->
+                                                <%
+                                                    int sectionTime = 0;
+                                                %>
+                                                <c:forEach items="${listLesson}" var="lesson">
+                                                    <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
-                                                            <c:set var="lessonTime" value="${lesson.getTime()}"></c:set>
-                                                            <%
-                                                                int lessonTime = Integer.parseInt(pageContext.getAttribute("lessonTime").toString());
-                                                                sectionTime +=  lessonTime;
-                                                            %>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                    <%
-                                                        int minute = sectionTime / 60 % 60;
-                                                        int second = sectionTime % 60;
-                                                    %>
-                                                    <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
-                                                    <!-- End: Section Time -->
-                                                </div>
-                                            </div>
-                                            <div class="course-lesson-right">
-                                                <i class="fa-solid fa-chevron-down"></i>
+                                                        <c:set var="lessonTime" value="${lesson.getTime()}"></c:set>
+                                                        <%
+                                                            int lessonTime = Integer.parseInt(pageContext.getAttribute("lessonTime").toString());
+                                                            sectionTime +=  lessonTime;
+                                                        %>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <%
+                                                    int minute = sectionTime / 60 % 60;
+                                                    int second = sectionTime % 60;
+                                                %>
+                                                <div class="course-lesson-time d-inline"><%=minute%>:<%=second%></div>
+                                                <!-- End: Section Time -->
                                             </div>
                                         </div>
-                                        <!-- Course lesson child container -->
-                                        <div class="course-lesson-child-container" style="display: none;">        
-                                            <c:forEach items="${listLesson}" var="lesson">
-                                                <c:if test="${lesson.getSectionId() == section.getSectionId()}">
+                                        <div class="course-lesson-right">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Course lesson child container -->
+                                    <div class="course-lesson-child-container" style="display: none;">        
+                                        <c:forEach items="${listLesson}" var="lesson">
+                                            <c:if test="${lesson.getSectionId() == section.getSectionId()}">
 
 
 
 
-                                                    <!-- course lesson child -->
+                                                <!-- course lesson child -->
+                                                <c:if test="${lesson.getType() == 'Quiz'}">
+                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}&questionID=0&count=0">
+                                                        <div class="course-lesson-child  px-4 py-2">
+                                                            <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
+                                                                <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
+
+                                                                <c:choose>
+                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                        <i class="fa-solid fa-circle-check"></i>
+                                                                    </c:when>                                                                
+                                                                    <c:otherwise>
+                                                                        <i class="fa-regular fa-circle"></i>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </div>
+
+                                                            <div class="course-lesson-child-footer">
+                                                                <i class="fa-solid fa-circle-play"></i>
+                                                                <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                                <fmt:parseNumber var="minute" type="number" value="${time/60%60}" pattern="#" integerOnly="true"/>
+                                                                <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
+                                                                ${minute}:${second}
+
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </c:if>
+                                                <c:if test="${lesson.getType() != 'Quiz'}">
                                                     <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                         <div class="course-lesson-child  px-4 py-2">
                                                             <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
@@ -175,20 +258,22 @@
                                                             </div>
                                                         </div>
                                                     </a>
-                                                    <!-- course lesson child -->
-
-
-
-
-
-
-
                                                 </c:if>
-                                            </c:forEach>
-                                            <!-- Course lesson child container -->
-                                        </div>
-                                    </div>    
-                                    <!-- Course section -->
+
+                                                <!-- course lesson child -->
+
+
+
+
+
+
+
+                                            </c:if>
+                                        </c:forEach>
+                                        <!-- Course lesson child container -->
+                                    </div>
+                                </div>    
+                                <!-- Course section -->
                             </c:forEach>
 
                         </div>
