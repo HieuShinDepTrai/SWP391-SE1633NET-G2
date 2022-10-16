@@ -127,7 +127,6 @@ public class QuizQuestionController extends HttpServlet {
         int lessonID = Integer.parseInt(request.getParameter("lessonID"));
         int quizID = Integer.parseInt(request.getParameter("quizID"));
         ArrayList<Integer> listQuestionID = qdao.getListQuestionID(quizID);
-
         String JsonData = request.getParameter("jsonQuestions");
         JsonArray json = new JsonParser().parse(JsonData).getAsJsonArray();
         for (JsonElement jsonElement : json) {
@@ -137,7 +136,15 @@ public class QuizQuestionController extends HttpServlet {
 
             // If question id from frontend send is null then add to DB
             if (questionID.equals("null")) {
-                int qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+                ArrayList<Question> queslist = qdao.getQuestionsOfQuiz(quizID);
+                int qID = 0;
+                if(queslist.size() == 0){
+                    qID = qdao.addQuestion(new Question(0, questionContent, quizID));
+                }
+                else{
+                    qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+                }
+                
                 for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
                     JsonObject answer = jsonElement1.getAsJsonObject();
                     String answerID = answer.get("answerID").getAsString();
