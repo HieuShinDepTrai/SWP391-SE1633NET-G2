@@ -200,4 +200,24 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
+
+    public int getNumberQuestionOfQuiz(int lessonid) {
+        try {
+            ResultSet rs = executeQuery("WITH T AS (SELECT DISTINCT A.QuestionID FROM\n"
+                    + "[Quiz] QU INNER JOIN [Question] QT\n"
+                    + "ON QU.QuizID = QT.QuizID\n"
+                    + "INNER JOIN [Answer] A\n"
+                    + "ON QT.QuestionID = A.QuestionID\n"
+                    + "WHERE LessonID = ?\n"
+                    + "GROUP BY A.QuestionID)\n"
+                    + "SELECT COUNT(*) FROM T", lessonid);
+            if(rs.next()) {
+                int num = rs.getInt(1);
+                return num;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }

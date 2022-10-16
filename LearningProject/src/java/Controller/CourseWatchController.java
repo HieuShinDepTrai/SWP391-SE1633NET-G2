@@ -175,10 +175,17 @@ public class CourseWatchController extends HttpServlet {
             lesson.setStatus(ldao.getLessonStatusOfUser(lessonID, userId));
         }
         if (lesson.getType().compareTo("Quiz") == 0) {
+            int countquestion = 0;
             questionID = Integer.parseInt(request.getParameter("questionID"));
             Question question = qdao.getNextQuestion(lessonID, questionID);
             questionID = question.getQuestionId();
             ArrayList<Answer> answers = qdao.getAnswersbyQuestionID(questionID);
+            int number = qdao.getNumberQuestionOfQuiz(lessonID);
+            countquestion = Integer.parseInt(request.getParameter("count"));
+            countquestion++;
+            
+            request.setAttribute("count", countquestion);
+            request.setAttribute("number", number);
             request.setAttribute("questionID", questionID);
             request.setAttribute("question", question);
             request.setAttribute("answer", answers);

@@ -89,7 +89,7 @@
                             <div class="lesson-content">
                                 <div class="bg-primary p-5" style="height: 240px;">
                                     <div class="container p-2">
-                                        <h3 class="text-white fw-bold">Question 1 of 5</h3>
+                                        <h3 class="text-white fw-bold">Question ${count} of ${number}</h3>
                                         <div class="question-content text-white" style="line-height: 28px;">
                                             ${question.getQuestionContent()}
                                         </div>
@@ -106,7 +106,13 @@
                                                 <input type="hidden" value="${sectionID}" name="sectionID">
                                                 <input type="hidden" value="${lessonID}" name="lessonID">
                                                 <input type="hidden" value="${questionID}" name="questionID">
-                                                <button type="submit" class="btn btn-danger">Next Question</button>
+                                                <input type="hidden" value="${count}" name="count">
+                                                <c:if test="${count ne number}">
+                                                    <button type="submit" class="btn btn-danger">Next Question</button>
+                                                </c:if>
+                                                <c:if test="${count eq number}">
+                                                    <button type="submit" class="btn btn-danger" disabled="">Next Question</button>
+                                                </c:if>
                                             </form>
 
                                             <!-- If is last question: Show submit quiz -->
@@ -200,7 +206,7 @@
 
                                                 <!-- course lesson child -->
                                                 <c:if test="${lesson.getType() == 'Quiz'}">
-                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}&questionID=0">
+                                                    <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}&questionID=0&count=0">
                                                         <div class="course-lesson-child  px-4 py-2">
                                                             <div class="course-lesson-child-content d-flex justify-content-between align-items-center">
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
