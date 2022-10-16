@@ -318,7 +318,7 @@
                         <div class="course-comment-list d-flex flex-column w-100 gap-4">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
-                                <c:if test="${parentComment.isIsDisabled() == false}"> </c:if>
+                               
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
