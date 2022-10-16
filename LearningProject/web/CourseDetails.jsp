@@ -139,6 +139,9 @@
                                                                     <c:if test="${lesson.getType() == 'Docs'}">
                                                                         <i class="fa-solid fa-file me-2"></i>
                                                                     </c:if>
+                                                                    <c:if test="${lesson.getType() == 'Quiz'}">
+                                                                        <i class="fa-solid fa-clipboard-question me-2"></i>
+                                                                    </c:if>
                                                                     <p>${lesson.getLessonName()}</p>
                                                                 </div>
                                                                 <div class="course-content-right">11:02</div>
