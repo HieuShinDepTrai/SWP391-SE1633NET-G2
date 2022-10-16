@@ -24,7 +24,7 @@
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: 'textarea'
+                selector: '.text-input'
             });
 
 
@@ -165,7 +165,8 @@
 
                                         <c:forEach items="${docslist}" var="docs">
                                             <c:if test="${docs.getLessonId() == lesson.getLessonId()}">
-                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-docs-content="${docs.getContent()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                                <input type="button" class="btn btn-primary" value="Edit" data-bs-toggle="modal" data-bs-target="#${lesson.getType()}" data-lesson-name="${lesson.getLessonName()}" data-lesson-type="${lesson.getType()}" data-lesson-time="${lesson.getTime()}" data-lesson-id="${lesson.getLessonId()}" onclick="Forward(this)">
+                                                <textarea id="docs-content-${lesson.getLessonId()}" class="d-none">${docs.getContent()}</textarea>
                                             </c:if>
                                         </c:forEach>
 
@@ -259,7 +260,7 @@
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
-                                                <textarea name="lessondocscontent" id="lessondocscontent" cols="30" rows="10" class="form-control"></textarea>
+                                                <textarea name="lessondocscontent" id="lessondocscontent" cols="30" rows="10" class="form-control text-input"></textarea>
                                             </div>
                                             <input type="text" value="Docs" class="d-none" name="type">
                                         </div>
@@ -420,7 +421,7 @@
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="LessonTitle" class="form-label fw-bold">Lesson Content</label>
-                                                <textarea name="DocsContent" id="DocsContent" cols="30" rows="10" class="form-control"></textarea>
+                                                <textarea name="DocsContent" id="DocsContent" cols="30" rows="10" class="form-control text-input"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -581,10 +582,9 @@
                                                 } else if (target.getAttribute("data-lesson-type") == "Docs") {
                                                     tinyMCE.activeEditor.setContent('');
                                                     document.getElementById("LessonDocsName").value = target.getAttribute("data-lesson-name");
-                                                    document.getElementById("Time").value = target.getAttribute("data-lesson-time");
-                                                    document.getElementById("DocsContent").value = target.getAttribute("data-docs-content");
-                                                    tinymce.activeEditor.selection.setContent(target.getAttribute("data-docs-content"));
+                                                    document.getElementById("Time").value = target.getAttribute("data-lesson-time");                                                                                   
                                                     document.getElementById("LessonDocsId").value = target.getAttribute("data-lesson-id");
+                                                    tinymce.activeEditor.selection.setContent(document.getElementById("docs-content-" + document.getElementById("LessonDocsId").value).value);
                                                 } else {
                                                     document.getElementById("LessonQuizTitle").value = target.getAttribute("data-lesson-name");
                                                     document.getElementById("LessonQuizTime").value = target.getAttribute("data-lesson-time");

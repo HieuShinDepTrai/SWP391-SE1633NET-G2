@@ -134,15 +134,31 @@ public class QuizQuestionController extends HttpServlet {
                 String questionID = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionID").getAsString();
                 String questionContent = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionContent").getAsString();
 
-                // If question id from frontend send is null then add to DB
-                if (questionID.equals("null")) {
-                    ArrayList<Question> queslist = qdao.getQuestionsOfQuiz(quizID);
-                    int qID = 0;
-                    if(queslist.size() == 0){
-                        qID = qdao.addQuestion(new Question(0, questionContent, quizID));
-                    }
-                    else{
-                        qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+            // If question id from frontend send is null then add to DB
+            if (questionID.equals("null")) {
+                boolean exist = qdao.isThereAnyQuestions();
+                int qID = 0;
+                if(exist == false){
+                    qID = qdao.addQuestion(new Question(0, questionContent, quizID));
+                }
+                else{
+                    qID = qdao.addQuestion(new Question(0, questionContent, quizID)) + 1;
+                }
+                
+                for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
+                    JsonObject answer = jsonElement1.getAsJsonObject();
+                    String answerID = answer.get("answerID").getAsString();
+                    String answerValue = answer.get("val").getAsString();
+                    boolean isAnswer = answer.get("isCorrect").getAsBoolean();
+
+                    ansdao.addAnswer(new Answer(0, answerValue, qID, isAnswer));
+                }
+            } else {
+                int qID = Integer.parseInt(questionID);
+                for (Integer i : listQuestionID) {
+                    if (qID == i) {
+                        listQuestionID.remove(i);
+                        break;
                     }
 
                     for (JsonElement jsonElement1 : question.get("ans").getAsJsonArray()) {
