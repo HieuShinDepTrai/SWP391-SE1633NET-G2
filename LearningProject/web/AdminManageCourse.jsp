@@ -48,7 +48,7 @@
                                             <tr>
                                                 <td style="max-width: 180px">
                                                     <div class="d-flex">
-                                                        <img src="assets/img/Asset 1.png" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 10px;">
+                                                        <img src="${course.getCourseImage()}" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 10px;">
                                                         <div class="ms-2">
                                                             <div class="fw-bold">${course.getCourseName()}o</div>
                                                         </div>
