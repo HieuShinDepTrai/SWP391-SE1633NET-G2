@@ -91,7 +91,7 @@ public class CourseDetailsController extends HttpServlet {
             }
         }
         
-
+        
         request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), courseID));
         request.setAttribute("course", course);

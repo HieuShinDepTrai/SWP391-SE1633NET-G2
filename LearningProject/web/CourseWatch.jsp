@@ -30,7 +30,7 @@
         <div id="main">            
             <section>
                 <div class="course-watch-left">
-                    <div class="course-watch-left-content">
+                    <div class="course-watch-left-content" style="overflow-y: auto;">
                         <c:if test="${lesson.getType() == 'Video'}">
                             <div class="lesson-video">
                                 <iframe width="100%" height="100%" src="${lesson.getVideoLink()}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -47,7 +47,7 @@
                             </div>
                             <!-- Mark As Done -->                                
                             <div class="d-flex justify-content-center">
-                                <c:if test="${lesson.getStatus() ne 'Done      '}">
+                                <c:if test="${lesson.getStatus() ne 'Done'}">
                                     <form action="markasdone" method="POST">
                                         <button class="btn btn-primary">Mark As Done</button>
                                         <input type="hidden" name="lessonID" value="${lessonID}">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="d-flex justify-content-between p-5">
                                 <div class="d-flex justify-content-center">
-                                    <c:if test="${lesson.getStatus() ne 'Done      '}">                                            
+                                    <c:if test="${lesson.getStatus() ne 'Done'}">                                            
                                         <form action="markasdone" method="POST">
                                             <button class="btn btn-primary">Mark As Done</button>
                                             <input type="hidden" name="lessonID" value="${lessonID}">
@@ -161,7 +161,7 @@
                                                 <c:forEach items="${listLesson}" var="lesson">
                                                     <c:if test="${lesson.getSectionId() == section.getSectionId()}">                                                        
                                                         <c:set var="totalLesson" value="${totalLesson+1}"></c:set>
-                                                        <c:if test="${lesson.getStatus() eq 'Done      '}">
+                                                        <c:if test="${lesson.getStatus() eq 'Done'}">
                                                             <c:set var="userTotalLesson" value="${userTotalLesson+1}"></c:set>
                                                         </c:if>
                                                     </c:if>
@@ -212,7 +212,7 @@
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
 
                                                                 <c:choose>
-                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                    <c:when test="${lesson.getStatus() eq 'Done'}">
                                                                         <i class="fa-solid fa-circle-check"></i>
                                                                     </c:when>                                                                
                                                                     <c:otherwise>
@@ -222,7 +222,7 @@
                                                             </div>
 
                                                             <div class="course-lesson-child-footer">
-                                                                <i class="fa-solid fa-circle-play"></i>
+                                                                <i class="fa-solid fa-clipboard-question"></i>
                                                                 <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
                                                                 <fmt:parseNumber var="minute" type="number" value="${time/60%60}" pattern="#" integerOnly="true"/>
                                                                 <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
@@ -232,6 +232,7 @@
                                                         </div>
                                                     </a>
                                                 </c:if>
+
                                                 <c:if test="${lesson.getType() != 'Quiz'}">
                                                     <a href="WatchCourse?courseID=${course.getCourseID()}&sectionID=${section.getSectionId()}&lessonID=${lesson.getLessonId()}">
                                                         <div class="course-lesson-child  px-4 py-2">
@@ -239,7 +240,7 @@
                                                                 <div class="course-lesson-child-content-title">${lesson.getLessonName()}</div>
 
                                                                 <c:choose>
-                                                                    <c:when test="${lesson.getStatus() eq 'Done      '}">
+                                                                    <c:when test="${lesson.getStatus() eq 'Done'}">
                                                                         <i class="fa-solid fa-circle-check"></i>
                                                                     </c:when>                                                                
                                                                     <c:otherwise>
@@ -247,7 +248,7 @@
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </div>
-
+                                                                
                                                             <div class="course-lesson-child-footer">
                                                                 <i class="fa-solid fa-circle-play"></i>
                                                                 <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
@@ -255,8 +256,9 @@
                                                                 <fmt:parseNumber var="second" type="number" integerOnly="true" value="${time%60}"/>
                                                                 ${minute}:${second}
 
-                                                            </div>
-                                                        </div>
+                                                            </div>    
+                                                        </div>        
+                                                                
                                                     </a>
                                                 </c:if>
 
