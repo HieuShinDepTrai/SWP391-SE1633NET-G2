@@ -146,7 +146,7 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Account Management</a>
+                                                    <a href="manageaccount">Account Management</a>
                                                 </div>
                                                 <div class="mb-2" style="font-size: 14px;">Admin Function Description
                                                 </div>
@@ -164,7 +164,7 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Comment Report Management</a>
+                                                    <a href="managecomment">Comment Report Management</a>
                                                 </div>
                                                 <div class="mb-2" style="font-size: 14px;">Admin Function Description
                                                 </div>
