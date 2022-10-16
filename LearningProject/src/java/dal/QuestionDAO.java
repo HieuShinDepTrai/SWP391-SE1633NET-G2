@@ -7,7 +7,10 @@ package dal;
 import Model.Answer;
 import Model.Question;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -118,6 +121,114 @@ public class QuestionDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-     
 
+    public ArrayList<Answer> getAnswersbyQuestionID(int questionid) {
+        ArrayList<Answer> answers = new ArrayList<>();
+        try {
+            ResultSet rs = executeQuery("SELECT \n"
+                    + "	[AnswerID],\n"
+                    + "	[AnswerContent]\n"
+                    + "FROM \n"
+                    + "[Quiz] QU INNER JOIN [Question] QT\n"
+                    + "ON QU.QuizID = QT.QuizID\n"
+                    + "INNER JOIN [Answer] A\n"
+                    + "ON QT.QuestionID = A.QuestionID\n"
+                    + "WHERE QT.QuestionID = ?", questionid);
+            while (rs.next()) {
+                Answer a = new Answer();
+                a.setAnswerId(rs.getInt("AnswerID"));
+                a.setAnswerContent(rs.getNString("AnswerContent"));
+                answers.add(a);
+            }
+            return answers;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Question getQuestionByQuestionID(int questionid) {
+        try {
+            ResultSet rs = executeQuery("SELECT [QuestionContent]\n"
+                    + "FROM [Question]\n"
+                    + "WHERE [QuestionID] = ?", questionid);
+            if (rs.next()) {
+                Question q = new Question();
+                q.setQuestionContent(rs.getNString("QuestionContent"));
+                return q;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Question getFirstQuestion(int lessonid) {
+        try {
+            ResultSet rs = executeQuery("SELECT TOP 1\n"
+                    + "	QU.[QuestionID],\n"
+                    + "	QU.[QuestionContent]\n"
+                    + "FROM\n"
+                    + "[Lesson] L FULL OUTER JOIN [Quiz] Q\n"
+                    + "ON L.LessonID = Q.LessonID\n"
+                    + "FULL OUTER JOIN [Question] QU\n"
+                    + "ON Q.QuizID = QU.QuizID\n"
+                    + "WHERE types = 'Quiz' AND Q.LessonID = ? AND L.isDisable = 0\n"
+                    + "ORDER BY QU.[QuestionID] ASC", lessonid);
+            if (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getInt("QuestionID"));
+                question.setQuestionContent(rs.getNString("QuestionContent"));
+                return question;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Question getNextQuestion(int lessonid, int questionid) {
+        try {
+            ResultSet rs = executeQuery("SELECT TOP 1\n"
+                    + "	QU.[QuestionID],\n"
+                    + "	QU.[QuestionContent]\n"
+                    + "FROM\n"
+                    + "[Lesson] L FULL OUTER JOIN [Quiz] Q\n"
+                    + "ON L.LessonID = Q.LessonID\n"
+                    + "FULL OUTER JOIN [Question] QU\n"
+                    + "ON Q.QuizID = QU.QuizID\n"
+                    + "WHERE types = 'Quiz' AND Q.LessonID = ? \n"
+                    + "AND L.isDisable = 0 AND QU.QuestionID > ?\n"
+                    + "ORDER BY QU.[QuestionID] ASC", lessonid, questionid);
+            if (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getInt("QuestionID"));
+                question.setQuestionContent(rs.getNString("QuestionContent"));
+                return question;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int getNumberQuestionOfQuiz(int lessonid) {
+        try {
+            ResultSet rs = executeQuery("WITH T AS (SELECT DISTINCT A.QuestionID FROM\n"
+                    + "[Quiz] QU INNER JOIN [Question] QT\n"
+                    + "ON QU.QuizID = QT.QuizID\n"
+                    + "INNER JOIN [Answer] A\n"
+                    + "ON QT.QuestionID = A.QuestionID\n"
+                    + "WHERE LessonID = ?\n"
+                    + "GROUP BY A.QuestionID)\n"
+                    + "SELECT COUNT(*) FROM T", lessonid);
+            if(rs.next()) {
+                int num = rs.getInt(1);
+                return num;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }
