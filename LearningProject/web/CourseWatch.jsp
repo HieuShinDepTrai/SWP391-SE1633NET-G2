@@ -233,7 +233,7 @@
                         <div class="course-comment-list d-flex flex-column w-100 gap-4">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
-
+                                <c:if test="${parentComment.isIsDisabled() == false}"> </c:if>
                                 <div class="comment d-flex align-items-start">
                                     <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
                                     <div class="comment-content">
@@ -257,12 +257,13 @@
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
                                                     </c:if>
                                                 </div>
+                                                    <div id="NumberLikes${parentComment.getCommentId()}">${parentComment.getLikes()}</div>
                                                 <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${parentComment.getCommentId()}" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
                                                 <div class="dot">.</div>
                                                 <div class="comment-action-content comment-action-content-reply" id="Edit${parentComment.getCommentId()}" data-cmt-id="${parentComment.getCommentId()}" onclick="disableOn(this)">Edit</div>
                                                 <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${parentComment.getCommentId()}" type="submit" name="op"  value="Save">
                                                 <div class="dot">.</div>
-                                                <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
+                                                <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" data-cmt-reply="${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
                                                 <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
                                                 <div id="Report${parentComment.getCommentId()}">
                                                     <!--<form action="Report" method="GET">-->
@@ -273,6 +274,7 @@
                                                     <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
                                                     </c:if>
+                                                        
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
@@ -284,7 +286,7 @@
 
                                         <!-- Reply Comment -->
 
-                                        <div class="reply-comment d-none">
+                                        <div class="reply-comment d-none" id="ShowReply${parentComment.getCommentId()}">
                                             <form  action="postvideocomment" method="GET">
                                                 <input type="hidden" name="lessonID" value="${lessonID}">
                                                 <input type="hidden" name="courseID" value="${courseID}">
@@ -342,6 +344,7 @@
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
                                                     </c:if>
                                                 </div>
+                                                    <div id="NumberLikes${commentOfLesson.getCommentId()}">${commentOfLesson.getLikes()}</div>
                                                 <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${commentOfLesson.getCommentId()}" data-cmt-cancel-id="${commentOfLesson.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
                                                 <div class="dot">.</div>
                                                 <div class="comment-action-content comment-action-content-reply" id="Edit${commentOfLesson.getCommentId()}" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="disableOn(this)">Edit</div>
@@ -361,7 +364,7 @@
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${commentOfLesson.getCommentId()}">.</div>
-                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">20 day ago</div>
+                                                <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${commentOfLesson.getCommentDate()}</div>
                                             </div>
                                         </form>
 

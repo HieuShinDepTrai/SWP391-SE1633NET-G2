@@ -19,12 +19,12 @@ public class Comment {
     private Date commentDate;
     private int likes;
     private boolean isReported;
-    
+    private boolean isDisabled;
 
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId, User User, int ParentId, String commentUser, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId, User User, int ParentId, String commentContent, Date commentDate, int likes, boolean isReported, boolean isDisabled) {
         this.commentId = commentId;
         this.videoId = videoId;
         this.User = User;
@@ -33,7 +33,10 @@ public class Comment {
         this.commentDate = commentDate;
         this.likes = likes;
         this.isReported = isReported;
+        this.isDisabled = isDisabled;
     }
+
+  
 
 
 
@@ -99,6 +102,14 @@ public class Comment {
 
     public void setIsReported(boolean isReported) {
         this.isReported = isReported;
+    }
+
+    public boolean isIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(boolean isDisabled) {
+        this.isDisabled = isDisabled;
     }
 
 

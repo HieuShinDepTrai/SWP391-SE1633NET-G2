@@ -90,8 +90,10 @@ public class LikeCommentController extends HttpServlet {
         
         //like and dislike
         if (op.equals("Like")) {
+            cmtDAO.updateLikesOfCommentIncreaseByCommentId(CommentID);
             cmtDAO.insertIntoUserComment(CommentID, userId, 1);
         } else if (op.equals("Liked")) {
+            cmtDAO.updateLikesOfCommentDecreaseByCommentId(CommentID);
             cmtDAO.deleteIntoUserComment(CommentID, userId);
         }
         
