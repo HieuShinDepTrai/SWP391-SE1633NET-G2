@@ -41,7 +41,14 @@ function createObjective() {
     $('#staticBackdrop').modal('hide');
 }
 
-
+let addObjBtn = document.querySelector('.create-objectives .add-section')
+let sectionContainer = document.querySelector('.section-list');
+addObjBtn.addEventListener('click', function() {
+    $(sectionContainer).append(`<div class="section">
+    <input type="text" class="section-create mb-2 section-title" value="" style="width: 95%; height: 100%;" placeholder="Objective" name="Objectives">
+    <i class="fa-solid fa-circle-xmark" onclick="$(this).parent().remove()"></i>
+</div>`);
+});
 // function UploadThumbnail(target) {
 //     var reader = new FileReader();
 //     var avatar = document.getElementById("imageBase64");
