@@ -28,8 +28,7 @@ public class UserDashboardController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
-        UserDAO userDao = new UserDAO();
-        String username = session.getAttribute("username").toString();
+        UserDAO userDao = new UserDAO();        
         ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());
         User user = (User)session.getAttribute("user");        
         int time = userDao.getUserTotalTime(user.getUserId());

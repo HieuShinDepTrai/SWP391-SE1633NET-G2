@@ -146,8 +146,8 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Account Management</a>
-                                                </div>
+                                                    <a href="manageaccount">Account Management</a>
+x                                                </div>
                                                 <div class="mb-2" style="font-size: 14px;">Admin Function Description
                                                 </div>
 
@@ -155,6 +155,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-12">
                                     <div class="card shadow-sm overflow-hidden">
                                         <div class="row my-course g-0">
@@ -164,15 +165,16 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Comment Report Management</a>
+                                                    <a href="AdminManageCourse">Manage Course</a>
                                                 </div>
-                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                <div class="mb-2" style="font-size: 14px;">Admin Manage Course
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-12">
                                     <div class="card shadow-sm overflow-hidden">
                                         <div class="row my-course g-0">
@@ -182,9 +184,9 @@
                                             </div>
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
-                                                    <a href="#">Course Management</a>
+                                                    <a href="managecomment">Manage Comment</a>
                                                 </div>
-                                                <div class="mb-2" style="font-size: 14px;">Admin Function Description
+                                                <div class="mb-2" style="font-size: 14px;">Admin Manage Course
                                                 </div>
 
                                             </div>

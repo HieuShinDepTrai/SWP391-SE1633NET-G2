@@ -65,6 +65,10 @@ public class AdminManageCourseController extends HttpServlet {
 
             ArrayList<Course> coursePendingList = cdao.getPendingCourse();
             request.setAttribute("coursePendingList", coursePendingList);
+            
+            ArrayList<Course> allCourse = cdao.getAllCourse();
+            request.setAttribute("allCourse", allCourse);
+            
             request.getRequestDispatcher("AdminManageCourse.jsp").forward(request, response);
         } else {
             response.sendRedirect("home");
@@ -92,6 +96,16 @@ public class AdminManageCourseController extends HttpServlet {
             if (request.getParameter("Denied") != null) {
                 int courseID = Integer.parseInt(request.getParameter("courseID"));
                 cdao.updateCourseStatus(courseID, "Denied");
+            }
+            
+            if (request.getParameter("Enabled") != null) {
+                int courseID = Integer.parseInt(request.getParameter("courseID"));
+                cdao.updateCourseStatus(courseID, "Enabled");
+            }
+            
+            if (request.getParameter("Disabled") != null) {
+                int courseID = Integer.parseInt(request.getParameter("courseID"));
+                cdao.updateCourseStatus(courseID, "Disabled");
             }
             response.sendRedirect("AdminManageCourse");
         } else {

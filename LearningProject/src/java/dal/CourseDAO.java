@@ -31,6 +31,10 @@ import java.util.logging.Logger;
  */
 public class CourseDAO extends DBContext {
 
+    public CourseDAO() {
+    }
+
+    
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
         try {
@@ -65,7 +69,7 @@ public class CourseDAO extends DBContext {
                 course.setDifficulty(rs.getString("Difficulty"));
                 course.setCourseImage(rs.getString("CourseImage"));
                 course.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
-
+                
                 courses.add(course);
             }
         } catch (SQLException ex) {
@@ -73,7 +77,7 @@ public class CourseDAO extends DBContext {
         }
         return courses;
     }
-
+    
     public Course getAllCourseInformation(int courseId) {
         try ( ResultSet rs = executeQuery("SELECT [CourseName],"
                 + "[DateCreate],"
@@ -107,7 +111,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public Course getCourseInformation(int courseId) {
         try {
             String sql = "SELECT [CourseName],"
@@ -144,7 +148,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void disableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = 'Disabled' WHERE [CourseID] = ? ", courseId);
@@ -152,7 +156,7 @@ public class CourseDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public int createClone(int courseId) {
         int newCourseID = 0;
         try {
@@ -164,9 +168,9 @@ public class CourseDAO extends DBContext {
             QuizDAO qd = new QuizDAO();
             QuestionDAO qtd = new QuestionDAO();
             AnswerDAO ad = new AnswerDAO();
-
+            
             ArrayList<Section> sectionlist = sd.getAllSectionOfCourse(courseId);
-
+            
             ResultSet rs = executeQuery("SELECT IDENT_CURRENT('Course')\nINSERT INTO [dbo].[Course] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                     course.getCourseName(),
                     course.getDateCreate(),
@@ -179,25 +183,25 @@ public class CourseDAO extends DBContext {
                     course.getDescription(),
                     course.getObjectives(),
                     course.getDifficulty());
-
+            
             if (!rs.next()) {
                 return 0;
             }
-
+            
             newCourseID = rs.getInt(1) + 1;
-
+            
             for (Section section : sectionlist) {
                 rs = executeQuery("SELECT IDENT_CURRENT('Section')\nINSERT INTO [dbo].[Section] VALUES (?, ?, ?);",
                         newCourseID,
                         section.getSectionName(),
                         0);
-
+                
                 if (!rs.next()) {
                     return 0;
                 }
-
+                
                 int newSectionID = rs.getInt(1) + 1;
-
+                
                 ArrayList<Lesson> lessonlist = ld.getAllLessonOfSection(section.getSectionId());
                 for (Lesson lesson : lessonlist) {
                     rs = executeQuery("SELECT IDENT_CURRENT('Lesson')\nINSERT INTO [dbo].[Lesson] VALUES (?, ?, ?, ?, ?);",
@@ -206,13 +210,13 @@ public class CourseDAO extends DBContext {
                             0,
                             lesson.getType(),
                             lesson.getTime());
-
+                    
                     if (!rs.next()) {
                         return 0;
                     }
-
+                    
                     int newLessonID = rs.getInt(1) + 1;
-
+                    
                     if (lesson.getType().equals("Docs")) {
                         Docs docs = dd.getDocsOfLesson(lesson.getLessonId());
                         executeUpdate("INSERT INTO [dbo].[Docs] VALUES (?, ?)",
@@ -231,25 +235,25 @@ public class CourseDAO extends DBContext {
                         rs = executeQuery("SELECT IDENT_CURRENT('Quiz')\nINSERT INTO [dbo].[Quiz] VALUES (?, ?);",
                                 quiz.getMark(),
                                 newLessonID);
-
+                        
                         if (!rs.next()) {
                             return 0;
                         }
-
+                        
                         int newQuizId = rs.getInt(1) + 1;
-
+                        
                         ArrayList<Question> questionlist = qtd.getQuestionsOfQuiz(quiz.getQuizId());
                         for (Question question : questionlist) {
                             rs = executeQuery("SELECT IDENT_CURRENT('Question')\nINSERT INTO [dbo].[Question] VALUES (?, ?);",
                                     question.getQuestionContent(),
                                     newQuizId);
-
+                            
                             if (!rs.next()) {
                                 return 0;
                             }
-
+                            
                             int newQuestionId = rs.getInt(1) + 1;
-
+                            
                             ArrayList<Answer> answerlist = ad.getAnswersOfQuestion(question.getQuestionId());
                             for (Answer answer : answerlist) {
                                 executeUpdate("INSERT INTO [dbo].[Answer] VALUES (?, ?, ?)",
@@ -266,7 +270,7 @@ public class CourseDAO extends DBContext {
         }
         return newCourseID;
     }
-
+    
     public ArrayList<Course> getAllUserCourse(String username) {
         ArrayList<Course> courseList = new ArrayList<>();
         UserDAO userDao = new UserDAO();
@@ -294,7 +298,7 @@ public class CourseDAO extends DBContext {
         }
         return courseList;
     }
-
+    
     public ArrayList<Course> getAllMentorCourse(int userId) {
         try {
             ArrayList<Course> list = new ArrayList<Course>();
@@ -309,7 +313,7 @@ public class CourseDAO extends DBContext {
                     + " [Description],"
                     + " [Objectives],"
                     + " [Difficulty] FROM [Course] WHERE [AuthorID] = ?", userId);
-
+            
             while (rs.next()) {
                 list.add(new Course(rs.getInt("CourseID"),
                         rs.getString("CourseName"),
@@ -324,14 +328,14 @@ public class CourseDAO extends DBContext {
                         rs.getNString("Objectives"),
                         rs.getString("Difficulty")));
             }
-
+            
             return list;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
     public ArrayList<Feedback> getFeedBack(int courseID) {
         UserDAO userDAO = new UserDAO();
         ArrayList<Feedback> feedbackList = new ArrayList<>();
@@ -347,7 +351,7 @@ public class CourseDAO extends DBContext {
         }
         return feedbackList;
     }
-
+    
     public void addNewCourse(Course c) {
         try {
             executeUpdate("INSERT INTO [dbo].[Course]\n"
@@ -381,7 +385,7 @@ public class CourseDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public int getNewCourseID() {
         int id = 0;
         try {
@@ -393,7 +397,7 @@ public class CourseDAO extends DBContext {
         }
         return id;
     }
-
+    
     public int getCourseTime(int courseID) {
         try {
             ResultSet rs = executeQuery("select SUM(Time) as totalTime from Lesson l\n"
@@ -407,10 +411,10 @@ public class CourseDAO extends DBContext {
         }
         return 0;
     }
-
+    
     public UserCourse getUserCourseInformation(int courseId, int userId) {
         try ( ResultSet rs = executeQuery("SELECT * FROM [User_Course] WHERE CourseID = ? AND UserID = ?", courseId, userId)) {
-
+            
             if (rs.next()) {
                 int userID = rs.getInt("UserID");
                 int courseID = rs.getInt("CourseID");
@@ -420,7 +424,7 @@ public class CourseDAO extends DBContext {
                 double Progress = rs.getDouble("Progress");
                 Date Paydate = rs.getDate("Paydate");
                 boolean isFavourite = rs.getBoolean("isFavourite");
-
+                
                 return new UserCourse(userID, courseID, isStudied, courseRating, CourseFeedback, Progress, Paydate, isFavourite);
             }
         } catch (Exception e) {
@@ -428,7 +432,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void insertNewObjective(String objective, int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Objectives] = CONCAT([Objectives], ?) WHERE [CourseID] = ?", "/" + objective, courseId);
@@ -436,7 +440,7 @@ public class CourseDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public void updateSaveChangesCourse(int courseId, String courseName, String description, String image, String category, String status, double price) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [CourseName] = ?,"
@@ -449,7 +453,7 @@ public class CourseDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public CurrentCourse getCurrentCourse(int courseID, int userID) {
         try {
             ResultSet rs = executeQuery("select top 1 CourseID, l.LessonID, s.SectionID\n"
@@ -467,7 +471,7 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void enableCourse(int courseId) {
         try {
             executeUpdate("UPDATE [dbo].[Course] SET [Status] = ? WHERE [CourseID] = ?", "Enabled", courseId);
@@ -475,69 +479,69 @@ public class CourseDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public int getMentorNumberOfCourse(int authorId) {
         int count = 0;
         try {
             ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Course] WHERE [AuthorID] =  ?", authorId);
-
+            
             if (rs.next()) {
                 count = rs.getInt("Total");
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
     }
-
+    
     public int getMentorNumberOfStudent(int authorId) {
         int count = 0;
         try {
             ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Course] C, [dbo].[User_Course] UC WHERE [AuthorID] =  ? AND C.[CourseID] = UC.[CourseID] AND UC.[isStudied] = ?", authorId, 1);
-
+            
             if (rs.next()) {
                 count = rs.getInt("Total");
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
     }
-
+    
     public int getMentorNumberOfBlog(int authorId) {
         int count = 0;
         try {
             ResultSet rs = executeQuery("SELECT COUNT(1) AS Total FROM [dbo].[Blog] WHERE [UserID] =  ?", authorId);
-
+            
             if (rs.next()) {
                 count = rs.getInt("Total");
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
     }
-
+    
     public int getMentorNumberOfQuiz(int authorId) {
         int count = 0;
         try {
             ResultSet rs = executeQuery("SELECT COUNT(1) AS Total"
                     + " FROM [dbo].[Course] C, [dbo].[Section] S, [dbo].[Lesson] L, [dbo].[Quiz] Q"
                     + " WHERE C.[AuthorID] =  ? AND C.[CourseID] = S.[CourseID] AND S.[SectionID] = L.[SectionID] AND L.[SectionID] = Q.[LessonID]", authorId);
-
+            
             if (rs.next()) {
                 count = rs.getInt("Total");
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
     }
-
+    
     public ArrayList<Course> getPendingCourse() {
         ArrayList<Course> coursePendingList = new ArrayList<>();
         UserDAO udao = new UserDAO();
@@ -570,7 +574,7 @@ public class CourseDAO extends DBContext {
         }
         return coursePendingList;
     }
-
+    
     public void updateCourseStatus(int courseID, String Status) {
         try {
             int updateStatus = executeUpdate("update Course\n"
@@ -584,6 +588,38 @@ public class CourseDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public ArrayList<Course> getAllCourse() {
+        ArrayList<Course> allCourse = new ArrayList<>();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID]\n"
+                    + "      ,[CourseName]\n"
+                    + "      ,[DateCreate]\n"
+                    + "      ,[AuthorID]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[NumberEnrolled]\n"
+                    + "      ,[CoursePrice]\n"
+                    + "      ,[CourseImage]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[Objectives]\n"
+                    + "      ,[Difficulty]\n"
+                    + "  FROM [dbo].[Course]");
+            while(rs.next()) {
+                allCourse.add(new Course(rs.getInt("CourseID"),
+                        rs.getNString("CourseName"), rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"), rs.getInt("NumberEnrolled"),
+                        rs.getInt("CoursePrice"), rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        udao.getAllUserInformationByID(rs.getInt("AuthorID")),
+                        0, rs.getNString("Description"), rs.getNString("Objectives"), rs.getString("Difficulty")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allCourse;
     }
 }
 
