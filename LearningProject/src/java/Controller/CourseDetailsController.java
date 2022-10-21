@@ -54,9 +54,7 @@ public class CourseDetailsController extends HttpServlet {
         LessonDAO lessonDAO = new LessonDAO();
         CourseDAO cDAO = new CourseDAO();
         UserDAO u = new UserDAO();
-                
-                    
-        
+
         int courseID = Integer.parseInt(request.getParameter("id"));
 
         HttpSession session = request.getSession();
@@ -70,14 +68,13 @@ public class CourseDetailsController extends HttpServlet {
             //set UserCourse that the user enroll or unenroll
             request.setAttribute("UserCourse", UserCourse);
         }
-        
 
         Course course = cdao.getCourseInformation(courseID);
         // Add course objectives
         String courseObjectives = course.getObjectives();
         String[] objective = courseObjectives.split("[/]+");
         request.setAttribute("objective", objective);
-        
+
         // Get feedback list
         ArrayList<Feedback> feedbackList = cdao.getFeedBack(courseID);
         // Get section list
@@ -90,8 +87,18 @@ public class CourseDetailsController extends HttpServlet {
                 lessonList.add(lesson);
             }
         }
-        
 
+        double avgStar = 0;
+        for (Feedback feedback : feedbackList) {
+            avgStar += feedback.getRating();
+        }
+        if(avgStar != 0){
+            avgStar = avgStar / feedbackList.size();
+        }
+
+        request.setAttribute("averageStar", avgStar);
+        request.setAttribute("avg", (int)avgStar);
+        request.setAttribute("avgup", (int)avgStar + 1);
         request.setAttribute("feedbackList", feedbackList);
         request.setAttribute("checkDup", new UserDAO().checkDupFeedback(user.getUserId(), courseID));
         request.setAttribute("course", course);
@@ -106,19 +113,24 @@ public class CourseDetailsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        double star = Double.parseDouble(request.getParameter("star"));
-        String feedback = request.getParameter("feedback");
-        int courseid = Integer.parseInt(request.getParameter("courseid"));
+        try {
+            double star = Double.parseDouble(request.getParameter("star"));
+            String feedback = request.getParameter("feedback");
+            int courseid = Integer.parseInt(request.getParameter("courseid"));
 
-        HttpSession session = request.getSession();
-        User user = new User();
-        if (session != null) {
-            user = (User) session.getAttribute("user");
+            HttpSession session = request.getSession();
+            User user = new User();
+            if (session != null) {
+                user = (User) session.getAttribute("user");
+            }
+
+            new UserDAO().insertFeedbackAndStar(user.getUserId(), courseid, star, feedback);
+
+            response.sendRedirect("CourseDetails?id=" + courseid);
         }
-
-        new UserDAO().insertFeedbackAndStar(user.getUserId(), courseid, star, feedback);
-
-        response.sendRedirect("CourseDetails?id=" + courseid);
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

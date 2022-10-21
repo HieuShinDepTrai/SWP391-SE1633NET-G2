@@ -248,15 +248,23 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">
-                                                                <c:if test="${course.getStatus() == 'Enabled   '}">
-                                                                    Accepted
-                                                                </c:if>
+                                                            <c:if test="${course.getStatus().trim() == 'Enabled'}">
+                                                                <div style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;" class="bg-success">
+                                                                    Disabled
+                                                                </div>
+                                                            </c:if>
 
-                                                                <c:if test="${course.getStatus() != 'Enabled   '}">
-                                                                    ${course.getStatus()}
-                                                                </c:if>                                                               
-                                                            </div>  
+                                                            <c:if test="${course.getStatus().trim() == 'Disabled'}">
+                                                                <div style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;" class="bg-danger">
+                                                                    Accepted
+                                                                </div>
+                                                            </c:if>
+                                                            
+                                                            <c:if test="${course.getStatus().trim() == 'Pending'}">
+                                                                <div style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;" class="bg-warning">
+                                                                    Pending
+                                                                </div>
+                                                            </c:if>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -279,7 +287,7 @@
                         </div>
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
-                                <c:if test="${course.getStatus() == 'Enabled   '}">
+                                <c:if test="${course.getStatus().trim() == 'Enabled'}">
                                     <div class="col-xl-3 col-lg-4 col-md-6" >
                                         <div class="card" style="min-height: 234px; height: 400px;">
                                             <div class="card-top-img">
