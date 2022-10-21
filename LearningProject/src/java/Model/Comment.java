@@ -25,7 +25,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId, User User, int ParentId, String commentUser, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId, User User, int ParentId, String commentContent, Date commentDate, int likes, boolean isReported, boolean isDisable) {
         this.commentId = commentId;
         this.videoId = videoId;
         this.User = User;
@@ -34,6 +34,7 @@ public class Comment {
         this.commentDate = commentDate;
         this.likes = likes;
         this.isReported = isReported;
+        this.isDisable = isDisable;
     }
 
     public boolean isIsDisable() {
@@ -107,7 +108,6 @@ public class Comment {
     public void setIsReported(boolean isReported) {
         this.isReported = isReported;
     }
-
 
     
     
