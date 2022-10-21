@@ -132,7 +132,7 @@ public class CourseWatchController extends HttpServlet {
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
 
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-
+        
         ArrayList<Integer> userCmtId = new ArrayList<>();
 
         for (UserComment userComment : listUserComment) {
@@ -233,7 +233,10 @@ public class CourseWatchController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+<<<<<<< HEAD
+=======
         UserDAO userDAO = new UserDAO();
+>>>>>>> e9f61577a47a0e67be4d73e8ebf3591e49ea6937
         LessonDAO lessonDAO = new LessonDAO();
         User user = (User) session.getAttribute("user");
         int lessonID = Integer.parseInt(request.getParameter("lessonID"));
