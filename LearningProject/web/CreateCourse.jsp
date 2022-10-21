@@ -60,7 +60,7 @@
                                 <div class="create-section-title fw-bold mb-3">Objectives</div>
                                 <div class="section-list">
                                 </div>
-                                <div class="add-section" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <div class="add-section">
                                     Add Objectives
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                 <div class="course-option-content mb-2">
                                     <div class="course-option-content-title mb-1">Price</div>
                                     <div class="course-option-content-input mb-1">
-                                        <input type="text" class="w-100" name="CoursePrice" required/>
+                                        <input type="number" class="w-100" name="CoursePrice" required/>
                                     </div>
                                     <div class="course-option-content-des">
                                         Enter price of course
@@ -130,30 +130,7 @@
                     </div>
                 </div>
             </form>
-            <!-- Modal Add Section-->
-            <div class="modal fade" id="staticBackdrop" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">
-                                Add Objectives
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="Section name" class="form-label">Objective Name</label>
-                            <!-- Section name must not null -->
-                            <input id="value" type="text" class="form-control" name="SectionName" required="true" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <input type="button" class="btn btn-primary" value="Add Objectives" onclick="createObjective()">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </section>
         <!-- End: Create Course -->
 

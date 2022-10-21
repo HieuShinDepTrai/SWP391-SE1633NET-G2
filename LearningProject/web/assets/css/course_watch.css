@@ -4,6 +4,24 @@
     box-sizing: border-box;
 }
 
+#style-1::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
