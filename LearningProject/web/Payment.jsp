@@ -32,7 +32,7 @@
                         
                     </div>
                     <div class="mb-3">
-                       Lưu ý:
+                       Lưu ý: Nếu 5 phút mà không nhận được tiền thì vui lòng liên hệ admin
                     </div>
                         <button class="btn btn-primary mb-2" onclick="window.location.href='transaction'">
                         Go to transaction history

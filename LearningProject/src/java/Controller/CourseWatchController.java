@@ -4,12 +4,14 @@
  */
 package Controller;
 
+import Model.Answer;
 import Model.Course;
 import Model.Docs;
 import Model.Lesson;
 import Model.Section;
 import Model.Comment;
 import Model.CurrentCourse;
+import Model.Question;
 import Model.Report;
 import Model.User;
 import Model.UserComment;
@@ -19,6 +21,7 @@ import dal.SectionDAO;
 import dal.CommentDAO;
 import dal.CourseDAO;
 import dal.LessonDAO;
+import dal.QuestionDAO;
 import dal.UserDAO;
 import dal.VideoDAO;
 import java.io.IOException;
@@ -87,11 +90,13 @@ public class CourseWatchController extends HttpServlet {
         CourseDAO cdao = new CourseDAO();
         SectionDAO sdao = new SectionDAO();
         LessonDAO ldao = new LessonDAO();
+        QuestionDAO qdao = new QuestionDAO();
 
         // Get course id 
         int courseID = 0;
         int sectionID = 0;
         int lessonID = 0;
+        int questionID = 0;
 
         HttpSession session = request.getSession();
         if (request.getParameter("courseID") != null) {
@@ -169,7 +174,22 @@ public class CourseWatchController extends HttpServlet {
         if (lessonID != 0) {
             lesson.setStatus(ldao.getLessonStatusOfUser(lessonID, userId));
         }
-
+        if (lesson.getType().compareTo("Quiz") == 0) {
+            int countquestion = 0;
+            questionID = Integer.parseInt(request.getParameter("questionID"));
+            Question question = qdao.getNextQuestion(lessonID, questionID);
+            questionID = question.getQuestionId();
+            ArrayList<Answer> answers = qdao.getAnswersbyQuestionID(questionID);
+            int number = qdao.getNumberQuestionOfQuiz(lessonID);
+            countquestion = Integer.parseInt(request.getParameter("count"));
+            countquestion++;
+            
+            request.setAttribute("count", countquestion);
+            request.setAttribute("number", number);
+            request.setAttribute("questionID", questionID);
+            request.setAttribute("question", question);
+            request.setAttribute("answer", answers);
+        }
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked

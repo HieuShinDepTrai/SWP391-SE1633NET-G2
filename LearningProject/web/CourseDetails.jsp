@@ -139,9 +139,17 @@
                                                                     <c:if test="${lesson.getType() == 'Docs'}">
                                                                         <i class="fa-solid fa-file me-2"></i>
                                                                     </c:if>
+                                                                    <c:if test="${lesson.getType() == 'Quiz'}">
+                                                                        <i class="fa-solid fa-clipboard-question me-2"></i>
+                                                                    </c:if>
                                                                     <p>${lesson.getLessonName()}</p>
                                                                 </div>
-                                                                <div class="course-content-right">11:02</div>
+                                                                <div class="course-content-right">
+                                                                    <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                                    <fmt:parseNumber var="minute" type="number" value="${(time/1000)/60%60}" pattern="#" integerOnly="true"/>
+                                                                    <fmt:parseNumber var="second" type="number" integerOnly="true" value="${(time/1000)%60}"/>
+                                                                    ${minute}:${second}
+                                                                </div>
                                                             </div>
                                                         </c:if>
 

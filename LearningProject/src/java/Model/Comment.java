@@ -19,6 +19,7 @@ public class Comment {
     private Date commentDate;
     private int likes;
     private boolean isReported;
+    private boolean isDisable;
     
 
     public Comment() {
@@ -35,7 +36,13 @@ public class Comment {
         this.isReported = isReported;
     }
 
+    public boolean isIsDisable() {
+        return isDisable;
+    }
 
+    public void setIsDisable(boolean isDisable) {
+        this.isDisable = isDisable;
+    }
 
     public int getCommentId() {
         return commentId;

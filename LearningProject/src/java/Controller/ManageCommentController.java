@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
-import Model.Course;
+import Model.Comment;
 import Model.User;
-import dal.CourseDAO;
+import dal.CommentDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,40 +19,37 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Dung
+ * @author Hieu Shin
  */
-public class AdminManageCourseController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class ManageCommentController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminManageCourseController</title>");
+            out.println("<title>Servlet ManageCommentController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminManageCourseController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageCommentController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,26 +57,25 @@ public class AdminManageCourseController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        User u = (User) request.getSession().getAttribute("user");
-        if (u.getRole().equals("Admin")) {
-            CourseDAO cdao = new CourseDAO();
+    throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") != null) {
+            User user = (User) request.getSession().getAttribute("user");
+            if (user.getRole().equals("Admin")) {
+                CommentDAO cdao = new CommentDAO();
 
-            ArrayList<Course> coursePendingList = cdao.getPendingCourse();
-            request.setAttribute("coursePendingList", coursePendingList);
-            
-            ArrayList<Course> allCourse = cdao.getAllCourse();
-            request.setAttribute("allCourse", allCourse);
-            
-            request.getRequestDispatcher("AdminManageCourse.jsp").forward(request, response);
+                ArrayList<Comment> comments = cdao.ListAllCommentsReported();
+                request.setAttribute("comments", comments);
+                request.getRequestDispatcher("AdminManageComment.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("home");
+            }
         } else {
             response.sendRedirect("home");
         }
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,37 +83,25 @@ public class AdminManageCourseController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        User u = (User) request.getSession().getAttribute("user");
-        if (u.getRole().equals("Admin")) {
-            CourseDAO cdao = new CourseDAO();
-            if (request.getParameter("Accept") != null) {
-                int courseID = Integer.parseInt(request.getParameter("courseID"));
-                cdao.updateCourseStatus(courseID, "Enabled");
+    throws ServletException, IOException {
+        CommentDAO cdao = new CommentDAO();
+        int commentid = 0;
+        String isdisable = "";
+        if (request.getParameter("commentid") != null) {
+            commentid = Integer.parseInt(request.getParameter("commentid"));
+            isdisable = request.getParameter("isdisable");
+            if(isdisable.compareToIgnoreCase("true") == 0) {
+                cdao.EnableComment(commentid);
             }
-            if (request.getParameter("Denied") != null) {
-                int courseID = Integer.parseInt(request.getParameter("courseID"));
-                cdao.updateCourseStatus(courseID, "Denied");
+            else {
+                cdao.DisableComment(commentid);
             }
-            
-            if (request.getParameter("Enabled") != null) {
-                int courseID = Integer.parseInt(request.getParameter("courseID"));
-                cdao.updateCourseStatus(courseID, "Enabled");
-            }
-            
-            if (request.getParameter("Disabled") != null) {
-                int courseID = Integer.parseInt(request.getParameter("courseID"));
-                cdao.updateCourseStatus(courseID, "Disabled");
-            }
-            response.sendRedirect("AdminManageCourse");
-        } else {
-            response.sendRedirect("home");
+            response.sendRedirect("managecomment");
         }
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
