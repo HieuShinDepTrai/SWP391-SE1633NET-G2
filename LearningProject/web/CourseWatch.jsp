@@ -308,7 +308,7 @@
                                     <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                 </div>
                                 <div class="course-postcomment-action" style="float: right;">
-                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>
+<!--                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>-->
                                     <input class="submit-comment" name="op" type="submit" value="Comment">
                                 </div>
                             </div>
@@ -353,6 +353,7 @@
                                                 <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" data-cmt-reply="${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
                                                 <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
                                                 <div id="Report${parentComment.getCommentId()}">
+                                                    
                                                     <!--<form action="Report" method="GET">-->
 
                                                     <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
@@ -364,6 +365,8 @@
                                                         
                                                     <!--</form>-->
                                                 </div>
+                                                <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
+                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${parentComment.getCommentDate()}</div>
                                             </div>
@@ -388,7 +391,7 @@
                                                         <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                                     </div>
                                                     <div class="course-postcomment-action" style="float: right;">
-                                                        <p class="post-cancel d-inline-block me-4 fw-bold">Cancel</p>
+                                                        <div class="post-cancel d-inline-block me-4 fw-bold" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="CancelReply(this)">Cancel</div>
 
                                                         <input type="submit" name="op" value="Reply" class="submit-comment">                                     
                                                         <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
