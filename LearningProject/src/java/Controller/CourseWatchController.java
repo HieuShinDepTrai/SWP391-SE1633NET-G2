@@ -134,7 +134,7 @@ public class CourseWatchController extends HttpServlet {
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
 
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-
+        
         ArrayList<Integer> userCmtId = new ArrayList<>();
 
         for (UserComment userComment : listUserComment) {

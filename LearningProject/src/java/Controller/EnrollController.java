@@ -73,7 +73,7 @@ public class EnrollController extends HttpServlet {
         } else if ((op.equals("Buy now") && ses.getAttribute("username") != null)) {
             User tmp = (User) ses.getAttribute("user");
             User user = u.getAllUserInformationByID(tmp.getUserId());
-            int coursePrice = (int) Double.parseDouble(request.getParameter("coursePrice"));
+            int coursePrice = Integer.parseInt(request.getParameter("coursePrice"));
             if (user.getBalance() < coursePrice) {
                 PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");

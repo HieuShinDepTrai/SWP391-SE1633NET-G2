@@ -64,7 +64,6 @@ public class MarkAsDoneController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        UserDAO userDAO = new UserDAO();
         LessonDAO lessonDAO = new LessonDAO();
         User user = (User) session.getAttribute("user");
         int lessonID = Integer.parseInt(request.getParameter("lessonID"));

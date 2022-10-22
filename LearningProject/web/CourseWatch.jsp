@@ -48,7 +48,7 @@
                             <!-- Mark As Done -->                                
                             <div class="d-flex justify-content-center">
                                 <c:if test="${lesson.getStatus() ne 'Done'}">
-                                    <form action="markasdone" method="POST">
+                                    <form action="WatchCourse" method="POST">
                                         <button class="btn btn-primary">Mark As Done</button>
                                         <input type="hidden" name="lessonID" value="${lessonID}">
                                         <input type="hidden" name="sectionID" value="${sectionID}">
