@@ -31,7 +31,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.ArrayList;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
@@ -143,8 +145,13 @@ public class CourseWatchController extends HttpServlet {
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
 
+        parentCommentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+
+        
         ArrayList<Comment> commentOfLesson = cmtDao.ListAllCommentByLessonID(lessonID);
 
+        commentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+        
         int count = 0;
         //list the number of comments by lessonID
         for (Comment com : commentOfLesson) {
@@ -183,7 +190,7 @@ public class CourseWatchController extends HttpServlet {
             int number = qdao.getNumberQuestionOfQuiz(lessonID);
             countquestion = Integer.parseInt(request.getParameter("count"));
             countquestion++;
-            
+
             request.setAttribute("count", countquestion);
             request.setAttribute("number", number);
             request.setAttribute("questionID", questionID);
@@ -240,9 +247,9 @@ public class CourseWatchController extends HttpServlet {
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         int sectionID = Integer.parseInt(request.getParameter("sectionID"));
         lessonDAO.UpdateMarkAs(lessonID, user.getUserId(), "Done");
-        if (lessonDAO.getNextLessonInSection(sectionID, lessonID) != null) {            
+        if (lessonDAO.getNextLessonInSection(sectionID, lessonID) != null) {
             lessonID = lessonDAO.getNextLessonInSection(sectionID, lessonID);
-        }else if(lessonDAO.getNextSectionOfCourse(sectionID, courseID) != null){
+        } else if (lessonDAO.getNextSectionOfCourse(sectionID, courseID) != null) {
             sectionID = lessonDAO.getNextSectionOfCourse(sectionID, courseID);
             lessonID = lessonDAO.getNextLessonInSection(sectionID, 0);
         }
