@@ -4,6 +4,7 @@
  */
 package dal;
 
+import Model.CurrentCourse;
 import Model.Lesson;
 import Model.Question;
 import java.sql.ResultSet;
@@ -164,7 +165,7 @@ public class LessonDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public void updateLessonQuiz(String lessonName, int time, int lessonId) {
         try {
             executeUpdate("UPDATE [dbo].[Lesson] SET [LessonName] = ?, [Time] = ? WHERE [LessonID] = ?", lessonName, time, lessonId);
@@ -172,7 +173,7 @@ public class LessonDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public int getQuizID(int lessonID) {
         try {
             ResultSet rs = executeQuery("select Quiz.QuizID from dbo.Lesson, dbo.Quiz\n"
@@ -187,8 +188,6 @@ public class LessonDAO extends DBContext {
         }
         return 0;
     }
-    
-
 
     public void MarkAs(int lessonID, int userID, String status) {
         execute("INSERT INTO [dbo].[User_Lesson]\n"
@@ -263,6 +262,21 @@ public class LessonDAO extends DBContext {
             }
         } catch (SQLException ex) {
             return null;
+        }
+        return null;
+    }
+
+    public CurrentCourse getAllFromLessonID(int lessonID) {
+        try {
+            ResultSet rs = executeQuery("select l.LessonID, s.SectionID, s.CourseID from Lesson l\n"
+                    + "inner join Section s on l.SectionID = s.SectionID\n"
+                    + "where l.LessonID = ?", lessonID);
+            if (rs.next()) {
+                CurrentCourse current = new CurrentCourse(rs.getInt("CourseID"), lessonID, rs.getInt("SectionID"));
+                return current;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

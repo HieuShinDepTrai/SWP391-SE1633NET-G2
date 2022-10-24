@@ -5,8 +5,10 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import Model.Course;
+import Model.Notification;
 import Model.User;
 import dal.CourseDAO;
+import dal.NotificationDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,13 +64,14 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
+        UserDAO userDAO = new UserDAO();
         ArrayList<Course> courses = cdao.ListAllCourses();
 
         HttpSession session = request.getSession();
 
         if (session.getAttribute("username") != null) {
             String username = session.getAttribute("username").toString();
-
+            NotificationDAO noticeDAO = new NotificationDAO();            
             ArrayList<Course> courseList = cdao.getAllUserCourse(username);
             ArrayList<Integer> courseIDs = new ArrayList<>();
 
@@ -81,13 +84,12 @@ public class HomeController extends HttpServlet {
             String avatar = user.getAvatar();
             request.setAttribute("avatar", avatar);
             //}                        
-            request.setAttribute("courseIDs", courseIDs);            
-            UserDAO userDAO = new UserDAO();
+            request.setAttribute("courseIDs", courseIDs);                        
             user = userDAO.getAllUserInformation(user.getUserName());
-            request.setAttribute("user", user);
+            request.setAttribute("user", user);            
         }
 
-        request.setAttribute("courses", courses);
+        request.setAttribute("courses", courses);        
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 

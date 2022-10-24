@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import dal.NotificationDAO;
 import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -89,7 +90,9 @@ public class TransactionController extends HttpServlet {
             throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            NotificationDAO noticeDAO = new NotificationDAO();
+            UserDAO userDAO = new UserDAO();
+            
             int status = 99;
 
             //read the post content
@@ -104,7 +107,7 @@ public class TransactionController extends HttpServlet {
             String text = new String(bytes, "utf-8");
             Gson gson = new Gson();
             JsonObject jobj = gson.fromJson(text, JsonObject.class).getAsJsonArray("data").get(0).getAsJsonObject();
-            UserDAO userDAO = new UserDAO();
+            
             PaymentDAO paymentDAO = new PaymentDAO();
 
             //get the transaction data            
@@ -126,9 +129,11 @@ public class TransactionController extends HttpServlet {
             }
 
             String when = jobj.get("when").toString().replaceAll("\"", "");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = sdf.parse(when);
             java.sql.Date sqldate = new java.sql.Date(date.getTime());
             paymentDAO.userRecharge(userid, sqldate, amount, status, "Recharge", content);
+            //noticeDAO.sendNotification(userid, "Ban đã nạp thành công "+amount+" vào tài khoản của bạn", "Recharge "+amount+" "+userid);
         } catch (ParseException ex) {
             Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
         }

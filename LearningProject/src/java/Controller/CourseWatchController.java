@@ -101,14 +101,21 @@ public class CourseWatchController extends HttpServlet {
         int questionID = 0;
 
         HttpSession session = request.getSession();
-        if (request.getParameter("courseID") != null) {
-            courseID = Integer.parseInt(request.getParameter("courseID"));
-        }
-        if (courseID == 0) {
-            request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
-        }
-        if (session.getAttribute("username") != null) {
+        if (request.getParameter("lessonID") != null) {
             User user = (User) session.getAttribute("user");
+            lessonID = Integer.parseInt(request.getParameter("lessonID"));
+            ldao.MarkAs(lessonID, user.getUserId(), "Study");
+            CurrentCourse current = ldao.getAllFromLessonID(lessonID);
+            courseID = current.getCourseID();
+            sectionID = current.getSectionID();
+        }
+//        if (request.getParameter("courseID") != null) {
+//            courseID = Integer.parseInt(request.getParameter("courseID"));
+//        }
+        
+        else if (request.getParameter("courseID") != null) {
+            User user = (User) session.getAttribute("user");
+            courseID = Integer.parseInt(request.getParameter("courseID"));
             CurrentCourse currentCourse = cdao.getCurrentCourse(courseID, user.getUserId());
             if (currentCourse != null) {
                 sectionID = currentCourse.getSectionID();
@@ -122,19 +129,15 @@ public class CourseWatchController extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-        if (request.getParameter("sectionID") != null) {
-            sectionID = Integer.parseInt(request.getParameter("sectionID"));
-        }
-        if (request.getParameter("lessonID") != null) {
-            User user = (User) session.getAttribute("user");
-            lessonID = Integer.parseInt(request.getParameter("lessonID"));
-            ldao.MarkAs(lessonID, user.getUserId(), "Study");
-        }
+
+//        if (request.getParameter("sectionID") != null) {
+//            sectionID = Integer.parseInt(request.getParameter("sectionID"));
+//        }
 
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
 
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-        
+
         ArrayList<Integer> userCmtId = new ArrayList<>();
 
         for (UserComment userComment : listUserComment) {
