@@ -636,6 +636,17 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
+    public void UpdateNumberEnrolledCourse(int courseId) {
+        try {
+            executeUpdate("UPDATE [Course] SET [NumberEnrolled] += 1 WHERE [CourseID] = ?", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 }
 
 //SQL for getCurrentCourse
