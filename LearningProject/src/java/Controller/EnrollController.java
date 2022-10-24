@@ -8,6 +8,7 @@ import Model.Course;
 import Model.User;
 import Model.UserCourse;
 import dal.CourseDAO;
+import dal.NotificationDAO;
 import dal.PaymentDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -54,6 +55,7 @@ public class EnrollController extends HttpServlet {
         //Enroll in home page
         UserDAO u = new UserDAO();
         CourseDAO cDAO = new CourseDAO();
+        NotificationDAO noticeDAO = new NotificationDAO();
         HttpSession ses = request.getSession();
         int CourseID = Integer.parseInt(request.getParameter("courseID"));
         String op = request.getParameter("op");
@@ -62,8 +64,10 @@ public class EnrollController extends HttpServlet {
         Course course = cDAO.getAllCourseInformation(CourseID);
         if (op.equals("Enroll") && ses.getAttribute("username") != null) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-
+            User tmp = (User) ses.getAttribute("user");
+            User user = u.getAllUserInformationByID(tmp.getUserId());
             u.insertIntoUserCourse(UserID, CourseID);
+            //noticeDAO.sendNotification(user.getUserId(), "Cảm ơn bạn đã tham gia khóa học" + course.getCourseName(), "Enroll "+CourseID);            
             response.sendRedirect("home");
 
         } else if (op.equals("Go to Course") && ses.getAttribute("username") != null) {
@@ -83,6 +87,7 @@ public class EnrollController extends HttpServlet {
             Date date = new Date();
             java.sql.Date sqldate = new java.sql.Date(date.getTime());
             paymentDAO.userRecharge(user.getUserId(), sqldate, (-coursePrice), 0, "Buy", "Buy course " + course.getCourseName());
+            //noticeDAO.sendNotification(user.getUserId(), "Cảm ơn bạn đã mua khóa học" + course.getCourseName(), "Enroll "+CourseID);            
             u.insertIntoUserCourse(user.getUserId(), CourseID);
             User newuser = u.getAllUserInformationByID(user.getUserId());
             ses.setAttribute("user", newuser);
