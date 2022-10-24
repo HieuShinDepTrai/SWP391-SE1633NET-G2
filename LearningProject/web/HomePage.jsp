@@ -6,6 +6,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Model.Course" %>
+<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -181,6 +183,7 @@
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
                                                             <input name="op" type="submit" value="Go to Course">
                                                         </c:if>
+
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
                                                     </form>
                                                 </c:if>
@@ -188,7 +191,7 @@
                                                     <div class="course-price">${course.getCoursePrice()} đ</div>
                                                     <form id="enroll" action="enroll" method="POST">
                                                         <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                            
+
                                                             <input name="op" type="submit" value="Buy now" class="d-inline">
                                                         </c:if>
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
@@ -196,9 +199,30 @@
                                                         </c:if>
                                                         <input type="hidden" name="coursePrice" value="${course.getCoursePrice()}">    
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
+
                                                     </form>
                                                 </c:if>
 
+                                                <c:set var="isPresent" value="${false}"></c:set>
+                                                
+                                                <c:forEach items="${usercourselist}" var="usercourse">
+                                                    <c:if test="${course.getCourseID() == usercourse.getCourseID()}">
+                                                        <c:if test="${usercourse.isIsFavourite() == true}">
+                                                            <form action="home" method="POST">
+                                                                <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                                <button style="border: #ffffff; background: #ffffff; font-size: 25px; color:red" type="submit" name="favour" value="unlike"><i class="fa-solid fa-heart"></i></i></button>
+                                                            </form>     
+                                                            <c:set var="isPresent" value="${true}"></c:set>
+                                                        </c:if>
+                                                    </c:if> 
+                                                </c:forEach>
+                                                    
+                                                <c:if test="${isPresent == false}">
+                                                    <form action="home" method="POST">
+                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                        <button style="border: white; background: white; font-size: 25px" type="submit" name="favour" value="like"><i class="fa-regular fa-heart"></i></button>
+                                                    </form>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>
