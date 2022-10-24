@@ -31,7 +31,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.ArrayList;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
@@ -146,8 +148,13 @@ public class CourseWatchController extends HttpServlet {
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
 
+        parentCommentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+
+        
         ArrayList<Comment> commentOfLesson = cmtDao.ListAllCommentByLessonID(lessonID);
 
+        commentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+        
         int count = 0;
         //list the number of comments by lessonID
         for (Comment com : commentOfLesson) {

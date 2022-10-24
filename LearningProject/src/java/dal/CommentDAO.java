@@ -9,9 +9,9 @@ import Model.Report;
 import Model.User;
 import Model.UserComment;
 import Model.Video;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +40,7 @@ public class CommentDAO extends DBContext {
                 User user = userDAO.getAllUserInformationByID(rs.getInt("UserID"));
                 int pId = rs.getInt("ParentID");
                 String cmtContent = rs.getString("CommentContent");
-                Date cmtDate = rs.getDate("CommentDate");
+                Timestamp cmtDate = rs.getTimestamp("CommentDate");
                 int likes = rs.getInt("Likes");
                 boolean isReport = rs.getBoolean("isReported");
                 boolean isDisable = rs.getBoolean("isDisable");
@@ -68,7 +68,6 @@ public class CommentDAO extends DBContext {
         return null;
     }
 
-     
     public void insertIntoCommentContentReply(String content, int videoId, int userId, int parentId, String date) {
         try {
             executeUpdate("INSERT INTO [Comment](CommentContent, VideoID, UserID, ParentID, CommentDate, isReported, isDisable, Likes) VALUES (?, ?, ?, ?, ?, 0, 0, 0)", content, videoId, userId, parentId, date);
@@ -93,6 +92,13 @@ public class CommentDAO extends DBContext {
     public void deleteIntoUserComment(int commentId, int userId) {
         try {
             executeUpdate("DELETE FROM [User_Comment] WHERE [CommentID] = ? AND [UserID] = ?", commentId, userId);
+        } catch (Exception e) {
+        }
+    }
+    
+    public void deleteIntoComment(int cmtId) {
+        try {
+            executeUpdate("DELETE FROM [Comment] WHERE CommentID = ? OR ParentID = ?", cmtId, cmtId);
         } catch (Exception e) {
         }
     }
@@ -182,7 +188,7 @@ public class CommentDAO extends DBContext {
                 c.setParentId(rs.getInt("ParentID"));
                 c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setCommentContent(rs.getNString("CommentContent"));
-                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getTimestamp("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
 
@@ -215,8 +221,7 @@ public class CommentDAO extends DBContext {
                 c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setParentId(rs.getInt("ParentID"));
                 c.setCommentContent(rs.getNString("CommentContent"));
-                c.setCommentDate(rs.getDate("CommentDate"));
-                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getTimestamp("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
 
@@ -249,8 +254,7 @@ public class CommentDAO extends DBContext {
                 c.setParentId(rs.getInt("ParentID"));
                 c.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
                 c.setCommentContent(rs.getNString("CommentContent"));
-                c.setCommentDate(rs.getDate("CommentDate"));
-                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getTimestamp("CommentDate"));
                 c.setLikes(rs.getInt("Likes"));
                 c.setIsReported(rs.getBoolean("isReported"));
 
@@ -305,7 +309,7 @@ public class CommentDAO extends DBContext {
 
                 c.setCommentId(rs.getInt("CommentID"));
                 c.setCommentContent(rs.getNString("CommentContent"));
-                c.setCommentDate(rs.getDate("CommentDate"));
+                c.setCommentDate(rs.getTimestamp("CommentDate"));
                 c.setIsDisable(rs.getBoolean("isDisable"));
                 c.setUser(u);
 

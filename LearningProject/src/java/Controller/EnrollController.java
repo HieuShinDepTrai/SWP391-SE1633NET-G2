@@ -41,6 +41,7 @@ public class EnrollController extends HttpServlet {
         if (op.equals("Enroll") && ses.getAttribute("username") != null) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
             u.insertIntoUserCourse(UserID, CourseID);
+            cDAO.UpdateNumberEnrolledCourse(CourseID);
             request.getRequestDispatcher("CourseDetails").forward(request, response);
         } else {
             response.sendRedirect("login");
@@ -64,10 +65,10 @@ public class EnrollController extends HttpServlet {
         Course course = cDAO.getAllCourseInformation(CourseID);
         if (op.equals("Enroll") && ses.getAttribute("username") != null) {
             int UserID = u.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-            User tmp = (User) ses.getAttribute("user");
-            User user = u.getAllUserInformationByID(tmp.getUserId());
-            u.insertIntoUserCourse(UserID, CourseID);
             //noticeDAO.sendNotification(user.getUserId(), "Cảm ơn bạn đã tham gia khóa học" + course.getCourseName(), "Enroll "+CourseID);            
+            
+            u.insertIntoUserCourse(UserID, CourseID);
+            cDAO.UpdateNumberEnrolledCourse(CourseID);
             response.sendRedirect("home");
 
         } else if (op.equals("Go to Course") && ses.getAttribute("username") != null) {
