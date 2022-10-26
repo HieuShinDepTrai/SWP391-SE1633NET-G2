@@ -144,7 +144,12 @@
                                                                     </c:if>
                                                                     <p>${lesson.getLessonName()}</p>
                                                                 </div>
-                                                                <div class="course-content-right">11:02</div>
+                                                                <div class="course-content-right">
+                                                                    <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
+                                                                    <fmt:parseNumber var="minute" type="number" value="${(time/1000)/60%60}" pattern="#" integerOnly="true"/>
+                                                                    <fmt:parseNumber var="second" type="number" integerOnly="true" value="${(time/1000)%60}"/>
+                                                                    ${minute}:${second}
+                                                                </div>
                                                             </div>
                                                         </c:if>
 
@@ -210,7 +215,28 @@
                     <div class="container-fluid">
                         <div class="row px-4">
                             <div class="">
-                                <h4 class="fw-bold mb-3">Course Feedback</h4>
+                                <h4 class="fw-bold mb-3">Course Feedback 
+                                    <c:forEach begin="1" end="${avg}">                                                    
+                                        <i class="fa-solid fa-star" style="color: #FF9529"></i>                                                    
+                                    </c:forEach>
+                                    <c:if test="${Double.parseDouble(avg) != averageStar}">
+                                        <c:if test="${averageStar != Double.parseDouble(0)}">
+                                            <i class="fa-solid fa-star-half-stroke" style="color: #FF9529"></i>
+                                        </c:if>                                       
+
+                                        <c:forEach begin="${avgup}" end="4">
+                                            <i class="fa-regular fa-star" style="color: #FF9529"></i>                                      
+                                        </c:forEach>
+                                    </c:if>
+
+                                    <c:if test="${Double.parseDouble(avg) == averageStar}">
+                                        <c:forEach begin="${avg}" end="4">
+                                            <i class="fa-regular fa-star" style="color: #FF9529"></i>                                      
+                                        </c:forEach>
+                                    </c:if>
+
+                                    (${averageStar} star)</h4>
+
                                 <c:if test="${checkDup == true}">
                                     <p
                                         class="mb-3 btn btn-primary"

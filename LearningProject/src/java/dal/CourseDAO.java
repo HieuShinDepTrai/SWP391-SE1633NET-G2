@@ -30,6 +30,10 @@ import java.util.logging.Logger;
  * @author Hieu Shin
  */
 public class CourseDAO extends DBContext {
+
+    public CourseDAO() {
+    }
+
     
     public ArrayList<Course> ListAllCourses() {
         ArrayList<Course> courses = new ArrayList<>();
@@ -617,6 +621,32 @@ public class CourseDAO extends DBContext {
         }
         return allCourse;
     }
+    
+    public ArrayList<UserCourse> getListUserCourseOfUser(int userId){
+        ArrayList<UserCourse> list = new ArrayList<UserCourse>();
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID], [isStudied], [CourseRating], [CourseFeedback], [Progress], [Paydate], [isFavourite] FROM [dbo].[User_Course] WHERE [UserID] = ?", userId);
+            while(rs.next()){
+                list.add(new UserCourse(userId, rs.getInt("CourseID"), rs.getBoolean("isStudied"), rs.getInt("CourseRating"), rs.getString("CourseFeedback"), rs.getDouble("Progress"), rs.getDate("Paydate"), rs.getBoolean("isFavourite")));
+            }
+            
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void UpdateNumberEnrolledCourse(int courseId) {
+        try {
+            executeUpdate("UPDATE [Course] SET [NumberEnrolled] += 1 WHERE [CourseID] = ?", courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
 }
 
 //SQL for getCurrentCourse

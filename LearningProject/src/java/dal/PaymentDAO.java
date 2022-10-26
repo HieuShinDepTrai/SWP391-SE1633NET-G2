@@ -33,7 +33,7 @@ public class PaymentDAO extends DBContext {
                 payment.setMethod(rs.getString("Method"));
                 payment.setStatus(rs.getInt("Status"));
                 payment.setPaymentID(rs.getInt("RechargeID"));
-                payment.setRechargeDate(rs.getDate("RechargeDate"));
+                payment.setRechargeDate(rs.getTimestamp("RechargeDate"));
                 paymentList.add(payment);
             }
         } catch (SQLException ex) {
@@ -55,7 +55,7 @@ public class PaymentDAO extends DBContext {
                 payment.setContent(rs.getString("Content"));
                 payment.setMethod(rs.getString("Method"));
                 payment.setStatus(rs.getInt("Status"));
-                payment.setRechargeDate(rs.getDate("RechargeDate"));
+                payment.setRechargeDate(rs.getTimestamp("RechargeDate"));
                 payment.setPaymentID(rs.getInt("RechargeID"));
                 paymentList.add(payment);
             }
@@ -66,7 +66,8 @@ public class PaymentDAO extends DBContext {
     }
 
     public void userRecharge(int userid, Date date, int amount, int status, String method, String content) {
-        execute("INSERT INTO [dbo].[Recharge]\n"
+        int hehe=0;
+        hehe = executeUpdate("INSERT INTO [dbo].[Recharge]\n"
                 + "           ([UserID]\n"
                 + "           ,[RechargeDate]\n"
                 + "           ,[Amount]\n"

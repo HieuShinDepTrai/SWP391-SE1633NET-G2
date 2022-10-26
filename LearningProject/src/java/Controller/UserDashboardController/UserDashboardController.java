@@ -6,10 +6,10 @@ package Controller.UserDashboardController;
 
 import Model.Course;
 import Model.User;
+import Model.UserCourse;
 import dal.CourseDAO;
 import dal.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,11 +29,19 @@ public class UserDashboardController extends HttpServlet {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
         UserDAO userDao = new UserDAO();
-        String username = session.getAttribute("username").toString();
         ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());
-        User user = (User)session.getAttribute("user");        
+        User user = (User) session.getAttribute("user");
         int time = userDao.getUserTotalTime(user.getUserId());
         String totalTime = (time / 1000) / 60 / 60 % 24 + " hours " + (time / 1000) / 60 % 60 + " minutes " + (time / 1000) % 60 + " seconds ";
+        ArrayList<UserCourse> usList = courseDAO.getListUserCourseOfUser(user.getUserId());
+        ArrayList<Course> favCourseList = new ArrayList<Course>();
+        for (UserCourse course : usList) {
+            if(course.isIsFavourite()){
+                favCourseList.add(courseDAO.getAllCourseInformation(course.getCourseID()));
+            }
+        }
+
+        request.setAttribute("favlist", favCourseList);
         request.setAttribute("totalTime", totalTime);
         request.setAttribute("user", user);
         request.setAttribute("allUserCourse", courseList.size());
@@ -44,12 +52,21 @@ public class UserDashboardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("ErrorPage.jsp").forward(request, response);
+        try {
+            HttpSession session = request.getSession();
+            UserDAO ud = new UserDAO();
+            int courseId = Integer.parseInt(request.getParameter("courseID"));
+            
+            if (session.getAttribute("username") != null) {
+                User user = (User) session.getAttribute("user");
+            
+                ud.unLikeCourse(courseId, user.getUserId());
+            }
+            
+            response.sendRedirect("userdashboard");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

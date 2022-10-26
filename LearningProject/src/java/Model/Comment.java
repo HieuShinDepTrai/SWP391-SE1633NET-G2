@@ -4,7 +4,10 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Date;
+
+
 
 /**
  *
@@ -16,7 +19,7 @@ public class Comment {
     private User User;
     private int ParentId;
     private String commentContent;
-    private Date commentDate;
+    private Timestamp commentDate;
     private int likes;
     private boolean isReported;
     private boolean isDisable;
@@ -25,7 +28,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int commentId, int videoId, User User, int ParentId, String commentUser, String commentContent, Date commentDate, int likes, boolean isReported) {
+    public Comment(int commentId, int videoId, User User, int ParentId, String commentContent, Timestamp commentDate, int likes, boolean isReported, boolean isDisable) {
         this.commentId = commentId;
         this.videoId = videoId;
         this.User = User;
@@ -34,13 +37,6 @@ public class Comment {
         this.commentDate = commentDate;
         this.likes = likes;
         this.isReported = isReported;
-    }
-
-    public boolean isIsDisable() {
-        return isDisable;
-    }
-
-    public void setIsDisable(boolean isDisable) {
         this.isDisable = isDisable;
     }
 
@@ -84,11 +80,11 @@ public class Comment {
         this.commentContent = commentContent;
     }
 
-    public Date getCommentDate() {
+    public Timestamp getCommentDate() {
         return commentDate;
     }
 
-    public void setCommentDate(Date commentDate) {
+    public void setCommentDate(Timestamp commentDate) {
         this.commentDate = commentDate;
     }
 
@@ -108,6 +104,15 @@ public class Comment {
         this.isReported = isReported;
     }
 
+    public boolean isIsDisable() {
+        return isDisable;
+    }
+
+    public void setIsDisable(boolean isDisable) {
+        this.isDisable = isDisable;
+    }
+
+    
 
     
     

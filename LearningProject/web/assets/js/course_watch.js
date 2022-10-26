@@ -35,8 +35,9 @@ function active_comment_button(current) {
   }
 }
 
-function show_reply_post_comment(elem) {
-    $(elem).parent().next().toggleClass('d-none');
+function show_reply_post_comment(input) {
+//    $(elem).parent().next().toggleClass('d-none');
+    document.querySelector('#ShowReply' + input.getAttribute("data-cmt-reply")).classList.remove('d-none');
 }
 
 $("#course-comment-close").click(function(){
@@ -56,9 +57,10 @@ function disableOn(input) {
 //    
 //    
 
-
     
     input.classList.add('d-none');
+    
+    document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-id")).classList.add('d-none');
     document.querySelector('#Like' + input.getAttribute("data-cmt-id")).classList.add('d-none');
     document.querySelector('#Report' + input.getAttribute("data-cmt-id")).classList.add('d-none');
     document.querySelector('#dotReport' + input.getAttribute("data-cmt-id")).classList.add('d-none');
@@ -75,6 +77,7 @@ function disableOff(input) {
     
     input.classList.add('d-none');
     
+    document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
     document.querySelector('#Like' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
     document.querySelector('#Edit' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
     document.querySelector('#Report' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
@@ -85,5 +88,11 @@ function disableOff(input) {
     document.querySelector('#Cancel' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
     document.querySelector('#Save' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
     
+    
+}
+
+function CancelReply(input) {
+    
+    document.querySelector('#ShowReply' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
     
 }
