@@ -97,6 +97,13 @@ public class LikeCommentController extends HttpServlet {
             cmtDAO.deleteIntoUserComment(CommentID, userId);
         }
         
+        if (op.equals("Delete")) {
+//            cmtDAO.deleteIntoUserComment(CommentID, userId);
+//            cmtDAO.deleteIntoReport(userId, CommentID);
+            cmtDAO.deleteIntoComment(CommentID);
+            
+        }
+        
         //list all cmtId by UserID in report
         for (Report report : listReport) {
             userCommentIdOfReport.add(report.getCommentID());

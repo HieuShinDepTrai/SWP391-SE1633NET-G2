@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Model.Notification;
+import dal.NotificationDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import utils.SHA256;
 
 /**
@@ -29,14 +32,16 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             UserDAO userDAO = new UserDAO();
+            NotificationDAO noticeDAO = new NotificationDAO();
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
             if (userDAO.checkLogin(username, SHA256.SHA256(password))) {
-                // save into session
+                // save into session                
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 session.setAttribute("user", userDAO.getAllUserInformation(username));
+                session.setAttribute("test", "This is text");               
                 response.sendRedirect("home");
             } else {
                 if (userDAO.isAccountExist(username)) {
