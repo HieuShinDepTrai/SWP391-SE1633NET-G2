@@ -27,23 +27,66 @@
         <%@include file="header.jsp" %>
         <section>
             <!-- Begin: Side Bar -->
-            <div id="side-bar-container">
-                <div id="side-bar">
-                    <div class="bar-button" onclick="activeHome()">
-                        <i class="fa-solid fa-house"></i>
-                        <p class="button-title">Home</p>
-                    </div>
-                    <div class="bar-button button-hover" onclick="activeCourse()">
-                        <i class="fa-solid fa-road"></i>
-                        <p class="button-title text-center">Admin Dashboard</p>
-                    </div>
-                    <div class="bar-button">
-                        <i class="fa-solid fa-newspaper"></i>
-                        <p class="button-title">Blog</p>
+                <div id="side-bar-container">
+                    <div id="side-bar">
+                        <c:if test="${user.role == 'Mentor'}">
+                            <a style="
+                               display: block;
+                               width: 36px;
+                               display: flex;
+                               justify-content: center;
+                               align-items: center;
+                               height: 36px;
+                               padding: 19px;
+                               border-radius: 50%;
+                               background-color: var(--bs-orange);
+                               margin: 0 auto 10px auto;
+                               " href="CreateCourse" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                                <i class="fa-solid fa-plus" style="
+                                   font-size: 24px;
+                                   /* padding: 10px; */
+                                   color: white;
+                                   "></i>
+                            </a>
+                        </c:if>
+                        <a class="bar-button" href="home">
+                            <i class="fa-solid fa-house"></i>
+                            <p class="button-title">Home</p>
+                        </a>
+                        <c:if test="${user.role == 'User'}">
+                            <a class="bar-button  button-hover" href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                        </c:if>
+                        <c:if test="${user.role == 'Admin'}">
+                            <a class="bar-button " href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                            <a class="bar-button button-hover" href="admindashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">Admin Dashboard</p>
+                            </a>
+                        </c:if>
+                        <c:if test="${user.role == 'Mentor'}">
+                            <a class="bar-button  button-hover" href="userdashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">User Dashboard</p>
+                            </a>
+                            <a class="bar-button " href="mentordashboard">
+                                <i class="fa-solid fa-road"></i>
+                                <p class="button-title text-center">Mentor Dashboard</p>
+                            </a>
+                        </c:if>
+                        <a class="bar-button">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <p class="button-title">Blog</p>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <!-- End: Side Bar -->
+                <!-- End: Side Bar -->
+
 
             <!-- Begin: User Dashboard -->
             <div class="user-dashboard-container">
@@ -147,7 +190,7 @@
                                             <div class="col-9 px-3 m-auto">
                                                 <div class="fw-bold mb-1">
                                                     <a href="manageaccount">Account Management</a>
-x                                                </div>
+                                                </div>
                                                 <div class="mb-2" style="font-size: 14px;">Admin Function Description
                                                 </div>
 
@@ -193,6 +236,26 @@ x                                                </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="card shadow-sm overflow-hidden">
+                                        <div class="row my-course g-0">
+                                            <div class="col-3">
+                                                <img src="https://img.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg?w=1060&t=st=1664958980~exp=1664959580~hmac=88310d1b905804a0cd9333cbce64a79caae79f10802976640842f9cc7129c044"
+                                                    alt="" style="width: 100%; height: 96px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-9 px-3 m-auto">
+                                                <div class="fw-bold mb-1">
+                                                    <a href="sendnotice">Send notice</a>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 14px;">Send notice to user by gmail or on web
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- End admin tool -->
                             </div>
                         </div>
                     </div>
