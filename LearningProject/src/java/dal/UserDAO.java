@@ -462,4 +462,27 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+    public void likeCourse(int courseId, int userId){
+        try {
+            ResultSet rs = executeQuery("SELECT 1 FROM [dbo].[User_Course] WHERE [CourseID] = ? AND [UserID] = ?", courseId, userId);
+            
+            if(rs.next()){
+                executeUpdate("UPDATE [dbo].[User_Course] SET [isFavourite] = ? WHERE [CourseID] = ? AND [UserID] = ?", 1, courseId, userId);
+            }
+            else{
+                executeUpdate("INSERT INTO [dbo].[User_Course]([UserID], [CourseID], [isStudied], [isFavourite]) VALUES (?, ?, ?, ?)", userId, courseId, 0, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void unLikeCourse(int courseId, int userId){
+        try {
+            executeUpdate("UPDATE [dbo].[User_Course] SET [isFavourite] = ? WHERE [CourseID] = ? AND [UserID] = ?", 0, courseId, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
