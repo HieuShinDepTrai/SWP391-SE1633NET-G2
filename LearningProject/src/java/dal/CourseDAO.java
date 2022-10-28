@@ -637,6 +637,46 @@ public class CourseDAO extends DBContext {
 
         return listFeedback;
     }
+    
+    public ArrayList<Course> getAllCoursesByCourseName(String courseName) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try (ResultSet rs = executeQuery("SELECT \n"
+                    + "[C].[CourseName],"
+                    + "[C].[DateCreate],"
+                    + "[C].[Category],"
+                    + "[C].[CourseImage],"
+                    + "[C].[Status],"
+                    + "[C].[NumberEnrolled],"
+                    + "[C].[CourseID],"
+                    + "[C].[CoursePrice],"
+                    + "[C].[Description],"
+                    + "[C].[Objectives],"
+                    + "[C].[Difficulty],"
+                    + "[C].[AuthorID]"
+                    + "FROM [Course] C INNER JOIN [User] U\n"
+                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled' AND [CourseName] LIKE  '%" + courseName +"%'" )){
+            while (rs.next()) {                
+                Course course = new Course();
+                course.setCourseName(rs.getString("CourseName"));
+                course.setDateCreate(rs.getTimestamp("DateCreate"));
+                course.setCategory(rs.getString("Category"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setStatus(rs.getString("Status"));
+                course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
+                course.setCoursePrice(rs.getInt("CoursePrice"));
+                course.setCourseID(rs.getInt("CourseID"));
+                course.setObjectives(rs.getNString("Objectives"));
+                course.setDifficulty(rs.getString("Difficulty"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+
+                courseList.add(course);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseList;
+    }
 
 }
 

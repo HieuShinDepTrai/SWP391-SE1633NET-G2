@@ -109,6 +109,7 @@ public class CourseWatchController extends HttpServlet {
         }
         if (session.getAttribute("username") != null) {
             User user = (User) session.getAttribute("user");
+            
             CurrentCourse currentCourse = cdao.getCurrentCourse(courseID, user.getUserId());
             if (currentCourse != null) {
                 sectionID = currentCourse.getSectionID();
@@ -132,7 +133,9 @@ public class CourseWatchController extends HttpServlet {
         }
 
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
-
+        //Get user information
+        User user = uDao.getAllUserInformation(session.getAttribute("username").toString());
+        
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
         
         ArrayList<Integer> userCmtId = new ArrayList<>();
@@ -197,6 +200,8 @@ public class CourseWatchController extends HttpServlet {
             request.setAttribute("question", question);
             request.setAttribute("answer", answers);
         }
+       
+        request.setAttribute("User", user);
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked
