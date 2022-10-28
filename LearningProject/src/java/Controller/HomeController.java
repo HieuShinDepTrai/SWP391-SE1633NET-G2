@@ -5,8 +5,10 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import Model.Course;
+import Model.Notification;
 import Model.User;
 import dal.CourseDAO;
+import dal.NotificationDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,15 +51,6 @@ public class HomeController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,7 +70,7 @@ public class HomeController extends HttpServlet {
 
         if (session.getAttribute("username") != null) {
             String username = session.getAttribute("username").toString();
-
+            NotificationDAO noticeDAO = new NotificationDAO();            
             ArrayList<Course> courseList = cdao.getAllUserCourse(username);
             ArrayList<Integer> courseIDs = new ArrayList<>();
 
@@ -89,40 +82,43 @@ public class HomeController extends HttpServlet {
             // if (session != null) {
             User user = (User) session.getAttribute("user");
             String avatar = user.getAvatar();
+
+            request.setAttribute("usercourselist", cdao.getListUserCourseOfUser(user.getUserId()));
             request.setAttribute("avatar", avatar);
             //}                        
-            request.setAttribute("courseIDs", courseIDs);            
-            UserDAO userDAO = new UserDAO();
+            request.setAttribute("courseIDs", courseIDs);                        
             user = userDAO.getAllUserInformation(user.getUserName());
-            request.setAttribute("user", user);
+            request.setAttribute("user", user);            
         }
 
-        request.setAttribute("courses", courses);
+        request.setAttribute("courses", courses);        
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+        try {
+            HttpSession session = request.getSession();
+            UserDAO ud = new UserDAO();
+            String favourite = request.getParameter("favour");
+            int courseId = Integer.parseInt(request.getParameter("courseID"));
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+            if (session.getAttribute("username") != null) {
+                User user = (User) session.getAttribute("user");
+            
+                if (favourite.equals("like")) {
+                    ud.likeCourse(courseId, user.getUserId());
+                }
+                else{
+                    ud.unLikeCourse(courseId, user.getUserId());
+                }
+            }
+            
+            response.sendRedirect("home");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

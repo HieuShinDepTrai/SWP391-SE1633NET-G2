@@ -11,6 +11,7 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/user_dashboard.css" />
         <link rel="stylesheet" href="assets/css/header.css" />
+
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap");
         </style>
@@ -57,7 +58,7 @@
                                 <i class="fa-solid fa-road"></i>
                                 <p class="button-title text-center">User Dashboard</p>
                             </a>
-                            <a class="bar-button " href="#">
+                            <a class="bar-button " href="admindashboard">
                                 <i class="fa-solid fa-road"></i>
                                 <p class="button-title text-center">Admin Dashboard</p>
                             </a>
@@ -135,7 +136,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 mb-2">
                                         <div class="overview p-4">
                                             <div class="overview-header mb-2">
                                                 <h6>Quizzes detail</h6>
@@ -146,9 +147,76 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <h5 class="fw-bold">My favourite course</h5>          
+                                <div class="row g-3">
+                                    <c:forEach items="${favlist}" var="course">
+                                        <c:if test="${course.getStatus().trim() == 'Enabled'}">
+                                            <div class="col-xl-3 col-lg-4 col-md-6" >
+                                                <div class="card" style="min-height: 234px; height: 400px;">
+                                                    <div class="card-top-img">
+                                                        <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
+                                                    </div>
+                                                    <div class="card-body">
 
+                                                        <h6 class="course-title" ><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h6>
+                                                        <div class="course-meta-info">
+                                                            <div class="course-meta-author">
+                                                                <div class="author-avatar">
+                                                                    <img src="${course.getAuthor().getAvatar()}"
+                                                                         alt="" style="width: 40px; height: 40px; border-radius: 50%;">
+                                                                </div>
+                                                                <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
+                                                            </div>
+                                                            <div class="course-meta-student">
+                                                                <i class="fa-solid fa-user"></i>
+                                                                <p>${course.getNumberEnrolled()} Students</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="course-footer">
+                                                            <c:if test="${course.getCoursePrice() == 0}">
+                                                                <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
+                                                                <form id="enroll" action="enroll" method="POST" class="d-flex justify-content-between">                                                                             
+                                                                    <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Enroll">
+                                                                    </c:if>
+
+                                                                    <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Go to Course">
+                                                                    </c:if>
+
+                                                                    <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                                </form>
+                                                            </c:if>
+                                                            <c:if test="${course.getCoursePrice() != 0}">
+                                                                <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                                <form id="enroll" action="enroll" method="POST">
+                                                                    <c:if test="${!courseIDs.contains(course.getCourseID())}">
+
+                                                                        <input name="op" type="submit" value="Buy now" class="d-inline">
+                                                                    </c:if>
+                                                                    <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Go to Course">                                                            
+                                                                    </c:if>
+                                                                    <input type="hidden" name="coursePrice" value="${course.getCoursePrice()}">    
+                                                                    <input type="hidden" name="courseID" value="${course.getCourseID()}">
+
+                                                                </form>
+                                                            </c:if>
+
+                                                            <form action="userdashboard" method="POST">
+                                                                <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                                <button style="border: #ffffff; background: #ffffff; font-size: 25px; color:red" type="submit"><i class="fa-solid fa-heart"></i></i></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
                                 </div>
                             </div>
+
                             <div class="col-4">
                                 <h5 class="fw-bold">My Course</h5>
                                 <div class="row flex-column gy-2">
