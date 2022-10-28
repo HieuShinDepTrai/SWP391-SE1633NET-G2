@@ -18,6 +18,9 @@ import java.util.logging.Logger;
  */
 public class UserDAO extends DBContext {
 
+    public  UserDAO(){
+        
+    }
     public void addUser(User u) {
         try {
             executeUpdate("INSERT INTO [dbo].[User]([Username], [Password], [Email], [Firstname], [LastName], [DoB], [Role], [Balance], [BankNumber], [BankName], [isDisable]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", u.getUserName(),

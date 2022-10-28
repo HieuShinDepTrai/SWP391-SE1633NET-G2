@@ -106,6 +106,7 @@ public class CourseWatchController extends HttpServlet {
         }
         if (request.getParameter("lessonID") != null) {
             User user = (User) session.getAttribute("user");
+            
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
             ldao.MarkAs(lessonID, user.getUserId(), "Study");
             CurrentCourse current = ldao.getAllFromLessonID(lessonID);
@@ -135,7 +136,9 @@ public class CourseWatchController extends HttpServlet {
 //            sectionID = Integer.parseInt(request.getParameter("sectionID"));
 //        }
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
-
+        //Get user information
+        User user = uDao.getAllUserInformation(session.getAttribute("username").toString());
+        
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
 
         ArrayList<Integer> userCmtId = new ArrayList<>();
@@ -199,6 +202,8 @@ public class CourseWatchController extends HttpServlet {
             request.setAttribute("question", question);
             request.setAttribute("answer", answers);
         }
+       
+        request.setAttribute("User", user);
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked
