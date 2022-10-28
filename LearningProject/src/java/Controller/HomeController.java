@@ -55,6 +55,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO cdao = new CourseDAO();
+        UserDAO userDAO = new UserDAO();
         
         String courseName = request.getParameter("searching");
         if (courseName == null) {
