@@ -38,9 +38,9 @@
                         <label class="form-label fw-bold">Category</label>
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="1">Front-end</option>
+                            <option value="2">Back-end</option>
+                            <option value="3">Database</option>
                           </select>
 
                         <label class="form-label fw-bold mt-3">Blog Content</label>

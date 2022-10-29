@@ -64,6 +64,10 @@
         <servlet-name>QuizResultReviewController</servlet-name>
         <servlet-class>Controller.QuizResultReviewController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateBlogController</servlet-name>
+        <servlet-class>Controller.CreateBlogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -295,6 +299,10 @@
     <servlet-mapping>
         <servlet-name>QuizResultReviewController</servlet-name>
         <url-pattern>/quizresultreview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateBlogController</servlet-name>
+        <url-pattern>/createblog</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
