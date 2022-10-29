@@ -68,7 +68,7 @@ public class NotificationController extends HttpServlet {
         PrintWriter out = response.getWriter();
         String value = request.getParameter("value");        
         ArrayList<Notification> noticeList = new ArrayList<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         NotificationDAO noticeDAO = new NotificationDAO();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -116,7 +116,7 @@ public class NotificationController extends HttpServlet {
         if (actionList[0].equals("Recharge")) {
             response.sendRedirect("transaction");
             return;
-        } else if (actionList[0].equals("Enroll")) {
+        } else if (actionList[0].equals("Enroll") || actionList[0].equals("Verify")) {
             response.sendRedirect("WatchCourse?courseID=" + actionList[1]);
             return;
         } else if(actionList[0].equals("Reply")){

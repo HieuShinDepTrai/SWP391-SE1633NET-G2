@@ -8,6 +8,7 @@ import Model.Notification;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,8 +53,7 @@ public class NotificationDAO extends DBContext {
 
     public void sendNotification(int userID, String content, String action) {
 
-        java.util.Date date = new java.util.Date();
-        java.sql.Date sqldate = new java.sql.Date(date.getTime());
+        java.util.Date date = new java.util.Date();        
         int status = 99;
         try {
             status = executeUpdate("INSERT INTO [dbo].[Notification]\n"
@@ -67,7 +67,7 @@ public class NotificationDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?)", userID, content, sqldate, false, action);
+                    + "           ,?)", userID, content, new Timestamp(date.getTime()), false, action);
         } catch (Exception e) {
             System.out.println("Error");
         }

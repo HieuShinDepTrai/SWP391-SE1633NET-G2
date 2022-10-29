@@ -248,8 +248,13 @@
                                     </p>
                                 </c:if>
                             </div>
+                                    
+                                    <c:forEach begin="${1}" end="${numOfPages}" var="item">
+                                    <a href="CourseDetails?pageIndex=${item}&id=<%= request.getParameter("id")%>">${item}</a>
+                                    </c:forEach>
+                                    
                             <!-- Begin: Feedback -->
-                            <c:forEach var="fb" items="${feedbackList}">
+                            <c:forEach var="fb" items="${listFeedbackByPage}">
                                 <div class="row col-8 mb-4">
                                     <div class="col-1">
                                         <img

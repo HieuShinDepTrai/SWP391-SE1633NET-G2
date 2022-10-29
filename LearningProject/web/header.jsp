@@ -21,8 +21,11 @@
         <div class="header-search">
             <div class="icon-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video...">
+            </div>            
+             <form action="home" method="GET">
+                <input type="text" name="searching" placeholder="Tìm kiếm khóa học, bài viết, video...">
+                <input type="submit" hidden />
+            </form>
         </div>
         <div class="header-profile">
             <a href="recharge" class="header-mycourse" style="text-decoration: none;color: #707070;">
