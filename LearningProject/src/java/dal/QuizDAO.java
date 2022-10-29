@@ -5,14 +5,19 @@
 package dal;
 
 import Model.Quiz;
+import Model.UserQuiz;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author vuman
  */
 public class QuizDAO extends DBContext {
-    
+
     public Quiz getQuizOfLesson(int lessonId) {
         try ( ResultSet rs = executeQuery("SELECT [QuizID], [Mark] FROM [dbo].[Quiz] WHERE [LessonID] = ?", lessonId)) {
             if (rs.next()) {
@@ -23,7 +28,7 @@ public class QuizDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void addQuiz(int lessonID) {
         try {
             execute("insert into Quiz\n"
