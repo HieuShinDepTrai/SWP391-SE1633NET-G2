@@ -10,6 +10,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,9 +19,10 @@ import utils.SendEmail;
 
 /**
  *
- * @author Hieu Shin
+ * @author NamDepTraiVL
  */
-public class ManageAccountController extends HttpServlet {
+@WebServlet(name = "SendNoticeGmailController", urlPatterns = {"/sendnotice"})
+public class SendNoticeGmailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class ManageAccountController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageAccountController</title>");
+            out.println("<title>Servlet SendNoticeGmailController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageAccountController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SendNoticeGmailController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,20 +62,10 @@ public class ManageAccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getSession().getAttribute("user") != null) {
-            User user = (User) request.getSession().getAttribute("user");
-            if (user.getRole().equals("Admin")) {
-                UserDAO udao = new UserDAO();
-
-                ArrayList<User> users = udao.getAllUser();
-                request.setAttribute("users", users);
-                request.getRequestDispatcher("AdminManageAccount.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("home");
-            }
-        } else {
-            response.sendRedirect("home");
-        }
+        UserDAO userDAO = new UserDAO();
+        ArrayList<User> users = userDAO.getTopUser(10);
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("SendNotification.jsp").forward(request, response);
     }
 
     /**
@@ -87,26 +79,25 @@ public class ManageAccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO udao = new UserDAO();
+        SendEmail sendemail = new SendEmail();
         NotificationDAO noticeDAO = new NotificationDAO();
-        SendEmail sendEmail = new SendEmail();
-        int userid = 0;
-        String isdisable = "";
-        if (request.getParameter("userid") != null) {
-            userid = Integer.parseInt(request.getParameter("userid"));
-            isdisable = request.getParameter("isdisable");
-            if(isdisable.compareToIgnoreCase("true") == 0) {
-                udao.EnableAccount(userid);
-                noticeDAO.sendNotification(userid, "Tài khoản của bạn đã được mở khóa, bạn có thể tham gia vào các khóa học bình thường.", "Account");
-                sendEmail.sendEmail(udao.getAllUserInformationByID(userid).getEmail(), "Thông báo mở tài khoản","Tài khoản của đã được mở, bạn có thể tham gia vào các khóa học bình thường.");
+        String subject = request.getParameter("subject");
+        String context = request.getParameter("context");
+        String[] userList = request.getParameterValues("userid");
+        String[] emailList = request.getParameterValues("email");
+        String[] option = request.getParameterValues("option");
+        for (int i = 0; i < option.length; i++) {
+            if (option[i].equals("email")) {
+                for (int j = 0; j < emailList.length; j++) {
+                    sendemail.sendEmail(emailList[j], subject, context);
+                }
+            } else if (option[i].equals("web")) {
+                for (int j = 0; j < emailList.length; j++) {
+                    noticeDAO.sendNotification(Integer.parseInt(userList[j]), context, "Notification");
+                }
             }
-            else {
-                udao.DisableAccount(userid);
-                noticeDAO.sendNotification(userid, "Tài khoản của bạn đã bị khóa, vui lòng liên hệ với Admin để được mở khóa. ", "Account");
-                sendEmail.sendEmail(udao.getAllUserInformationByID(userid).getEmail(), "Thông báo khóa tài khoản","Tài khoản của bạn đã bị khóa, vui lòng liên hệ với Admin để được mở khóa.");                
-            }
-            response.sendRedirect("manageaccount");
         }
+        doGet(request, response);
     }
 
     /**

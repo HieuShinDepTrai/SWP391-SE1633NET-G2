@@ -99,20 +99,22 @@ public class CourseWatchController extends HttpServlet {
         int sectionID = 0;
         int lessonID = 0;
         int questionID = 0;
-
         HttpSession session = request.getSession();
+        if (session.getAttribute("username") == null) {
+            response.sendRedirect("login");
+            return;
+        }
         if (request.getParameter("lessonID") != null) {
             User user = (User) session.getAttribute("user");
+            
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
             ldao.MarkAs(lessonID, user.getUserId(), "Study");
             CurrentCourse current = ldao.getAllFromLessonID(lessonID);
             courseID = current.getCourseID();
             sectionID = current.getSectionID();
-        }
-//        if (request.getParameter("courseID") != null) {
-//            courseID = Integer.parseInt(request.getParameter("courseID"));
-//        }
-        
+        } //        if (request.getParameter("courseID") != null) {
+        //            courseID = Integer.parseInt(request.getParameter("courseID"));
+        //        }
         else if (request.getParameter("courseID") != null) {
             User user = (User) session.getAttribute("user");
             courseID = Integer.parseInt(request.getParameter("courseID"));
@@ -133,9 +135,10 @@ public class CourseWatchController extends HttpServlet {
 //        if (request.getParameter("sectionID") != null) {
 //            sectionID = Integer.parseInt(request.getParameter("sectionID"));
 //        }
-
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
-
+        //Get user information
+        User user = uDao.getAllUserInformation(session.getAttribute("username").toString());
+        
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
 
         ArrayList<Integer> userCmtId = new ArrayList<>();
@@ -148,13 +151,12 @@ public class CourseWatchController extends HttpServlet {
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
 
-        parentCommentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+        parentCommentOfLesson.sort((o1, o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
 
-        
         ArrayList<Comment> commentOfLesson = cmtDao.ListAllCommentByLessonID(lessonID);
 
-        commentOfLesson.sort((o1,o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
-        
+        commentOfLesson.sort((o1, o2) -> o2.getCommentDate().compareTo(o1.getCommentDate()));
+
         int count = 0;
         //list the number of comments by lessonID
         for (Comment com : commentOfLesson) {
@@ -200,6 +202,8 @@ public class CourseWatchController extends HttpServlet {
             request.setAttribute("question", question);
             request.setAttribute("answer", answers);
         }
+       
+        request.setAttribute("User", user);
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
         //to get All comment of user that liked

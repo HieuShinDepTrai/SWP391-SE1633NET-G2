@@ -81,9 +81,11 @@ public class PostVideoCommentController extends HttpServlet {
         String username = (String) ses.getAttribute("username");
         int userId = userDAO.getAllUserInformation(username).getUserId();
        
-
+        
         int getLessonId = Integer.parseInt(request.getParameter("lessonID"));
         ArrayList<Comment> parentComment = cmtDao.ListAllParentCommentByLessonID(getLessonId);
+        
+        
         
         Video video = cmtDao.getVideoIdByLessonId(getLessonId);
         int videoId = video.getVideoId();

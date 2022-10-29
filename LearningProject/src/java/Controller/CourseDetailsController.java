@@ -95,7 +95,26 @@ public class CourseDetailsController extends HttpServlet {
         if(avgStar != 0){
             avgStar = avgStar / feedbackList.size();
         }
-
+        
+        String pageIndex = request.getParameter("pageIndex");
+        int page;
+        
+        if(pageIndex==null){
+            page=1;
+        }else{
+            page=Integer.parseInt(pageIndex);
+        } 
+        
+        int size = feedbackList.size();
+        final int PAGE_SIZE = 10;
+        int numOfPages = ( size%PAGE_SIZE ==0 )? size/PAGE_SIZE : size/PAGE_SIZE+1;
+        int start = (page - 1)*PAGE_SIZE;
+        int end = Math.min(size, page*PAGE_SIZE);
+        
+        ArrayList<Feedback> listFeedbackByPage = cdao.getFeedbackByPage(feedbackList, start, end);
+        
+        request.setAttribute("numOfPages", numOfPages);
+        request.setAttribute("listFeedbackByPage", listFeedbackByPage);
         request.setAttribute("averageStar", avgStar);
         request.setAttribute("avg", (int)avgStar);
         request.setAttribute("avgup", (int)avgStar + 1);
