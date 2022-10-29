@@ -1,3 +1,10 @@
+<%-- 
+    Document   : CreateBlog
+    Created on : Oct 29, 2022, 5:26:26 PM
+    Author     : HieuShin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,21 +34,21 @@
                 <div class="col-12 mb-2">Create your blog below</div>
                 <div class="col-12 row mt-2">
                    <div class="col-8">
-                        <label class="form-label fw-bold">Blog title</label>
+                        <label class="form-label fw-bold" name="tilte">Blog title</label>
                         <input type="text" class="form-control mb-3">
 
-                        <label class="form-label fw-bold">Blog description</label>
+                        <label class="form-label fw-bold" name="description">Blog description</label>
                         <input type="text" class="form-control mb-3">
                         
-                        <label class="form-label fw-bold">Category</label>
+                        <label class="form-label fw-bold" name="category">Category</label>
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Open this select menu</option>
-                            <option value="1">Front-end</option>
-                            <option value="2">Back-end</option>
-                            <option value="3">Database</option>
+                            <option value="Front-end">Front-end</option>
+                            <option value="Back-end">Back-end</option>
+                            <option value="Database">Database</option>
                           </select>
 
-                        <label class="form-label fw-bold mt-3">Blog Content</label>
+                        <label class="form-label fw-bold mt-3" name="content">Blog Content</label>
                         <form method="post">
                             <textarea id="mytextarea"></textarea>
                         </form>
