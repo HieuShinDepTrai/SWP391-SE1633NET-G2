@@ -76,7 +76,7 @@
         <servlet-name>AdminManageBlogController</servlet-name>
         <servlet-class>Controller.AdminManageBlogController</servlet-class>
     </servlet>
-    <servlet>    
+    <servlet>
         <servlet-name>UpdateBlogController</servlet-name>
         <servlet-class>Controller.UpdateBlogController</servlet-class>
     </servlet>
@@ -131,6 +131,14 @@
     <servlet>
         <servlet-name>MentorDashboardController</servlet-name>
         <servlet-class>Controller.MentorDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailController</servlet-name>
+        <servlet-class>Controller.BlogDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileDetailsController</servlet-name>
+        <servlet-class>Controller.ProfileDetailsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
@@ -320,7 +328,7 @@
         <servlet-name>AdminManageBlogController</servlet-name>
         <url-pattern>/AdminManageBlog</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>    
+    <servlet-mapping>
         <servlet-name>UpdateBlogController</servlet-name>
         <url-pattern>/updateblog</url-pattern>
     </servlet-mapping>
@@ -335,6 +343,14 @@
     <servlet-mapping>
         <servlet-name>FilterBlog</servlet-name>
         <url-pattern>/filterblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailController</servlet-name>
+        <url-pattern>/blogdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileDetailsController</servlet-name>
+        <url-pattern>/profiledetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -49,7 +49,7 @@ public class Blog {
         this.status = status;
         this.user = user;
     }
-
+    
     public User getUser() {
         return user;
     }
