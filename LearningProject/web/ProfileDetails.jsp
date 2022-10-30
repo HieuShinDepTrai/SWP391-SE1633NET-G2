@@ -25,7 +25,7 @@
     <body style="font-family: 'Montserrat'; width: 100vw; " class="bg-light ">
 
         <div id="main">
-
+            <%@include file="header.jsp"%>
             <div id="blog" style="margin-left: 0px; width: 100%;">
                 <div>
                     <div class="bg-white">
@@ -121,9 +121,9 @@
                                                                 </form>
                                                             </c:if>
 
-                                                            
+
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,55 +136,55 @@
                                     <div class="w-100 row mt-3 justify-content-center">
                                         <!-- Blog -->
                                         <div class="col-10">
-                                            <div class="card card-body p-3 shadow-sm mb-4">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <!-- User post -->
+                                            <c:forEach items="${blogs}" var="blogs">
+                                                <div class="card card-body p-3 shadow-sm mb-4"> 
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <!-- User post -->
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="${blogs.getUser().getAvatar()}" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
+                                                            <a style="font-size: 12px; font-weight: 600  ;" class="ms-2" href="profiledetails?id=${blogs.getUserid()}">${blogs.getUser().getLastName()} ${blogs.getUser().getFirstName()}</a>
+                                                        </div>
+
+                                                        <!-- User post -->
+
+                                                        <!-- Action -->
+                                                        <i class="fa-solid fa-ellipsis"></i>
+                                                        <!-- Action -->
+                                                    </div>
+
+                                                    <!-- Content -->
+                                                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                                                        <!-- Content left -->
+                                                        <div class="" style="width: 78%;">
+                                                            <a style="font-size: 20px;" class="fw-bolder" href="blogdetail?id=${blogs.getBlogid()}">${blogs.getTitle()}</a>
+                                                            <p class="text-black-50" style="font-size: 15px;">${blogs.getDescription()}</p>
+                                                        </div>
+                                                        <!-- Content left -->
+                                                        <div style="width: 20%; height: 80px;">
+                                                            <img src="${blogs.getImage()}" class="rounded-3" alt="" style="width: 100%; max-height: 120px; object-fit: cover;">
+                                                        </div>
+                                                        <!-- Content right -->
+                                                        <div>
+
+                                                        </div>
+                                                        <!-- Content right -->
+
+                                                    </div>
+                                                    <!-- Content -->
+
                                                     <div class="d-flex align-items-center">
-                                                        <img src="../assets/img/f8-logo.png" alt=""
-                                                             style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
-                                                        <span style="font-size: 12px; font-weight: 600  ;"
-                                                              class="ms-2">dungssj12</span>
-                                                    </div>
-                                                    <!-- User post -->
-
-                                                    <!-- Action -->
-                                                    <i class="fa-solid fa-ellipsis"></i>
-                                                    <!-- Action -->
-                                                </div>
-
-                                                <!-- Content -->
-                                                <div class="mt-3 d-flex justify-content-between align-items-center">
-                                                    <!-- Content left -->
-                                                    <div class="" style="width: 78%;">
-                                                        <h5 class="fw-bolder">Setup Môi Trường Lập Trình Nhanh Chóng Cho
-                                                            Desktop. Phần 1: Lý thuyết</h5>
-                                                        <p class="text-black-50" style="font-size: 15px;">Một ngày đẹp trời,
-                                                            bạn mới sắm cho mình một chiếc laptop hoặc một bộ PC để tập
-                                                            trung theo đuổi công nghệ thông tin, theo ngành...</p>
-                                                    </div>
-                                                    <!-- Content left -->
-                                                    <div style="width: 20%; height: 80px;">
-                                                        <img src="../assets/img/f8-logo.png" class="rounded-3" alt=""
-                                                             style="width: 100%; max-height: 120px; object-fit: cover;">
-                                                    </div>
-                                                    <!-- Content right -->
-                                                    <div>
-
-                                                    </div>
-                                                    <!-- Content right -->
-
-                                                </div>
-                                                <!-- Content -->
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="tag bg-primary fw-bold text-white"
-                                                         style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
-                                                        Javascript
+                                                        <div class="tag bg-primary fw-bold text-white" style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
+                                                            ${blogs.getCategory()}
+                                                        </div>
+                                                        <span class="ms-2">
+                                                            .
+                                                        </span>
+                                                        <div class="ms-2 d-inline-block" style="font-size: 14px;">
+                                                            <fmt:formatDate type = "both" value = "${blog.getDate()}" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-
+                                            </c:forEach>
                                         </div>
                                         <!-- Blog -->
                                     </div>
