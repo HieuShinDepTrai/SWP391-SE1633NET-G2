@@ -73,6 +73,10 @@
         <servlet-class>Controller.CreateBlogController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AdminManageBlogController</servlet-name>
+        <servlet-class>Controller.AdminManageBlogController</servlet-class>
+    </servlet>
+    <servlet>    
         <servlet-name>UpdateBlogController</servlet-name>
         <servlet-class>Controller.UpdateBlogController</servlet-class>
     </servlet>
@@ -313,6 +317,10 @@
         <url-pattern>/createblog</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AdminManageBlogController</servlet-name>
+        <url-pattern>/AdminManageBlog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>    
         <servlet-name>UpdateBlogController</servlet-name>
         <url-pattern>/updateblog</url-pattern>
     </servlet-mapping>
