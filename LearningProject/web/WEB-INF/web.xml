@@ -76,6 +76,10 @@
         <servlet-name>BlogListController</servlet-name>
         <servlet-class>Controller.BlogListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterBlog</servlet-name>
+        <servlet-class>Controller.FilterBlog</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -319,6 +323,10 @@
     <servlet-mapping>
         <servlet-name>BlogListController</servlet-name>
         <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterBlog</servlet-name>
+        <url-pattern>/filterblog</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

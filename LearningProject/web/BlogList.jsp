@@ -91,7 +91,7 @@
                     <div class="col-12 mb-2">Tổng hợp các bài viết chia sẻ về kinh nghiệm tự học lập trình online và các kỹ thuật lập trình web.</div>
                     <div class="col-12 row mt-5">
                         <!-- Blog -->
-                        <div class="col-8">
+                        <div class="col-8" id="filter">
                             <c:forEach items="${blogs}" var="blog">
                                 <div class="card card-body p-3 shadow-sm mb-4"> 
                                     <div class="d-flex align-items-center justify-content-between">
@@ -147,8 +147,14 @@
                         <!-- Tag -->
                         <div class="col-3">
                             <h6 class="text-black-50">CÁC CHỦ ĐỀ ĐƯỢC ĐỀ XUẤT</h6>
-                            <a style="padding: 6px 12px; background-color: rgba(0, 0, 0, 0.3); border-radius:20px;" class="d-inline-block text-white">
+                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogFrontEnd()">
                                 Front-end
+                            </a>
+                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogBackEnd()">
+                                Back-end
+                            </a>
+                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogDatabase()">
+                                Database
                             </a>
                         </div>                    
                         <!-- Tag -->
@@ -161,6 +167,52 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+        <script>
+            function loadBlogFrontEnd() {
+                $.ajax({
+                    url: "/LearningProject/filterblog",
+                    type: 'GET',
+                    data: 'category=Front-end',
+                    success: function (data) {
+                        var row = document.getElementById("filter");
+                        row.innerHTML = data;
+                    },
+                    error: function () {
+                        console.log('Error');
+                    }
+                });
+            }
+            
+            function loadBlogBackEnd() {
+                $.ajax({
+                    url: "/LearningProject/filterblog",
+                    type: 'GET',
+                    data: 'category=Back-end',
+                    success: function (data) {
+                        var row = document.getElementById("filter");
+                        row.innerHTML = data;
+                    },
+                    error: function () {
+                        console.log('Error');
+                    }
+                });
+            }
+            
+            function loadBlogDatabase() {
+                $.ajax({
+                    url: "/LearningProject/filterblog",
+                    type: 'GET',
+                    data: 'category=Database',
+                    success: function (data) {
+                        var row = document.getElementById("filter");
+                        row.innerHTML = data;
+                    },
+                    error: function () {
+                        console.log('Error');
+                    }
+                });
+            }
+        </script>
     </body>
 
 </html>
