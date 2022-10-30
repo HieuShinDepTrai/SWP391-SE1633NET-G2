@@ -19,6 +19,9 @@ import java.util.logging.Logger;
  */
 public class PaymentDAO extends DBContext {
 
+    public PaymentDAO() {
+    }
+    
     public ArrayList<Payment> getPaymentListFromUser(int userid) {
         ArrayList<Payment> paymentList = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
