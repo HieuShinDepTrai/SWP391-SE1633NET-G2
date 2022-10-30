@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>UserDashboardController</servlet-name>
-        <servlet-class>Controller.UserDashboardController.UserDashboardController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateSectionController</servlet-name>
         <servlet-class>Controller.CreateSectionController</servlet-class>
     </servlet>
@@ -92,10 +88,6 @@
         <servlet-name>FilterBlog</servlet-name>
         <servlet-class>Controller.FilterBlog</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>UserDashboardController</servlet-name>
-        <url-pattern>/userdashboard</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>ResetPass</servlet-name>
         <servlet-class>Controller.ResetController.ResetPass</servlet-class>
@@ -135,10 +127,6 @@
     <servlet>
         <servlet-name>MentorDashboardController</servlet-name>
         <servlet-class>Controller.MentorDashboardController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CourseWatchController</servlet-name>
-        <servlet-class>Controller.CourseWatchController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
@@ -181,10 +169,6 @@
         <servlet-class>Controller.LogoutController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>HomeController</servlet-name>
-        <servlet-class>Controller.HomeController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BecomeMentorController</servlet-name>
         <servlet-class>Controller.BecomeMentorController</servlet-class>
     </servlet>
@@ -211,10 +195,6 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>HomeController</servlet-name>
-        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BecomeMentorController</servlet-name>
@@ -259,10 +239,6 @@
     <servlet-mapping>
         <servlet-name>MentorDashboardController</servlet-name>
         <url-pattern>/mentordashboard</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CourseWatchController</servlet-name>
-        <url-pattern>/WatchCourse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCourseController</servlet-name>
@@ -323,8 +299,8 @@
     <servlet-mapping>
         <servlet-name>QuizResultReviewController</servlet-name>
         <url-pattern>/quizresultreview</url-pattern>
-    </servlet>
-    <servlet>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DoQuizController</servlet-name>
         <url-pattern>/DoQuiz</url-pattern>
     </servlet-mapping>
