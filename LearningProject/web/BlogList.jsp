@@ -133,6 +133,12 @@
                                         <span class="ms-2">
                                             .
                                         </span>
+                                        
+                                        <form action="blog" method="GET">
+                                            <input type="submit" name="op" value="reportBlog">
+                                        <input type="hidden" name="blogId" value="${blog.getBlogid()}">
+                                        </form>
+                                        
                                         <div class="ms-2 d-inline-block" style="font-size: 14px;">
                                             <fmt:formatDate type = "both" value = "${blog.getDate()}" />
                                         </div>

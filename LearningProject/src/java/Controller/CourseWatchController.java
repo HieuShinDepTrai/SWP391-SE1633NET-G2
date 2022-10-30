@@ -136,15 +136,22 @@ public class CourseWatchController extends HttpServlet {
         int userId = uDao.getAllUserInformation(session.getAttribute("username").toString()).getUserId();
         //Get user information
         User user = uDao.getAllUserInformation(session.getAttribute("username").toString());
-        
+        //Get all comment liked by user
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
-
         ArrayList<Integer> userCmtId = new ArrayList<>();
-
         for (UserComment userComment : listUserComment) {
             userCmtId.add(userComment.getCommentId());
         }
-
+        
+        //
+        ArrayList<Comment> listCommentByUser = cmtDAO.ListAllCommentByUserID(userId);
+        
+        ArrayList<Integer> commentIdByUser = new ArrayList<>();
+        for (Comment c : listCommentByUser) {
+            commentIdByUser.add(c.getCommentId());
+        }
+        
+        
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
@@ -174,10 +181,10 @@ public class CourseWatchController extends HttpServlet {
 
         ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(userId);
 
-        ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
+        ArrayList<String> userCommentOfReport = new ArrayList<>();
 
         for (Report report : listReport) {
-            userCommentIdOfReport.add(report.getCommentID());
+            userCommentOfReport.add(report.getAction());
         }
 
         Lesson lesson = ldao.getLessonbyLessonID(lessonID);
@@ -215,9 +222,12 @@ public class CourseWatchController extends HttpServlet {
             request.setAttribute("answerList", answerList);
         }
        
+        //all cmtId by user 
+        request.setAttribute("commentIdByUser", commentIdByUser);
+        
         request.setAttribute("User", user);
         //set arraylist ReportID by UserID
-        request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
+        request.setAttribute("userCommentOfReport", userCommentOfReport);
         //to get All comment of user that liked
         request.setAttribute("userCmtId", userCmtId);
 

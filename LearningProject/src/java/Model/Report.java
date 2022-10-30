@@ -11,17 +11,17 @@ package Model;
 public class Report {
     private int ReportID;
     private int UserID;
-    private int CommentID;
+    private String Action;
     private String ReportContent;
 
     public Report() {
         
     }
-    
-    public Report(int ReportID, int UserID, int CommentID, String ReportContent) {
+
+    public Report(int ReportID, int UserID, String Action, String ReportContent) {
         this.ReportID = ReportID;
         this.UserID = UserID;
-        this.CommentID = CommentID;
+        this.Action = Action;
         this.ReportContent = ReportContent;
     }
 
@@ -41,12 +41,12 @@ public class Report {
         this.UserID = UserID;
     }
 
-    public int getCommentID() {
-        return CommentID;
+    public String getAction() {
+        return Action;
     }
 
-    public void setCommentID(int CommentID) {
-        this.CommentID = CommentID;
+    public void setAction(String Action) {
+        this.Action = Action;
     }
 
     public String getReportContent() {
@@ -57,6 +57,7 @@ public class Report {
         this.ReportContent = ReportContent;
     }
     
+  
     
     
     

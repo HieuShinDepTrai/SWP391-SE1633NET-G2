@@ -95,9 +95,9 @@ public class LoadCommentController extends HttpServlet {
 
         //get the ReportID by the user logined in the session
         ArrayList<Report> listReport = commentDAO.getAllReportByUserId(userId);
-        ArrayList<Integer> cmtIdByUserReport = new ArrayList<>();
+        ArrayList<String> cmtIdByUserReport = new ArrayList<>();
         for (Report rp : listReport) {
-            cmtIdByUserReport.add(rp.getCommentID());
+            cmtIdByUserReport.add(rp.getAction());
         }
         
 

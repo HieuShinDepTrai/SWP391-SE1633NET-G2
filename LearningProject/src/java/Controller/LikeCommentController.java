@@ -75,8 +75,10 @@ public class LikeCommentController extends HttpServlet {
         ArrayList<UserComment> listUserComment = cmtDAO.getAllUserCommentByUserId(userId);
         ArrayList<Integer> userCmtId = new ArrayList<>();
         //get all cmtId that User Reported
+        
         ArrayList<Report> listReport = cmtDAO.getAllReportByUserId(userId);
-        ArrayList<Integer> userCommentIdOfReport = new ArrayList<>();
+        
+        ArrayList<String> userCommentReport = new ArrayList<>();
         
         //Get all cmtID by userID        
         for (UserComment userComment : listUserComment) {
@@ -101,23 +103,24 @@ public class LikeCommentController extends HttpServlet {
 //            cmtDAO.deleteIntoUserComment(CommentID, userId);
 //            cmtDAO.deleteIntoReport(userId, CommentID);
             cmtDAO.deleteIntoComment(CommentID);
-            
         }
+        
         
         //list all cmtId by UserID in report
         for (Report report : listReport) {
-            userCommentIdOfReport.add(report.getCommentID());
+            userCommentReport.add(report.getAction());
         }
-       
+        
+        
         //insert and delete into report
         if (op.equals("Report")) {
-            cmtDAO.insertIntoReport(userId, CommentID);
+            cmtDAO.insertIntoReport(userId, "Comment " + CommentID);
         } else if (op.equals("Reported")) {
-            cmtDAO.deleteIntoReport(userId, CommentID);
+            cmtDAO.deleteIntoReport(userId, "Comment " + CommentID);
         }
         
         //get all cmtID in Report of User
-        request.setAttribute("userCommentIdOfReport", userCommentIdOfReport);
+        request.setAttribute("userCommentReport", userCommentReport);
         
         //get all cmtID in UserComment of User
         request.setAttribute("userCmtId", userCmtId);
