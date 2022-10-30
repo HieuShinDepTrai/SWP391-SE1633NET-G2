@@ -18,6 +18,7 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
         <link rel="stylesheet" href="../assets/css/blog.css">
+        <link rel="stylesheet" href="assets/css/homepage.css">
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
