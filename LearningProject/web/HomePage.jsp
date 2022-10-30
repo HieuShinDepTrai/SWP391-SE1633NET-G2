@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Model.Course" %>
 <%@page import="java.util.ArrayList" %>
@@ -197,7 +198,8 @@
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
                                                             <input name="op" type="submit" value="Go to Course">                                                            
                                                         </c:if>
-                                                        <input type="hidden" name="coursePrice" value="${course.getCoursePrice()}">    
+                                                            <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
+                                                        <input type="hidden" name="coursePrice" value="${price}">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
 
                                                     </form>

@@ -4,23 +4,27 @@
  */
 package Controller;
 
-import Model.User;
+import Model.Course;
+import Model.Lesson;
+import Model.QuizDetail;
+import dal.CourseDAO;
 import dal.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
- * @author Dung
+ * @author NamDepTraiVL
  */
-public class testserasdfs extends HttpServlet {
+@WebServlet(name = "QuizDashboardController", urlPatterns = {"/quizdashboard"})
+public class QuizDashboardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +38,8 @@ public class testserasdfs extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet testserasdfs</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet testserasdfs at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        PrintWriter out = response.getWriter();
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,32 +54,41 @@ public class testserasdfs extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO qzdao = new QuizDAO();
-        Date date = new Date();
-//        try {
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//            Date parsedDate = dateFormat.parse(dateFormat.format(date).toString());
-//            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//            // Add DB
-//            qzdao.insertUserQuiz(4, 16, 9, 2, timestamp);
-//            // return user quizID
-//            int userQuizID = qzdao.getUserQuizID(timestamp, 4, 16);
-//            response.getWriter().print(userQuizID);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        Timestamp doDate = new Timestamp(date.getTime());
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Date parsedDate = dateFormat.parse(dateFormat.format(date).toString());
-            doDate = new java.sql.Timestamp(parsedDate.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        QuizDAO quizDAO = new QuizDAO();
+        CourseDAO courseDAO = new CourseDAO();
+        HttpSession session = request.getSession();
+        int courseid = Integer.parseInt(request.getParameter("courseid"));
+        Course course = courseDAO.getAllCourseInformation(courseid);
+        ArrayList<QuizDetail> quizDetailList = quizDAO.getAllQuizInCourseID(courseid);
+        QuizDetail hardest = new QuizDetail(new Lesson(), 100, 0, 0);
+        QuizDetail easiest = new QuizDetail(new Lesson(), 0, 0, 0);
+        QuizDetail enroll = new QuizDetail(new Lesson(), 0, 0, 0);
+        QuizDetail attempt = new QuizDetail(new Lesson(), 0, 0, 0);
+        for (QuizDetail quiz : quizDetailList) {
+            if (quiz.getAcc() < hardest.getAcc()) {
+                hardest.setAcc(quiz.getAcc());
+                hardest.setLesson(quiz.getLesson());
+            }
+            if (quiz.getAcc() > easiest.getAcc()) {
+                easiest.setAcc(quiz.getAcc());
+                easiest.setLesson(quiz.getLesson());
+            }
+            if (quiz.getEnrolled() > enroll.getEnrolled()) {
+                enroll.setEnrolled(quiz.getEnrolled());
+                enroll.setLesson(quiz.getLesson());
+            }
+            if (quiz.getEnrolled() > attempt.getAttempt()) {
+                attempt.setAttempt(quiz.getAttempt());
+                attempt.setLesson(quiz.getLesson());
+            }
         }
-        // Add DB
-        qzdao.insertUserQuiz(4, 16, 9, 2, doDate);
-        // return user quizID
-        int userQuizID = qzdao.getUserQuizID(doDate, 4, 16);
+        request.setAttribute("enroll", enroll);
+        request.setAttribute("attempt", attempt);
+        request.setAttribute("hardest", hardest);
+        request.setAttribute("easiest", easiest);
+        request.setAttribute("course", course);
+        request.setAttribute("quizdetaillist", quizDetailList);
+        request.getRequestDispatcher("QuizDashboard.jsp").forward(request, response);
     }
 
     /**
