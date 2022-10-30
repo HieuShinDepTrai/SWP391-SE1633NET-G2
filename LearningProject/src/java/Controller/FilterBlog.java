@@ -87,7 +87,7 @@ public class FilterBlog extends HttpServlet {
                         + "                                    <div class=\"mt-3 d-flex justify-content-between align-items-center\">\n"
                         + "                                        <!-- Content left -->\n"
                         + "                                        <div class=\"\" style=\"width: 78%;\">\n"
-                        + "                                            <h5 class=\"fw-bolder\">"+ blog.getTitle() +"</h5>\n"
+                        + "                                            <a style=\"font-size: 20px;\" class=\"fw-bolder\" href=\"blogdetail?id="+blog.getBlogid()+"\">"+blog.getTitle()+"</a>\n"
                         + "                                            <p class=\"text-black-50\" style=\"font-size: 15px;\">"+ blog.getDescription() +"</p>\n"
                         + "                                        </div>\n"
                         + "                                        <!-- Content left -->\n"

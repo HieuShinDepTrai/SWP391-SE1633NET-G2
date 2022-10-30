@@ -6,7 +6,6 @@ package dal;
 
 import Model.CurrentCourse;
 import Model.Lesson;
-import Model.Question;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

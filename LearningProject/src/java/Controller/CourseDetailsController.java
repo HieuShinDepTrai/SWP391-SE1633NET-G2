@@ -17,6 +17,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  *
  * @author Dung
  */
+@WebServlet(urlPatterns = {"/CourseDetails"}, name = "CourseDetailsController")
 public class CourseDetailsController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -106,7 +108,7 @@ public class CourseDetailsController extends HttpServlet {
         } 
         
         int size = feedbackList.size();
-        final int PAGE_SIZE = 10;
+        final int PAGE_SIZE = 5;
         int numOfPages = ( size%PAGE_SIZE ==0 )? size/PAGE_SIZE : size/PAGE_SIZE+1;
         int start = (page - 1)*PAGE_SIZE;
         int end = Math.min(size, page*PAGE_SIZE);

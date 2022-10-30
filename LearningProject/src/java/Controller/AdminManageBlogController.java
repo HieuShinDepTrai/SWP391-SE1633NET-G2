@@ -4,27 +4,23 @@
  */
 package Controller;
 
-import Model.Course;
-import Model.Lesson;
-import Model.QuizDetail;
-import dal.CourseDAO;
-import dal.QuizDAO;
+import Model.Blog;
+import Model.User;
+import dal.BlogDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
  *
- * @author NamDepTraiVL
+ * @author Dung
  */
-@WebServlet(name = "QuizDashboardController", urlPatterns = {"/quizdashboard"})
-public class QuizDashboardController extends HttpServlet {
+public class AdminManageBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,8 +34,18 @@ public class QuizDashboardController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminManageBlogController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminManageBlogController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,41 +60,24 @@ public class QuizDashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        CourseDAO courseDAO = new CourseDAO();
-        HttpSession session = request.getSession();
-        int courseid = Integer.parseInt(request.getParameter("courseid"));
-        Course course = courseDAO.getAllCourseInformation(courseid);
-        ArrayList<QuizDetail> quizDetailList = quizDAO.getAllQuizInCourseID(courseid);
-        QuizDetail hardest = new QuizDetail(new Lesson(), 100, 0, 0);
-        QuizDetail easiest = new QuizDetail(new Lesson(), 0, 0, 0);
-        QuizDetail enroll = new QuizDetail(new Lesson(), 0, 0, 0);
-        QuizDetail attempt = new QuizDetail(new Lesson(), 0, 0, 0);
-        for (QuizDetail quiz : quizDetailList) {
-            if (quiz.getMark()< hardest.getMark()) {
-                hardest.setMark(quiz.getMark());
-                hardest.setLesson(quiz.getLesson());
-            }
-            if (quiz.getMark()> easiest.getMark()) {
-                easiest.setMark(quiz.getMark());
-                easiest.setLesson(quiz.getLesson());
-            }
-            if (quiz.getEnrolled() > enroll.getEnrolled()) {
-                enroll.setEnrolled(quiz.getEnrolled());
-                enroll.setLesson(quiz.getLesson());
-            }
-            if (quiz.getEnrolled() > attempt.getAttempt()) {
-                attempt.setAttempt(quiz.getAttempt());
-                attempt.setLesson(quiz.getLesson());
-            }
+        User u = (User) request.getSession().getAttribute("user");
+        UserDAO udao = new UserDAO();
+
+        if (!u.getRole().equals("Admin")) {
+            response.sendRedirect("home");
         }
-        request.setAttribute("enroll", enroll);
-        request.setAttribute("attempt", attempt);
-        request.setAttribute("hardest", hardest);
-        request.setAttribute("easiest", easiest);
-        request.setAttribute("course", course);
-        request.setAttribute("quizdetaillist", quizDetailList);
-        request.getRequestDispatcher("QuizDashboard.jsp").forward(request, response);
+
+        BlogDAO blogDao = new BlogDAO();
+        ArrayList<Blog> blogListReport = blogDao.getBlogListReported();
+        request.setAttribute("blogListReported", blogListReport);
+
+        ArrayList<Blog> blogListAll = blogDao.ListAllBlogsOnWebs();
+        for (int i = 0; i < blogListAll.size(); i++) {
+            blogListAll.get(i).setUser(udao.getAllUserInformationByID(blogListAll.get(i).getUserid()));
+        }
+        request.setAttribute("allBlogList", blogListAll);
+        
+        request.getRequestDispatcher("AdminManageBlog.jsp").forward(request, response);
     }
 
     /**
@@ -102,7 +91,25 @@ public class QuizDashboardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        User u = (User) request.getSession().getAttribute("user");
+
+        if (!u.getRole().equals("Admin")) {
+            response.sendRedirect("home");
+        }
+
+        BlogDAO blogDao = new BlogDAO();
+        if (request.getParameter("enable") != null) {
+            int blogID = Integer.parseInt(request.getParameter("blogID"));
+            blogDao.updateBlogStatus("Enabled", blogID);
+        }
+
+        if (request.getParameter("disable") != null) {
+            int blogID = Integer.parseInt(request.getParameter("blogID"));
+            blogDao.updateBlogStatus("Disabled", blogID);
+        }
+        
+        response.sendRedirect("AdminManageBlog");
+
     }
 
     /**

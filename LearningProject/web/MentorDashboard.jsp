@@ -327,7 +327,7 @@
                                                     
                                                     <form action="quizdashboard" method="GET">  
 
-                                                        <input type="submit" name="button" value="Quiz">
+                                                        <input type="submit" value="Quiz">
 
 
                                                         <input type="hidden" name="courseid" value="${course.getCourseID()}">

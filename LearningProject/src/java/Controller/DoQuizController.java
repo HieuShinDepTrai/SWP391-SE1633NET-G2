@@ -131,7 +131,8 @@ public class DoQuizController extends HttpServlet {
             }
 
             // Tinh diem
-            double mark = numberOfRightQuestion / data.size();
+            int datasize = data.size();
+            double mark = ((double)numberOfRightQuestion / (double)datasize) * 10;            
             User u = (User) request.getSession().getAttribute("user");
             Date date = new Date();
             Timestamp doDate = new Timestamp(date.getTime());
@@ -142,7 +143,7 @@ public class DoQuizController extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
             // Add DB
             qzdao.insertUserQuiz(u.getUserId(), quizID, mark, numberOfRightQuestion, doDate);
             // return user quizID
@@ -153,28 +154,29 @@ public class DoQuizController extends HttpServlet {
                     + "           ([UserID]\n"
                     + "           ,[AnswerID]\n"
                     + "           ,[UserQuizID])\n"
-                    + "     VALUES ";            
+                    + "     VALUES ";
             boolean isFirst = true;
             for (JsonElement jsonElement : json) {
                 JsonObject question = jsonElement.getAsJsonObject();
                 JsonArray answers = question.get("ans").getAsJsonArray();
-           
+
                 for (JsonElement answerJsonElement : answers) {
-                    
+
                     JsonObject answer = answerJsonElement.getAsJsonObject();
                     int answerID = Integer.parseInt(answer.get("ansID").getAsString());
                     boolean isChecked = answer.get("isCorrect").getAsBoolean();
                     if (isChecked) {
-                        if(!isFirst) {
+                        if (!isFirst) {
                             query += ", ";
                         }
                         isFirst = false;
-                        query += "(" + u.getUserId() + ", " + answerID + ", " + userQuizID +")";
+                        query += "(" + u.getUserId() + ", " + answerID + ", " + userQuizID + ")";
                     }
-                    
+
                 }
             }
             qzdao.insertUserAnswer(query);
+            doGet(request, response);
         }
     }
 

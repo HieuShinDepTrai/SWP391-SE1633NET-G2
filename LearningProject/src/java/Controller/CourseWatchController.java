@@ -25,6 +25,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
  *
  * @author Dung
  */
+@WebServlet(name = "CourseWatchController", urlPatterns = {"/WatchCourse"})
 public class CourseWatchController extends HttpServlet {
 
     /**
