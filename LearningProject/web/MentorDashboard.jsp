@@ -324,6 +324,14 @@
 
                                                         <input type="hidden" name="courseid" value="${course.getCourseID()}">
                                                     </form>
+                                                    
+                                                    <form action="quizdashboard" method="GET">  
+
+                                                        <input type="submit" name="button" value="Quiz">
+
+
+                                                        <input type="hidden" name="courseid" value="${course.getCourseID()}">
+                                                    </form>
 
                                                 </div>
                                             </div>
