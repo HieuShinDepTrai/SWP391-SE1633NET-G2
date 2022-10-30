@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blog</title>
+        <title>Blog Detail</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
@@ -92,16 +93,16 @@
                 <div class="row w-100" style="--bs-gutter-x: 0">
                     <div class="col-12 w-100 d-flex">
                         <div class="w-75 mx-auto">
-                            <h1 class="mt-2" style="font-weight: 700;">Về key prop trong map()</h1>
+                            <h1 class="mt-2" style="font-weight: 700;">${blog.getTitle()}</h1>
 
                             <!-- User and post information -->
                             <div class="d-flex justify-content-center">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <div class="user d-flex">
-                                        <img src="../assets/img/f8-logo.png" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 50px;">
+                                        <img src="${blog.getUser().getAvatar()}" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 50px;">
                                         <div class="ms-3 d-flex justify-content-between flex-column">
-                                            <div class="username" style="font-weight: 600;">dungssj12</div>
-                                            <div class="post-time text-black-50" style="font-size: 14px;">25-12-2002</div>
+                                            <div class="username" style="font-weight: 600;">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</div>
+                                            <div class="post-time text-black-50" style="font-size: 14px;">${blog.getDate()}</div>
                                         </div>
                                     </div>
                                     <div class="dropdown">
@@ -119,7 +120,7 @@
 
                             <!-- Post content -->
                             <div class="mt-3" style="border: 1px solid black; height: 600px;">
-
+                                ${blog.getContent()}
                             </div>
                             <!-- Post content -->
 
@@ -139,9 +140,56 @@
 
                             <div class="mt-5">
                                 <h5 style="font-weight: 600;">Bài đăng cùng tác giả</h5>
-                                <ul>
-                                    <li><a href="#">Bai viet so 1</a></li>
-                                </ul>
+                                <c:forEach items="${blogs}" var="blogs">
+                                    <div class="card card-body p-3 shadow-sm mb-4"> 
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <!-- User post -->
+                                            <div class="d-flex align-items-center">
+                                                <img src="${blog.getUser().getAvatar()}" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
+                                                <span style="font-size: 12px; font-weight: 600  ;" class="ms-2">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</span>
+                                            </div>
+
+                                            <!-- User post -->
+
+                                            <!-- Action -->
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                            <!-- Action -->
+                                        </div>
+
+                                        <!-- Content -->
+                                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                                            <!-- Content left -->
+                                            <div class="" style="width: 78%;">
+                                                <a style="font-size: 20px;" class="fw-bolder" href="blogdetail?id=${blogs.getBlogid()}">${blogs.getTitle()}</a>
+                                                <p class="text-black-50" style="font-size: 15px;">${blogs.getDescription()}</p>
+                                            </div>
+                                            <!-- Content left -->
+                                            <div style="width: 20%; height: 80px;">
+                                                <img src="${blogs.getImage()}" class="rounded-3" alt="" style="width: 100%; max-height: 120px; object-fit: cover;">
+                                            </div>
+                                            <!-- Content right -->
+                                            <div>
+
+                                            </div>
+                                            <!-- Content right -->
+
+                                        </div>
+                                        <!-- Content -->
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="tag bg-primary fw-bold text-white" style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
+                                                ${blogs.getCategory()}
+                                            </div>
+                                            <span class="ms-2">
+                                                .
+                                            </span>
+                                            <div class="ms-2 d-inline-block" style="font-size: 14px;">
+                                                ${blogs.getDate()}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+
                             </div>
                         </div>
                     </div>

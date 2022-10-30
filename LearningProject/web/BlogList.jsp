@@ -112,7 +112,7 @@
                                     <div class="mt-3 d-flex justify-content-between align-items-center">
                                         <!-- Content left -->
                                         <div class="" style="width: 78%;">
-                                            <h5 class="fw-bolder">${blog.getTitle()}</h5>
+                                            <a style="font-size: 20px;" class="fw-bolder" href="blogdetail?id=${blog.getBlogid()}">${blog.getTitle()}</a>
                                             <p class="text-black-50" style="font-size: 15px;">${blog.getDescription()}</p>
                                         </div>
                                         <!-- Content left -->
