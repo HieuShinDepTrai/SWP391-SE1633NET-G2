@@ -83,30 +83,6 @@ where i.CommentID = i.CommentID))
 END
 
 GO
-CREATE TRIGGER [trg_user_isdisable_notification]
-ON [User]
-AFTER UPDATE
-AS BEGIN	
-DECLARE @UserID INT, @Content nvarchar(max), @Action nchar(50), @Date datetime
-	if(select isDisable from inserted)=1
-	BEGIN
-		select @UserID = (select UserID from inserted),
-		@Content = N'Tài khoản của bạn đã bị cấm. Vui lòng liên hệ với admin để được mở khóa.',
-		@Action = 'Ban',
-		@Date = GETDATE()
-		EXEC [sp_insert_notification] @UserID, @Content, @Action, @Date;	
-	END
-	else if(select isDisable from inserted)=0
-	BEGIN
-		select @UserID = (select UserID from inserted),
-		@Content = N'Tài khoản của bạn đã được mở khóa, bạn có thể tiếp tục học các bài học.',
-		@Action = 'Ban',
-		@Date = GETDATE()
-		EXEC [sp_insert_notification] @UserID, @Content, @Action, @Date;	
-	END	
-END
-
-GO
 CREATE TRIGGER [trg_course_enable_notification]
 ON [Course]
 AFTER UPDATE
@@ -140,20 +116,31 @@ DECLARE @UserID INT, @Content nvarchar(max), @Action nchar(50), @Date datetime, 
 	END
 END
 
+
+
 GO
-CREATE TRIGGER [trg_report_notification]
-ON [Report]
-AFTER INSERT
+CREATE TRIGGER [trg_user_isdisable_notification]
+ON [User]
+AFTER UPDATE
 AS BEGIN	
 DECLARE @UserID INT, @Content nvarchar(max), @Action nchar(50), @Date datetime
-	select @UserID = UserID, @Date = GETDATE(), @Action = Method from inserted
-	if(select Method from inserted) = 'Recharge'
+	if(select isDisable from inserted)=1
 	BEGIN
-	select @Content = CONCAT(N'Bạn đã nạp ',Amount,' thành công') from inserted	
-	EXEC [sp_insert_notification] @UserID, @Content, @Action, @Date;
+		select @UserID = (select UserID from inserted),
+		@Content = N'Tài khoản của bạn đã bị cấm. Vui lòng liên hệ với admin để được mở khóa.',
+		@Action = 'Ban',
+		@Date = GETDATE()
+		EXEC [sp_insert_notification] @UserID, @Content, @Action, @Date;	
 	END
+	else if(select isDisable from inserted)=0
+	BEGIN
+		select @UserID = (select UserID from inserted),
+		@Content = N'Tài khoản của bạn đã được mở khóa, bạn có thể tiếp tục học các bài học.',
+		@Action = 'Ban',
+		@Date = GETDATE()
+		EXEC [sp_insert_notification] @UserID, @Content, @Action, @Date;	
+	END	
 END
-
 
 
 
