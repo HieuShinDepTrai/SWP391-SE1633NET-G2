@@ -43,6 +43,50 @@ public class BlogDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+    public void deleteBlog(int blogId){
+        try {
+            executeUpdate("DELETE FROM [dbo].[Blog] WHERE [BlogID] = ?", blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Blog getBlogInformation(int blogId){
+        try {
+            ResultSet rs = executeQuery("SELECT [UserID], [BlogDate], [BlogContent], [BlogTilte], [BlogDescription], [BlogImage], [Category], [Status] "
+                    + "FROM [dbo].[Blog] WHERE [BlogID] = ?", blogId);
+            
+            if(rs.next()){
+                return new Blog(blogId, 
+                        rs.getInt("UserID"), 
+                        rs.getTimestamp("BlogDate"), 
+                        rs.getNString("BlogContent"), 
+                        rs.getNString("BlogTilte"), 
+                        rs.getNString("BlogDescription"), 
+                        rs.getString("BlogImage"), 
+                        rs.getString("Category"), 
+                        rs.getString("Status"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void updateBlog(String content, String tilte, String description, String image, String category, int blogId) {
+        try {
+            executeUpdate("UPDATE [dbo].[Blog] "
+                    + "SET [BlogContent] = ?,"
+                    + "[BlogTilte] = ?,"
+                    + "[BlogDescription] = ?,"
+                    + "[BlogImage] = ?,"
+                    + "[Category] = ? "
+                    + "WHERE [BlogID] = ?", content, tilte, description, image, category, blogId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<Blog> getBlogListReported() {
         ArrayList<Blog> blogListReport = new ArrayList();

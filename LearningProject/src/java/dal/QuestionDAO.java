@@ -5,6 +5,7 @@
 package dal;
 
 import Model.Answer;
+import Model.CurrentCourse;
 import Model.Question;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,10 +31,26 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
-    
+
+    public CurrentCourse getDetailFromQuiz(int quizid) {
+        try {
+            ResultSet rs = executeQuery("select l.LessonID, s.SectionID, s.CourseID from Quiz q\n"
+                    + "inner join Lesson l on q.LessonID= l.LessonID\n"
+                    + "inner join Section s on s.SectionID = l.SectionID\n"
+                    + "where QuizID = ?", quizid);
+            if (rs.next()) {
+                CurrentCourse current = new CurrentCourse(rs.getInt("CourseID"), rs.getInt("LessonID"), rs.getInt("SectionID"));
+                return current;
+            }
+        } catch (SQLException ex) {
+            return new CurrentCourse();
+        }
+        return new CurrentCourse();
+    }
+
     public boolean isThereAnyQuestions() {
         try ( ResultSet rs = executeQuery("SELECT [QuestionID], [QuestionContent] FROM [dbo].[Question]")) {
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
         } catch (Exception e) {
@@ -222,12 +239,25 @@ public class QuestionDAO extends DBContext {
                     + "WHERE LessonID = ?\n"
                     + "GROUP BY A.QuestionID)\n"
                     + "SELECT COUNT(*) FROM T", lessonid);
-            if(rs.next()) {
+            if (rs.next()) {
                 int num = rs.getInt(1);
                 return num;
             }
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumberQuesOfQuiz(int quizId) {
+        try {
+            ResultSet rs = executeQuery("SELECT COUNT(1) FROM [dbo].[Question] WHERE [QuizID] = ?", quizId);
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return 0;
     }
