@@ -118,7 +118,7 @@
                         <div class="lesson-content" id="result">
                             <div class="bg-primary py-5 px-4 fw-bold text-white fs-3">
                                 Review attempt on Monday, 1 August 2022, 3:01 PM
-                                <span class="btn-danger btn float-end">Return to Quiz History</span>
+                                <span class="btn-danger btn float-end"><a href="quizresult?quizid=${quizid}">Return to Quiz History</a></span>
                             </div>
 
                             <div class="">
