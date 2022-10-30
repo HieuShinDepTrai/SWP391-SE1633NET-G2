@@ -93,30 +93,39 @@
                                 </div>
                                 <div class="">
                                     <c:forEach items="${questionList}" var="question" varStatus="index">
-                                        <div class="px-5 py-2">
+                                        <div class="question px-5 py-2">
                                             <div class="fw-bold mb-2" style="font-size: 20px;">
                                                 Question ${index.count}
                                             </div>
                                             <div>
                                                 ${question.getQuestionContent()}
+                                                <input type="hidden" name="questionID" value="${question.getQuestionId()}">
                                             </div>
                                             <div class="mt-3">
                                                 <c:forEach items="${answerList}" var="answer">
                                                     <c:if test="${answer.getQuestionId() == question.getQuestionId()}">
-                                                        <div class="mb-2"><input type="checkbox" class="form-check-input"> ${answer.getAnswerContent()}</div>
+
+                                                        <div class="mb-2">
+                                                            <input name="answerID" type="hidden" value="${answer.getAnswerId()}">
+                                                            <input type="checkbox" class="form-check-input"> ${answer.getAnswerContent()}
+                                                        </div>
                                                     </c:if>
                                                 </c:forEach>
                                             </div>
                                         </div>    
 
                                     </c:forEach>
-                                        
+
                                 </div>
                                 <div class="px-4 py-2 d-flex justify-content-between">
                                     <div class="btn btn-primary">Back to home</div> 
-                                    <div class="btn btn-danger">Finish the quiz</div> 
+                                    <div class="btn btn-danger" onclick="submit()">Finish the quiz</div> 
                                 </div>
                             </div>
+                            <form action="DoQuiz" method="post" id="submitForm">
+                                <input type="hidden" name="quizID" value="${quizID}">
+                                <input type="hidden" name="jsonQuestions" id="valueSubmit">
+                            </form>
                         </c:if>
                     </div>
                 </div>

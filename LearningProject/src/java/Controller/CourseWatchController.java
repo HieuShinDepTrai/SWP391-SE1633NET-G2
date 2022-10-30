@@ -205,6 +205,7 @@ public class CourseWatchController extends HttpServlet {
                 }
 
             }
+            request.setAttribute("quizID", quizID);
             request.setAttribute("questionList", questionList);
             request.setAttribute("answerList", answerList);
         }

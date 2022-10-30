@@ -169,7 +169,7 @@ function submit() {
     ).value;
     newQuestion.ques.push({
       questionID,
-      questionContent,
+      questionContent
     });
 
     newQuestion.ans = [];
