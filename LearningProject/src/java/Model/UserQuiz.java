@@ -13,29 +13,31 @@ import java.util.ArrayList;
  * @author vuman
  */
 public class UserQuiz {
+    private int userQuizId;
     private int userId;
-    private String time;
-    private ArrayList<Integer> choosedList;
+    private int quizId;
     private int correctAmount;
     private double mark;
+    private String time;
 
     public UserQuiz() {
     }
 
-    public UserQuiz(int userId, String time, ArrayList<Integer> choosedList, int correctAmount, double mark) {
+    public UserQuiz(int userQuizId, int userId, int quizId, int correctAmount, double mark, String time) {
+        this.userQuizId = userQuizId;
         this.userId = userId;
-        this.time = time;
-        this.choosedList = choosedList;
+        this.quizId = quizId;
         this.correctAmount = correctAmount;
         this.mark = mark;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getUserQuizId() {
+        return userQuizId;
+    }
+
+    public void setUserQuizId(int userQuizId) {
+        this.userQuizId = userQuizId;
     }
 
     public int getUserId() {
@@ -46,12 +48,12 @@ public class UserQuiz {
         this.userId = userId;
     }
 
-    public ArrayList<Integer> getChoosedList() {
-        return choosedList;
+    public int getQuizId() {
+        return quizId;
     }
 
-    public void setChoosedList(ArrayList<Integer> choosedList) {
-        this.choosedList = choosedList;
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
     }
 
     public int getCorrectAmount() {
@@ -68,6 +70,14 @@ public class UserQuiz {
 
     public void setMark(double mark) {
         this.mark = mark;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
     
     

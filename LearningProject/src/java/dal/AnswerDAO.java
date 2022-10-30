@@ -131,5 +131,21 @@ public class AnswerDAO extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Integer> getUserAnswerList(int userId, int userQuizId){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        try {
+            ResultSet rs = executeQuery("SELECT [AnswerID] FROM [dbo].[User_Answer] WHERE [UserID] = ? AND [UserQuizID] = ?", userId, userQuizId);
+            
+            while(rs.next()){
+                list.add(rs.getInt(1));
+            }
+            
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

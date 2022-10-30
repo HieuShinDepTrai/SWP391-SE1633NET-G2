@@ -68,6 +68,14 @@
         <servlet-name>CreateBlogController</servlet-name>
         <servlet-class>Controller.CreateBlogController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateBlogController</servlet-name>
+        <servlet-class>Controller.UpdateBlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizResultController</servlet-name>
+        <servlet-class>Controller.QuizResultController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -303,6 +311,14 @@
     <servlet-mapping>
         <servlet-name>CreateBlogController</servlet-name>
         <url-pattern>/createblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateBlogController</servlet-name>
+        <url-pattern>/updateblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizResultController</servlet-name>
+        <url-pattern>/quizresult</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

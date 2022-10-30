@@ -7,10 +7,9 @@ package dal;
 import Model.Quiz;
 import Model.UserQuiz;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -36,5 +35,26 @@ public class QuizDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public ArrayList<UserQuiz> getQuizHistory(int userId, int quizId){
+        try {
+            ArrayList<UserQuiz> quizHisList = new ArrayList<UserQuiz>();
+            ResultSet rs = executeQuery("SELECT [UserQuizID], [Mark], [NumberOfRightQuestion], [Date] "
+                    + "FROM [dbo].[User_Quiz] "
+                    + "WHERE [UserID] = ? AND [QuizID] = ?", userId, quizId);
+            
+            while(rs.next()){
+                Timestamp time = rs.getTimestamp("Date");
+                SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy, hh:mm:ss a");
+                String date = sdf.format(time);
+                quizHisList.add(new UserQuiz(rs.getInt("UserQuizID"), userId, quizId, rs.getInt("NumberOfRightQuestion"), rs.getInt("Mark"), date));
+            }
+            
+            return quizHisList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
