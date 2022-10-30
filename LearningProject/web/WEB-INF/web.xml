@@ -61,6 +61,14 @@
         <servlet-class>Controller.AdminManageCourseController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DoQuizController</servlet-name>
+        <servlet-class>Controller.DoQuizController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>testserasdfs</servlet-name>
+        <servlet-class>Controller.testserasdfs</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateBlogController</servlet-name>
         <servlet-class>Controller.CreateBlogController</servlet-class>
     </servlet>
@@ -291,6 +299,14 @@
     <servlet-mapping>
         <servlet-name>AdminManageCourseController</servlet-name>
         <url-pattern>/AdminManageCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoQuizController</servlet-name>
+        <url-pattern>/DoQuiz</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testserasdfs</servlet-name>
+        <url-pattern>/testserasdfs</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateBlogController</servlet-name>

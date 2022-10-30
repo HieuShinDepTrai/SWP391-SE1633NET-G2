@@ -6,7 +6,6 @@ package Controller;
 
 import Model.Answer;
 import Model.Course;
-import Model.Docs;
 import Model.Lesson;
 import Model.Section;
 import Model.Comment;
@@ -15,7 +14,7 @@ import Model.Question;
 import Model.Report;
 import Model.User;
 import Model.UserComment;
-import Model.Video;
+import dal.AnswerDAO;
 
 import dal.SectionDAO;
 import dal.CommentDAO;
@@ -23,7 +22,6 @@ import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.QuestionDAO;
 import dal.UserDAO;
-import dal.VideoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -31,9 +29,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.ArrayList;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
@@ -93,7 +89,7 @@ public class CourseWatchController extends HttpServlet {
         SectionDAO sdao = new SectionDAO();
         LessonDAO ldao = new LessonDAO();
         QuestionDAO qdao = new QuestionDAO();
-
+        AnswerDAO ansdao = new AnswerDAO();
         // Get course id 
         int courseID = 0;
         int sectionID = 0;
@@ -187,20 +183,34 @@ public class CourseWatchController extends HttpServlet {
             lesson.setStatus(ldao.getLessonStatusOfUser(lessonID, userId));
         }
         if (lesson.getType().compareTo("Quiz") == 0) {
-            int countquestion = 0;
-            questionID = Integer.parseInt(request.getParameter("questionID"));
-            Question question = qdao.getNextQuestion(lessonID, questionID);
-            questionID = question.getQuestionId();
-            ArrayList<Answer> answers = qdao.getAnswersbyQuestionID(questionID);
-            int number = qdao.getNumberQuestionOfQuiz(lessonID);
-            countquestion = Integer.parseInt(request.getParameter("count"));
-            countquestion++;
+//            int countquestion = 0;
+//            questionID = Integer.parseInt(request.getParameter("questionID"));
+//            Question question = qdao.getNextQuestion(lessonID, questionID);
+//            questionID = question.getQuestionId();
+//            ArrayList<Answer> answers = qdao.getAnswersbyQuestionID(questionID);
+//            int number = qdao.getNumberQuestionOfQuiz(lessonID);
+//            countquestion = Integer.parseInt(request.getParameter("count"));
+//            countquestion++;
+//
+//            request.setAttribute("count", countquestion);
+//            request.setAttribute("number", number);
+//            request.setAttribute("questionID", questionID);
+//            request.setAttribute("question", question);
+//            request.setAttribute("answer", answers);
 
-            request.setAttribute("count", countquestion);
-            request.setAttribute("number", number);
-            request.setAttribute("questionID", questionID);
-            request.setAttribute("question", question);
-            request.setAttribute("answer", answers);
+            int quizID = ldao.getQuizID(lessonID);
+            ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+            ArrayList<Answer> answerList = new ArrayList<>();
+            for (Question question : questionList) {
+                ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+                for (Answer answer : temp) {
+                    answerList.add(answer);
+                }
+
+            }
+            request.setAttribute("quizID", quizID);
+            request.setAttribute("questionList", questionList);
+            request.setAttribute("answerList", answerList);
         }
        
         request.setAttribute("User", user);
