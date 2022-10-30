@@ -61,14 +61,31 @@ public class testserasdfs extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuizDAO qzdao = new QuizDAO();
-        User u = (User) request.getSession().getAttribute("user");
         Date date = new Date();
+//        try {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//            Date parsedDate = dateFormat.parse(dateFormat.format(date).toString());
+//            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+//            // Add DB
+//            qzdao.insertUserQuiz(4, 16, 9, 2, timestamp);
+//            // return user quizID
+//            int userQuizID = qzdao.getUserQuizID(timestamp, 4, 16);
+//            response.getWriter().print(userQuizID);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         Timestamp doDate = new Timestamp(date.getTime());
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date parsedDate = dateFormat.parse(dateFormat.format(date).toString());
+            doDate = new java.sql.Timestamp(parsedDate.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Add DB
         qzdao.insertUserQuiz(4, 16, 9, 2, doDate);
         // return user quizID
-        int userQuizID = qzdao.getUserQuizID(doDate, 4);
-        response.getWriter().print(userQuizID);  
+        int userQuizID = qzdao.getUserQuizID(doDate, 4, 16);
     }
 
     /**
