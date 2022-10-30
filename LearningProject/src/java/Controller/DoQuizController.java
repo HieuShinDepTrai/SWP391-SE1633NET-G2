@@ -149,7 +149,31 @@ public class DoQuizController extends HttpServlet {
             int userQuizID = qzdao.getUserQuizID(doDate, u.getUserId(), quizID);
 
             // Add to User Answer in DB
+            String query = "INSERT INTO [dbo].[User_Answer]\n"
+                    + "           ([UserID]\n"
+                    + "           ,[AnswerID]\n"
+                    + "           ,[UserQuizID])\n"
+                    + "     VALUES ";            
+            boolean isFirst = true;
+            for (JsonElement jsonElement : json) {
+                JsonObject question = jsonElement.getAsJsonObject();
+                JsonArray answers = question.get("ans").getAsJsonArray();
            
+                for (JsonElement answerJsonElement : answers) {
+                    
+                    JsonObject answer = answerJsonElement.getAsJsonObject();
+                    int answerID = Integer.parseInt(answer.get("ansID").getAsString());
+                    boolean isChecked = answer.get("isCorrect").getAsBoolean();
+                    if (isChecked) {
+                        if(!isFirst) {
+                            query += ", ";
+                        }
+                        isFirst = false;
+                        query += "(" + u.getUserId() + ", " + answerID + ", " + userQuizID +")";
+                    }
+                    
+                }
+            }
             qzdao.insertUserAnswer(query);
         }
     }
