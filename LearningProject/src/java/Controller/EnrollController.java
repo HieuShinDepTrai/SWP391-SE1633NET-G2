@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Date;
 import org.apache.tomcat.util.net.SSLSupport;
+import utils.SendEmail;
 
 /**
  *
@@ -60,6 +61,7 @@ public class EnrollController extends HttpServlet {
         HttpSession ses = request.getSession();
         int CourseID = Integer.parseInt(request.getParameter("courseID"));
         String op = request.getParameter("op");
+        SendEmail sendemail = new SendEmail();
 
         PaymentDAO paymentDAO = new PaymentDAO();
         Course course = cDAO.getAllCourseInformation(CourseID);
@@ -90,6 +92,8 @@ public class EnrollController extends HttpServlet {
             paymentDAO.userRecharge(user.getUserId(), sqldate, (-coursePrice), 0, "Buy", "Buy course " + course.getCourseName());
             //noticeDAO.sendNotification(user.getUserId(), "Cảm ơn bạn đã mua khóa học" + course.getCourseName(), "Enroll "+CourseID);            
             u.insertIntoUserCourse(user.getUserId(), CourseID);
+            sendemail.sendEmail(user.getEmail(), "Mua khóa học thành công", "Cảm ơn bạn đã mua khóa học "+course.getCourseName()+" từ trang web chúng tôi!");
+            
             User newuser = u.getAllUserInformationByID(user.getUserId());
             ses.setAttribute("user", newuser);
             response.sendRedirect("home");

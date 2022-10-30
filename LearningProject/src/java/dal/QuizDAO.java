@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -89,21 +90,22 @@ public class QuizDAO extends DBContext {
 
     public QuizDetail getQuizDetail(int quizid) {
         LessonDAO lessonDAO = new LessonDAO();
+        DecimalFormat df = new DecimalFormat("#.00");
         try {
-            ResultSet rs = executeQuery("select QuizID,LessonID,\n"
+            ResultSet rs = executeQuery("select QuizID,LessonID,(select (select SUM(Mark) from User_Quiz where QuizID = "+quizid+")/(select COUNT(*) from User_Quiz where QuizID = "+quizid+")) as Mark,\n"
                     + "(select COUNT(DISTINCT(UserID)) from User_Answer ua\n"
-                    + "inner join Answer a on ua.ChooseID = a.AnswerID\n"
+                    + "inner join Answer a on ua.AnswerID = a.AnswerID\n"
                     + "inner join Question q on q.QuestionID = a.QuestionID where q.QuizID = " + quizid + ") as Enrolled,\n"
-                    + "(select COUNT(DISTINCT(Time)) from User_Answer ua\n"
-                    + "inner join Answer a on ua.ChooseID = a.AnswerID\n"
+                    + "(select COUNT(DISTINCT (UserQuizID)) from User_Answer ua\n"
+                    + "inner join Answer a on ua.AnswerID = a.AnswerID\n"
                     + "inner join Question q on q.QuestionID = a.QuestionID where q.QuizID = " + quizid + ") as Attempt,\n"
                     + "(select CAST((\n"
                     + "select count(*) from User_Answer ua\n"
-                    + "inner join Answer a on ua.ChooseID = a.AnswerID\n"
+                    + "inner join Answer a on ua.AnswerID = a.AnswerID\n"
                     + "inner join Question q on q.QuestionID = a.QuestionID\n"
                     + "where a.isCorrect = 1 and QuizID = " + quizid + ") * 100 / \n"
                     + "( select count(*) from User_Answer ua\n"
-                    + "inner join Answer a on ua.ChooseID = a.AnswerID\n"
+                    + "inner join Answer a on ua.AnswerID = a.AnswerID\n"
                     + "inner join Question q on q.QuestionID = a.QuestionID\n"
                     + "where QuizID = " + quizid + "\n"
                     + ") as INT)) AS Accuracy  \n"
@@ -114,7 +116,8 @@ public class QuizDAO extends DBContext {
                 quiz.setQuizid(rs.getInt("QuizID"));
                 quiz.setAcc(rs.getInt("Accuracy"));
                 quiz.setAttempt(rs.getInt("Attempt"));
-                quiz.setEnrolled(rs.getInt("Enrolled"));
+                quiz.setEnrolled(rs.getInt("Enrolled"));                
+                quiz.setMark(Double.parseDouble(df.format(rs.getDouble("Mark"))));
                 quiz.setLesson(lessonDAO.getLessonbyLessonID(rs.getInt("LessonID")));
                 return quiz;
             }
@@ -176,11 +179,11 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public void insertUserAnswer(String query) {
         try {
             int status = executeUpdate(query);
-            if(status < 0) {
+            if (status < 0) {
                 throw new Exception();
             }
             System.out.println("insertUserAnswer: Insert success");
@@ -189,4 +192,3 @@ public class QuizDAO extends DBContext {
         }
     }
 }
-    
