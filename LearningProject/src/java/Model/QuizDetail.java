@@ -9,9 +9,11 @@ package Model;
  * @author NamDepTraiVL
  */
 public class QuizDetail {
+
     private int quizid;
     private Lesson lesson;
     private int acc;
+    private double mark;
     private int enrolled;
     private int attempt;
     private String overview;
@@ -19,10 +21,11 @@ public class QuizDetail {
     public QuizDetail() {
     }
 
-    public QuizDetail(int quizid, Lesson lesson, int acc, int enrolled, int attempt, String overview) {
+    public QuizDetail(int quizid, Lesson lesson, int acc, double mark, int enrolled, int attempt, String overview) {
         this.quizid = quizid;
         this.lesson = lesson;
         this.acc = acc;
+        this.mark = mark;
         this.enrolled = enrolled;
         this.attempt = attempt;
         this.overview = overview;
@@ -30,12 +33,18 @@ public class QuizDetail {
 
     public QuizDetail(Lesson lesson, int acc, int enrolled, int attempt) {
         this.lesson = lesson;
-        this.acc = acc;
+        this.mark = acc;
         this.enrolled = enrolled;
         this.attempt = attempt;
     }
-    
-    
+
+    public double getMark() {
+        return mark;
+    }
+
+    public void setMark(double mark) {
+        this.mark = mark;
+    }
 
     public int getQuizid() {
         return quizid;
@@ -84,5 +93,5 @@ public class QuizDetail {
     public void setOverview(String overview) {
         this.overview = overview;
     }
-    
+
 }

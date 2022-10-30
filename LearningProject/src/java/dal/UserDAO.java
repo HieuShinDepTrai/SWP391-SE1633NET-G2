@@ -18,8 +18,7 @@ import java.util.logging.Logger;
  */
 public class UserDAO extends DBContext {
 
-    public  UserDAO(){
-        
+    public  UserDAO(){        
     }
     public void addUser(User u) {
         try {
