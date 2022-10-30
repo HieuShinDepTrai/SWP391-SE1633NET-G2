@@ -205,6 +205,9 @@
                                                     </form>
                                                 </c:if>
 
+                                                
+                                            </div>
+                                            <div>
                                                 <c:set var="isPresent" value="${false}"></c:set>
                                                 
                                                 <c:forEach items="${usercourselist}" var="usercourse">
