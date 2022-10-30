@@ -147,6 +147,33 @@ public class BlogDAO extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Blog> ListAllBlogsOnWebs() {
+        try {
+            ArrayList<Blog> blogs = new ArrayList<>();
+            ResultSet rs = executeQuery("SELECT \n"
+                    + "	[BlogID],\n"
+                    + "	[UserID],\n"
+                    + "	[BlogDate],\n"
+                    + "	[BlogContent],\n"
+                    + "	[BlogTitle],\n"
+                    + "	[BlogDescription],\n"
+                    + "	[BlogImage],\n"
+                    + "	[Category],\n"
+                    + " [Status] \n"
+                    + "FROM [Blog]");
+            while (rs.next()) {
+                blogs.add(new Blog(rs.getInt("BlogID"), rs.getInt("UserID"),
+                        rs.getTimestamp("BlogDate"), rs.getNString("BlogContent"),
+                        rs.getNString("BlogTitle"), rs.getNString("BlogDescription"),
+                        rs.getString("BlogImage"), rs.getString("Category"), rs.getString("Status")));
+            }
+            return blogs;
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public ArrayList<Blog> ListAllBlogsByCategory(String category) {
         try {
@@ -176,7 +203,7 @@ public class BlogDAO extends DBContext {
         return null;
     }
 
-    public void updateCourseStatus(String status, int blogID) {
+    public void updateBlogStatus(String status, int blogID) {
         try {
             int updateStatus = executeUpdate("UPDATE [dbo].[Blog]\n"
                     + "   SET [Status] = ?\n"

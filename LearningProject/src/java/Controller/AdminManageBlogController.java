@@ -7,6 +7,7 @@ package Controller;
 import Model.Blog;
 import Model.User;
 import dal.BlogDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -60,6 +61,7 @@ public class AdminManageBlogController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User u = (User) request.getSession().getAttribute("user");
+        UserDAO udao = new UserDAO();
 
         if (!u.getRole().equals("Admin")) {
             response.sendRedirect("home");
@@ -69,6 +71,12 @@ public class AdminManageBlogController extends HttpServlet {
         ArrayList<Blog> blogListReport = blogDao.getBlogListReported();
         request.setAttribute("blogListReported", blogListReport);
 
+        ArrayList<Blog> blogListAll = blogDao.ListAllBlogsOnWebs();
+        for (int i = 0; i < blogListAll.size(); i++) {
+            blogListAll.get(i).setUser(udao.getAllUserInformationByID(blogListAll.get(i).getUserid()));
+        }
+        request.setAttribute("allBlogList", blogListAll);
+        
         request.getRequestDispatcher("AdminManageBlog.jsp").forward(request, response);
     }
 
@@ -92,12 +100,12 @@ public class AdminManageBlogController extends HttpServlet {
         BlogDAO blogDao = new BlogDAO();
         if (request.getParameter("enable") != null) {
             int blogID = Integer.parseInt(request.getParameter("blogID"));
-            blogDao.updateCourseStatus("Enabled", blogID);
+            blogDao.updateBlogStatus("Enabled", blogID);
         }
 
         if (request.getParameter("disable") != null) {
             int blogID = Integer.parseInt(request.getParameter("blogID"));
-            blogDao.updateCourseStatus("Disabled", blogID);
+            blogDao.updateBlogStatus("Disabled", blogID);
         }
         
         response.sendRedirect("AdminManageBlog");
