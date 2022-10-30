@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -46,7 +49,7 @@ public class QuizDAO extends DBContext {
             ResultSet rs = executeQuery("select q.QuizID from Lesson l\n"
                     + "inner join Quiz q on l.LessonID = q.LessonID\n"
                     + "inner join Section s on s.SectionID = l.SectionID\n"
-                    + "where l.types = 'Quiz' and CourseID = "+courseID+"");
+                    + "where l.types = 'Quiz' and CourseID = " + courseID + "");
             while (rs.next()) {
                 QuizDetail quiz = getQuizDetail(rs.getInt("QuizID"));
                 lessonList.add(quiz);
@@ -93,5 +96,58 @@ public class QuizDAO extends DBContext {
             return new QuizDetail();
         }
         return new QuizDetail();
+    }
+
+    public HashMap<Integer, ArrayList<Integer>> getAnswers(int quizID) {
+        HashMap<Integer, ArrayList<Integer>> data = new HashMap<>();
+        try {
+            ResultSet rs = executeQuery("select q.QuestionID, a.AnswerID "
+                    + "from Question q, Answer a\n"
+                    + "where q.QuizID = ? and q.QuestionID = a.QuestionID and a.isCorrect = 1 "
+                    + "order by QuestionID asc ,AnswerID asc", quizID);
+            while (rs.next()) {
+                if (!data.containsKey(rs.getInt("QuestionID"))) {
+                    data.put(rs.getInt("QuestionID"), new ArrayList<>());
+                }
+                data.get(rs.getInt("QuestionID")).add(rs.getInt("AnswerID"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public void insertUserQuiz(int userId, int quizID, double mark, int numberOfRightQuestion, Timestamp doDate) {
+        try {
+            executeUpdate("INSERT INTO [dbo].[User_Quiz]\n"
+                    + "           ([UserID]\n"
+                    + "           ,[QuizID]\n"
+                    + "           ,[Mark]\n"
+                    + "           ,[NumberOfRightQuestion]\n"
+                    + "           ,[Date])\n"
+                    + "     VALUES\n"
+                    + "           (?"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)",
+                    userId, quizID, mark, numberOfRightQuestion, doDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getUserQuizID(Timestamp doDate, int userID) {
+        try {
+            ResultSet rs = executeQuery("select UserQuizID from dbo.[User_Quiz]\n"
+                    + "where [Date] = ? and UserID = ?", doDate, userID);
+            while (rs.next()) {
+                return rs.getInt("UserQuizID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
