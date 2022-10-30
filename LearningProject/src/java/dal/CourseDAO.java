@@ -733,6 +733,43 @@ public class CourseDAO extends DBContext {
         }
         return courseList;
     }
+    
+    public ArrayList<Course> getAllMentorCourseByID(int userId) {
+        try {
+            ArrayList<Course> list = new ArrayList<Course>();
+            ResultSet rs = executeQuery("SELECT [CourseID],"
+                    + " [CourseName],"
+                    + " [DateCreate],"
+                    + " [Category],"
+                    + " [NumberEnrolled],"
+                    + " [CoursePrice],"
+                    + " [CourseImage],"
+                    + " [Status],"
+                    + " [Description],"
+                    + " [Objectives],"
+                    + " [Difficulty] FROM [Course] WHERE [AuthorID] = ? AND [Status] = 'Enabled'", userId);
+
+            while (rs.next()) {
+                list.add(new Course(rs.getInt("CourseID"),
+                        rs.getString("CourseName"),
+                        rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"),
+                        rs.getInt("NumberEnrolled"),
+                        rs.getInt("CoursePrice"),
+                        rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        new UserDAO().getAllUserInformationByID(userId),
+                        rs.getNString("Description"),
+                        rs.getNString("Objectives"),
+                        rs.getString("Difficulty")));
+            }
+
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
 
