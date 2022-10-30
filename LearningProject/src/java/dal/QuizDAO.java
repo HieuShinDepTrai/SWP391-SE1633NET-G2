@@ -47,28 +47,28 @@ public class QuizDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
-    public ArrayList<UserQuiz> getQuizHistory(int userId, int quizId){
+
+    public ArrayList<UserQuiz> getQuizHistory(int userId, int quizId) {
         try {
             ArrayList<UserQuiz> quizHisList = new ArrayList<UserQuiz>();
             ResultSet rs = executeQuery("SELECT [UserQuizID], [Mark], [NumberOfRightQuestion], [Date] "
                     + "FROM [dbo].[User_Quiz] "
                     + "WHERE [UserID] = ? AND [QuizID] = ?", userId, quizId);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Timestamp time = rs.getTimestamp("Date");
                 SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy, hh:mm:ss a");
                 String date = sdf.format(time);
                 quizHisList.add(new UserQuiz(rs.getInt("UserQuizID"), userId, quizId, rs.getInt("NumberOfRightQuestion"), rs.getInt("Mark"), date));
             }
-            
+
             return quizHisList;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     public ArrayList<QuizDetail> getAllQuizInCourseID(int courseID) {
         ArrayList<QuizDetail> lessonList = new ArrayList<>();
         LessonDAO lessonDAO = new LessonDAO();
@@ -92,7 +92,7 @@ public class QuizDAO extends DBContext {
         LessonDAO lessonDAO = new LessonDAO();
         DecimalFormat df = new DecimalFormat("#.00");
         try {
-            ResultSet rs = executeQuery("select QuizID,LessonID,(select (select SUM(Mark) from User_Quiz where QuizID = "+quizid+")/(select COUNT(*) from User_Quiz where QuizID = "+quizid+")) as Mark,\n"
+            ResultSet rs = executeQuery("select QuizID,LessonID,(select (select SUM(Mark) from User_Quiz where QuizID = " + quizid + ")/(select COUNT(*) from User_Quiz where QuizID = " + quizid + ")) as Mark,\n"
                     + "(select COUNT(DISTINCT(UserID)) from User_Answer ua\n"
                     + "inner join Answer a on ua.AnswerID = a.AnswerID\n"
                     + "inner join Question q on q.QuestionID = a.QuestionID where q.QuizID = " + quizid + ") as Enrolled,\n"
@@ -116,7 +116,7 @@ public class QuizDAO extends DBContext {
                 quiz.setQuizid(rs.getInt("QuizID"));
                 quiz.setAcc(rs.getInt("Accuracy"));
                 quiz.setAttempt(rs.getInt("Attempt"));
-                quiz.setEnrolled(rs.getInt("Enrolled"));                
+                quiz.setEnrolled(rs.getInt("Enrolled"));
                 quiz.setMark(Double.parseDouble(df.format(rs.getDouble("Mark"))));
                 quiz.setLesson(lessonDAO.getLessonbyLessonID(rs.getInt("LessonID")));
                 return quiz;
@@ -190,5 +190,21 @@ public class QuizDAO extends DBContext {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getTotalQuizOfUserID(int userid) {
+        try {
+            ResultSet rs = executeQuery("select COUNT(*) as TotalQuiz from Quiz q\n"
+                    + "inner join Lesson l on l.LessonID = q.LessonID\n"
+                    + "inner join Section s on s.SectionID = l.SectionID\n"
+                    + "inner join Course c on c.CourseID = s.SectionID\n"
+                    + "where c.AuthorID = ? ", userid);
+            if (rs.next()) {
+                return rs.getInt("TotalQuiz");
+            }
+        } catch (SQLException ex) {
+            return 0;
+        }
+        return 0;
     }
 }

@@ -108,7 +108,7 @@ public class CourseDetailsController extends HttpServlet {
         } 
         
         int size = feedbackList.size();
-        final int PAGE_SIZE = 10;
+        final int PAGE_SIZE = 5;
         int numOfPages = ( size%PAGE_SIZE ==0 )? size/PAGE_SIZE : size/PAGE_SIZE+1;
         int start = (page - 1)*PAGE_SIZE;
         int end = Math.min(size, page*PAGE_SIZE);
