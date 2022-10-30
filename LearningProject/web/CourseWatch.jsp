@@ -290,7 +290,7 @@
 
                             <div class="course-post-comment-container">
                                 <div class="course-comment-postcomment d-flex justify-content-between">
-                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                    <img src="${User.getAvatar()}" alt="none" class="user-avatar">
                                     <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
                                     border: none;
                                     border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
@@ -311,7 +311,8 @@
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
 
                                 <div class="comment d-flex align-items-start">
-                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+<!--                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">-->
+                                    <img src="${parentComment.getUser().getAvatar()}" alt="none" class="user-avatar">
                                     <div class="comment-content">
                                         <form action="LikeComment" method="GET">
                                             <div class="comment-user">
@@ -373,7 +374,7 @@
                                                 <input type="hidden"  name="videoID" value="${videoID}">
                                                 <div class="course-post-comment-container">
                                                     <div class="course-comment-postcomment d-flex justify-content-between">
-                                                        <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                        <img src="${User.getAvatar()}" alt="none" class="user-avatar">
                                                         <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
                                                         border: none;
                                                         border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
@@ -400,7 +401,7 @@
                                                 <c:forEach items="${requestScope.commentOfLesson}" var="commentOfLesson">
                                                     <c:if test="${commentOfLesson.getParentId() == parentComment.getCommentId()}">
                                                         <div class="comment d-flex align-items-start">
-                                                            <img src="assets/img/f8-logo.png" alt="" class="user-avatar">
+                                                            <img src="${commentOfLesson.getUser().getAvatar()}" alt="none" class="user-avatar">
                                                             <div class="comment-content">
 
                                                                 <form action="LikeComment" method="GET">

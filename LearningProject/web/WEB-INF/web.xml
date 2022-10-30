@@ -68,6 +68,10 @@
         <servlet-name>testserasdfs</servlet-name>
         <servlet-class>Controller.testserasdfs</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateBlogController</servlet-name>
+        <servlet-class>Controller.CreateBlogController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -303,6 +307,10 @@
     <servlet-mapping>
         <servlet-name>testserasdfs</servlet-name>
         <url-pattern>/testserasdfs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateBlogController</servlet-name>
+        <url-pattern>/createblog</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
