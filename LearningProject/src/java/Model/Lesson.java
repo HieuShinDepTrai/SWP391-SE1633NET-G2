@@ -18,6 +18,7 @@ public class Lesson {
     private String videoLink;
     private String Content;
     private String Status;
+    private Quiz quiz;
     
     public Lesson() {
     }
@@ -61,6 +62,26 @@ public class Lesson {
         this.videoLink = videoLink;
         this.Content = Content;
     }
+
+    public Lesson(int lessonId, int sectionId, String lessonName, String type, Quiz quiz) {
+        this.lessonId = lessonId;
+        this.sectionId = sectionId;
+        this.lessonName = lessonName;
+        this.type = type;
+        this.quiz = quiz;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+    
+    
+    
+    
 
     public String getVideoLink() {
         return videoLink;

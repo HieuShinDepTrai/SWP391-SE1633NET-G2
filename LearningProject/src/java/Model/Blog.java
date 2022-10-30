@@ -5,7 +5,6 @@
 
 package Model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -17,11 +16,12 @@ public class Blog {
     private int userid;
     private Timestamp date;
     private String content;
-    private String tilte;
+    private String title;
     private String description;
     private String image;
     private String category;
     private String status;
+    private User user;
 
     public Blog() {
     }
@@ -31,11 +31,19 @@ public class Blog {
         this.userid = userid;
         this.date = date;
         this.content = content;
-        this.tilte = tilte;
+        this.title = tilte;
         this.description = description;
         this.image = image;
         this.category = category;
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getBlogid() {
@@ -70,12 +78,12 @@ public class Blog {
         this.content = content;
     }
 
-    public String getTilte() {
-        return tilte;
+    public String getTitle() {
+        return title;
     }
 
     public void setTilte(String tilte) {
-        this.tilte = tilte;
+        this.title = tilte;
     }
 
     public String getDescription() {

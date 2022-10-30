@@ -22,7 +22,7 @@
             <div class="icon-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>            
-             <form action="home" method="GET">
+             <form action="${searchPath == null ? 'home' : searchPath}" method="GET">
                 <input type="text" name="searching" placeholder="Tìm kiếm khóa học, bài viết, video...">
                 <input type="submit" hidden />
             </form>

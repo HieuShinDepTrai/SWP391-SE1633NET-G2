@@ -29,18 +29,41 @@ public class UserDashboardController extends HttpServlet {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
         UserDAO userDao = new UserDAO();
-        ArrayList<Course> courseList = courseDAO.getAllUserCourse(session.getAttribute("username").toString());
+        
+        String searching = request.getParameter("searching");
+        
+        //if the searching is null, send "" to list, that will not make the error from the web
+        if (searching == null) {
+            searching = "";
+        } else {
+            searching = request.getParameter("searching").trim();
+        }
+        
+        Object oUsername = session.getAttribute("username");
+        
+        if (oUsername == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        
+        
+        //get URL partern of controller to choose the action of form from 'searching bar'
+        request.setAttribute("searchPath", "userdashboard");
+        
+        ArrayList<Course> courseList = courseDAO.getAllUserCourse(oUsername.toString());
         User user = (User) session.getAttribute("user");
         int time = userDao.getUserTotalTime(user.getUserId());
         String totalTime = (time / 1000) / 60 / 60 % 24 + " hours " + (time / 1000) / 60 % 60 + " minutes " + (time / 1000) % 60 + " seconds ";
-        ArrayList<UserCourse> usList = courseDAO.getListUserCourseOfUser(user.getUserId());
+        ArrayList<UserCourse> usList = courseDAO.getListUserCourseOfUser(user.getUserId(), searching);
+        
         ArrayList<Course> favCourseList = new ArrayList<Course>();
+        
         for (UserCourse course : usList) {
             if(course.isIsFavourite()){
                 favCourseList.add(courseDAO.getAllCourseInformation(course.getCourseID()));
             }
         }
-
+        
         request.setAttribute("favlist", favCourseList);
         request.setAttribute("totalTime", totalTime);
         request.setAttribute("user", user);
