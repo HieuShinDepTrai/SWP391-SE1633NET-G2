@@ -76,10 +76,10 @@ public class QuizDAO extends DBContext {
         }
     }
 
-    public int getUserQuizID(Timestamp doDate, int userID) {
+    public int getUserQuizID(Timestamp doDate, int userID, int QuizID) {
         try {
             ResultSet rs = executeQuery("select UserQuizID from dbo.[User_Quiz]\n"
-                    + "where [Date] = ? and UserID = ?", doDate, userID);
+                    + "where [Date] = ? and UserID = ? and QuizID = ?", doDate, userID, QuizID);
             while (rs.next()) {
                 return rs.getInt("UserQuizID");
             }
@@ -88,4 +88,17 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
+    
+    public void insertUserAnswer(String query) {
+        try {
+            int status = executeUpdate(query);
+            if(status < 0) {
+                throw new Exception();
+            }
+            System.out.println("insertUserAnswer: Insert success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+    

@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,35 +86,35 @@ public class DoQuizController extends HttpServlet {
         QuizDAO qzdao = new QuizDAO();
         if (request.getParameter("jsonQuestions") != null) {
             int quizID = 0;
-            if(request.getParameter("quizID") != null) {
+            if (request.getParameter("quizID") != null) {
                 quizID = Integer.parseInt(request.getParameter("quizID"));
             }
             HashMap<Integer, ArrayList<Integer>> data = new HashMap<>();
-            
+
             String JsonData = request.getParameter("jsonQuestions");
             JsonArray json = new JsonParser().parse(JsonData).getAsJsonArray();
             for (JsonElement jsonElement : json) {
                 JsonObject question = jsonElement.getAsJsonObject();
                 String questionID = question.get("ques").getAsJsonArray().get(0).getAsJsonObject().get("questionID").getAsString();
-                JsonArray answers =  question.get("ans").getAsJsonArray();
+                JsonArray answers = question.get("ans").getAsJsonArray();
                 ArrayList<Integer> answerList = new ArrayList();
                 for (JsonElement answerJsonElement : answers) {
                     JsonObject answer = answerJsonElement.getAsJsonObject();
                     int answerID = Integer.parseInt(answer.get("ansID").getAsString());
                     boolean isChecked = answer.get("isCorrect").getAsBoolean();
-                    
-                    if(isChecked) {
+
+                    if (isChecked) {
                         answerList.add(answerID);
                     }
                 }
-                
+
                 data.put(Integer.parseInt(questionID), answerList);
-                
+
             }
-            
+
             // Lay tu db
             HashMap<Integer, ArrayList<Integer>> dataOnDB = qzdao.getAnswers(quizID);
-            
+
             int numberOfRightQuestion = 0;
             for (Map.Entry<Integer, ArrayList<Integer>> entry : data.entrySet()) {
                 Object quesIdUser = entry.getKey();
@@ -121,23 +122,35 @@ public class DoQuizController extends HttpServlet {
                 for (Map.Entry<Integer, ArrayList<Integer>> entry1 : dataOnDB.entrySet()) {
                     Object quesIdDB = entry1.getKey();
                     Object ansIdDB = entry1.getValue();
-                    if(quesIdUser.equals(quesIdDB)) {
-                        if(ansIdUser.equals(ansIdDB)) {
+                    if (quesIdUser.equals(quesIdDB)) {
+                        if (ansIdUser.equals(ansIdDB)) {
                             numberOfRightQuestion++;
                         }
                     }
                 }
             }
-            
+
             // Tinh diem
             double mark = numberOfRightQuestion / data.size();
             User u = (User) request.getSession().getAttribute("user");
             Date date = new Date();
             Timestamp doDate = new Timestamp(date.getTime());
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date parsedDate = dateFormat.parse(dateFormat.format(date).toString());
+                doDate = new java.sql.Timestamp(parsedDate.getTime());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
             // Add DB
             qzdao.insertUserQuiz(u.getUserId(), quizID, mark, numberOfRightQuestion, doDate);
             // return user quizID
-            int userQuizID = qzdao.getUserQuizID(doDate, u.getUserId());   
+            int userQuizID = qzdao.getUserQuizID(doDate, u.getUserId(), quizID);
+
+            // Add to User Answer in DB
+           
+            qzdao.insertUserAnswer(query);
         }
     }
 
