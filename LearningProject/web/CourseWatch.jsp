@@ -290,6 +290,7 @@
                         <div class="course-comment-title">
                             ${numberOfComments} Comments
                             <span>(If you see spam comment, please report to admin)</span>
+<!--                            <button class="btn btn-classic" onclick="loadAllComment()">View </button>-->
                         </div>
 
                         <!-- Begin: Course post comment -->
@@ -305,11 +306,11 @@
                                     <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
                                     border: none;
                                     border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                    <textarea name="comment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                    <textarea name="comment" id="commentContent" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                 </div>
                                 <div class="course-postcomment-action" style="float: right;">
 <!--                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>-->
-                                    <input class="submit-comment" name="op" type="submit" value="Comment">
+                                <input class="submit-comment" onclick="loadAllComment()" type="submit" name="op" value="Comment">
                                 </div>
                             </div>
                         </form>
@@ -317,7 +318,7 @@
                         <!-- End: Course post comment -->
 
                         <!-- Comment List -->
-                        <div class="course-comment-list d-flex flex-column w-100 gap-4">
+                        <div class="course-comment-list d-flex flex-column w-100 gap-4" id="commentform">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
                                
@@ -389,7 +390,7 @@
                                                         <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
                                                         border: none;
                                                         border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                        <textarea name="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                        <textarea name="repComment" id="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                                     </div>
                                                     <div class="course-postcomment-action" style="float: right;">
                                                         <div class="post-cancel d-inline-block me-4 fw-bold" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="CancelReply(this)">Cancel</div>
@@ -455,6 +456,8 @@
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${commentOfLesson.getCommentId()}">.</div>
+                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
+                                                <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${commentOfLesson.getCommentDate()}</div>
                                             </div>
                                         </form>
@@ -523,6 +526,23 @@
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
         <script src="https://player.vimeo.com/api/player.js"></script>
+        <script>
+        function loadAllComment() {
+            var Comment = document.getElementById("commentContent").value;
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}',
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        </script>        
     </body>
 
 </html>

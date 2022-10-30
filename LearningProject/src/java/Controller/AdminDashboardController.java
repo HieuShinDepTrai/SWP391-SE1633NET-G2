@@ -54,7 +54,7 @@ public class AdminDashboardController extends HttpServlet {
         
         int totalCourse = courseDAO.ListAllCourses().size();
         int totalUser = userDAO.getTotalUser();
-        int totalWithdrawPending = paymentDAO.getPendingWithdraw().size();
+        int totalWithdrawPending = paymentDAO.getPendingWithdraw("").size();
         request.setAttribute("totalUser", totalUser);
         request.setAttribute("totalCourse", totalCourse);
         request.setAttribute("totalWithdrawPending", totalWithdrawPending);       
