@@ -104,10 +104,7 @@
         <servlet-name>AddLesson</servlet-name>
         <servlet-class>Controller.AddLesson</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CourseDetailsController</servlet-name>
-        <servlet-class>Controller.CourseDetailsController</servlet-class>
-    </servlet>
+    
     <servlet>
         <servlet-name>PostVideoCommentController</servlet-name>
         <servlet-class>Controller.PostVideoCommentController</servlet-class>
@@ -227,10 +224,6 @@
     <servlet-mapping>
         <servlet-name>AddLesson</servlet-name>
         <url-pattern>/AddLesson</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CourseDetailsController</servlet-name>
-        <url-pattern>/CourseDetails</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostVideoCommentController</servlet-name>

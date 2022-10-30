@@ -65,12 +65,12 @@ public class QuizDashboardController extends HttpServlet {
         QuizDetail enroll = new QuizDetail(new Lesson(), 0, 0, 0);
         QuizDetail attempt = new QuizDetail(new Lesson(), 0, 0, 0);
         for (QuizDetail quiz : quizDetailList) {
-            if (quiz.getAcc() < hardest.getAcc()) {
-                hardest.setAcc(quiz.getAcc());
+            if (quiz.getMark()< hardest.getMark()) {
+                hardest.setMark(quiz.getMark());
                 hardest.setLesson(quiz.getLesson());
             }
-            if (quiz.getAcc() > easiest.getAcc()) {
-                easiest.setAcc(quiz.getAcc());
+            if (quiz.getMark()> easiest.getMark()) {
+                easiest.setMark(quiz.getMark());
                 easiest.setLesson(quiz.getLesson());
             }
             if (quiz.getEnrolled() > enroll.getEnrolled()) {

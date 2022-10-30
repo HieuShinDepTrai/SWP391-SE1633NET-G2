@@ -63,10 +63,10 @@
                         <div class="col-6">
                             <div class="overview p-4">
                                 <div class="overview-header mb-2">
-                                    <h6>Hardest Quiz</h6>
+                                    <h6>Lowest Mark</h6>
                                 </div>
                                 <div class="overview-content d-flex justify-content-between">
-                                    <p>${hardest.getLesson().getLessonName()}</p>
+                                    <p>${hardest.getLesson().getLessonName()}: ${hardest.getMark()}</p>
                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                 </div>
                             </div>
@@ -74,10 +74,10 @@
                         <div class="col-6">
                             <div class="overview p-4">
                                 <div class="overview-header mb-2">
-                                    <h6>Easiest Quiz</h6>
+                                    <h6>Highest Mark</h6>
                                 </div>
                                 <div class="overview-content d-flex justify-content-between">
-                                    <p>${easiest.getLesson().getLessonName()}</p>
+                                    <p>${easiest.getLesson().getLessonName()}: ${easiest.getMark()}</p>
                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     <h6>Most Attempt Quiz</h6>
                                 </div>
                                 <div class="overview-content d-flex justify-content-between">
-                                    <p>${attempt.getLesson().getLessonName()}</p>
+                                    <p>${attempt.getLesson().getLessonName()}: ${attempt.getAttempt()}</p>
                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                     <h6>Most Enroll Quiz</h6>
                                 </div>
                                 <div class="overview-content d-flex justify-content-between">
-                                    <p>${enroll.getLesson().getLessonName()}</p>
+                                    <p>${enroll.getLesson().getLessonName()}: ${enroll.getEnrolled()}</p>
                                     <i class="fa-solid fa-laptop overview-content-img"></i>
                                 </div>
                             </div>
@@ -124,6 +124,7 @@
                                     <th>QuizID</th>
                                     <th>LessonName</th>
                                     <th>Accuracy</th>
+                                    <th>Avarage Mark</th>
                                     <th>Enrolled</th>
                                     <th>Attempt</th>
                                     <th>Overview</th>
@@ -145,6 +146,12 @@
                                                 </td>
                                                 <td>
                                                     <div style="font-weight: 600">${quiz.getAcc()}</div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div
+                                                            style="font-weight: 500;">${quiz.getMark()}</div>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div>
