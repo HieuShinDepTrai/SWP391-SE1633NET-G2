@@ -27,26 +27,24 @@
             <%@include file="header.jsp"%>
             <!-- Begin: Side Bar -->
             <div id="side-bar">
-                <c:if test="${user.role == 'Mentor'}">
-                    <a style="
-                       display: block;
-                       width: 36px;
-                       display: flex;
-                       justify-content: center;
-                       align-items: center;
-                       height: 36px;
-                       padding: 19px;
-                       border-radius: 50%;
-                       background-color: var(--bs-orange);
-                       margin: 0 auto 10px auto;
-                       " href="createblog" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
-                        <i class="fa-solid fa-plus" style="
-                           font-size: 24px;
-                           /* padding: 10px; */
-                           color: white;
-                           "></i>
-                    </a>
-                </c:if>
+                <a style="
+                   display: block;
+                   width: 36px;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   height: 36px;
+                   padding: 19px;
+                   border-radius: 50%;
+                   background-color: var(--bs-orange);
+                   margin: 0 auto 10px auto;
+                   " href="createblog" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                    <i class="fa-solid fa-plus" style="
+                       font-size: 24px;
+                       /* padding: 10px; */
+                       color: white;
+                       "></i>
+                </a>
                 <a class="bar-button button-hover" href="home">
                     <i class="fa-solid fa-house"></i>
                     <p class="button-title">Home</p>
@@ -98,7 +96,7 @@
                                         <!-- User post -->
                                         <div class="d-flex align-items-center">
                                             <img src="${blog.getUser().getAvatar()}" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
-                                            <span style="font-size: 12px; font-weight: 600  ;" class="ms-2">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</span>
+                                            <a style="font-size: 12px; font-weight: 600  ;" class="ms-2" href="profiledetails?id=${blog.getUserid()}">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</a>
                                         </div>
 
                                         <!-- User post -->
@@ -112,7 +110,7 @@
                                     <div class="mt-3 d-flex justify-content-between align-items-center">
                                         <!-- Content left -->
                                         <div class="" style="width: 78%;">
-                                            <h5 class="fw-bolder">${blog.getTitle()}</h5>
+                                            <a style="font-size: 20px;" class="fw-bolder" href="blogdetail?id=${blog.getBlogid()}">${blog.getTitle()}</a>
                                             <p class="text-black-50" style="font-size: 15px;">${blog.getDescription()}</p>
                                         </div>
                                         <!-- Content left -->
@@ -135,8 +133,14 @@
                                         <span class="ms-2">
                                             .
                                         </span>
+                                        
+                                        <form action="blog" method="GET">
+                                            <input type="submit" name="op" value="reportBlog">
+                                        <input type="hidden" name="blogId" value="${blog.getBlogid()}">
+                                        </form>
+                                        
                                         <div class="ms-2 d-inline-block" style="font-size: 14px;">
-                                            ${blog.getDate()}
+                                            <fmt:formatDate type = "both" value = "${blog.getDate()}" />
                                         </div>
                                     </div>
                                 </div>
@@ -168,50 +172,50 @@
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
         <script>
-            function loadBlogFrontEnd() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Front-end',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
-            
-            function loadBlogBackEnd() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Back-end',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
-            
-            function loadBlogDatabase() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Database',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
+                                function loadBlogFrontEnd() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Front-end',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
+
+                                function loadBlogBackEnd() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Back-end',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
+
+                                function loadBlogDatabase() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Database',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
         </script>
     </body>
 

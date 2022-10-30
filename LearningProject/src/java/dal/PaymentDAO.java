@@ -51,10 +51,10 @@ public class PaymentDAO extends DBContext {
         try {
             ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n" +
                                         "where Method = 'Withdraw' and Status = 2 \n" +
-                                        "and [u].[Username] like N'%" + searchingName + "%' \n" +
+                                        "and ([u].[Username] like N'%" + searchingName + "%' \n" +
                                         "or [re].[RechargeID] like N'%" + searchingName + "%' \n" +
                                         "or [u].[BankName] like N'%" + searchingName + "%' \n" +
-                                        "or [u].[BankNumber] like N'%" + searchingName + "%'");
+                                        "or [u].[BankNumber] like N'%" + searchingName + "%')");
             while (rs.next()) {
                 Payment payment = new Payment();
                 payment.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));

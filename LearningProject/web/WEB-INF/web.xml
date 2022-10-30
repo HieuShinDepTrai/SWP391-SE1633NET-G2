@@ -73,6 +73,10 @@
         <servlet-class>Controller.CreateBlogController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AdminManageBlogController</servlet-name>
+        <servlet-class>Controller.AdminManageBlogController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UpdateBlogController</servlet-name>
         <servlet-class>Controller.UpdateBlogController</servlet-class>
     </servlet>
@@ -116,10 +120,7 @@
         <servlet-name>AddLesson</servlet-name>
         <servlet-class>Controller.AddLesson</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CourseDetailsController</servlet-name>
-        <servlet-class>Controller.CourseDetailsController</servlet-class>
-    </servlet>
+    
     <servlet>
         <servlet-name>PostVideoCommentController</servlet-name>
         <servlet-class>Controller.PostVideoCommentController</servlet-class>
@@ -127,6 +128,14 @@
     <servlet>
         <servlet-name>MentorDashboardController</servlet-name>
         <servlet-class>Controller.MentorDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogDetailController</servlet-name>
+        <servlet-class>Controller.BlogDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileDetailsController</servlet-name>
+        <servlet-class>Controller.ProfileDetailsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
@@ -229,10 +238,6 @@
         <url-pattern>/AddLesson</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CourseDetailsController</servlet-name>
-        <url-pattern>/CourseDetails</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PostVideoCommentController</servlet-name>
         <url-pattern>/postvideocomment</url-pattern>
     </servlet-mapping>
@@ -313,6 +318,10 @@
         <url-pattern>/createblog</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AdminManageBlogController</servlet-name>
+        <url-pattern>/AdminManageBlog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UpdateBlogController</servlet-name>
         <url-pattern>/updateblog</url-pattern>
     </servlet-mapping>
@@ -327,6 +336,14 @@
     <servlet-mapping>
         <servlet-name>FilterBlog</servlet-name>
         <url-pattern>/filterblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogDetailController</servlet-name>
+        <url-pattern>/blogdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileDetailsController</servlet-name>
+        <url-pattern>/profiledetails</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -45,10 +45,10 @@
                             <i class="fa-solid fa-road"></i>
                             <p class="button-title">My Course</p>
                         </div>
-                        <div class="bar-button">
+                        <a class="bar-button" href="blog">
                             <i class="fa-solid fa-newspaper"></i>
                             <p class="button-title">Blog</p>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <!-- End: Side Bar -->
