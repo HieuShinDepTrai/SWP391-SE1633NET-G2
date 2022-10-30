@@ -88,6 +88,39 @@ public class BlogDAO extends DBContext {
         }
     }
 
+    public ArrayList<Blog> getBlogListReported() {
+        ArrayList<Blog> blogListReport = new ArrayList();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [BlogID]\n"
+                    + "      ,[UserID]\n"
+                    + "      ,[BlogDate]\n"
+                    + "      ,[BlogContent]\n"
+                    + "      ,[BlogTitle]\n"
+                    + "      ,[BlogDescription]\n"
+                    + "      ,[BlogImage]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[isReported]\n"
+                    + "  FROM [dbo].[Blog]\n"
+                    + "  WHERE isReported = 1");
+            while (rs.next()) {
+                blogListReport.add(new Blog(rs.getInt("BlogID"),
+                        rs.getTimestamp("BlogDate"),
+                        rs.getString("BlogContent"),
+                        rs.getString("BlogTitle"),
+                        rs.getString("BlogDescription"),
+                        rs.getString("BlogImage"),
+                        rs.getString("Category"),
+                        rs.getString("Status"),
+                        udao.getAllUserInformationByID(rs.getInt("UserID"))));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogListReport;
+    }
+
     public ArrayList<Blog> ListAllBlogs() {
         try {
             ArrayList<Blog> blogs = new ArrayList<>();
@@ -194,5 +227,18 @@ public class BlogDAO extends DBContext {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+        
+    public void updateCourseStatus(String status, int blogID) {
+        try {
+            int updateStatus = executeUpdate("UPDATE [dbo].[Blog]\n"
+                    + "   SET [Status] = ?\n"
+                    + " WHERE BlogID = ?", status, blogID);
+            if(updateStatus < 0) {
+                throw new Exception();
+            }
+            System.out.println("Update success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
