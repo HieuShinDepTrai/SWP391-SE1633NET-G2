@@ -4,7 +4,10 @@
  */
 package dal;
 
+import Model.Blog;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,9 +36,34 @@ public class BlogDAO extends DBContext {
                     + "	?, \n"
                     + "	?, \n"
                     + "	?)", userid, date, content, tilte, description, image, category, status);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<Blog> getBlogListReported() {
+        ArrayList<Blog> blogListReport = new ArrayList();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [BlogID]\n"
+                    + "      ,[UserID]\n"
+                    + "      ,[BlogDate]\n"
+                    + "      ,[BlogContent]\n"
+                    + "      ,[BlogTitle]\n"
+                    + "      ,[BlogDescription]\n"
+                    + "      ,[BlogImage]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[isReported]\n"
+                    + "  FROM [dbo].[Blog]\n"
+                    + "  WHERE isReported = 1");
+            while (rs.next()) {
+                blogListReport.add(new Blog(rs.getInt("BlogID"), rs.getInt("UserID"), rs.getTimestamp("BlogDate"), rs.getString("BlogContent"), rs.getString("BlogTitle"), rs.getString("BlogDescription"), rs.getString("BlogImage"), rs.getString("Category"), rs.getString("Status")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return blogListReport;
+    }
+
 }
