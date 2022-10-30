@@ -227,7 +227,8 @@ public class BlogDAO extends DBContext {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-        
+    }
+    
     public void updateCourseStatus(String status, int blogID) {
         try {
             int updateStatus = executeUpdate("UPDATE [dbo].[Blog]\n"

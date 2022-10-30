@@ -102,8 +102,8 @@
                                     <div class="user d-flex">
                                         <img src="${blog.getUser().getAvatar()}" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 50px;">
                                         <div class="ms-3 d-flex justify-content-between flex-column">
-                                            <div class="username" style="font-weight: 600;">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</div>
-                                            <div class="post-time text-black-50" style="font-size: 14px;">${blog.getDate()}</div>
+                                            <a style="font-size: 12px; font-weight: 600  ;" class="ms-2" href="profiledetails?id=${blog.getUserid()}">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</a>
+                                            <div class="post-time text-black-50" style="font-size: 14px;"><fmt:formatDate type = "both" value = "${blog.getDate()}" /></div>
                                         </div>
                                     </div>
                                     <div class="dropdown">
@@ -147,7 +147,7 @@
                                             <!-- User post -->
                                             <div class="d-flex align-items-center">
                                                 <img src="${blog.getUser().getAvatar()}" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
-                                                <span style="font-size: 12px; font-weight: 600  ;" class="ms-2">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</span>
+                                                <a style="font-size: 12px; font-weight: 600  ;" class="ms-2" href="profiledetails?id=${blog.getUserid()}">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</a>
                                             </div>
 
                                             <!-- User post -->
@@ -185,7 +185,7 @@
                                                 .
                                             </span>
                                             <div class="ms-2 d-inline-block" style="font-size: 14px;">
-                                                ${blogs.getDate()}
+                                                <fmt:formatDate type = "both" value = "${blog.getDate()}" />
                                             </div>
                                         </div>
                                     </div>
