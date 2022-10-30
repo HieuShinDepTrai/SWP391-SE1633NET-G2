@@ -256,7 +256,7 @@ public class BlogDAO extends DBContext {
         return null;
     }
     
-    public void updateCourseStatus(String status, int blogID) {
+    public void updateBlogStatus(String status, int blogID) {
         try {
             int updateStatus = executeUpdate("UPDATE [dbo].[Blog]\n"
                     + "   SET [Status] = ?\n"
