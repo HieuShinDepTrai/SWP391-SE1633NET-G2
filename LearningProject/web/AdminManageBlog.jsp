@@ -18,14 +18,14 @@
         <div class="container-fluid w-100" style="margin-top: 66px;">
             <div class="row py-3 px-4">
                 <div class="col-lg-12">
-                    <h4 class="fw-bold">Admin Manage Blog</h4>
+                    <h4 class="fw-bold">Blog Reported</h4>
                 </div>
                 <div class="col-lg-12">
                     <div class="card card-body shadow-sm" style="border-radius: 12px;">
                         <div class="row">
                             <div class="col-6">
-                                <h6 class="fw-bold">Course Request List</h6>
-                                <p style="color: rgba(0, 0, 0, 0.6)">Have ${coursePendingList.size()} requests</p>
+                                <h6 class="fw-bold">Blog Reported List</h6>
+                                <p style="color: rgba(0, 0, 0, 0.6)" class="text-danger">Have <span class="fw-bold">${blogListReported.size()} </span>blog are reported</p>
                             </div>
                             <div class="col-6">
                                 <div class="d-flex justify-content-end" style="position: relative;">
@@ -46,44 +46,39 @@
                                     <tbody>
                                         <c:forEach items="${blogListReported}" var="blog">
                                             <tr>
-                                                <td style="max-width: 180px">
+                                                <td style="width: 28%">
                                                     <div>
-                                                        <div>${blog.getTilte()}</div>
+                                                        <div class="fw-bold">
+                                                            <a href>${blog.getTitle()}</a>
+                                                            </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <img src="${course.getAuthor().getAvatar()}" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
-                                                        <div class="d-inline-block" style="font-size: 14px; font-weight: 500;">${course.getAuthor().getUserName()}</div>
+                                                        <img src="${blog.getUser().getAvatar()}" alt="" style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
+                                                        <div class="d-inline-block" style="font-size: 14px; font-weight: 500;">${blog.getUser().getUserName()}</div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="font-weight: 600">${course.getDateCreate()}</div>
+                                                    <div style="font-weight: 600">${blog.getDate()}</div>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${course.getCategory()}</div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <c:if test="${course.getCoursePrice() == 0}">
-                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Free</div>
-
-                                                        </c:if>
-                                                        <c:if test="${course.getCoursePrice() != 0}">
-                                                            <div style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;"><fmt:formatNumber value="${course.getCoursePrice()}" type="number" maxFractionDigits ="3"/>đ</div>
-
-                                                        </c:if>    
+                                                        <div style="background-color: #4dd4ac; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${blog.getCategory()}</div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <form action="AdminManageCourse?courseID=${course.getCourseID()}&Accept='true'" method="POST" class="d-inline">
-                                                            <input type="submit" value="Accept" class="bg-success" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
-                                                        </form>
-                                                        <form action="AdminManageCourse?courseID=${course.getCourseID()}&Denied='true'" method="POST" class="d-inline">
-                                                            <input type="submit" value="Denied" class="bg-danger" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
+                                                        ${blog.getStatus()}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <form action="AdminManageBlog?blogID=${blog.getBlogid()}&enable='true'" method="POST" class="d-inline">
+                                                            <input type="submit" value="Enable blog" class="bg-success" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
+                                                        </form>  
+                                                        <form action="AdminManageBlog?blogID=${blog.getBlogid()}&disable='true'" method="POST" class="d-inline">
+                                                            <input type="submit" value="Disable blog" class="bg-danger" style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500; outline: none; border: none;">
                                                         </form>  
                                                     </div>
                                                 </td>
