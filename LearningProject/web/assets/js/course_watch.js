@@ -36,63 +36,92 @@ function active_comment_button(current) {
 }
 
 function show_reply_post_comment(input) {
-//    $(elem).parent().next().toggleClass('d-none');
-    document.querySelector('#ShowReply' + input.getAttribute("data-cmt-reply")).classList.remove('d-none');
+  //    $(elem).parent().next().toggleClass('d-none');
+  document.querySelector('#ShowReply' + input.getAttribute("data-cmt-reply")).classList.remove('d-none');
 }
 
-$("#course-comment-close").click(function(){
-    $('.course-comment-container').hide();
+$("#course-comment-close").click(function () {
+  $('.course-comment-container').hide();
 });
 
-$('.lesson-comment').click(function(){
-    $('.course-comment-container').show();
+$('.lesson-comment').click(function () {
+  $('.course-comment-container').show();
 })
 
 
 function disableOn(input) {
-    document.querySelector("#cmt" + input.getAttribute("data-cmt-id")).disabled = false;
-//    var put = document.querySelector('.content-comment');
-//    
-//    put.disabled = false;
-//    
-//    
+  document.querySelector("#cmt" + input.getAttribute("data-cmt-id")).disabled = false;
+  //    var put = document.querySelector('.content-comment');
+  //    
+  //    put.disabled = false;
+  //    
+  //    
 
-    
-    input.classList.add('d-none');
-    
-    document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    document.querySelector('#Like' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    document.querySelector('#Report' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    document.querySelector('#dotReport' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    document.querySelector('#Reply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    document.querySelector('#dotReply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
-    
-    document.querySelector('#Cancel' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
-    document.querySelector('#Save' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
+
+  input.classList.add('d-none');
+
+  document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+  document.querySelector('#Like' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+  document.querySelector('#Report' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+  document.querySelector('#dotReport' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+  document.querySelector('#Reply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+  document.querySelector('#dotReply' + input.getAttribute("data-cmt-id")).classList.add('d-none');
+
+  document.querySelector('#Cancel' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
+  document.querySelector('#Save' + input.getAttribute("data-cmt-id")).classList.remove('d-none');
 }
 
 function disableOff(input) {
-    document.querySelector("#cmt" + input.getAttribute("data-cmt-cancel-id")).disabled = true;
+  document.querySelector("#cmt" + input.getAttribute("data-cmt-cancel-id")).disabled = true;
 
-    
-    input.classList.add('d-none');
-    
-    document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#Like' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#Edit' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#Report' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#dotReport' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#Reply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    document.querySelector('#dotReply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
-    
-    document.querySelector('#Cancel' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
-    document.querySelector('#Save' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
-    
-    
+
+  input.classList.add('d-none');
+
+  document.querySelector('#NumberLikes' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#Like' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#Edit' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#Report' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#dotReport' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#Reply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+  document.querySelector('#dotReply' + input.getAttribute("data-cmt-cancel-id")).classList.remove('d-none');
+
+  document.querySelector('#Cancel' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
+  document.querySelector('#Save' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
+
+
 }
 
 function CancelReply(input) {
-    
-    document.querySelector('#ShowReply' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
-    
+
+  document.querySelector('#ShowReply' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
+
+}
+
+
+function submit() {
+  let question = document.querySelectorAll('.question')
+  let output = []
+
+  question.forEach((ques) => {
+    let questionID = ques.querySelector('input[name="questionID"]').value
+    let questions = {};
+    questions.ques = []
+    questions.ques.push({
+      questionID
+    });
+
+    questions.ans = []
+    let answersID = ques.querySelectorAll('input[name="answerID"]')
+    answersID.forEach((ans) => {
+      let ansID = ans.value
+      let isCorrect = ans.nextElementSibling.checked
+      questions.ans.push({ ansID, isCorrect })
+    });
+    output.push(questions);
+  });
+  let valueSubmit = document.querySelector("#valueSubmit");
+  valueSubmit.value = JSON.stringify(output) 
+  console.log(JSON.stringify(output))
+  let formSubmit = document.querySelector("#submitForm");
+  // formSubmit.submit();
 }
