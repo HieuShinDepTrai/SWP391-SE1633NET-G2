@@ -117,10 +117,14 @@ public class NotificationController extends HttpServlet {
             response.sendRedirect("transaction");
             return;
         } else if (actionList[0].equals("Enroll") || actionList[0].equals("Verify")) {
-            response.sendRedirect("WatchCourse?courseID=" + actionList[1]);
+            response.sendRedirect("CourseDetails?id=" + actionList[1]);
             return;
         } else if(actionList[0].equals("Reply")){
             response.sendRedirect("WatchCourse?lessonID=" + actionList[1]);
+        } else if(actionList[0].equals("Withdraw") || actionList[0].equals("Recharge")){
+            response.sendRedirect("transaction");
+        } else{
+            response.sendRedirect("home");
         }
     }
 

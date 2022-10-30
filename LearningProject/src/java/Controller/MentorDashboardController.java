@@ -7,6 +7,7 @@ package Controller;
 import Model.Course;
 import Model.User;
 import dal.CourseDAO;
+import dal.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,17 +29,17 @@ public class MentorDashboardController extends HttpServlet {
             HttpSession session = request.getSession();
             if (session.getAttribute("user") != null) {
                 CourseDAO cd = new CourseDAO();
+                QuizDAO quizDAO = new QuizDAO();
                 User user = (User) session.getAttribute("user");
-                ArrayList<Course> list = cd.getAllMentorCourse(user.getUserId());
-                
+                ArrayList<Course> list = cd.getAllMentorCourse(user.getUserId());                
+
                 request.setAttribute("numofcourses", cd.getMentorNumberOfCourse(user.getUserId()));
                 request.setAttribute("numofstudents", cd.getMentorNumberOfStudent(user.getUserId()));
                 request.setAttribute("numofblogs", cd.getMentorNumberOfBlog(user.getUserId()));
                 request.setAttribute("numofquizs", cd.getMentorNumberOfQuiz(user.getUserId()));
-                request.setAttribute("courses", list);
+                request.setAttribute("courses", list);                
                 request.getRequestDispatcher("MentorDashboard.jsp").forward(request, response);
-            }
-            else{
+            } else {
                 response.sendRedirect("home");
             }
         } catch (Exception e) {
