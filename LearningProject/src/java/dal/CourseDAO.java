@@ -622,10 +622,11 @@ public class CourseDAO extends DBContext {
     }
 
     
-    public ArrayList<UserCourse> getListUserCourseOfUser(int userId){
+    public ArrayList<UserCourse> getListUserCourseOfUser(int userId, String courseName){
         ArrayList<UserCourse> list = new ArrayList<UserCourse>();
         try {
-            ResultSet rs = executeQuery("SELECT [CourseID], [isStudied], [CourseRating], [CourseFeedback], [Progress], [Paydate], [isFavourite] FROM [dbo].[User_Course] WHERE [UserID] = ?", userId);
+            ResultSet rs = executeQuery("SELECT [uc].[CourseID], [uc].[isStudied], [uc].[CourseRating], [uc].[CourseFeedback], [uc].[Progress], [uc].[Paydate], [uc].[isFavourite] FROM [dbo].[User_Course] uc INNER JOIN [Course] c ON [uc].[CourseID] = [c].[CourseID] WHERE [uc].[UserID] ="  + userId
+                    + "AND [c].[CourseName] LIKE N'%" + courseName + "%'");
             while(rs.next()){
                 list.add(new UserCourse(userId, rs.getInt("CourseID"), rs.getBoolean("isStudied"), rs.getInt("CourseRating"), rs.getString("CourseFeedback"), rs.getDouble("Progress"), rs.getDate("Paydate"), rs.getBoolean("isFavourite")));
             }
@@ -669,7 +670,47 @@ public class CourseDAO extends DBContext {
                     + "[C].[Difficulty],"
                     + "[C].[AuthorID]"
                     + "FROM [Course] C INNER JOIN [User] U\n"
-                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled' AND [CourseName] LIKE  '%" + courseName +"%'" )){
+                    + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled' AND [CourseName] LIKE  N'%" + courseName + "%'" )){
+            while (rs.next()) {                
+                Course course = new Course();
+                course.setCourseName(rs.getString("CourseName"));
+                course.setDateCreate(rs.getTimestamp("DateCreate"));
+                course.setCategory(rs.getString("Category"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setStatus(rs.getString("Status"));
+                course.setNumberEnrolled(rs.getInt("NumberEnrolled"));
+                course.setCoursePrice(rs.getInt("CoursePrice"));
+                course.setCourseID(rs.getInt("CourseID"));
+                course.setObjectives(rs.getNString("Objectives"));
+                course.setDifficulty(rs.getString("Difficulty"));
+                course.setCourseImage(rs.getString("CourseImage"));
+                course.setAuthor(new UserDAO().getAllUserInformationByID(rs.getInt("AuthorID")));
+
+                courseList.add(course);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return courseList;
+    }
+    
+    public ArrayList<Course> getAllFavouriteCoursesByCourseName(String courseName) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try (ResultSet rs = executeQuery("SELECT \n"
+                    + "[C].[CourseName],"
+                    + "[C].[DateCreate],"
+                    + "[C].[Category],"
+                    + "[C].[CourseImage],"
+                    + "[C].[Status],"
+                    + "[C].[NumberEnrolled],"
+                    + "[C].[CourseID],"
+                    + "[C].[CoursePrice],"
+                    + "[C].[Description],"
+                    + "[C].[Objectives],"
+                    + "[C].[Difficulty],"
+                    + "[C].[AuthorID]"
+                    + "FROM [User_Course] C\n"
+                    + "WHERE[isFavourite] = 1 AND [CourseName] LIKE  '%" + courseName +"%'" )){
             while (rs.next()) {                
                 Course course = new Course();
                 course.setCourseName(rs.getString("CourseName"));

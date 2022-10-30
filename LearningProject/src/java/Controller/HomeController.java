@@ -61,11 +61,12 @@ public class HomeController extends HttpServlet {
         if (courseName == null) {
             courseName = "";
         } else {
-            courseName = request.getParameter("searching");
+            courseName = request.getParameter("searching").trim();
         }
         
+        //get all the Courses by CourseName - Searching
         ArrayList<Course> courses = cdao.getAllCoursesByCourseName(courseName);
-
+        
         
         HttpSession session = request.getSession();
 
@@ -84,7 +85,7 @@ public class HomeController extends HttpServlet {
             User user = (User) session.getAttribute("user");
             String avatar = user.getAvatar();
 
-            request.setAttribute("usercourselist", cdao.getListUserCourseOfUser(user.getUserId()));
+            request.setAttribute("usercourselist", cdao.getListUserCourseOfUser(user.getUserId(), ""));
             request.setAttribute("avatar", avatar);
             //}                        
             request.setAttribute("courseIDs", courseIDs);                        

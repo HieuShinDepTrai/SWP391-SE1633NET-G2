@@ -52,6 +52,13 @@ public class WithdrawManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String searching = request.getParameter("searching");
+        if (searching == null) {
+            searching = "";
+            } else {
+            searching = request.getParameter("searching").trim();
+        }
+        
         HttpSession session = request.getSession();
         PaymentDAO paymentDAO = new PaymentDAO();
         User user = (User) session.getAttribute("user");
@@ -59,7 +66,8 @@ public class WithdrawManagementController extends HttpServlet {
             response.sendRedirect("ErrorPage.jsp");
             return;
         }
-        ArrayList<Payment> withdrawList = paymentDAO.getPendingWithdraw();
+     
+        ArrayList<Payment> withdrawList = paymentDAO.getPendingWithdraw(searching);
         request.setAttribute("withdrawList", withdrawList);
         request.getRequestDispatcher("AdminManageWithdraw.jsp").forward(request, response);
     }

@@ -110,11 +110,12 @@ public class PostVideoCommentController extends HttpServlet {
         }
 
         request.setAttribute("parentComment", parentComment);
-     //   request.setAttribute("commentList", commentList);
-        //request.getRequestDispatcher("WatchCourse").forward(request, response);
+
         response.sendRedirect("WatchCourse?courseID=" + request.getParameter("courseID") 
                 + "&sectionID=" + request.getParameter("sectionID") 
                 + "&lessonID=" + request.getParameter("lessonID"));
+//        response.sendRedirect("loadcomment?lessonid=" + request.getParameter("lessonID") );
+        
     }
 
     @Override
