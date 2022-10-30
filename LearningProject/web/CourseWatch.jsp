@@ -87,60 +87,49 @@
 
                         <c:if test="${lesson.getType() == 'Quiz'}">
                             <div class="lesson-content">
-                                <div class="bg-primary p-5" style="height: 240px;">
-                                    <div class="container p-2">
-                                        <h3 class="text-white fw-bold">Question ${count} of ${number}</h3>
-                                        <div class="question-content text-white" style="line-height: 28px;">
-                                            ${question.getQuestionContent()}
-                                        </div>
-                                    </div>
-                                </div>  
-                                <div class="bg-light p-4">
-                                    <div class="container d-flex justify-content-betweena align-items-center">
-                                        <div class="container fw-bold">
-                                            Choose the correct answer below:
-                                        </div>
-                                        <div class="container d-flex justify-content-end">
-                                            <form action="WatchCourse?courseID=${courseID}&sectionID=${sectionID}&lessonID=${lessonID}&questionID=${questionID}" method="GET">
-                                                <input type="hidden" value="${courseID}" name="courseID">
-                                                <input type="hidden" value="${sectionID}" name="sectionID">
-                                                <input type="hidden" value="${lessonID}" name="lessonID">
-                                                <input type="hidden" value="${questionID}" name="questionID">
-                                                <input type="hidden" value="${count}" name="count">
-                                                <c:if test="${count ne number}">
-                                                    <button type="submit" class="btn btn-danger">Next Question</button>
-                                                </c:if>
-                                                <c:if test="${count eq number}">
-                                                    <button type="submit" class="btn btn-danger" disabled="">Next Question</button>
-                                                </c:if>
-                                            </form>
-
-                                            <!-- If is last question: Show submit quiz -->
-                                            <!-- <div class="btn btn-danger">Submit Quiz</div> -->
-
-                                        </div>
-                                    </div>
+                                <div class="bg-primary py-5 px-4 fw-bold text-white fs-3">
+                                    ${lesson.getLessonName()}
+                                    <span class="btn-danger btn float-end">Finish the quiz</span>
                                 </div>
-                                <div class="p-5">
-                                    <div class="answer-title fw-bold mb-3">Your Answer:</div>
-                                    <div class="answer-list">
-                                        <!-- Answer -->
-                                        <c:forEach items="${answer}" var="answers">
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width: 20px; height: 20px;"> 
-                                                <label class="form-check-label fs-5" for="flexCheckDefault">
-                                                    ${answers.getAnswerContent()}
-                                                </label>
+                                <div class="">
+                                    <c:forEach items="${questionList}" var="question" varStatus="index">
+                                        <div class="question px-5 py-2">
+                                            <div class="fw-bold mb-2" style="font-size: 20px;">
+                                                Question ${index.count}
                                             </div>
-                                        </c:forEach>
+                                            <div>
+                                                ${question.getQuestionContent()}
+                                                <input type="hidden" name="questionID" value="${question.getQuestionId()}">
+                                            </div>
+                                            <div class="mt-3">
+                                                <c:forEach items="${answerList}" var="answer">
+                                                    <c:if test="${answer.getQuestionId() == question.getQuestionId()}">
 
-                                        <!-- Answer -->
-                                    </div>
+                                                        <div class="mb-2">
+                                                            <input name="answerID" type="hidden" value="${answer.getAnswerId()}">
+                                                            <input type="checkbox" class="form-check-input"> ${answer.getAnswerContent()}
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                        </div>    
+
+                                    </c:forEach>
+
+                                </div>
+                                <div class="px-4 py-2 d-flex justify-content-between">
+                                    <div class="btn btn-primary">Back to home</div> 
+                                    <div class="btn btn-danger" onclick="submit()">Finish the quiz</div> 
                                 </div>
                             </div>
+                            <form action="DoQuiz" method="post" id="submitForm">
+                                <input type="hidden" name="quizID" value="${quizID}">
+                                <input type="hidden" name="jsonQuestions" id="valueSubmit">
+                            </form>
                         </c:if>
                     </div>
                 </div>
+
                 <div class="course-watch-right">
                     <div class="course-watch-right-content">
                         <h4 class="course-content-title px-4 py-3">Course Content</h4>
@@ -248,7 +237,7 @@
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </div>
-                                                                
+
                                                             <div class="course-lesson-child-footer">
                                                                 <i class="fa-solid fa-circle-play"></i>
                                                                 <fmt:parseNumber var="time" type="number" integerOnly="true" value="${lesson.getTime()}"/>
@@ -258,7 +247,7 @@
 
                                                             </div>    
                                                         </div>        
-                                                                
+
                                                     </a>
                                                 </c:if>
 
@@ -309,8 +298,8 @@
                                     <textarea name="comment" id="commentContent" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                 </div>
                                 <div class="course-postcomment-action" style="float: right;">
-<!--                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>-->
-                                <input class="submit-comment" onclick="loadAllComment()" type="submit" name="op" value="Comment">
+                                    <!--                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>-->
+                                    <input class="submit-comment" name="op" type="submit" value="Comment">
                                 </div>
                             </div>
                         </form>
@@ -321,7 +310,7 @@
                         <div class="course-comment-list d-flex flex-column w-100 gap-4" id="commentform">
                             <!-- Begin: Comment -->
                             <c:forEach items="${requestScope.parentComment}" var="parentComment">
-                               
+
                                 <div class="comment d-flex align-items-start">
 <!--                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">-->
                                     <img src="${parentComment.getUser().getAvatar()}" alt="none" class="user-avatar">
@@ -346,7 +335,7 @@
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
                                                     </c:if>
                                                 </div>
-                                                    <div id="NumberLikes${parentComment.getCommentId()}">${parentComment.getLikes()}</div>
+                                                <div id="NumberLikes${parentComment.getCommentId()}">${parentComment.getLikes()}</div>
                                                 <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${parentComment.getCommentId()}" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
                                                 <div class="dot">.</div>
                                                 <div class="comment-action-content comment-action-content-reply" id="Edit${parentComment.getCommentId()}" data-cmt-id="${parentComment.getCommentId()}" onclick="disableOn(this)">Edit</div>
@@ -355,7 +344,7 @@
                                                 <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" data-cmt-reply="${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
                                                 <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
                                                 <div id="Report${parentComment.getCommentId()}">
-                                                    
+
                                                     <!--<form action="Report" method="GET">-->
 
                                                     <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
@@ -364,7 +353,7 @@
                                                     <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
                                                     </c:if>
-                                                        
+
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
@@ -417,35 +406,35 @@
                                                             <div class="comment-content">
 
                                                                 <form action="LikeComment" method="GET">
-                                            <div class="comment-user">
-                                                <div class="user-name">
-                                                    ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
-                                                </div>
-                                                <input name="commentContent" style="border:none" id="cmt${commentOfLesson.getCommentId()}" type="text" value="${commentOfLesson.getCommentContent()}" disabled>
-                                            </div>
-                                            <div class="comment-action">
-                                                <div id="Like${commentOfLesson.getCommentId()}">
-                                                    <input type="hidden" name="lessonID" value="${lessonID}">
-                                                    <input type="hidden" name="courseID" value="${courseID}">
-                                                    <input type="hidden" name="sectionID" value="${sectionID}">
-                                                    <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
-                                                    <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
-                                                    </c:if>
-                                                    <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
-                                                    </c:if>
-                                                </div>
-                                                    <div id="NumberLikes${commentOfLesson.getCommentId()}">${commentOfLesson.getLikes()}</div>
-                                                <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${commentOfLesson.getCommentId()}" data-cmt-cancel-id="${commentOfLesson.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
-                                                <div class="dot">.</div>
-                                                <div class="comment-action-content comment-action-content-reply" id="Edit${commentOfLesson.getCommentId()}" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="disableOn(this)">Edit</div>
-                                                <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${commentOfLesson.getCommentId()}" type="submit" name="op"  value="Save">
-                                                <div class="dot">.</div>
-                                                <div class="comment-action-content comment-action-content-reply" id="Reply${commentOfLesson.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
-                                                <div class="dot" id="dotReply${commentOfLesson.getCommentId()}">.</div>
-                                                <div id="Report${commentOfLesson.getCommentId()}">
-                                                    <!--<form action="Report" method="GET">-->
+                                                                    <div class="comment-user">
+                                                                        <div class="user-name">
+                                                                            ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
+                                                                        </div>
+                                                                        <input name="commentContent" style="border:none" id="cmt${commentOfLesson.getCommentId()}" type="text" value="${commentOfLesson.getCommentContent()}" disabled>
+                                                                    </div>
+                                                                    <div class="comment-action">
+                                                                        <div id="Like${commentOfLesson.getCommentId()}">
+                                                                            <input type="hidden" name="lessonID" value="${lessonID}">
+                                                                            <input type="hidden" name="courseID" value="${courseID}">
+                                                                            <input type="hidden" name="sectionID" value="${sectionID}">
+                                                                            <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
+                                                                            <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
+                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+                                                                            </c:if>
+                                                                            <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
+                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+                                                                            </c:if>
+                                                                        </div>
+                                                                        <div id="NumberLikes${commentOfLesson.getCommentId()}">${commentOfLesson.getLikes()}</div>
+                                                                        <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${commentOfLesson.getCommentId()}" data-cmt-cancel-id="${commentOfLesson.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
+                                                                        <div class="dot">.</div>
+                                                                        <div class="comment-action-content comment-action-content-reply" id="Edit${commentOfLesson.getCommentId()}" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="disableOn(this)">Edit</div>
+                                                                        <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${commentOfLesson.getCommentId()}" type="submit" name="op"  value="Save">
+                                                                        <div class="dot">.</div>
+                                                                        <div class="comment-action-content comment-action-content-reply" id="Reply${commentOfLesson.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
+                                                                        <div class="dot" id="dotReply${commentOfLesson.getCommentId()}">.</div>
+                                                                        <div id="Report${commentOfLesson.getCommentId()}">
+                                                                            <!--<form action="Report" method="GET">-->
 
                                                     <c:if test="${!userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">

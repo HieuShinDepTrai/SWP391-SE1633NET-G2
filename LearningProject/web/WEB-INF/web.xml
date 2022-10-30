@@ -60,6 +60,26 @@
         <servlet-name>AdminManageCourseController</servlet-name>
         <servlet-class>Controller.AdminManageCourseController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DoQuizController</servlet-name>
+        <servlet-class>Controller.DoQuizController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>testserasdfs</servlet-name>
+        <servlet-class>Controller.testserasdfs</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateBlogController</servlet-name>
+        <servlet-class>Controller.CreateBlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BlogListController</servlet-name>
+        <servlet-class>Controller.BlogListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterBlog</servlet-name>
+        <servlet-class>Controller.FilterBlog</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserDashboardController</servlet-name>
         <url-pattern>/userdashboard</url-pattern>
@@ -287,6 +307,26 @@
     <servlet-mapping>
         <servlet-name>AdminManageCourseController</servlet-name>
         <url-pattern>/AdminManageCourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoQuizController</servlet-name>
+        <url-pattern>/DoQuiz</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>testserasdfs</servlet-name>
+        <url-pattern>/testserasdfs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateBlogController</servlet-name>
+        <url-pattern>/createblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BlogListController</servlet-name>
+        <url-pattern>/blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterBlog</servlet-name>
+        <url-pattern>/filterblog</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
