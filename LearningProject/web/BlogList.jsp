@@ -4,6 +4,7 @@
     Author     : Dung
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
-                <link rel="stylesheet" href="assets/css/homepage.css">
+        <link rel="stylesheet" href="assets/css/homepage.css">
 
         <link rel="stylesheet" href="assets/css/blog.css">
     </head>
@@ -38,7 +39,7 @@
                        border-radius: 50%;
                        background-color: var(--bs-orange);
                        margin: 0 auto 10px auto;
-                       " href="CreateCourse" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                       " href="createblog" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
                         <i class="fa-solid fa-plus" style="
                            font-size: 24px;
                            /* padding: 10px; */
@@ -76,14 +77,14 @@
                         <p class="button-title text-center">Mentor Dashboard</p>
                     </a>
                 </c:if>
-                <a class="bar-button">
+                <a class="bar-button" href="blog">
                     <i class="fa-solid fa-newspaper"></i>
                     <p class="button-title">Blog</p>
                 </a>
 
             </div>
             <!-- End: Side Bar -->
-            
+
             <div id="blog">
                 <div class="row g-2 py-3 px-4">
                     <div class="col-12 fw-bolder fs-2 mb-2">Bài viết nổi bật</div>
@@ -91,60 +92,55 @@
                     <div class="col-12 row mt-5">
                         <!-- Blog -->
                         <div class="col-8">
-                            <div class="card card-body p-3 shadow-sm mb-4"> 
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <!-- User post -->
+                            <c:forEach items="${blogs}" var="blog">
+                                <div class="card card-body p-3 shadow-sm mb-4"> 
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <!-- User post -->
+                                        <div class="d-flex align-items-center">
+                                            <img src="${blog.getUser().getAvatar()}" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
+                                            <span style="font-size: 12px; font-weight: 600  ;" class="ms-2">${blog.getUser().getLastName()} ${blog.getUser().getFirstName()}</span>
+                                        </div>
+
+                                        <!-- User post -->
+
+                                        <!-- Action -->
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                        <!-- Action -->
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                                        <!-- Content left -->
+                                        <div class="" style="width: 78%;">
+                                            <h5 class="fw-bolder">${blog.getTitle()}</h5>
+                                            <p class="text-black-50" style="font-size: 15px;">${blog.getDescription()}</p>
+                                        </div>
+                                        <!-- Content left -->
+                                        <div style="width: 20%; height: 80px;">
+                                            <img src="${blog.getImage()}" class="rounded-3" alt="" style="width: 100%; max-height: 120px; object-fit: cover;">
+                                        </div>
+                                        <!-- Content right -->
+                                        <div>
+
+                                        </div>
+                                        <!-- Content right -->
+
+                                    </div>
+                                    <!-- Content -->
+
                                     <div class="d-flex align-items-center">
-                                        <img src="../assets/img/f8-logo.png" alt="" style="width: 24px; height: 24px; object-fit: cover; border-radius: 50%;">
-                                        <span style="font-size: 12px; font-weight: 600  ;" class="ms-2">dungssj12</span>
-                                    </div>
-                                    <!-- User post -->
-
-                                    <!-- Action -->
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                    <!-- Action -->
-                                </div>
-
-                                <!-- Content -->
-                                <div class="mt-3 d-flex justify-content-between align-items-center">
-                                    <!-- Content left -->
-                                    <div class="" style="width: 78%;">
-                                        <h5 class="fw-bolder">Setup Môi Trường Lập Trình Nhanh Chóng Cho Desktop. Phần 1: Lý thuyết</h5>
-                                        <p class="text-black-50" style="font-size: 15px;">Một ngày đẹp trời, bạn mới sắm cho mình một chiếc laptop hoặc một bộ PC để tập trung theo đuổi công nghệ thông tin, theo ngành...</p>
-                                    </div>
-                                    <!-- Content left -->
-                                    <div style="width: 20%; height: 80px;">
-                                        <img src="../assets/img/f8-logo.png" class="rounded-3" alt="" style="width: 100%; max-height: 120px; object-fit: cover;">
-                                    </div>
-                                    <!-- Content right -->
-                                    <div>
-
-                                    </div>
-                                    <!-- Content right -->
-
-                                </div>
-                                <!-- Content -->
-
-                                <div class="d-flex align-items-center">
-                                    <div class="tag bg-primary fw-bold text-white" style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
-                                        Javascript
-                                    </div>
-                                    <span class="ms-2">
-                                        .
-                                    </span>
-                                    <div class="ms-2 d-inline-block" style="font-size: 14px;">
-                                        4 tháng trước
-                                    </div>
-                                    <span class="ms-2">
-                                        .
-                                    </span>
-                                    <div class="ms-2 d-inline-block" style="font-size: 14px;">
-                                        6 phút đọc
+                                        <div class="tag bg-primary fw-bold text-white" style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
+                                            ${blog.getCategory()}
+                                        </div>
+                                        <span class="ms-2">
+                                            .
+                                        </span>
+                                        <div class="ms-2 d-inline-block" style="font-size: 14px;">
+                                            ${blog.getDate()}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-
+                            </c:forEach>
                         </div>
                         <!-- Blog -->
 
