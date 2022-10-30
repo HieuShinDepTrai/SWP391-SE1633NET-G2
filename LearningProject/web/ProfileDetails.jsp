@@ -17,7 +17,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
-        <link rel="stylesheet" href="../assets/css/blog.css">
+        <link rel="stylesheet" href="assets/css/blog.css">
+        <link rel="stylesheet" href="assets/css/homepage.css">
+
     </head>
 
     <body style="font-family: 'Montserrat'; width: 100vw; " class="bg-light ">
@@ -60,88 +62,73 @@
                                             aria-selected="false">Blog</button>
                                 </div>
                             </nav>
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            <div class="tab-content w-100"  id="nav-tabContent">
+                                <div class="tab-pane fade show active w-100" id="nav-home" role="tabpanel"
                                      aria-labelledby="nav-home-tab">
-                                    <c:forEach items="${requestScope.courses}" var="course">
-                                        <div class="col-xl-3 col-lg-4 col-md-6" >
-                                            <div class="card" style="min-height: 234px; height: 400px;">
-                                                <div class="card-top-img">
-                                                    <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
-                                                </div>
-                                                <div class="card-body">
+                                    <div class="row g-3 mt-5">
 
-                                                    <h6 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h6>
-                                                    <div class="course-meta-info">
-                                                        <div class="course-meta-author">
-                                                            <div class="author-avatar">
-                                                                <img src="${course.getAuthor().getAvatar()}"
-                                                                     alt="" style="width: 40px; height: 40px; border-radius: 50%;">
-                                                            </div>
-                                                            <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
-                                                        </div>
-                                                        <div class="course-meta-student">
-                                                            <i class="fa-solid fa-user"></i>
-                                                            <p>${course.getNumberEnrolled()} Students</p>
-                                                        </div>
+                                        <c:forEach items="${requestScope.courses}" var="course">
+                                            <div class="col-xl-3 col-lg-4 col-md-6" >
+                                                <div class="card" style="min-height: 234px; height: 400px;">
+                                                    <div class="card-top-img">
+                                                        <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
                                                     </div>
-                                                    <div class="course-footer">
-                                                        <c:if test="${course.getCoursePrice() == 0}">
-                                                            <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
-                                                            <form id="enroll" action="enroll" method="POST" class="d-flex justify-content-between">                                                                             
-                                                                <c:if test="${!courseIDs.contains(course.getCourseID())}">
-                                                                    <input name="op" type="submit" value="Enroll">
-                                                                </c:if>
+                                                    <div class="card-body">
 
-                                                                <c:if test="${courseIDs.contains(course.getCourseID())}">
-                                                                    <input name="op" type="submit" value="Go to Course">
-                                                                </c:if>
+                                                        <h6 class="course-title"><a href="CourseDetails?id=${course.getCourseID()}">${course.getCourseName()}</a></h6>
+                                                        <div class="course-meta-info">
+                                                            <div class="course-meta-author">
+                                                                <div class="author-avatar">
+                                                                    <img src="${course.getAuthor().getAvatar()}"
+                                                                         alt="" style="width: 40px; height: 40px; border-radius: 50%;">
+                                                                </div>
+                                                                <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
+                                                            </div>
+                                                            <div class="course-meta-student">
+                                                                <i class="fa-solid fa-user"></i>
+                                                                <p>${course.getNumberEnrolled()} Students</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="course-footer">
+                                                            <c:if test="${course.getCoursePrice() == 0}">
+                                                                <div class="free" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color:  white;">Free</div>
+                                                                <form id="enroll" action="enroll" method="POST" class="d-flex justify-content-between">                                                                             
+                                                                    <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Enroll">
+                                                                    </c:if>
 
-                                                                <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                            </form>
-                                                        </c:if>
-                                                        <c:if test="${course.getCoursePrice() != 0}">
-                                                            <div class="course-price">${course.getCoursePrice()} đ</div>
-                                                            <form id="enroll" action="enroll" method="POST">
-                                                                <c:if test="${!courseIDs.contains(course.getCourseID())}">
+                                                                    <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Go to Course">
+                                                                    </c:if>
 
-                                                                    <input name="op" type="submit" value="Buy now" class="d-inline">
-                                                                </c:if>
-                                                                <c:if test="${courseIDs.contains(course.getCourseID())}">
-                                                                    <input name="op" type="submit" value="Go to Course">                                                            
-                                                                </c:if>
-                                                                <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
-                                                                <input type="hidden" name="coursePrice" value="${price}">
-                                                                <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                                    <input type="hidden" name="courseID" value="${course.getCourseID()}">
+                                                                </form>
+                                                            </c:if>
+                                                            <c:if test="${course.getCoursePrice() != 0}">
+                                                                <div class="course-price">${course.getCoursePrice()} đ</div>
+                                                                <form id="enroll" action="enroll" method="POST">
+                                                                    <c:if test="${!courseIDs.contains(course.getCourseID())}">
 
-                                                            </form>
-                                                        </c:if>
+                                                                        <input name="op" type="submit" value="Buy now" class="d-inline">
+                                                                    </c:if>
+                                                                    <c:if test="${courseIDs.contains(course.getCourseID())}">
+                                                                        <input name="op" type="submit" value="Go to Course">                                                            
+                                                                    </c:if>
+                                                                    <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
+                                                                    <input type="hidden" name="coursePrice" value="${price}">
+                                                                    <input type="hidden" name="courseID" value="${course.getCourseID()}">
 
-                                                        <c:set var="isPresent" value="${false}"></c:set>
+                                                                </form>
+                                                            </c:if>
 
-                                                        <c:forEach items="${usercourselist}" var="usercourse">
-                                                            <c:if test="${course.getCourseID() == usercourse.getCourseID()}">
-                                                                <c:if test="${usercourse.isIsFavourite() == true}">
-                                                                    <form action="home" method="POST">
-                                                                        <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                                        <button style="border: #ffffff; background: #ffffff; font-size: 25px; color:red" type="submit" name="favour" value="unlike"><i class="fa-solid fa-heart"></i></i></button>
-                                                                    </form>     
-                                                                    <c:set var="isPresent" value="${true}"></c:set>
-                                                                </c:if>
-                                                            </c:if> 
-                                                        </c:forEach>
-
-                                                        <c:if test="${isPresent == false}">
-                                                            <form action="home" method="POST">
-                                                                <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                                <button style="border: white; background: white; font-size: 25px" type="submit" name="favour" value="like"><i class="fa-regular fa-heart"></i></button>
-                                                            </form>
-                                                        </c:if>
+                                                            
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    </div>
 
                                 </div>
                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel"
