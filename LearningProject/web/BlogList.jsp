@@ -27,26 +27,24 @@
             <%@include file="header.jsp"%>
             <!-- Begin: Side Bar -->
             <div id="side-bar">
-                <c:if test="${user.role == 'Mentor'}">
-                    <a style="
-                       display: block;
-                       width: 36px;
-                       display: flex;
-                       justify-content: center;
-                       align-items: center;
-                       height: 36px;
-                       padding: 19px;
-                       border-radius: 50%;
-                       background-color: var(--bs-orange);
-                       margin: 0 auto 10px auto;
-                       " href="createblog" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
-                        <i class="fa-solid fa-plus" style="
-                           font-size: 24px;
-                           /* padding: 10px; */
-                           color: white;
-                           "></i>
-                    </a>
-                </c:if>
+                <a style="
+                   display: block;
+                   width: 36px;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   height: 36px;
+                   padding: 19px;
+                   border-radius: 50%;
+                   background-color: var(--bs-orange);
+                   margin: 0 auto 10px auto;
+                   " href="createblog" data-bs-toggle="tooltip" data-bs-placement="right" title="Create Course">
+                    <i class="fa-solid fa-plus" style="
+                       font-size: 24px;
+                       /* padding: 10px; */
+                       color: white;
+                       "></i>
+                </a>
                 <a class="bar-button button-hover" href="home">
                     <i class="fa-solid fa-house"></i>
                     <p class="button-title">Home</p>
@@ -168,50 +166,50 @@
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
         <script>
-            function loadBlogFrontEnd() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Front-end',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
-            
-            function loadBlogBackEnd() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Back-end',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
-            
-            function loadBlogDatabase() {
-                $.ajax({
-                    url: "/LearningProject/filterblog",
-                    type: 'GET',
-                    data: 'category=Database',
-                    success: function (data) {
-                        var row = document.getElementById("filter");
-                        row.innerHTML = data;
-                    },
-                    error: function () {
-                        console.log('Error');
-                    }
-                });
-            }
+                                function loadBlogFrontEnd() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Front-end',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
+
+                                function loadBlogBackEnd() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Back-end',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
+
+                                function loadBlogDatabase() {
+                                    $.ajax({
+                                        url: "/LearningProject/filterblog",
+                                        type: 'GET',
+                                        data: 'category=Database',
+                                        success: function (data) {
+                                            var row = document.getElementById("filter");
+                                            row.innerHTML = data;
+                                        },
+                                        error: function () {
+                                            console.log('Error');
+                                        }
+                                    });
+                                }
         </script>
     </body>
 
