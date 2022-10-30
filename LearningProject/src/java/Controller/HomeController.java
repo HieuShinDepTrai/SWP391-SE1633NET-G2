@@ -13,6 +13,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
  *
  * @author Hieu Shin
  */
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
     /**
@@ -61,11 +63,12 @@ public class HomeController extends HttpServlet {
         if (courseName == null) {
             courseName = "";
         } else {
-            courseName = request.getParameter("searching");
+            courseName = request.getParameter("searching").trim();
         }
         
+        //get all the Courses by CourseName - Searching
         ArrayList<Course> courses = cdao.getAllCoursesByCourseName(courseName);
-
+        
         
         HttpSession session = request.getSession();
 
@@ -84,7 +87,7 @@ public class HomeController extends HttpServlet {
             User user = (User) session.getAttribute("user");
             String avatar = user.getAvatar();
 
-            request.setAttribute("usercourselist", cdao.getListUserCourseOfUser(user.getUserId()));
+            request.setAttribute("usercourselist", cdao.getListUserCourseOfUser(user.getUserId(), ""));
             request.setAttribute("avatar", avatar);
             //}                        
             request.setAttribute("courseIDs", courseIDs);                        

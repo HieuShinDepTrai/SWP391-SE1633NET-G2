@@ -132,7 +132,7 @@ public class DoQuizController extends HttpServlet {
 
             // Tinh diem
             int datasize = data.size();
-            double mark = ((double)numberOfRightQuestion / (double)datasize) * 10;
+            double mark = ((double)numberOfRightQuestion / (double)datasize) * 10;            
             User u = (User) request.getSession().getAttribute("user");
             Date date = new Date();
             Timestamp doDate = new Timestamp(date.getTime());

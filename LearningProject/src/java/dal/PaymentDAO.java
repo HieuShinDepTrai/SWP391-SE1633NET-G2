@@ -19,6 +19,9 @@ import java.util.logging.Logger;
  */
 public class PaymentDAO extends DBContext {
 
+    public PaymentDAO() {
+    }
+    
     public ArrayList<Payment> getPaymentListFromUser(int userid) {
         ArrayList<Payment> paymentList = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
@@ -42,12 +45,16 @@ public class PaymentDAO extends DBContext {
         return paymentList;
     }
 
-    public ArrayList<Payment> getPendingWithdraw() {
+    public ArrayList<Payment> getPendingWithdraw(String searchingName) {
         ArrayList<Payment> paymentList = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
         try {
-            ResultSet rs = executeQuery("select * from Recharge\n"
-                    + "where Method = 'Withdraw' and Status = 2");
+            ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n" +
+                                        "where Method = 'Withdraw' and Status = 2 \n" +
+                                        "and [u].[Username] like N'%" + searchingName + "%' \n" +
+                                        "or [re].[RechargeID] like N'%" + searchingName + "%' \n" +
+                                        "or [u].[BankName] like N'%" + searchingName + "%' \n" +
+                                        "or [u].[BankNumber] like N'%" + searchingName + "%'");
             while (rs.next()) {
                 Payment payment = new Payment();
                 payment.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));

@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package Model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -13,15 +11,17 @@ import java.sql.Timestamp;
  * @author Hieu Shin
  */
 public class Blog {
+
     private int blogid;
     private int userid;
     private Timestamp date;
     private String content;
-    private String tilte;
+    private String title;
     private String description;
     private String image;
     private String category;
     private String status;
+    private User user;
 
     public Blog() {
     }
@@ -31,11 +31,31 @@ public class Blog {
         this.userid = userid;
         this.date = date;
         this.content = content;
-        this.tilte = tilte;
+        this.title = tilte;
         this.description = description;
         this.image = image;
         this.category = category;
         this.status = status;
+    }
+
+    public Blog(int blogid, Timestamp date, String content, String title, String description, String image, String category, String status, User user) {
+        this.blogid = blogid;
+        this.date = date;
+        this.content = content;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+        this.category = category;
+        this.status = status;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getBlogid() {
@@ -70,12 +90,12 @@ public class Blog {
         this.content = content;
     }
 
-    public String getTilte() {
-        return tilte;
+    public String getTitle() {
+        return title;
     }
 
     public void setTilte(String tilte) {
-        this.tilte = tilte;
+        this.title = tilte;
     }
 
     public String getDescription() {
