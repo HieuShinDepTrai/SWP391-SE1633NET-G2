@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.annotations.JsonAdapter;
 import dal.AnswerDAO;
 import dal.QuestionDAO;
+import dal.LessonDAO;
 import dal.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -106,10 +107,14 @@ public class DoQuizController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuizDAO qzdao = new QuizDAO();
+        LessonDAO lessonDAO = new LessonDAO();
+        int lessonID = 0;
+
         if (request.getParameter("jsonQuestions") != null) {
             int quizID = 0;
             if (request.getParameter("quizID") != null) {
                 quizID = Integer.parseInt(request.getParameter("quizID"));
+                lessonID = qzdao.getLessonID(quizID);
             }
             HashMap<Integer, ArrayList<Integer>> data = new HashMap<>();
 
@@ -194,11 +199,11 @@ public class DoQuizController extends HttpServlet {
                         isFirst = false;
                         query += "(" + u.getUserId() + ", " + answerID + ", " + userQuizID + ")";
                     }
-
+                    lessonDAO.UpdateMarkAs(lessonID, u.getUserId(), "Done");
                 }
             }
             qzdao.insertUserAnswer(query);
-            doGet(request, response);
+            response.sendRedirect("quizresult?quizid=" + quizID);
         }
     }
 
