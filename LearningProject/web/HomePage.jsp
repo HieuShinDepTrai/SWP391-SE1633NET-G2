@@ -207,7 +207,7 @@
 
                                                 
                                             </div>
-                                            <div>
+                                            <div class="mt-2">
                                                 <c:set var="isPresent" value="${false}"></c:set>
                                                 
                                                 <c:forEach items="${usercourselist}" var="usercourse">
@@ -215,7 +215,7 @@
                                                         <c:if test="${usercourse.isIsFavourite() == true}">
                                                             <form action="home" method="POST">
                                                                 <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                                <button style="border: #ffffff; background: #ffffff; font-size: 25px; color:red" type="submit" name="favour" value="unlike"><i class="fa-solid fa-heart"></i></i></button>
+                                                                <button style="border: none;  background-color: transparent; outline: unset; font-size: 25px; color:red" type="submit" name="favour" value="unlike"><i class="fa-solid fa-heart"></i></i></button>
                                                             </form>     
                                                             <c:set var="isPresent" value="${true}"></c:set>
                                                         </c:if>
@@ -225,7 +225,7 @@
                                                 <c:if test="${isPresent == false}">
                                                     <form action="home" method="POST">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                        <button style="border: white; background: white; font-size: 25px" type="submit" name="favour" value="like"><i class="fa-regular fa-heart"></i></button>
+                                                        <button style="border: none; outline: unset;background: transparent; font-size: 25px" type="submit" name="favour" value="like"><i class="fa-regular fa-heart"></i></button>
                                                     </form>
                                                 </c:if>
                                             </div>
