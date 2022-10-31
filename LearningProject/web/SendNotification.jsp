@@ -20,15 +20,15 @@
 
     <body style="font-family: 'Montserrat', sans-serif;">
         <%@include file="header.jsp" %>
-        <div class="container-fluid w-100" style="margin-top: 66px;">
-            <div class="row py-3 px-4">
-                <div class="col-lg-12">
-                    <h4 class="fw-bold">Admin Manage Account</h4>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card card-body shadow-sm" style="border-radius: 12px;">
-                        <div class="row">                            
-                            <form action="sendnotice" method="POST">
+        <form action="sendnotice" method="POST">
+            <div class="container-fluid w-100" style="margin-top: 66px;">
+                <div class="row py-3 px-4">
+                    <div class="col-lg-12">
+                        <h4 class="fw-bold">Admin Manage Account</h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card card-body shadow-sm" style="border-radius: 12px;">
+                            <div class="row">                            
                                 <div class="col-6">
                                     <div class="d-flex justify-content-end" style="position: relative;">
                                         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
@@ -103,39 +103,52 @@
                                         <a href="#" onclick="loadAll()">Load More...</a>
                                     </div>
                                 </div>
-                                <input type="text" style="width: 1000px" name="subject" placeholder="Subject"> 
-                                <textarea id="textarea" name="context" rows="5" cols="100"></textarea>
-                                <button type="submit" class="btn btn-primary"> Send </button>
-                                <input type="checkbox" name="option" value="email">Send to email
-                                <input type="checkbox" name="option" value="web">Send to web
-                            </form>
-                            <!-- End table -->
+                                <!-- End table -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 mt-3">
+                        <h4 class="fw-bold">Send Notification</h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card card-body shadow-sm" style="border-radius: 12px;">
+                                                     
+                                <input class="form-control mb-2 w-100" type="text" style="width: 1000px" name="subject" placeholder="Subject"> 
+                                <textarea id="textarea" name="context" class="form-control mb-3"></textarea>
+                                <div>
+                                    <input type="checkbox" name="option" value="email" class="d-inline">Send to email
+                                    <input type="checkbox" name="option" value="web" class="d-inline">Send to web
+                                    
+                                </div>
+                                <button type="submit" class="btn btn-primary d-inline mt-3"> Send </button>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </form>
+        <script src="assets/js/home_page.js"></script>
         <script src="https://kit.fontawesome.com/7562df3d9f.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
         <script>
-                                        function loadAll() {
-                                            $.ajax({
-                                                url: "/LearningProject/loadmore",
-                                                type: 'GET',
-                                                data: 'value= all',
-                                                success: function (data) {
-                                                    var row = document.getElementById("table");
-                                                    row.innerHTML = data;
-                                                },
-                                                error: function () {
-                                                    console.log('Error');
-                                                }
-                                            });
-                                        }
+                                            function loadAll() {
+                                                $.ajax({
+                                                    url: "/LearningProject/loadmore",
+                                                    type: 'GET',
+                                                    data: 'value= all',
+                                                    success: function (data) {
+                                                        var row = document.getElementById("table");
+                                                        row.innerHTML = data;
+                                                    },
+                                                    error: function () {
+                                                        console.log('Error');
+                                                    }
+                                                });
+                                            }
         </script>
         <script>
             $('#select-all').click(function (event) {
