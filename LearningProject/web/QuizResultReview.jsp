@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                 </c:forEach>
-                                <button class="btn btn-success" onclick="loadAll()">Next</button>
+                                <a href="quizresult?quizid=${quizid}" class="btn btn-success">Return</a>
                             </div>
                         </div>
 
