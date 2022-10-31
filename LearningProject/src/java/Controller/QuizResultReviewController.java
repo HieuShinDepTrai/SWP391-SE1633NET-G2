@@ -52,6 +52,7 @@ public class QuizResultReviewController extends HttpServlet {
                 ArrayList<Answer> answerList = ad.getAnswersOfQuiz(quizId);
                 ArrayList<Answer> correctAnswerList = ad.getCorrectAnswersOfQuiz(quizId);
                 ArrayList<Integer> userAnswerList = ad.getUserAnswerList(user.getUserId(), userQuizId);
+                
                 CurrentCourse current = quesdao.getDetailFromQuiz(quizId);
                 Lesson lesson = lessonDAO.getLessonbyLessonID(current.getLessonID());
                 Course c = courseDAO.getAllCourseInformation(current.getCourseID());

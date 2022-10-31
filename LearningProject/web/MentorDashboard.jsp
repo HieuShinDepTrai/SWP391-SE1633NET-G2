@@ -87,7 +87,7 @@
                             <p class="button-title text-center">Mentor Dashboard</p>
                         </a>
                     </c:if>
-                    <a class="bar-button">
+                    <a class="bar-button" href="blog">
                         <i class="fa-solid fa-newspaper"></i>
                         <p class="button-title">Blog</p>
                     </a>

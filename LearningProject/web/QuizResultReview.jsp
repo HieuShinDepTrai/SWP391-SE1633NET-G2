@@ -25,92 +25,10 @@
     </head>
 
     <body>
+        <%@include file="header.jsp"%>
 
         <div id="main">
-            <header>
-                <div class="header-content">
-                    <div class="logo">
-                        <img src="assets/img/Logo-FPT.webp" alt="" />
-                        <div class="header-title">Học Lập Trình FPT</div>
-                    </div>
-                    <div class="header-search d-none">
-                        <div class="icon-search">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <input type="text" placeholder="Tìm kiếm khóa học, bài viết, video..." />
-                    </div>
-                    <div class="header-profile">
-                        <div class="header-mycourse">Khóa học của tôi</div>
-                        <div class="header-notification" onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-bell"></i>
-                            <div class="notification-cotainer" onclick="event.stopPropagation()">
-                                <div class="notification-header">
-                                    <h3>Thông báo</h3>
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </div>
-                                <div class="notification-list">
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                    <div class="notification">
-                                        <div class="noti-icon">
-                                            <img src="assets/img/f8-logo.png" alt="" />
-                                        </div>
-                                        <div class="noti-content">
-                                            <p>
-                                                Chào mừng <span>Le Dao Quang Dung</span> đã gia nhập F8.
-                                                Hãy luôn đam mê, kiên trì và theo đuổi mục tiêu tới cùng
-                                                bạn nhé ❤️
-                                            </p>
-                                            <div class="noti-time">một tháng trước</div>
-                                        </div>
-                                        <div class="noti-remind"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="avatar" onclick="event.stopPropagation()">
-                            <img src="assets/img/user.png" alt="" />
-                            <div class="account-menu">
-                                <div class="menu-content">
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-user"></i>
-                                        <a href="" class="menu-title">Trang cá nhân</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-list"></i>
-                                        <a href="" class="menu-title">Khóa học của tôi</a>
-                                    </div>
-                                    <div class="menu-element">
-                                        <i class="fa-solid fa-gear"></i>
-                                        <a href="" class="menu-title">Cài đặt</a>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="menu-element">
-                                        Account Balance:
-                                        <a href="" class="menu-title">200.000đ</a>
-                                    </div>
-                                    <div class="menu-element menu-logout">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        <a href="" class="menu-title">Đăng xuất</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            
 
             <section>
                 <div class="course-watch-left" style="overflow-y: auto;" id="style-1">
@@ -122,10 +40,10 @@
                             </div>
 
                             <div class="">
-                                <c:forEach items="${queslist}" var="question">
+                                <c:forEach items="${queslist}" var="question" varStatus="index">
                                     <div class="px-5 py-2">
                                         <div class="fw-bold mb-2" style="font-size: 20px;">
-                                            Question 1
+                                            Question ${index.count}
                                         </div>
 
                                         <div>
@@ -184,7 +102,7 @@
                                         </div>
                                     </div>
                                 </c:forEach>
-                                <button class="btn btn-success" onclick="loadAll()">Next</button>
+                                <a href="quizresult?quizid=${quizid}" class="btn btn-success">Return</a>
                             </div>
                         </div>
 
