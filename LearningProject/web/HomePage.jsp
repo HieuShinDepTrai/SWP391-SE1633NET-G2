@@ -153,7 +153,7 @@
                         <div class="row g-3">
                             <c:forEach items="${requestScope.courses}" var="course">
                                 <div class="col-xl-3 col-lg-4 col-md-6" >
-                                    <div class="card" style="min-height: 234px; height: 400px;">
+                                    <div class="card" style="min-height: 234px; height: 420px;">
                                         <div class="card-top-img">
                                             <img src="${course.getCourseImage()}" alt="" style="width: 100%; height: 200px; object-fit: cover">
                                         </div>
