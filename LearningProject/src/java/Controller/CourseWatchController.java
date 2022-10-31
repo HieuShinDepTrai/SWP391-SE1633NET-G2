@@ -143,14 +143,13 @@ public class CourseWatchController extends HttpServlet {
             userCmtId.add(userComment.getCommentId());
         }
         
-        //
+        //list all the comment of the user
         ArrayList<Comment> listCommentByUser = cmtDAO.ListAllCommentByUserID(userId);
         
         ArrayList<Integer> commentIdByUser = new ArrayList<>();
         for (Comment c : listCommentByUser) {
             commentIdByUser.add(c.getCommentId());
         }
-        
         
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);

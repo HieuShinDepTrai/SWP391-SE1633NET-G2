@@ -120,7 +120,6 @@
         <servlet-name>AddLesson</servlet-name>
         <servlet-class>Controller.AddLesson</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>PostVideoCommentController</servlet-name>
         <servlet-class>Controller.PostVideoCommentController</servlet-class>
@@ -136,6 +135,10 @@
     <servlet>
         <servlet-name>ProfileDetailsController</servlet-name>
         <servlet-class>Controller.ProfileDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportBlogController</servlet-name>
+        <servlet-class>Controller.ReportBlogController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginController</servlet-name>
@@ -344,6 +347,10 @@
     <servlet-mapping>
         <servlet-name>ProfileDetailsController</servlet-name>
         <url-pattern>/profiledetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportBlogController</servlet-name>
+        <url-pattern>/ReportBlog</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
