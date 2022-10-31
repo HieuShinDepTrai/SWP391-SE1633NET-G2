@@ -54,7 +54,7 @@ public class BlogDAO extends DBContext {
 
     public Blog getBlogInformation(int blogId) {
         try {
-            ResultSet rs = executeQuery("SELECT [UserID], [BlogDate], [BlogContent], [BlogTitle], [BlogDescription], [BlogImage], [Category], [Status] "
+            ResultSet rs = executeQuery("SELECT [UserID], [BlogDate], [BlogContent], [BlogTilte], [BlogDescription], [BlogImage], [Category], [Status] "
                     + "FROM [dbo].[Blog] WHERE [BlogID] = ?", blogId);
 
             if (rs.next()) {
@@ -62,7 +62,7 @@ public class BlogDAO extends DBContext {
                         rs.getInt("UserID"),
                         rs.getTimestamp("BlogDate"),
                         rs.getNString("BlogContent"),
-                        rs.getNString("BlogTitle"),
+                        rs.getNString("BlogTilte"),
                         rs.getNString("BlogDescription"),
                         rs.getString("BlogImage"),
                         rs.getString("Category"),
