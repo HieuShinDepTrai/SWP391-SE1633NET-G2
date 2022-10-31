@@ -73,7 +73,7 @@
                                 <p class="button-title text-center">Mentor Dashboard</p>
                             </a>
                         </c:if>
-                        <a class="bar-button">
+                        <a class="bar-button" href="blog">
                             <i class="fa-solid fa-newspaper"></i>
                             <p class="button-title">Blog</p>
                         </a>
@@ -215,6 +215,55 @@
                                         </c:if>
                                     </c:forEach>
                                 </div>
+
+                                <h5 class="fw-bold">My blog</h5>
+                                <c:forEach items="${bloglist}" var="blog">
+                                    <div class="card card-body p-3 shadow-sm mb-4">                                        
+                                        <!-- Content -->
+                                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                                            <!-- Content left -->
+                                            <div class="" style="width: 78%;">
+                                                <a style="font-size: 20px;" class="fw-bolder" href="blogdetail?id=${blog.getBlogid()}">${blog.getTitle()}</a>
+                                                <p class="text-black-50" style="font-size: 15px;">${blog.getDescription()}</p>
+                                            </div>
+                                            <!-- Content left -->
+                                            <div style="width: 20%; height: 80px;">
+                                                <img src="${blog.getImage()}" class="rounded-3" alt="" style="width: 100%; max-height: 120px; object-fit: cover;">
+                                            </div>
+                                            <!-- Content right -->
+                                            <div>
+
+                                            </div>
+                                            <!-- Content right -->
+
+                                        </div>
+                                        <!-- Content -->
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="tag bg-primary fw-bold text-white" style="padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px;">
+                                                ${blog.getCategory()}
+                                            </div>
+                                            <span class="ms-2">
+                                                .
+                                            </span>
+
+                                            <form action="blog" method="GET">
+                                                <input type="submit" name="op" value="reportBlog">
+                                                <input type="hidden" name="blogId" value="${blog.getBlogid()}">
+                                            </form>
+
+                                            <div class="ms-2 d-inline-block" style="font-size: 14px;">
+                                                <fmt:formatDate type = "both" value = "${blog.getDate()}" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form action="updateblog" method="GET">
+                                        <input type="hidden" name="blogid" value="${blog.getBlogid()}">
+                                        <input type="submit" name="button" value="Delete" style="background-color: cornflowerblue; padding: 8px 18px; border-radius: 40px; color: white; border: 0">
+                                        <input type="submit" name="button" value="Update" style="background-color: #ff001e; padding: 8px 18px; border-radius: 40px; color: white; border: 0">
+                                    </form>
+                                </c:forEach>
                             </div>
 
                             <div class="col-4">

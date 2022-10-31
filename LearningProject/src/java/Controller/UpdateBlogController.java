@@ -5,6 +5,7 @@
 
 package Controller;
 
+import Model.Blog;
 import Model.User;
 import dal.BlogDAO;
 import java.io.IOException;
@@ -29,8 +30,10 @@ public class UpdateBlogController extends HttpServlet {
                     
                     response.sendRedirect("userdashboard");
                 }
-                else{                    
-                    request.setAttribute("blog", bd.getBlogInformation(blogId));
+                else{
+                    Blog blog = bd.getBlogInformation(blogId);
+                    
+                    request.setAttribute("blog", blog);
                     request.getRequestDispatcher("UpdateBlog.jsp").forward(request, response);
                 }
             }
