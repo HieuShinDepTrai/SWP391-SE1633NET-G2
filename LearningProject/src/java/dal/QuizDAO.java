@@ -207,4 +207,17 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
+
+    public int getLessonID(int quizid) {
+        try {
+            ResultSet rs = executeQuery("select LessonID from Quiz\n"
+                    + "where QuizID = ?", quizid);
+            if (rs.next()) {
+                return rs.getInt("LessonID");
+            }
+        } catch (SQLException ex) {
+            return 0;
+        }
+        return 0;
+    }
 }

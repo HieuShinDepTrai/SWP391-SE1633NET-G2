@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.JsonAdapter;
+import dal.LessonDAO;
 import dal.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,10 +85,14 @@ public class DoQuizController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuizDAO qzdao = new QuizDAO();
+        LessonDAO lessonDAO = new LessonDAO();
+        int lessonID = 0;
+
         if (request.getParameter("jsonQuestions") != null) {
             int quizID = 0;
             if (request.getParameter("quizID") != null) {
                 quizID = Integer.parseInt(request.getParameter("quizID"));
+                lessonID = qzdao.getLessonID(quizID);
             }
             HashMap<Integer, ArrayList<Integer>> data = new HashMap<>();
 
@@ -132,7 +137,7 @@ public class DoQuizController extends HttpServlet {
 
             // Tinh diem
             int datasize = data.size();
-            double mark = ((double)numberOfRightQuestion / (double)datasize) * 10;            
+            double mark = ((double) numberOfRightQuestion / (double) datasize) * 10;
             User u = (User) request.getSession().getAttribute("user");
             Date date = new Date();
             Timestamp doDate = new Timestamp(date.getTime());
@@ -172,11 +177,11 @@ public class DoQuizController extends HttpServlet {
                         isFirst = false;
                         query += "(" + u.getUserId() + ", " + answerID + ", " + userQuizID + ")";
                     }
-
+                    lessonDAO.UpdateMarkAs(lessonID, u.getUserId(), "Done");
                 }
             }
             qzdao.insertUserAnswer(query);
-            response.sendRedirect("quizresult?quizid="+quizID);
+            response.sendRedirect("quizresult?quizid=" + quizID);
         }
     }
 
