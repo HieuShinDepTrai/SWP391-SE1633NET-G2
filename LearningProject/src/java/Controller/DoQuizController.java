@@ -176,7 +176,7 @@ public class DoQuizController extends HttpServlet {
                 }
             }
             qzdao.insertUserAnswer(query);
-            doGet(request, response);
+            response.sendRedirect("quizresult?quizid="+quizID);
         }
     }
 
