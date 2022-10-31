@@ -347,18 +347,20 @@
 
                                                     <!--<form action="Report" method="GET">-->
 
-                                                    <c:if test="${!userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                    <c:if test="${!userCommentOfReport.contains(parentComment.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
                                                     </c:if>
-                                                    <c:if test="${userCommentIdOfReport.contains(parentComment.getCommentId())}">
+                                                    <c:if test="${userCommentOfReport.contains(parentComment.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
                                                     </c:if>
 
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
+                                                <c:if test="${commentIdByUser.contains(parentComment.getCommentId())}">
                                                 <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
+                                                </c:if>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${parentComment.getCommentDate()}</div>
                                             </div>
                                         </form> 
@@ -445,8 +447,10 @@
                                                     <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${commentOfLesson.getCommentId()}">.</div>
+                                                <c:if test="${commentIdByUser.contains(commentOfLesson.getCommentId())}">
                                                 <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
+                                                </c:if>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${commentOfLesson.getCommentDate()}</div>
                                             </div>
                                         </form>
