@@ -26,14 +26,16 @@
     <body>
         <%@include file="header.jsp"%>
 
-        <div id="main">                        
-            <div class="course-watch-left" style="overflow-y: auto;">
-                <div class="course-watch-left-content">
-                    <div class="lesson-content">
-                        <div class="bg-primary py-5 px-4 fw-bold text-white fs-3">
-                            Summary of your previous attempts
-                            <span class="btn-danger btn float-end"><a href="DoQuiz?quizid=${quizid}">Return to quiz</a></span>
-                        </div>
+        <div id="main">     
+            <section>
+                
+                <div class="course-watch-left" style="overflow-y: auto;">
+                    <div class="course-watch-left-content">
+                        <div class="lesson-content">
+                            <div class="bg-primary py-5 px-4 fw-bold text-white fs-3">
+                                Summary of your previous attempts
+                                <span class="btn-danger btn float-end">Return to quiz</span>
+                            </div>
 
                             <div class="">
                                 <table class="table table-striped">

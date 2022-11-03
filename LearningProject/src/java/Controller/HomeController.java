@@ -69,6 +69,7 @@ public class HomeController extends HttpServlet {
         //get all the Courses by CourseName - Searching
         ArrayList<Course> courses = cdao.getAllCoursesByCourseName(courseName);
         
+        
         HttpSession session = request.getSession();
 
         if (session.getAttribute("username") != null) {

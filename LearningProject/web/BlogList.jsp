@@ -134,7 +134,7 @@
                                             .
                                         </span>
                                         
-                                        <form action="ReportBlog" method="GET">
+                                        <form action="blog" method="GET">
                                             <input type="submit" name="op" value="reportBlog">
                                         <input type="hidden" name="blogId" value="${blog.getBlogid()}">
                                         </form>
