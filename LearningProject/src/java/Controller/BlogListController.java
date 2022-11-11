@@ -68,8 +68,6 @@ public class BlogListController extends HttpServlet {
         CommentDAO commentDao = new CommentDAO();
         HttpSession ses = request.getSession();
 
-        int UserId = udao.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-        
         
         String blogId = request.getParameter("blogId");
         String op = request.getParameter("op");
@@ -80,15 +78,7 @@ public class BlogListController extends HttpServlet {
         }
 
         //Report blog 
-        try {
-            if (op.equals("reportBlog") && op != null) {
-                commentDao.insertIntoReport(UserId, "Report " + blogId);
-            }
-        } catch (Exception e) {
-            request.setAttribute("blogs", blogs);
-            request.getRequestDispatcher("BlogList.jsp").forward(request, response);
-            return;
-        }
+      
 
         request.setAttribute("blogs", blogs);
         request.getRequestDispatcher("BlogList.jsp").forward(request, response);
