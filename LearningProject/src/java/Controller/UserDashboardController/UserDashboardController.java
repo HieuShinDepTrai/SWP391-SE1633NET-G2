@@ -4,11 +4,9 @@
  */
 package Controller.UserDashboardController;
 
-import Model.Blog;
 import Model.Course;
 import Model.User;
 import Model.UserCourse;
-import dal.BlogDAO;
 import dal.CourseDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -33,7 +31,6 @@ public class UserDashboardController extends HttpServlet {
         HttpSession session = request.getSession();
         CourseDAO courseDAO = new CourseDAO();
         UserDAO userDao = new UserDAO();
-        BlogDAO blogdao = new BlogDAO();
         
         String searching = request.getParameter("searching");
         
@@ -69,9 +66,6 @@ public class UserDashboardController extends HttpServlet {
             }
         }
         
-        ArrayList<Blog> blogList = blogdao.listUserBlogByID(user.getUserId());
-        
-        request.setAttribute("bloglist", blogList);
         request.setAttribute("favlist", favCourseList);
         request.setAttribute("totalTime", totalTime);
         request.setAttribute("user", user);
