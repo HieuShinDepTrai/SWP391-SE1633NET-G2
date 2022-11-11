@@ -64,7 +64,7 @@ public class ReportBlogController extends HttpServlet {
         String blogId = request.getParameter("blogId");
         
         try {
-             if (op.equals("reportBlog")) {
+             if (op.equals("Report")) {
                int UserId = uDao.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
                commentDao.insertIntoReport(UserId, "Blog " + blogId);
             } 
