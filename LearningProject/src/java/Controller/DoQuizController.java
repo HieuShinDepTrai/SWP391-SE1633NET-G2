@@ -5,14 +5,24 @@
 package Controller;
 
 import Model.Answer;
+import Model.Course;
+import Model.CurrentCourse;
+import Model.Lesson;
+import Model.Question;
+import Model.Section;
 import Model.User;
+import Model.UserQuiz;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.JsonAdapter;
+import dal.AnswerDAO;
+import dal.CourseDAO;
+import dal.QuestionDAO;
 import dal.LessonDAO;
 import dal.QuizDAO;
+import dal.SectionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,7 +80,54 @@ public class DoQuizController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        QuestionDAO qdao = new QuestionDAO();
+        AnswerDAO ansdao = new AnswerDAO();
+        
+        int quizID = Integer.parseInt(request.getParameter("quizid"));
+        
+        ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+        ArrayList<Answer> answerList = new ArrayList<>();
+        for (Question question : questionList) {
+            ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+            for (Answer answer : temp) {
+                answerList.add(answer);
+            }
+
+        }
+        
+        QuizDAO quizdao = new QuizDAO();
+                QuestionDAO quesdao = new QuestionDAO();
+                LessonDAO lessonDAO = new LessonDAO();
+                CourseDAO courseDAO = new CourseDAO();
+                SectionDAO sectionDAO = new SectionDAO();
+
+                User user = (User) request.getSession().getAttribute("user");
+                int quizId = Integer.parseInt(request.getParameter("quizid"));
+
+                ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizId);
+                CurrentCourse current = quesdao.getDetailFromQuiz(quizId);
+                Lesson lesson = lessonDAO.getLessonbyLessonID(current.getLessonID());
+                Course c = courseDAO.getAllCourseInformation(current.getCourseID());
+                ArrayList<Section> listSection = sectionDAO.getAllSectionOfCourse(current.getCourseID());
+                ArrayList<Lesson> listLesson = new ArrayList<>();
+                for (Section section : listSection) {
+                    ArrayList<Lesson> tmp = lessonDAO.getAllLessonOfUserOFSection(section.getSectionId(), user.getUserId());
+                    //ArrayList<Lesson> tmp = ldao.getAllLessonOfSection(section.getSectionId());
+                    for (Lesson les : tmp) {
+                        listLesson.add(les);
+                    }
+                }
+
+                request.setAttribute("lesson", lesson);
+                request.setAttribute("course", c);
+                request.setAttribute("listSection", listSection);
+                request.setAttribute("listLesson", listLesson);
+        request.setAttribute("quizID", quizID);
+        request.setAttribute("questionList", questionList);
+        request.setAttribute("answerList", answerList);
+        
+        request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
     }
 
     /**
