@@ -107,7 +107,7 @@ public class CourseWatchController extends HttpServlet {
         }
         if (request.getParameter("lessonID") != null) {
             User user = (User) session.getAttribute("user");
-            
+
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
             ldao.MarkAs(lessonID, user.getUserId(), "Study");
             CurrentCourse current = ldao.getAllFromLessonID(lessonID);
@@ -145,16 +145,15 @@ public class CourseWatchController extends HttpServlet {
         for (UserComment userComment : listUserComment) {
             userCmtId.add(userComment.getCommentId());
         }
-        
+
         //
         ArrayList<Comment> listCommentByUser = cmtDAO.ListAllCommentByUserID(userId);
-        
+
         ArrayList<Integer> commentIdByUser = new ArrayList<>();
         for (Comment c : listCommentByUser) {
             commentIdByUser.add(c.getCommentId());
         }
-        
-        
+
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
@@ -209,35 +208,37 @@ public class CourseWatchController extends HttpServlet {
 //            request.setAttribute("questionID", questionID);
 //            request.setAttribute("question", question);
 //            request.setAttribute("answer", answers);
+
             int quizID = ldao.getQuizID(lessonID);
-            
+
             ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizID);
 
-                if (quizHistoryList.size() != 0) {
-                    request.setAttribute("quizid", quizID);
-                    request.setAttribute("quizhislist", quizHistoryList);
-                    request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
-                    request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
-                    return;
-                } else {                   
-                    ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
-                    ArrayList<Answer> answerList = new ArrayList<>();
-                    for (Question question : questionList) {
-                        ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
-                        for (Answer answer : temp) {
-                            answerList.add(answer);
-                        }
-
+            if (quizHistoryList.size() != 0) {
+                request.setAttribute("quizid", quizID);
+                request.setAttribute("quizhislist", quizHistoryList);
+                request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
+                request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
+                return;
+            } else {
+                ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+                ArrayList<Answer> answerList = new ArrayList<>();
+                for (Question question : questionList) {
+                    ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+                    for (Answer answer : temp) {
+                        answerList.add(answer);
                     }
-                    request.setAttribute("quizID", quizID);
-                    request.setAttribute("questionList", questionList);
-                    request.setAttribute("answerList", answerList);
+
                 }
+                request.setAttribute("quizID", quizID);
+                request.setAttribute("questionList", questionList);
+                request.setAttribute("answerList", answerList);
+            }
+
         }
-       
+
         //all cmtId by user 
         request.setAttribute("commentIdByUser", commentIdByUser);
-        
+
         request.setAttribute("User", user);
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentOfReport", userCommentOfReport);

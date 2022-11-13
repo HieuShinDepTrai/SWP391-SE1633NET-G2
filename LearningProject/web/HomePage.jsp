@@ -199,7 +199,7 @@
                                                             <input name="op" type="submit" value="Go to Course">                                                            
                                                         </c:if>
                                                             <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
-                                                            <input type="hidden" name="coursePrice" value="${price}">
+                                                        <input type="hidden" name="coursePrice" value="${price}">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
 
                                                     </form>

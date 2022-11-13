@@ -36,10 +36,10 @@
                     <div class="col-12 row mt-2">
                         <div class="col-8">
                             <label class="form-label fw-bold">Blog title</label>
-                            <input type="text" name="title" class="form-control mb-3" value="${blog.getTitle()}">
+                            <input type="text" name="title" class="form-control mb-3" value="${blog.getTilte()}">
 
                             <label class="form-label fw-bold">Blog description</label>
-                            <input type="text" class="form-control mb-3" name="description" value="${blog.description}">
+                            <input type="text" class="form-control mb-3" name="description" value="${blog.getDescription()}">
 
                             <label class="form-label fw-bold">Category</label>
                             <select class="form-select" aria-label="Default select example" name="category">
