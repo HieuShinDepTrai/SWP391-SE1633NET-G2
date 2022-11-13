@@ -88,7 +88,7 @@
             </div>
             <!-- End: Side Bar -->
 
-            <div id="blog">
+            <div id="blog" style="margin-top: 66px;">
                 <div class="row w-100" style="--bs-gutter-x: 0">
                     <div class="col-12 w-100 d-flex">
                         <div class="w-75 mx-auto">
@@ -118,7 +118,7 @@
                             <!-- User and post information -->
 
                             <!-- Post content -->
-                            <div class="mt-3" style="border: 1px solid black; height: 600px;">
+                            <div class="mt-3" style="min-height: 200px;">
                                 ${blog.getContent()}
                             </div>
                             <!-- Post content -->

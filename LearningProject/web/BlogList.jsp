@@ -135,7 +135,7 @@
                                         </span>
                                         
                                         <form action="blog" method="GET">
-                                            <input type="submit" name="op" value="reportBlog">
+                                            <input style="color: white; font-weight: bold; padding: 6px 12px; width: fit-content; border-radius: 16px; font-size: 14px; border: none; background-color: red;" type="submit" name="op" value="Report Blog">
                                         <input type="hidden" name="blogId" value="${blog.getBlogid()}">
                                         </form>
                                         

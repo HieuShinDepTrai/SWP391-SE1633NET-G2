@@ -65,14 +65,6 @@ public class BlogListController extends HttpServlet {
             throws ServletException, IOException {
         BlogDAO bdao = new BlogDAO();
         UserDAO udao = new UserDAO();
-        CommentDAO commentDao = new CommentDAO();
-        HttpSession ses = request.getSession();
-
-        int UserId = udao.getAllUserInformation(ses.getAttribute("username").toString()).getUserId();
-        
-        
-        String blogId = request.getParameter("blogId");
-        String op = request.getParameter("op");
 
         ArrayList<Blog> blogs = bdao.ListAllBlogs();
         for (int i = 0; i < blogs.size(); i++) {
@@ -80,16 +72,6 @@ public class BlogListController extends HttpServlet {
         }
 
         //Report blog 
-        try {
-            if (op.equals("reportBlog") && op != null) {
-                commentDao.insertIntoReport(UserId, "Report " + blogId);
-            }
-        } catch (Exception e) {
-            request.setAttribute("blogs", blogs);
-            request.getRequestDispatcher("BlogList.jsp").forward(request, response);
-            return;
-        }
-
         request.setAttribute("blogs", blogs);
         request.getRequestDispatcher("BlogList.jsp").forward(request, response);
     }

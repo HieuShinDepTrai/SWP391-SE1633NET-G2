@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <label for="formFile" class="form-label">Upload your image</label>
-                                    <input class="form-control" type="file" id="formFile" onchange="UploadAvatar(this)">
+                                    <input class="form-control" type="file" id="formFile" onchange="UploadAvatar(this)" accept="image/*" />
                                     <textarea name="avatar" class="d-none" id="AvatarProfile"></textarea>
                                 </div>
                             </div>
