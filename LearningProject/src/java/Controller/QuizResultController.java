@@ -61,15 +61,11 @@ public class QuizResultController extends HttpServlet {
                 request.setAttribute("course", c);
                 request.setAttribute("listSection", listSection);
                 request.setAttribute("listLesson", listLesson);
-                if (quizHistoryList != null) {
-                    request.setAttribute("quizhislist", quizHistoryList);
-                    request.setAttribute("numofques", quesdao.getNumberQuesOfQuiz(quizId));
-                    request.setAttribute("quizid", quizId);
-                    request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
-                    return;
-                } else {
-
-                }
+                request.setAttribute("quizhislist", quizHistoryList);
+                request.setAttribute("numofques", quesdao.getNumberQuesOfQuiz(quizId));
+                request.setAttribute("quizid", quizId);
+                request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
+                return;
             } else {
                 response.sendRedirect("home");
             }
