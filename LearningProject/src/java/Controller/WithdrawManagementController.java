@@ -67,7 +67,7 @@ public class WithdrawManagementController extends HttpServlet {
             return;
         }
      
-        ArrayList<Payment> withdrawList = paymentDAO.getPendingWithdraw(searching);
+        ArrayList<Payment> withdrawList = paymentDAO.getAllWithdraw(searching);
         request.setAttribute("withdrawList", withdrawList);
         request.getRequestDispatcher("AdminManageWithdraw.jsp").forward(request, response);
     }

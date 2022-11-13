@@ -26,7 +26,7 @@
     <body>
         <%@include file="header.jsp"%>
 
-        <div id="main">                        
+        <div id="main">
             <div class="course-watch-left" style="overflow-y: auto;">
                 <div class="course-watch-left-content">
                     <div class="lesson-content">
