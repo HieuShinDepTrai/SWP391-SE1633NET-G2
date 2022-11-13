@@ -53,7 +53,7 @@ public class QuizDAO extends DBContext {
             ArrayList<UserQuiz> quizHisList = new ArrayList<UserQuiz>();
             ResultSet rs = executeQuery("SELECT [UserQuizID], [Mark], [NumberOfRightQuestion], [Date] "
                     + "FROM [dbo].[User_Quiz] "
-                    + "WHERE [UserID] = ? AND [QuizID] = ?", userId, quizId);
+                    + "WHERE [UserID] = "+userId+" AND [QuizID] = "+quizId+"", userId, quizId);
 
             while (rs.next()) {
                 Timestamp time = rs.getTimestamp("Date");

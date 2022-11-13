@@ -193,5 +193,5 @@ function submit() {
   valueSubmit.value = JSON.stringify(outputData);
   console.log(valueSubmit.value);
   let formSubmit = document.querySelector("#submitForm");
-  formSubmit.submit();
+//  formSubmit.submit();
 }
