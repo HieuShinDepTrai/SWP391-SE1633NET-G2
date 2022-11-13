@@ -84,7 +84,7 @@ public class CommentDAO extends DBContext {
 
     public void insertIntoReport(int UserId, String Action) {
         try {
-            executeUpdate("INSERT INTO [Report](UserID, Action) VALUES (? , ?) ", UserId, Action);
+            executeUpdate("INSERT INTO [Report](UserID, [Action]) VALUES (? , ?) ", UserId, Action);
         } catch (Exception e) {
         }
     }

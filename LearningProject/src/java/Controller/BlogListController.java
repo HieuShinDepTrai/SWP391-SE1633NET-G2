@@ -65,6 +65,12 @@ public class BlogListController extends HttpServlet {
             throws ServletException, IOException {
         BlogDAO bdao = new BlogDAO();
         UserDAO udao = new UserDAO();
+        CommentDAO commentDao = new CommentDAO();
+        HttpSession ses = request.getSession();
+
+        
+        String blogId = request.getParameter("blogId");
+        String op = request.getParameter("op");
 
         ArrayList<Blog> blogs = bdao.ListAllBlogs();
         for (int i = 0; i < blogs.size(); i++) {
@@ -72,6 +78,8 @@ public class BlogListController extends HttpServlet {
         }
 
         //Report blog 
+      
+
         request.setAttribute("blogs", blogs);
         request.getRequestDispatcher("BlogList.jsp").forward(request, response);
     }

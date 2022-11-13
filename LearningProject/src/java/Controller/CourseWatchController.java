@@ -14,6 +14,7 @@ import Model.Question;
 import Model.Report;
 import Model.User;
 import Model.UserComment;
+import Model.UserQuiz;
 import dal.AnswerDAO;
 
 import dal.SectionDAO;
@@ -21,6 +22,7 @@ import dal.CommentDAO;
 import dal.CourseDAO;
 import dal.LessonDAO;
 import dal.QuestionDAO;
+import dal.QuizDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -92,6 +94,7 @@ public class CourseWatchController extends HttpServlet {
         LessonDAO ldao = new LessonDAO();
         QuestionDAO qdao = new QuestionDAO();
         AnswerDAO ansdao = new AnswerDAO();
+        QuizDAO quizdao = new QuizDAO();
         // Get course id 
         int courseID = 0;
         int sectionID = 0;
@@ -104,7 +107,7 @@ public class CourseWatchController extends HttpServlet {
         }
         if (request.getParameter("lessonID") != null) {
             User user = (User) session.getAttribute("user");
-            
+
             lessonID = Integer.parseInt(request.getParameter("lessonID"));
             ldao.MarkAs(lessonID, user.getUserId(), "Study");
             CurrentCourse current = ldao.getAllFromLessonID(lessonID);
@@ -142,16 +145,15 @@ public class CourseWatchController extends HttpServlet {
         for (UserComment userComment : listUserComment) {
             userCmtId.add(userComment.getCommentId());
         }
-        
+
         //
         ArrayList<Comment> listCommentByUser = cmtDAO.ListAllCommentByUserID(userId);
-        
+
         ArrayList<Integer> commentIdByUser = new ArrayList<>();
         for (Comment c : listCommentByUser) {
             commentIdByUser.add(c.getCommentId());
         }
-        
-        
+
         // Get data from dao
         Course c = cdao.getCourseInformation(courseID);
         ArrayList<Comment> parentCommentOfLesson = cmtDao.ListAllParentCommentByLessonID(lessonID);
@@ -207,24 +209,13 @@ public class CourseWatchController extends HttpServlet {
 //            request.setAttribute("question", question);
 //            request.setAttribute("answer", answers);
 
-            int quizID = ldao.getQuizID(lessonID);
-            ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
-            ArrayList<Answer> answerList = new ArrayList<>();
-            for (Question question : questionList) {
-                ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
-                for (Answer answer : temp) {
-                    answerList.add(answer);
-                }
+            
 
-            }
-            request.setAttribute("quizID", quizID);
-            request.setAttribute("questionList", questionList);
-            request.setAttribute("answerList", answerList);
         }
-       
+
         //all cmtId by user 
         request.setAttribute("commentIdByUser", commentIdByUser);
-        
+
         request.setAttribute("User", user);
         //set arraylist ReportID by UserID
         request.setAttribute("userCommentOfReport", userCommentOfReport);
@@ -250,6 +241,31 @@ public class CourseWatchController extends HttpServlet {
         request.setAttribute("sectionID", sectionID);
         request.setAttribute("lessonID", lessonID);
 
+        int quizID = ldao.getQuizID(lessonID);
+
+            ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizID);
+
+            if (quizHistoryList.size() != 0) {
+                request.setAttribute("quizid", quizID);
+                request.setAttribute("quizhislist", quizHistoryList);
+                request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
+                request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
+                return;
+            } else {
+                ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+                ArrayList<Answer> answerList = new ArrayList<>();
+                for (Question question : questionList) {
+                    ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+                    for (Answer answer : temp) {
+                        answerList.add(answer);
+                    }
+
+                }
+                request.setAttribute("quizID", quizID);
+                request.setAttribute("questionList", questionList);
+                request.setAttribute("answerList", answerList);
+            }
+        
         request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {
 //            // Send back to home pages

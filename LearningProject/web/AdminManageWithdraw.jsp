@@ -40,19 +40,19 @@
                                         <input class="w-100 form-control" type="text" name="searching" style="border-radius: 30px; padding-left: 32px;">
                                         <input type="submit" hidden> 
                                     </form>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-12">
                                 <form action="withdrawmanagement" method="POST">
-                                    <table class="table table-borderless">
+                                    <table class="table table-borderless" id="withdrawtable">
                                         <thead>
                                         <th>Account</th>
                                         <th>TransactionID</th>
                                         <th>Account Bank</th>
                                         <th>Account Number</th>
                                         <th>Amount</th>
-                                        <th>Status</th>
+                                        <th>Method</th>
                                         </thead>
                                         <tbody>                                                                                
                                             <c:forEach items="${withdrawList}" var="payment">
@@ -87,13 +87,13 @@
                                                         <div>
                                                             <div
                                                                 style="background-color: #ccc; border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">
-                                                                ${-payment.amount}đ</div>
+                                                                ${-payment.amount}</div>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div>
                                                             <a class="bg-success"
-                                                               style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">Mark as success</a>
+                                                               style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">${payment.method}</a>
                                                             <input type="checkbox" name="${payment.paymentID}" value="Success">
                                                         </div>
                                                     </td>
@@ -103,6 +103,7 @@
                                     </table>
                                     <div class="d-flex justify-content-center">
                                         <button class="btn btn-success" type="submit">Save</button>
+                                        <button class="btn btn-success" type="submit" onclick="download()">Download CSV</button>
                                     </div>
                                 </form>
                             </div>
@@ -116,5 +117,38 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+        <script>
+            function download() {
+                myData = document.getElementById("withdrawtable").rows;
+                //console.log(myData)
+                my_liste = [];
+                for (var i = 1; i < myData.length; i++) {
+                    el = myData[i].children;
+                    my_el = [];
+                    for (var j = 0; j < el.length - 1; j++) {
+                        if (j === 3) {
+                            my_el.push("=\"" + el[j].innerText.toString() + "\"");
+                        } else {
+                            my_el.push(el[j].innerText);
+                        }
+                    }
+                    my_liste.push(my_el);
+
+                }
+                var csv = 'Account,TransactionID,AccountBank,AccountNumber,Amount(VND)\n';
+                my_liste.forEach(function (row) {
+                    csv += row.join(',');
+                    csv += "\n";
+                });
+
+                var hiddenElement = document.createElement('a');
+                hiddenElement.href = 'data:text/csv;charset=utf-16,' + encodeURI(csv);
+                hiddenElement.target = '_blank';
+
+                //provide the name for the CSV file to be downloaded  
+                hiddenElement.download = 'Withdraw Account.csv';
+                hiddenElement.click();
+            }
+        </script>
     </body>
 </html>
