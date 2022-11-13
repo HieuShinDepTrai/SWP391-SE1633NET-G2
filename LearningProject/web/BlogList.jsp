@@ -151,13 +151,13 @@
                         <!-- Tag -->
                         <div class="col-3">
                             <h6 class="text-black-50">CÁC CHỦ ĐỀ ĐƯỢC ĐỀ XUẤT</h6>
-                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogFrontEnd()">
+                            <a style="padding: 6px 12px; background-color: Blue; border-radius:20px; cursor: pointer;" onmouseover="this.style.backgroundColor='#8a008a';" onmouseout="this.style.backgroundColor='Blue';" class="d-inline-block text-white" onclick="loadBlogFrontEnd()">
                                 Front-end
                             </a>
-                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogBackEnd()">
+                            <a style="padding: 6px 12px; background-color: Blue; border-radius:20px; cursor: pointer;" onmouseover="this.style.backgroundColor='#8a008a';" onmouseout="this.style.backgroundColor='Blue';" class="d-inline-block text-white" onclick="loadBlogBackEnd()">
                                 Back-end
                             </a>
-                            <a style="padding: 6px 12px; background-image: linear-gradient(to right top, #f8c5e0, #ffc4c8, #ffcba7, #ffdc8f, #d3f092); border-radius:20px;" class="d-inline-block text-white" onclick="loadBlogDatabase()">
+                            <a style="padding: 6px 12px; background-color: Blue; border-radius:20px; cursor: pointer;" onmouseover="this.style.backgroundColor='#8a008a';" onmouseout="this.style.backgroundColor='Blue';" class="d-inline-block text-white" onclick="loadBlogDatabase()">
                                 Database
                             </a>
                         </div>                    
