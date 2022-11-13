@@ -213,7 +213,7 @@ public class CourseWatchController extends HttpServlet {
             
             ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizID);
 
-                if (quizHistoryList != null) {
+                if (quizHistoryList.size() != 0) {
                     request.setAttribute("quizid", quizID);
                     request.setAttribute("quizhislist", quizHistoryList);
                     request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
