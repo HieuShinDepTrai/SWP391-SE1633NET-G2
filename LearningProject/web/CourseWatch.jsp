@@ -338,9 +338,14 @@
                                                 <div id="NumberLikes${parentComment.getCommentId()}">${parentComment.getLikes()}</div>
                                                 <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${parentComment.getCommentId()}" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
                                                 <div class="dot">.</div>
+                                                
+                                                <c:if test="${commentIdByUser.contains(parentComment.getCommentId())}">
                                                 <div class="comment-action-content comment-action-content-reply" id="Edit${parentComment.getCommentId()}" data-cmt-id="${parentComment.getCommentId()}" onclick="disableOn(this)">Edit</div>
                                                 <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${parentComment.getCommentId()}" type="submit" name="op"  value="Save">
                                                 <div class="dot">.</div>
+                                                </c:if>
+                                                
+                                                
                                                 <div class="comment-action-content comment-action-content-reply" id="Reply${parentComment.getCommentId()}" data-cmt-reply="${parentComment.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
                                                 <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
                                                 <div id="Report${parentComment.getCommentId()}">
