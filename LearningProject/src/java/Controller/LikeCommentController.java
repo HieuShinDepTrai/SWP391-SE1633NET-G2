@@ -69,6 +69,7 @@ public class LikeCommentController extends HttpServlet {
         int CommentID = Integer.parseInt(request.getParameter("CommentID"));
         
         String op = request.getParameter("op");
+       
         String commentContent = request.getParameter("commentContent");
         
         //get all cmtId that User Liked

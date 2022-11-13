@@ -279,12 +279,11 @@
                         <div class="course-comment-title">
                             ${numberOfComments} Comments
                             <span>(If you see spam comment, please report to admin)</span>
-<!--                            <button class="btn btn-classic" onclick="loadAllComment()">View </button>-->
                         </div>
 
                         <!-- Begin: Course post comment -->
 
-                        <form  action="postvideocomment" method="GET">
+                        <!--<form  action="postvideocomment" method="GET">-->
                             <input type="hidden" name="lessonID" value="${lessonID}">
                             <input type="hidden" name="courseID" value="${courseID}">
                             <input type="hidden" name="sectionID" value="${sectionID}">
@@ -299,10 +298,11 @@
                                 </div>
                                 <div class="course-postcomment-action" style="float: right;">
                                     <!--                                    <p class="post-cancel d-inline-block me-4 fw-bold" >Cancel</p>-->
-                                    <input class="submit-comment" name="op" type="submit" value="Comment">
+                                    <!--<input class="submit-comment" name="op" type="submit" value="Comment">-->
+                                    <button class="submit-comment" name="op" onclick="loadAllComment()">Comment</button>
                                 </div>
                             </div>
-                        </form>
+                        <!--</form>-->
 
                         <!-- End: Course post comment -->
 
@@ -315,7 +315,7 @@
 <!--                                    <img src="assets/img/f8-logo.png" alt="" class="user-avatar">-->
                                     <img src="${parentComment.getUser().getAvatar()}" alt="none" class="user-avatar">
                                     <div class="comment-content">
-                                        <form action="LikeComment" method="GET">
+                                        <!--<form action="LikeComment" method="GET">-->
                                             <div class="comment-user">
                                                 <div class="user-name">
                                                     ${parentComment.getUser().getLastName()} ${parentComment.getUser().getFirstName()}
@@ -329,10 +329,10 @@
                                                     <input type="hidden" name="sectionID" value="${sectionID}">
                                                     <input type="hidden" name="CommentID" value="${parentComment.getCommentId()}">
                                                     <c:if test="${!userCmtId.contains(parentComment.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${parentComment.getCommentId()}" onclick="likeComment(this)" value="Like">
                                                     </c:if>
                                                     <c:if test="${userCmtId.contains(parentComment.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${parentComment.getCommentId()}" class="comment-action-content" onclick="dislikeComment(this)" value="Liked">
                                                     </c:if>
                                                 </div>
                                                 <div id="NumberLikes${parentComment.getCommentId()}">${parentComment.getLikes()}</div>
@@ -341,7 +341,7 @@
                                                 
                                                 <c:if test="${commentIdByUser.contains(parentComment.getCommentId())}">
                                                 <div class="comment-action-content comment-action-content-reply" id="Edit${parentComment.getCommentId()}" data-cmt-id="${parentComment.getCommentId()}" onclick="disableOn(this)">Edit</div>
-                                                <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${parentComment.getCommentId()}" type="submit" name="op"  value="Save">
+                                                <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${parentComment.getCommentId()}" type="button" data-cmt-id="${parentComment.getCommentId()}" onclick="saveComment(this)"  value="Save">
                                                 <div class="dot">.</div>
                                                 </c:if>
                                                 
@@ -350,32 +350,27 @@
                                                 <div class="dot" id="dotReply${parentComment.getCommentId()}">.</div>
                                                 <div id="Report${parentComment.getCommentId()}">
 
-                                                    <!--<form action="Report" method="GET">-->
-
                                                     <c:if test="${!userCommentOfReport.contains(parentComment.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${parentComment.getCommentId()}" onclick="reportComment(this)" class="comment-action-content" value="Report">
                                                     </c:if>
                                                     <c:if test="${userCommentOfReport.contains(parentComment.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
                                                     </c:if>
 
-                                                    <!--</form>-->
                                                 </div>
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
                                                 <c:if test="${commentIdByUser.contains(parentComment.getCommentId())}">
-                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${parentComment.getCommentId()}" onclick="deleteComment(this)" class="comment-action-content" value="Delete">
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
                                                 </c:if>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${parentComment.getCommentDate()}</div>
                                             </div>
-                                        </form> 
-
-
+                                        <!--</form>--> 
 
                                         <!-- Reply Comment -->
 
                                         <div class="reply-comment d-none" id="ShowReply${parentComment.getCommentId()}">
-                                            <form  action="postvideocomment" method="GET">
+                                            <!--<form  action="postvideocomment" method="GET">-->
                                                 <input type="hidden" name="lessonID" value="${lessonID}">
                                                 <input type="hidden" name="courseID" value="${courseID}">
                                                 <input type="hidden" name="sectionID" value="${sectionID}">
@@ -386,16 +381,18 @@
                                                         <!-- <input type="text" class="content" placeholder="Comment" style="    width: 90%;
                                                         border: none;
                                                         border-bottom: 1px solid rgba(0, 0, 0, 0.2); outline: none;"> -->
-                                                        <textarea name="repComment" id="repComment" oninput="auto_height(this); active_comment_button(this)"></textarea>
+                                                        <textarea name="repComment" id="commentContentReply${parentComment.getCommentId()}" oninput="auto_height(this); active_comment_button(this)"></textarea>
                                                     </div>
                                                     <div class="course-postcomment-action" style="float: right;">
                                                         <div class="post-cancel d-inline-block me-4 fw-bold" data-cmt-cancel-id="${parentComment.getCommentId()}" onclick="CancelReply(this)">Cancel</div>
-
-                                                        <input type="submit" name="op" value="Reply" class="submit-comment">                                     
-                                                        <input type="hidden" name="pId" value="${parentComment.getCommentId()}">
+                                                                <!--ReplyComment-->
+                                                        <!--<input type="submit" name="op" value="Reply" class="submit-comment">-->
+                                                        <button name="op" value="Reply" onclick="ReplyComment(this)" data-cmt-id="${parentComment.getCommentId()}" class="submit-comment">Reply</button>
+                                                        
+                                                        <input type="hidden" id="parentCommentId${parentComment.getCommentId()}" name="pId" value="${parentComment.getCommentId()}">
                                                     </div>
                                                 </div>
-                                            </form>
+                                            <!--</form>-->
                                         </div>
                                         <!-- Reply Comment -->
 
@@ -412,7 +409,7 @@
                                                             <img src="${commentOfLesson.getUser().getAvatar()}" alt="none" class="user-avatar">
                                                             <div class="comment-content">
 
-                                                                <form action="LikeComment" method="GET">
+                                                                <!--<form action="LikeComment" method="GET">-->
                                                                     <div class="comment-user">
                                                                         <div class="user-name">
                                                                             ${commentOfLesson.getUser().getLastName()} ${commentOfLesson.getUser().getFirstName()}
@@ -426,17 +423,17 @@
                                                                             <input type="hidden" name="sectionID" value="${sectionID}">
                                                                             <input type="hidden" name="CommentID" value="${commentOfLesson.getCommentId()}">
                                                                             <c:if test="${!userCmtId.contains(commentOfLesson.getCommentId())}">
-                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op"  value="Like">
+                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="button"  data-cmt-id="${commentOfLesson.getCommentId()}" onclick="likeComment(this)" value="Like">
                                                                             </c:if>
                                                                             <c:if test="${userCmtId.contains(commentOfLesson.getCommentId())}">
-                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Liked">
+                                                                                <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="dislikeComment(this)" class="comment-action-content" value="Liked">
                                                                             </c:if>
                                                                         </div>
                                                                         <div id="NumberLikes${commentOfLesson.getCommentId()}">${commentOfLesson.getLikes()}</div>
                                                                         <div class="comment-action-content comment-action-content-reply d-none" id="Cancel${commentOfLesson.getCommentId()}" data-cmt-cancel-id="${commentOfLesson.getCommentId()}" onclick="disableOff(this)"> Cancel</div>
                                                                         <div class="dot">.</div>
                                                                         <div class="comment-action-content comment-action-content-reply" id="Edit${commentOfLesson.getCommentId()}" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="disableOn(this)">Edit</div>
-                                                                        <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${commentOfLesson.getCommentId()}" type="submit" name="op"  value="Save">
+                                                                        <input style="border: none;background-color: white; color: #FD803A;" class="d-none" id="Save${commentOfLesson.getCommentId()}" type="button" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="saveComment(this)"  value="Save">
                                                                         <div class="dot">.</div>
                                                                         <div class="comment-action-content comment-action-content-reply" id="Reply${commentOfLesson.getCommentId()}" onclick="show_reply_post_comment(this)">Reply</div>
                                                                         <div class="dot" id="dotReply${commentOfLesson.getCommentId()}">.</div>
@@ -444,7 +441,7 @@
                                                                             <!--<form action="Report" method="GET">-->
 
                                                     <c:if test="${!userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
-                                                        <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Report">
+                                                        <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="reportComment(this)" class="comment-action-content" value="Report">
                                                     </c:if>
                                                     <c:if test="${userCommentIdOfReport.contains(commentOfLesson.getCommentId())}">
                                                         <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Reported">
@@ -453,12 +450,12 @@
                                                 </div>
                                                 <div class="dot" id="dotReport${commentOfLesson.getCommentId()}">.</div>
                                                 <c:if test="${commentIdByUser.contains(commentOfLesson.getCommentId())}">
-                                                <input style="border: none;background-color: white; color: #FD803A;" type="submit" name="op" class="comment-action-content" value="Delete">
+                                                    <input style="border: none;background-color: white; color: #FD803A;" type="button" data-cmt-id="${commentOfLesson.getCommentId()}" onclick="deleteComment(this)" class="comment-action-content" value="Delete">
                                                 <div class="dot" id="dotReport${parentComment.getCommentId()}">.</div>
                                                 </c:if>
                                                 <div class="comment-create-day" style="color: rgba(0, 0, 0, 0.4); font-weight: 600;">${commentOfLesson.getCommentDate()}</div>
                                             </div>
-                                        </form>
+                                        <!--</form>-->
 
                                                                 <!-- Reply Comment -->
 
@@ -525,12 +522,33 @@
         crossorigin="anonymous"></script>
         <script src="https://player.vimeo.com/api/player.js"></script>
         <script>
+            
         function loadAllComment() {
             var Comment = document.getElementById("commentContent").value;
+            
             $.ajax({
                 url: "/LearningProject/loadcomment",
                 type: 'GET',
-                data:'lessonid=${lessonID}',
+                data:'lessonid=${lessonID}&&CommentContent='+Comment, 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+            document.getElementById("commentContent").value='';
+        }
+        
+        function ReplyComment(input) {
+            var ReplyComment = document.querySelector('#commentContentReply' + input.getAttribute("data-cmt-id")).value;
+            var parentCommentId = document.querySelector('#parentCommentId' + input.getAttribute("data-cmt-id")).value;         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&commentContentReply='+ReplyComment+'&&parentCommentId='+parentCommentId, 
                 success: function (data) {
                     var row = document.getElementById("commentform");
                     row.innerHTML = data;
@@ -540,7 +558,102 @@
                 }
             });
         }
-        </script>        
+        
+        function saveComment(input) {
+            var CommentUpdate = document.querySelector('#cmt' + input.getAttribute("data-cmt-id")).value;
+            var CommentId =  input.getAttribute("data-cmt-id");         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&CommentUpdate='+CommentUpdate+'&&CommentId='+CommentId, 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        
+        function deleteComment(input) {
+            
+            var CommentId =  input.getAttribute("data-cmt-id");         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&CommentId='+CommentId+'&&op=Delete', 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        
+        function likeComment(input) {
+            
+            var CommentId =  input.getAttribute("data-cmt-id");         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&CommentId='+CommentId+'&&op=Like', 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        
+        function dislikeComment(input) {
+            
+            var CommentId =  input.getAttribute("data-cmt-id");         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&CommentId='+CommentId+'&&op=Liked', 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        
+         function reportComment(input) {
+            
+            var CommentId =  input.getAttribute("data-cmt-id");         
+            
+            $.ajax({
+                url: "/LearningProject/loadcomment",
+                type: 'GET',
+                data:'lessonid=${lessonID}&&CommentId='+CommentId+'&&op=Report', 
+                success: function (data) {
+                    var row = document.getElementById("commentform");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error');
+                }
+            });
+        }
+        
+        
+        </script>
+
+
+        
     </body>
 
 </html>
