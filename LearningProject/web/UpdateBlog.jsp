@@ -36,7 +36,7 @@
                     <div class="col-12 row mt-2">
                         <div class="col-8">
                             <label class="form-label fw-bold">Blog title</label>
-                            <input type="text" name="title" class="form-control mb-3" value="${blog.getTilte()}">
+                            <input type="text" name="title" class="form-control mb-3" value="${blog.getTitle()}">
 
                             <label class="form-label fw-bold">Blog description</label>
                             <input type="text" class="form-control mb-3" name="description" value="${blog.getDescription()}">

@@ -32,9 +32,11 @@ public class UpdateBlogController extends HttpServlet {
                     
                     response.sendRedirect("userdashboard");
                 }
-                else{                    
-                    request.setAttribute("blog", bd.getBlogInformation(blogId));
+                else{   
+                    Blog blog = bd.getBlogInformation(blogId);
+                    request.setAttribute("blog", blog);
                     request.getRequestDispatcher("UpdateBlog.jsp").forward(request, response);
+                    return;
                 }
             }
             else{
