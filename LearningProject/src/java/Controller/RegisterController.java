@@ -67,7 +67,7 @@ public class RegisterController extends HttpServlet {
 
             doGet(request, response);
         } catch (Exception e) {
-            e.printStackTrace(response.getWriter());
+            e.printStackTrace();
         }
     }
 
