@@ -30,7 +30,12 @@
                             <div class="col-6">
                                 <div class="d-flex justify-content-end" style="position: relative;">
                                     <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
-                                    <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
+                                    
+                                    <form action="AdminManageCourse" method="GET">
+                                        <input class="w-100 form-control" type="text" name="pendingCourseName" style="border-radius: 30px; padding-left: 32px;">
+                                    <input type="submit" hidden>
+                                    </form>
+                                    
                                 </div>
                             </div>
                             <div class="col-12">
@@ -149,7 +154,12 @@
                             <div class="col-6">
                                 <div class="d-flex justify-content-end" style="position: relative;">
                                     <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%);"></i>
-                                    <input class="w-100 form-control" type="text" style="border-radius: 30px; padding-left: 32px;">
+                                    
+                                    <form action="AdminManageCourse" method="GET">
+                                        <input class="w-100 form-control" type="text" name="allCourseName" style="border-radius: 30px; padding-left: 32px;">
+                                        <input type="submit" hidden>
+                                    </form>>
+                                    
                                 </div>
                             </div>
                             <div class="col-12">
