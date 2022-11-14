@@ -241,7 +241,7 @@ public class BlogDAO extends DBContext {
                     + "	[BlogImage],\n"
                     + "	[Category]\n"
                     + "FROM [Blog]\n"
-                    + "WHERE [Status] = 'Enabled'\n"
+                    + "WHERE [Status] != 'Disabled'\n"
                     + "AND [UserID] = ?", id);
             while(rs.next()) {
                 blogs.add(new Blog(rs.getInt("BlogID"), rs.getInt("UserID"),

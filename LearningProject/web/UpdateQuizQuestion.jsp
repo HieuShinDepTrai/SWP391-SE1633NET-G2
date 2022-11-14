@@ -121,7 +121,7 @@
                         </div>
                         <div class="btn btn-danger mt-3" onclick="addQuestion()">Add Question
                         </div>
-                        <div class="btn btn-success mt-3" onclick="submit()">Save Changes
+                        <div class="btn btn-success mt-3" onclick="submit1()">Save Changes
                         </div>
                     </div>
                 </div>

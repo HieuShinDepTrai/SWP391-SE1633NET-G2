@@ -195,3 +195,42 @@ function submit() {
   let formSubmit = document.querySelector("#submitForm");
   formSubmit.submit();
 }
+
+function submit1() {
+  window.alert("Update successful");
+  const outputData = [];
+  document.querySelectorAll("#questionTable > tr").forEach((question) => {
+    let newQuestion = {};
+    newQuestion.ques = [];
+    let questionID = question.querySelector('input[name="questionID"]').value;
+    let questionContent = question.querySelector(
+      'textarea[name="questionContent"]'
+    ).value;
+    newQuestion.ques.push({
+      questionID,
+      questionContent
+    });
+
+    newQuestion.ans = [];
+
+    const anws = question.querySelectorAll('input[name="answer"]');
+    anws.forEach((ans) => {
+      const val = ans.value;
+      const isCorrect =
+        ans.previousElementSibling.querySelector("input").checked;
+      const answerID = ans.previousElementSibling.previousElementSibling.value;
+      newQuestion.ans.push({
+        answerID,
+        val,
+        isCorrect,
+      });
+    });
+    
+    outputData.push(newQuestion);
+  });
+  let valueSubmit = document.querySelector("#valueSubmit");
+  valueSubmit.value = JSON.stringify(outputData);
+  console.log(valueSubmit.value);
+  let formSubmit = document.querySelector("#submitForm");
+  formSubmit.submit();
+}
