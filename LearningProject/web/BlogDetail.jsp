@@ -13,11 +13,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blog Detail</title>
+        <title>${blog.getTitle()}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
-        <link rel="stylesheet" href="../assets/css/blog.css">
+        <link rel="stylesheet" href="assets/css/blog.css">
         <link rel="stylesheet" href="assets/css/homepage.css">
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
@@ -88,7 +88,7 @@
             </div>
             <!-- End: Side Bar -->
 
-            <div id="blog">
+            <div id="blog" style="margin-top: 66px;">
                 <div class="row w-100" style="--bs-gutter-x: 0">
                     <div class="col-12 w-100 d-flex">
                         <div class="w-75 mx-auto">
@@ -118,7 +118,7 @@
                             <!-- User and post information -->
 
                             <!-- Post content -->
-                            <div class="mt-3" style="border: 1px solid black; height: 600px;">
+                            <div class="mt-3" style="min-height: 200px;">
                                 ${blog.getContent()}
                             </div>
                             <!-- Post content -->
