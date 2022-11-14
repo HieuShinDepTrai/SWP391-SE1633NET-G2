@@ -77,10 +77,10 @@ public class PaymentDAO extends DBContext {
         UserDAO userDAO = new UserDAO();
         try {
             ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n"
-                    + "and ([u].[Username] like N'%" + searchingName + "%' \n"
+                    + "where ([u].[Username] like N'%" + searchingName + "%' \n"
                     + "or [re].[RechargeID] like N'%" + searchingName + "%' \n"
                     + "or [u].[BankName] like N'%" + searchingName + "%' \n"
-                    + "or [u].[Method] like N'%" + searchingName + "%' \n"
+                    + "or [re].[Method] like N'%" + searchingName + "%' \n"
                     + "or [u].[BankNumber] like N'%" + searchingName + "%')");
             while (rs.next()) {
                 Payment payment = new Payment();
