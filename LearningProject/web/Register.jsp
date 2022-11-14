@@ -50,37 +50,37 @@
                                 <form action="register" method="post">
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="username" class="form-control">
+                                        <input type="text" name="username" class="form-control" required>
                                         <label class="form-label">Username</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="firstname" class="form-control">
+                                        <input type="text" name="firstname" class="form-control" required>
                                         <label class="form-label">Firstname</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="lastname" class="form-control">
+                                        <input type="text" name="lastname" class="form-control" required>
                                         <label class="form-label">Lastname</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="date" name="dob" class="form-control">
+                                        <input type="date" name="dob" class="form-control" required>
                                         <label class="form-label">Date of Birth</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input">
-                                        <input type="password" name="password" class="form-control">
+                                        <input type="password" name="password" class="form-control" required>
                                         <label class="form-label">Password</label>
                                     </div>
 
                                     <div class="form-outline mb-3 input ">
-                                        <input type="password" name="cfpassword" class="form-control">
+                                        <input type="password" name="cfpassword" class="form-control" required>
                                         <label class="form-label">Confirm password</label>
                                     </div>
                                     
                                     <div class="form-outline mb-3 input">
-                                        <input type="text" name="email" class="form-control">
+                                        <input type="text" name="email" class="form-control" required>
                                         <label class="form-label">Email</label>
                                     </div>
                                     <div class="g-recaptcha" data-sitekey="6LcpAk4iAAAAACx-z5YjHfgs5ANm_xKUWoMVXswi"></div>

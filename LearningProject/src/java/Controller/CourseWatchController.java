@@ -209,30 +209,7 @@ public class CourseWatchController extends HttpServlet {
 //            request.setAttribute("question", question);
 //            request.setAttribute("answer", answers);
 
-            int quizID = ldao.getQuizID(lessonID);
-
-            ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizID);
-
-            if (quizHistoryList.size() != 0) {
-                request.setAttribute("quizid", quizID);
-                request.setAttribute("quizhislist", quizHistoryList);
-                request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
-                request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
-                return;
-            } else {
-                ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
-                ArrayList<Answer> answerList = new ArrayList<>();
-                for (Question question : questionList) {
-                    ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
-                    for (Answer answer : temp) {
-                        answerList.add(answer);
-                    }
-
-                }
-                request.setAttribute("quizID", quizID);
-                request.setAttribute("questionList", questionList);
-                request.setAttribute("answerList", answerList);
-            }
+            
 
         }
 
@@ -264,6 +241,31 @@ public class CourseWatchController extends HttpServlet {
         request.setAttribute("sectionID", sectionID);
         request.setAttribute("lessonID", lessonID);
 
+        int quizID = ldao.getQuizID(lessonID);
+
+            ArrayList<UserQuiz> quizHistoryList = quizdao.getQuizHistory(user.getUserId(), quizID);
+
+            if (quizHistoryList.size() != 0) {
+                request.setAttribute("quizid", quizID);
+                request.setAttribute("quizhislist", quizHistoryList);
+                request.setAttribute("numofques", qdao.getNumberQuesOfQuiz(quizID));
+                request.getRequestDispatcher("QuizResult.jsp").forward(request, response);
+                return;
+            } else {
+                ArrayList<Question> questionList = qdao.getQuestionsOfQuiz(quizID);
+                ArrayList<Answer> answerList = new ArrayList<>();
+                for (Question question : questionList) {
+                    ArrayList<Answer> temp = ansdao.getAnswersOfQuestion(question.getQuestionId());
+                    for (Answer answer : temp) {
+                        answerList.add(answer);
+                    }
+
+                }
+                request.setAttribute("quizID", quizID);
+                request.setAttribute("questionList", questionList);
+                request.setAttribute("answerList", answerList);
+            }
+        
         request.getRequestDispatcher("CourseWatch.jsp").forward(request, response);
 //        } else {
 //            // Send back to home pages

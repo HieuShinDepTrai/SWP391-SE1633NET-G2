@@ -198,34 +198,34 @@
                                                         <c:if test="${courseIDs.contains(course.getCourseID())}">
                                                             <input name="op" type="submit" value="Go to Course">                                                            
                                                         </c:if>
-                                                            <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
+                                                        <fmt:parseNumber var = "price" integerOnly = "true" type = "number" value = "${course.getCoursePrice()}" />
                                                         <input type="hidden" name="coursePrice" value="${price}">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
 
                                                     </form>
                                                 </c:if>
 
-                                                
+
                                             </div>
                                             <div class="mt-2">
                                                 <c:set var="isPresent" value="${false}"></c:set>
-                                                
+
                                                 <c:forEach items="${usercourselist}" var="usercourse">
                                                     <c:if test="${course.getCourseID() == usercourse.getCourseID()}">
                                                         <c:if test="${usercourse.isIsFavourite() == true}">
                                                             <form action="home" method="POST">
                                                                 <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                                <button style="border: none;  background-color: transparent; outline: unset; font-size: 25px; color:red" type="submit" name="favour" value="unlike"><i class="fa-solid fa-heart"></i></i></button>
+                                                                <button style="border: none;  background-color: transparent; outline: unset; font-size: 25px; color:red" type="button" name="favour" value="unlike" onclick="unlike(this.parentNode)"><i class="fa-solid fa-heart"></i></i></button>
                                                             </form>     
                                                             <c:set var="isPresent" value="${true}"></c:set>
                                                         </c:if>
                                                     </c:if> 
                                                 </c:forEach>
-                                                    
+
                                                 <c:if test="${isPresent == false}">
                                                     <form action="home" method="POST">
                                                         <input type="hidden" name="courseID" value="${course.getCourseID()}">
-                                                        <button style="border: none; outline: unset;background: transparent; font-size: 25px" type="submit" name="favour" value="like"><i class="fa-regular fa-heart"></i></button>
+                                                        <button style="border: none; outline: unset;background: transparent; font-size: 25px" type="button" name="favour" value="like" onclick="like(this.parentNode)"><i class="fa-regular fa-heart"></i></button>
                                                     </form>
                                                 </c:if>
                                             </div>
@@ -300,14 +300,56 @@
                 integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
-            $('.autoplay').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 5000,
-                speed: 1500,
-                dots: true
-            });
+                                                            $('.autoplay').slick({
+                                                                slidesToShow: 1,
+                                                                slidesToScroll: 1,
+                                                                autoplay: true,
+                                                                autoplaySpeed: 5000,
+                                                                speed: 1500,
+                                                                dots: true
+                                                            });
+        </script>
+
+        <script>
+            function like(form) {
+                const courseID = form.querySelector("input[name='courseID']").value;
+                const button = form.querySelector("button");
+
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: 'favour=like&courseID=' + courseID,
+                    success: function (data) {
+                        if (data === "true") {
+                            button.remove();
+                            form.innerHTML += `<button style="border: none;  background-color: transparent; outline: unset; font-size: 25px; color:red" type="button" name="favour" value="unlike" onclick="unlike(this.parentNode)"><i class="fa-solid fa-heart"></i></i></button>`;
+                        }
+                    },
+                    error: function () {
+                        console.log('Error');
+                    }
+                });
+            }
+
+            function unlike(form) {
+                const courseID = form.querySelector("input[name='courseID']").value;
+                const button = form.querySelector("button");
+
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: 'favour=unlike&courseID=' + courseID,
+                    success: function (data) {
+                        if (data === "false") {
+                            button.remove();
+                            form.innerHTML += `<button style="border: none; outline: unset;background: transparent; font-size: 25px" type="button" name="favour" value="like" onclick="like(this.parentNode)"><i class="fa-regular fa-heart"></i></button>`;
+                        }
+                    },
+                    error: function () {
+                        console.log('Error');
+                    }
+                });
+            }
         </script>
     </body>
 

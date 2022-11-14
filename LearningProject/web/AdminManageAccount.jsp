@@ -87,17 +87,19 @@
                                                 <td>
                                                     <div>
                                                         <form action="manageaccount" method="POST">
-                                                            <a class="bg-success"
-                                                               style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">View Details</a>
                                                             <c:if test="${users.getIsDisable() == false}">
                                                                 <input type="hidden" value="${users.getUserId()}" name="userid">
                                                                 <input type="hidden" value="${users.getIsDisable()}" name="isdisable">
+                                                                <a class="bg-success" href="profiledetails?id=${users.getUserId()}"
+                                                               style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">View Details</a>
                                                                 <button type="submit" class="bg-danger"
                                                                         style="border:none; border-radius: 32px; padding: 4px 8px; color: white; min-width: 100px; font-weight: 500;">Disable</button>
                                                             </c:if>
                                                             <c:if test="${users.getIsDisable() == true}">
                                                                 <input type="hidden" value="${users.getUserId()}" name="userid">
                                                                 <input type="hidden" value="${users.getIsDisable()}" name="isdisable">
+                                                                <a class="bg-success" href="profiledetails?id=${users.getUserId()}"
+                                                               style="border-radius: 32px; padding: 4px 8px; color: white; width: fit-content; font-weight: 500;">View Details</a>
                                                                 <button type="submit" class="bg-success"
                                                                         style="border:none; border-radius: 32px; padding: 4px 8px; color: white; min-width: 100px; font-weight: 500;">Enable</button>
                                                             </c:if>

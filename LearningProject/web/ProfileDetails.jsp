@@ -82,7 +82,7 @@
                                                                     <img src="${course.getAuthor().getAvatar()}"
                                                                          alt="" style="width: 40px; height: 40px; border-radius: 50%;">
                                                                 </div>
-                                                                <p>By <a href="#" class="author-name">${course.getAuthor().firstName}</a></p>
+                                                                <p>By <a href="profiledetails?id=${course.getAuthor().getUserId()}" class="author-name">${course.getAuthor().firstName}</a></p>
                                                             </div>
                                                             <div class="course-meta-student">
                                                                 <i class="fa-solid fa-user"></i>

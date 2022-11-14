@@ -107,19 +107,22 @@ public class HomeController extends HttpServlet {
             UserDAO ud = new UserDAO();
             String favourite = request.getParameter("favour");
             int courseId = Integer.parseInt(request.getParameter("courseID"));
-
+            boolean isLike = false;
             if (session.getAttribute("username") != null) {
                 User user = (User) session.getAttribute("user");
             
                 if (favourite.equals("like")) {
                     ud.likeCourse(courseId, user.getUserId());
+                    isLike = true;
                 }
                 else{
                     ud.unLikeCourse(courseId, user.getUserId());
                 }
             }
             
-            response.sendRedirect("home");
+            try (PrintWriter pw = response.getWriter()) {
+                pw.print(isLike);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -16,7 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
         <link rel="stylesheet" href="assets/css/header.css" />
-        <link rel="stylesheet" href="../assets/css/blog.css">
+        <link rel="stylesheet" href="assets/css/blog.css">
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
@@ -58,7 +58,7 @@
                                     <img src="" alt="" style="width: 100%; height: 240px; object-fit: cover; border-radius: 16px;" class="image-thumbnail">
                                 </div>
                                 <div class="d-flex flex-column">
-                                    <input type="file" name="" id="thumbnail" onchange="upload(this)" class="form-control mt-3 mx-auto">
+                                    <input type="file" name="" id="thumbnail" onchange="upload(this)" class="form-control mt-3 mx-auto" accept="image/*">
                                     <textarea id="imageBase64" name="imageBase64" rows="5" cols="10" class="d-none"></textarea>
                                 </div>
                             </div>
