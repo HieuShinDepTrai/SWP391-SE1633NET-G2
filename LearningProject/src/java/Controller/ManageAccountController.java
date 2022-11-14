@@ -65,8 +65,19 @@ public class ManageAccountController extends HttpServlet {
             if (user.getRole().equals("Admin")) {
                 UserDAO udao = new UserDAO();
 
-                ArrayList<User> users = udao.getAllUser();
+                String searchingAccount = request.getParameter("searchingAccount");
+                if (searchingAccount == null) {
+                    searchingAccount = "";
+                } else {
+                    searchingAccount = (String)request.getParameter("searchingAccount").trim();
+                }
+                
+                
+                ArrayList<User> users = udao.getAllUserByEmail(searchingAccount);
+                
+                
                 request.setAttribute("users", users);
+                
                 request.getRequestDispatcher("AdminManageAccount.jsp").forward(request, response);
             } else {
                 response.sendRedirect("home");

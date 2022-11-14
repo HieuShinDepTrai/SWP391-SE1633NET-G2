@@ -323,6 +323,43 @@ public class CommentDAO extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Comment> ListAllCommentsReportedByUserNameOrCommentContent(String commentName) {
+        try {
+            ArrayList<Comment> comments = new ArrayList<>();
+            ResultSet rs = executeQuery("SELECT \n"
+                    + "	[Comment].[CommentID],\n"
+                    + "	[User].[Avatar],\n"
+                    + "	[User].[FirstName],\n"
+                    + "	[User].[LastName],\n"
+                    + "	[Comment].[CommentContent],\n"
+                    + "	[Comment].[CommentDate],\n"
+                    + "	[Comment].[isDisable]\n"
+                    + "FROM [Comment] INNER JOIN [User]\n"
+                    + "ON [Comment].[UserID] = [User].[UserID]\n"
+                    + "WHERE [isReported] = 1 AND ([CommentContent] LIKE '%"+commentName+"%' OR [FirstName] LIKE '%"+ commentName +"%' OR [LastName] LIKE '%"+commentName+ "%')");                               
+            while (rs.next()) {
+                Comment c = new Comment();
+                User u = new User();
+
+                u.setAvatar(rs.getString("Avatar"));
+                u.setFirstName(rs.getNString("FirstName"));
+                u.setLastName(rs.getNString("LastName"));
+
+                c.setCommentId(rs.getInt("CommentID"));
+                c.setCommentContent(rs.getNString("CommentContent"));
+                c.setCommentDate(rs.getTimestamp("CommentDate"));
+                c.setIsDisable(rs.getBoolean("isDisable"));
+                c.setUser(u);
+
+                comments.add(c);
+            }
+            return comments;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public void DisableComment(int commentid) {
         try {

@@ -62,11 +62,24 @@ public class AdminManageCourseController extends HttpServlet {
         User u = (User) request.getSession().getAttribute("user");
         if (u.getRole().equals("Admin")) {
             CourseDAO cdao = new CourseDAO();
-
-            ArrayList<Course> coursePendingList = cdao.getPendingCourse();
+            String pendingCourseName = request.getParameter("pendingCourseName");
+            if (pendingCourseName == null) {
+                pendingCourseName = "";
+            } else {
+                pendingCourseName = request.getParameter("pendingCourseName").trim();
+            }
+            
+            ArrayList<Course> coursePendingList = cdao.getPendingCourseByCourseName(pendingCourseName);
             request.setAttribute("coursePendingList", coursePendingList);
             
-            ArrayList<Course> allCourse = cdao.getAllCourse();
+            String allCourseName = request.getParameter("allCourseName");
+            if (allCourseName == null) {
+                allCourseName = "";
+            } else {
+                allCourseName = request.getParameter("allCourseName").trim();
+            }
+            
+            ArrayList<Course> allCourse = cdao.getAllCourseByCourseName(allCourseName);
             request.setAttribute("allCourse", allCourse);
             
             request.getRequestDispatcher("AdminManageCourse.jsp").forward(request, response);

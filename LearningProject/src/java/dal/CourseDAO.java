@@ -575,6 +575,39 @@ public class CourseDAO extends DBContext {
         }
         return coursePendingList;
     }
+    
+     public ArrayList<Course> getPendingCourseByCourseName(String courseName) {
+        ArrayList<Course> coursePendingList = new ArrayList<>();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID]\n"
+                    + "      ,[CourseName]\n"
+                    + "      ,[DateCreate]\n"
+                    + "      ,[AuthorID]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[NumberEnrolled]\n"
+                    + "      ,[CoursePrice]\n"
+                    + "      ,[CourseImage]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[Objectives]\n"
+                    + "      ,[Difficulty]\n"
+                    + "  FROM [dbo].[Course]\n"
+                    + "  where [Status] = 'pending' AND [CourseName] LIKE '%" +courseName +"%'");
+            while (rs.next()) {
+                coursePendingList.add(new Course(rs.getInt("CourseID"),
+                        rs.getNString("CourseName"), rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"), rs.getInt("NumberEnrolled"),
+                        rs.getInt("CoursePrice"), rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        udao.getAllUserInformationByID(rs.getInt("AuthorID")),
+                        0, rs.getNString("Description"), rs.getNString("Objectives"), rs.getString("Difficulty")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coursePendingList;
+    }
 
     public void updateCourseStatus(int courseID, String Status) {
         try {
@@ -623,6 +656,38 @@ public class CourseDAO extends DBContext {
         return allCourse;
     }
 
+    public ArrayList<Course> getAllCourseByCourseName(String courseName) {
+        ArrayList<Course> allCourse = new ArrayList<>();
+        UserDAO udao = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("SELECT [CourseID]\n"
+                    + "      ,[CourseName]\n"
+                    + "      ,[DateCreate]\n"
+                    + "      ,[AuthorID]\n"
+                    + "      ,[Category]\n"
+                    + "      ,[NumberEnrolled]\n"
+                    + "      ,[CoursePrice]\n"
+                    + "      ,[CourseImage]\n"
+                    + "      ,[Status]\n"
+                    + "      ,[Description]\n"
+                    + "      ,[Objectives]\n"
+                    + "      ,[Difficulty]\n"
+                    + "  FROM [dbo].[Course] WHERE [CourseName] LIKE '%" + courseName+ "%'");
+            while (rs.next()) {
+                allCourse.add(new Course(rs.getInt("CourseID"),
+                        rs.getNString("CourseName"), rs.getTimestamp("DateCreate"),
+                        rs.getString("Category"), rs.getInt("NumberEnrolled"),
+                        rs.getInt("CoursePrice"), rs.getString("CourseImage"),
+                        rs.getString("Status"),
+                        udao.getAllUserInformationByID(rs.getInt("AuthorID")),
+                        0, rs.getNString("Description"), rs.getNString("Objectives"), rs.getString("Difficulty")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allCourse;
+    }
+    
     public ArrayList<UserCourse> getListUserCourseOfUser(int userId, String courseName) {
         ArrayList<UserCourse> list = new ArrayList<UserCourse>();
         try {
@@ -672,7 +737,7 @@ public class CourseDAO extends DBContext {
                 + "[C].[Difficulty],"
                 + "[C].[AuthorID]"
                 + "FROM [Course] C INNER JOIN [User] U\n"
-                + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled' AND [CourseName] LIKE  N'%" + courseName + "%'")) {
+                + "ON [C].[AuthorID] = [U].[UserID] WHERE [C].[Status] = 'Enabled' AND ([C].[CourseName] LIKE  N'%" + courseName + "%' OR [U].[FirstName] LIKE N'%" + courseName +"%')")) {
             while (rs.next()) {
                 Course course = new Course();
                 course.setCourseName(rs.getString("CourseName"));

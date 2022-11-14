@@ -95,7 +95,6 @@ function CancelReply(input) {
 
   document.querySelector('#ShowReply' + input.getAttribute("data-cmt-cancel-id")).classList.add('d-none');
 
-
 }
  
 
