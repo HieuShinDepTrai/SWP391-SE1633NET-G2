@@ -84,7 +84,7 @@ public class CommentDAO extends DBContext {
 
     public void insertIntoReport(int UserId, String Action) {
         try {
-            executeUpdate("INSERT INTO [Report](UserID, Action) VALUES (? , ?) ", UserId, Action);
+            executeUpdate("INSERT INTO [Report](UserID, [Action]) VALUES (? , ?) ", UserId, Action);
         } catch (Exception e) {
         }
     }
@@ -290,6 +290,7 @@ public class CommentDAO extends DBContext {
             ArrayList<Comment> comments = new ArrayList<>();
             ResultSet rs = executeQuery("SELECT \n"
                     + "	[Comment].[CommentID],\n"
+                    + "	[User].[UserID],\n"
                     + "	[User].[Avatar],\n"
                     + "	[User].[FirstName],\n"
                     + "	[User].[LastName],\n"
@@ -303,6 +304,7 @@ public class CommentDAO extends DBContext {
                 Comment c = new Comment();
                 User u = new User();
 
+                u.setUserId(rs.getInt("UserID"));
                 u.setAvatar(rs.getString("Avatar"));
                 u.setFirstName(rs.getNString("FirstName"));
                 u.setLastName(rs.getNString("LastName"));

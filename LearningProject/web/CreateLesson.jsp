@@ -42,7 +42,7 @@
                         <h3 class="fw-bold">Create Lesson</h3>
                         <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                             <ol class="breadcrumb" style="font-size: 13px">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="home">Home</a></li>
                                 <li class="breadcrumb-item"><a href="CreateSection?courseId=${courseID}">Create Section</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Create Lesson

@@ -21,7 +21,7 @@ public class PaymentDAO extends DBContext {
 
     public PaymentDAO() {
     }
-    
+
     public ArrayList<Payment> getPaymentListFromUser(int userid) {
         ArrayList<Payment> paymentList = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
@@ -49,12 +49,39 @@ public class PaymentDAO extends DBContext {
         ArrayList<Payment> paymentList = new ArrayList<>();
         UserDAO userDAO = new UserDAO();
         try {
-            ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n" +
-                                        "where Method = 'Withdraw' and Status = 2 \n" +
-                                        "and ([u].[Username] like N'%" + searchingName + "%' \n" +
-                                        "or [re].[RechargeID] like N'%" + searchingName + "%' \n" +
-                                        "or [u].[BankName] like N'%" + searchingName + "%' \n" +
-                                        "or [u].[BankNumber] like N'%" + searchingName + "%')");
+            ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n"
+                    + "where Method = 'Withdraw' and Status = 2 \n"
+                    + "and ([u].[Username] like N'%" + searchingName + "%' \n"
+                    + "or [re].[RechargeID] like N'%" + searchingName + "%' \n"
+                    + "or [u].[BankName] like N'%" + searchingName + "%' \n"
+                    + "or [u].[BankNumber] like N'%" + searchingName + "%')");
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
+                payment.setAmount(rs.getInt("Amount"));
+                payment.setContent(rs.getString("Content"));
+                payment.setMethod(rs.getString("Method"));
+                payment.setStatus(rs.getInt("Status"));
+                payment.setRechargeDate(rs.getTimestamp("RechargeDate"));
+                payment.setPaymentID(rs.getInt("RechargeID"));
+                paymentList.add(payment);
+            }
+        } catch (SQLException ex) {
+            return paymentList;
+        }
+        return paymentList;
+    }
+
+    public ArrayList<Payment> getAllWithdraw(String searchingName) {
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+        try {
+            ResultSet rs = executeQuery("select * from [Recharge] re inner join [User] u on [re].UserID = [u].UserID\n"
+                    + "where ([u].[Username] like N'%" + searchingName + "%' \n"
+                    + "or [re].[RechargeID] like N'%" + searchingName + "%' \n"
+                    + "or [u].[BankName] like N'%" + searchingName + "%' \n"
+                    + "or [re].[Method] like N'%" + searchingName + "%' \n"
+                    + "or [u].[BankNumber] like N'%" + searchingName + "%')");
             while (rs.next()) {
                 Payment payment = new Payment();
                 payment.setUser(userDAO.getAllUserInformationByID(rs.getInt("UserID")));
@@ -73,7 +100,7 @@ public class PaymentDAO extends DBContext {
     }
 
     public void userRecharge(int userid, Date date, int amount, int status, String method, String content) {
-        int hehe=0;
+        int hehe = 0;
         hehe = executeUpdate("INSERT INTO [dbo].[Recharge]\n"
                 + "           ([UserID]\n"
                 + "           ,[RechargeDate]\n"
